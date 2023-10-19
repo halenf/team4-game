@@ -96,7 +96,19 @@ MonoBehaviour:
     m_ActionId: 2571899b-3660-4d97-a27b-ee08bf193cf4
     m_ActionName: Player/Move[/DualSenseGamepadHID/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5814125836590746918}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 05f79872-9ddc-4339-b849-f52f9f1a106a
     m_ActionName: Player/Shoot[/DualSenseGamepadHID/rightTrigger,/Mouse/leftButton]
   - m_PersistentCalls:
@@ -155,8 +167,12 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0bb0fa91-b033-47e8-b8fe-3878e43680fa
     m_ActionName: Player/Aim[/DualSenseGamepadHID/rightStick]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e7e65a92-36d4-4558-8f4f-08a70e90d485
+    m_ActionName: Player/Pause[/DualSenseGamepadHID/start]
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
