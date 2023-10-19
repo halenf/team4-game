@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
         DebugLeaderBoard();
         if (!m_started)
         {
+
             CheckControllers();
             LoadFirst();
         } else

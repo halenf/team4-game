@@ -330,11 +330,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a5617a3ba715d4b8ffc95356663fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_leaderBoard: 00000000000000000000000000000000
   stageList:
   - {fileID: 6279050203965020814, guid: 4ad91614d86c3d043b6dd9fef8bd91e9, type: 3}
   playerPrefab: {fileID: 4121675375420338414, guid: 5b20db2e57c73414d80c345d2f4cd062, type: 3}
   activePlayerControllers: []
-  isPaused: 0
+  pauseCanvas: {fileID: 0}
 --- !u!4 &1614796131
 Transform:
   m_ObjectHideFlags: 0
