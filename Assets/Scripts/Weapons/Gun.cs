@@ -5,10 +5,14 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     public GameObject bulletPrefab;
-    
-    public float baseSpread;
-    public float baseBulletSpeed;
-    public float baseBulletDamage;
+
+    [Header("Bullet Properties")]
+    public float spread;
+    public float bulletSpeed;
+    public float bulletDamage;
+    public bool shouldBounce;
+
+    [Header("Player Properties")]
     public float baseRecoil;
     public float baseFireRate;
     public float ammoCapacity;
