@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     [Tooltip("level prefabs")]
     public GameObject[] stageList;
     private int m_currentStage;
+
+    public TMP_Text controllerCount;
 
     public GameObject playerPrefab;
     public List<PlayerController> activePlayerControllers;
@@ -61,7 +64,7 @@ public class GameManager : MonoBehaviour
         DebugLeaderBoard();
         if (!m_started)
         {
-
+            controllerCount.text = "active players: " + m_controllers.Count.ToString();
             CheckControllers();
             LoadFirst();
         } else
@@ -101,6 +104,7 @@ public class GameManager : MonoBehaviour
                  newPlayer.transform.position = spawns[j].transform.position;
                  activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
              }
+            Destroy(controllerCount.gameObject);
              m_started = true;
          }
         
