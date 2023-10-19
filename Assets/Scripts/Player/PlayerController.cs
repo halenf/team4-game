@@ -70,32 +70,51 @@ public class PlayerController : MonoBehaviour
         m_aimIndicator.transform.rotation = Quaternion.LookRotation(m_aimIndicator.transform.position - m_rb.position);
     }
 
+    /// <summary>
+    /// Deal damage to the player and check if they are dead.
+    /// </summary>
+    /// <param name="damage"></param>
     public void TakeDamage(float damage)
     {
         m_currentHealth -= damage;
-        if (m_currentHealth <= 0) Debug.Log(name + " player is dead.");
+        if (m_currentHealth <= 0) GameManager.Instance.deadPlayers++;
     }
 
+    /// <summary>
+    /// Change the player's controller mappings to a different set.
+    /// </summary>
+    /// <param name="mapName"></param>
     public void SetControllerMap(string mapName)
     {
         
     }
 
+    /// <summary>
+    /// Enable the player's input.
+    /// </summary>
     public void EnableInput()
     {
         Debug.Log(name + " player input enabled.");
         m_playerInput.ActivateInput();
     }
 
+    /// <summary>
+    /// Disable the player's input.
+    /// </summary>
     public void DisableInput()
     {
         Debug.Log(name + " player input disabled.");
         m_playerInput.DeactivateInput();
     }
 
+    /// <summary>
+    /// Reset all active variables like health, ammo, and current gun.
+    /// </summary>
     public void ResetPlayer()
     {
         m_currentHealth = maxHealth;
-
+        m_currentGun = defaultGun;
+        m_currentAmmo = m_currentGun.ammoCapacity;
+        m_fireRate = m_currentGun.baseFireRate;
     }
 }

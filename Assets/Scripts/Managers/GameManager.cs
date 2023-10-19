@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    // Static reference
+    public static GameManager Instance { get; private set; }
+    
     private PlayerController m_focusedPlayerController;
     [SerializeField]
     private int[] m_leaderBoard;
@@ -25,8 +26,34 @@ public class GameManager : MonoBehaviour
 
     public Canvas pauseCanvas;
 
+    public int deadPlayers
+    {
+        get { return m_deadPlayers; }
+        set
+        {
+            m_deadPlayers = value;
+            if (m_deadPlayers > activePlayerControllers.Count - 1)
+            {
+                // round is over
+            }
+        }
+    }
+
     [SerializeField]
     private List<Gamepad> m_controllers;
+
+    // Singleton instantiation
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
 
     /// initalizing

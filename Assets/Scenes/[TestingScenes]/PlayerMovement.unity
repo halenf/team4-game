@@ -518,67 +518,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 960140515}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnShoot
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[12].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PlayerController, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5814125836590746924, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
---- !u!114 &960140515 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5814125836590746918, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-  m_PrefabInstance: {fileID: 960140514}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5b869ff5c7edf447bacadb3cc257971, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!43 &1071076135
 Mesh:
   m_ObjectHideFlags: 0
