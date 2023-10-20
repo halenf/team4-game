@@ -480,7 +480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8636647622954531190}
   m_Layer: 0
-  m_Name: aim_indicator_player
+  m_Name: gun_current_player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
