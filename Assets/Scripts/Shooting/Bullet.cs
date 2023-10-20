@@ -1,3 +1,7 @@
+// Bullet - Halen
+// Determines bullet behaviour
+// Last edit: 20/10/23
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,17 +15,26 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float m_damage;
     [SerializeField] private bool m_shouldBounce;
 
-    public Bullet(float playerID, float damage, bool shouldBounce)
+    /// <summary>
+    /// For setting bullet details after being instantiated
+    /// </summary>
+    /// <param name="playerID"></param>
+    /// <param name="damage"></param>
+    /// <param name="shouldBounce"></param>
+    public void Init(float playerID, float damage, bool shouldBounce, Vector3 velocity)
     {
         m_playerID = playerID;
         m_damage = damage;
         m_shouldBounce = shouldBounce;
+        m_rb.velocity = velocity;
+        transform.rotation = Quaternion.LookRotation(velocity);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
+        m_rb.drag = 0;
+        m_rb.angularDrag = 0;
         m_rb.useGravity = false;
     }
 

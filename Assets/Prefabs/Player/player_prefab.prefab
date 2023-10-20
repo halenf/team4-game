@@ -51,9 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 40
   maxHealth: 10
-  defaultGun: {fileID: 4789882382446241976, guid: fbac1fa5d84274140b2863d100c4fa70, type: 3}
-  aimIndicatorPrefab: {fileID: 8636647622954531189, guid: abc8c0c34cc59824b811e9a9a517d164, type: 3}
-  aimIndicatorDistance: 1.65
+  defaultGun: {fileID: 1788972594773971130, guid: fbac1fa5d84274140b2863d100c4fa70, type: 3}
+  gunHoldDistance: 1
 --- !u!114 &5814125836590746924
 MonoBehaviour:
   m_ObjectHideFlags: 0
