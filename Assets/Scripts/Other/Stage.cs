@@ -1,20 +1,12 @@
-
+//stage - Cameron
+//just stores spawn locations
+// last edit 20/10/2023
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
+    //array of spawn transforms
     public Transform[] spawns;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
