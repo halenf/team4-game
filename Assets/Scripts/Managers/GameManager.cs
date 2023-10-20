@@ -3,27 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.VFX;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     // Static reference
     public static GameManager Instance { get; private set; }
     
+
     private PlayerController m_focusedPlayerController;
     [SerializeField]
-    private int[] m_leaderBoard;
+    private List<int> m_leaderBoard;
     [Tooltip("level prefabs")]
     public GameObject[] stageList;
-    private int m_currentStage;
+    private int m_currentStage = 0;
+
+    private GameObject m_currentStageObject;
 
     public TMP_Text controllerCount;
+    public TMP_Text gameOverText;
 
     public GameObject playerPrefab;
+    public GameObject gameOverScreen;
     public List<PlayerController> activePlayerControllers;
     private int m_deadPlayers;
     private bool m_isPaused;
     private bool m_started = false;
+    private bool m_gameOver;
 
+    public int roundsPerGame;
+
+    //UI
     public Canvas pauseCanvas;
 
     public int deadPlayers
@@ -32,9 +43,18 @@ public class GameManager : MonoBehaviour
         set
         {
             m_deadPlayers = value;
-            if (m_deadPlayers > activePlayerControllers.Count - 1)
+            if (m_deadPlayers == activePlayerControllers.Count - 1)
             {
-                // round is over
+                
+                if (!IsGameOver())
+                {
+                    LoadStage();
+                } else
+                {
+                    StartGameOver();
+                    m_gameOver = true;
+
+                }
             }
         }
     }
@@ -88,15 +108,20 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        DebugLeaderBoard();
+        DebugUpdate();
         if (!m_started)
         {
             controllerCount.text = "active players: " + m_controllers.Count.ToString();
             CheckControllers();
             LoadFirst();
-        } else
+        } 
+        else if (!m_gameOver)
         {
 
+        } 
+        else if (m_gameOver)
+        {
+            GameOverUpdate();
         }
     }
 
@@ -111,6 +136,7 @@ public class GameManager : MonoBehaviour
             if (Gamepad.all[i].buttonEast.isPressed && !m_controllers.Contains(Gamepad.all[i]))
             {
                 m_controllers.Add(Gamepad.all[i]);
+                m_leaderBoard.Add(0);
             }
         }
     }
@@ -123,15 +149,17 @@ public class GameManager : MonoBehaviour
         
          if (m_controllers.Count > 0 && m_controllers[0].startButton.isPressed)
          {
-             Instantiate(stageList[0]);
+             int random = Random.Range(0, activePlayerControllers.Count);
+             m_currentStageObject = Instantiate(stageList[random]);
              Transform[] spawns = FindObjectOfType<Stage>().spawns;
+            ShuffleSpawns(spawns);
              for (int j = 0; m_controllers.Count > j; j++)
              {
                  GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: Gamepad.all[j]).gameObject;
                  newPlayer.transform.position = spawns[j].transform.position;
                  activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
              }
-            Destroy(controllerCount.gameObject);
+             Destroy(controllerCount.gameObject);
              m_started = true;
          }
         
@@ -181,14 +209,6 @@ public class GameManager : MonoBehaviour
             
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    private bool IsRoundOver()
-    {
-        return false;
-    }
 
     /// <summary>
     /// 
@@ -196,16 +216,42 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private bool IsGameOver()
     {
-        return false;
+        if (m_currentStage <= roundsPerGame)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     /// <summary>
     /// will delete old scen and instantiate and set up a new one
     /// </summary>
     /// <param name="newGame"></param>
-    private void LoadStage(bool newGame)
+    private void LoadStage()
     {
-
+        for (int i = 0; i < activePlayerControllers.Count; i++)
+        {
+            if (activePlayerControllers[i].GetComponent<PlayerInput>().inputIsActive)
+            {
+                m_leaderBoard[i]++;
+                break;
+            }
+        }
+        Debug.Log("loaded");
+        Destroy(m_currentStageObject);
+        int random = Random.Range(0, activePlayerControllers.Count - 1);
+        m_currentStageObject = Instantiate(stageList[random]);
+        ResetPlayers();
+        ShuffleSpawns(m_currentStageObject.GetComponent<Stage>().spawns);
+        for (int i = 0; i < activePlayerControllers.Count; i++)
+        {
+            activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().spawns[i].position;
+        }
+        m_currentStage++;
+        m_deadPlayers = 0;
     }
 
     /// <summary>
@@ -224,27 +270,60 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGame()
     {
-        //SceneManager.LoadScene();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void DebugLeaderBoard()
+    public void DebugUpdate()
     { 
         if (Keyboard.current.digit1Key.isPressed)
         {
-            m_leaderBoard[0]++;
+            activePlayerControllers[0].TakeDamage(1f);
         }
-        if (Keyboard.current.digit2Key.isPressed)
+        
+
+    }
+
+    private void ShuffleSpawns(Transform[] spawns)
+    {
+        // Knuth shuffle algorithm
+        for (int i = 0; i < spawns.Length; i++)
         {
-            m_leaderBoard[1]++;
+            Transform tmp = spawns[i];
+            int r = Random.Range(i, spawns.Length);
+            spawns[i] = spawns[r];
+            spawns[r] = tmp;
         }
-        if (Keyboard.current.digit3Key.isPressed)
+    }
+
+    public void GameOverUpdate()
+    {
+        if (m_controllers[0].startButton.isPressed || m_controllers[0].buttonEast.isPressed)
         {
-            m_leaderBoard[2]++;
+            ResetGame();
         }
-        if (Keyboard.current.digit4Key.isPressed)
+    }
+
+    public void StartGameOver()
+    {
+        Destroy(m_currentStageObject);
+        for (int i = 0; i < activePlayerControllers.Count; i++)
         {
-            m_leaderBoard[3]++;
+            Destroy(activePlayerControllers[i].gameObject);
         }
 
+        int winnerIndex = 0;
+        int topScore = 0;
+        for (int i = 0; i < m_leaderBoard.Count; i++)
+        {
+            if (m_leaderBoard[i] > topScore)
+            {
+                winnerIndex = i;
+                topScore = m_leaderBoard[i];
+            }
+        }
+
+        gameOverText.text = "the winner is player " + (winnerIndex + 1) + " there score was " + topScore;
+        
+        gameOverScreen.SetActive(true);
     }
 }
