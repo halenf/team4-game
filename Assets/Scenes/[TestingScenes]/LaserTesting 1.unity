@@ -707,6 +707,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageList:
   - {fileID: 6279050203965020814, guid: bf6e71dc87de07542a8a4b8ada061ac3, type: 3}
+  - {fileID: 6279050203965020814, guid: b585fbd85935a0b4aa5bdda6200c4e00, type: 3}
   roundsPerGame: 5
   m_leaderBoard: 
   playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}

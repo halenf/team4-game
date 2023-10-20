@@ -90,9 +90,9 @@ public class PlayerController : MonoBehaviour
         m_currentHealth -= damage;
         if (m_currentHealth <= 0) // if player is dead
         {
+            DisableInput();
             if (GameManager.Instance)
                 GameManager.Instance.deadPlayers++;
-            DisableInput();
         }
     }
 
@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="gun"></param>
     public void SetGun(Gun gun)
     {
-        if (m_currentGun) Destroy(m_currentGun);
+        if (m_currentGun) Destroy(m_currentGun.gameObject);
         m_currentGun = Instantiate(defaultGun, gameObject.transform);
 
         // Only sets an ammo capacity if the gun is a pickup gun and not the default
@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
     public void ResetPlayer()
     {
         m_currentHealth = maxHealth;
-        m_currentGun = defaultGun;
+        SetGun(defaultGun);
         m_currentAmmo = m_currentGun.ammoCapacity;
         m_fireRate = m_currentGun.baseFireRate;
     }

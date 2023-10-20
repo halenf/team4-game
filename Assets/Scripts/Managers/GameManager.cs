@@ -269,6 +269,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
             m_activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().spawns[i].position;
+            m_activePlayerControllers[i].EnableInput();
         }
         //keep track of what stage we are on
         m_currentStage++;
