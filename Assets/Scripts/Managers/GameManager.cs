@@ -14,33 +14,38 @@ public class GameManager : MonoBehaviour
     // Static reference
     public static GameManager Instance { get; private set; }
     
-
+    //input related variables
     private PlayerController m_focusedPlayerController;
-    [SerializeField]
-    private List<int> m_leaderBoard;
+    private List<Gamepad> m_controllers;
+    private List<PlayerController> activePlayerControllers;
+
+    //level loading variables
+    [Header("Level loading")]
+    private GameObject m_currentStageObject;
     [Tooltip("level prefabs")]
     public GameObject[] stageList;
     private int m_currentStage = 0;
+    public int roundsPerGame;
 
-    private GameObject m_currentStageObject;
-
-    public TMP_Text controllerCount;
-    public TMP_Text gameOverText;
-
-    public GameObject playerPrefab;
-    public GameObject gameOverScreen;
-    public List<PlayerController> activePlayerControllers;
+    //keeps score
+    [SerializeField]
+    private List<int> m_leaderBoard;
+    
+    //bools
     private int m_deadPlayers;
     private bool m_isPaused;
     private bool m_started = false;
-    private bool m_gameOver;
+    private bool m_gameOver;   
     
-    private List<Gamepad> m_controllers;
-
-    public int roundsPerGame;
+    [Header("Player")]
+    public GameObject playerPrefab;
 
     //UI
+    [Header("UI")]
     public Canvas pauseCanvas;
+    public GameObject gameOverScreen;
+    public TMP_Text controllerCount;
+    public TMP_Text gameOverText;
 
     public int deadPlayers
     {
@@ -50,7 +55,6 @@ public class GameManager : MonoBehaviour
             m_deadPlayers = value;
             if (m_deadPlayers == activePlayerControllers.Count - 1)
             {
-                
                 if (!IsGameOver())
                 {
                     LoadStage();

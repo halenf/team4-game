@@ -8,5 +8,6 @@ using UnityEngine;
 public class Stage : MonoBehaviour
 {
     //array of spawn transforms
-    public Transform[] spawns;
+    [Tooltip("put spawn transforms here")]
+    public Transform[] spawns; 
 }
