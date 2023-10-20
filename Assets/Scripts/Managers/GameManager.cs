@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     //input related variables
     private PlayerController m_focusedPlayerController;
     private List<Gamepad> m_controllers;
-    private List<PlayerController> activePlayerControllers;
+    private List<PlayerController> m_activePlayerControllers;
 
     //level loading variables
     [Header("Level loading")]
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         set
         {
             m_deadPlayers = value;
-            if (m_deadPlayers == activePlayerControllers.Count - 1)
+            if (m_deadPlayers == m_activePlayerControllers.Count - 1)
             {
                 if (!IsGameOver())
                 {
@@ -87,7 +87,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         m_controllers = new List<Gamepad>();
-        
+
+        m_activePlayerControllers = new List<PlayerController>();
+
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
             Debug.Log(Gamepad.all[i]);
@@ -156,8 +158,8 @@ public class GameManager : MonoBehaviour
                  GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: Gamepad.all[j]).gameObject;
                  //move that player to a spawn
                  newPlayer.transform.position = spawns[j].transform.position;
-                 // add player to list of players
-                 activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
+                // add player to list of players
+                m_activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
              }
              // destroy start screen
              Destroy(controllerCount.gameObject);
@@ -180,11 +182,11 @@ public class GameManager : MonoBehaviour
             m_focusedPlayerController = pauser;
 
             //disable input in ever player exept the pauser
-            for (int i = 0; i < activePlayerControllers.Count; i++)
+            for (int i = 0; i < m_activePlayerControllers.Count; i++)
             {
-                if (activePlayerControllers[i] != m_focusedPlayerController)
+                if (m_activePlayerControllers[i] != m_focusedPlayerController)
                 {
-                    activePlayerControllers[i].DisableInput();
+                    m_activePlayerControllers[i].DisableInput();
                 }
             }
             //give pauser menu controls instead of playing controls
@@ -202,11 +204,11 @@ public class GameManager : MonoBehaviour
         else // if the game is paused
         {
             //enable the input on every player exept the unpauser
-            for (int i = 0; i < activePlayerControllers.Count; i++)
+            for (int i = 0; i < m_activePlayerControllers.Count; i++)
             {
-                if (activePlayerControllers[i] != m_focusedPlayerController)
+                if (m_activePlayerControllers[i] != m_focusedPlayerController)
                 {
-                    activePlayerControllers[i].EnableInput();
+                    m_activePlayerControllers[i].EnableInput();
                 }
             }
             //give unpauser playing controls
@@ -247,9 +249,9 @@ public class GameManager : MonoBehaviour
     private void LoadStage()
     {
         //finds the only living player and adds score to its position in the leaderboard
-        for (int i = 0; i < activePlayerControllers.Count; i++)
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
-            if (activePlayerControllers[i].GetComponent<PlayerInput>().inputIsActive)
+            if (m_activePlayerControllers[i].GetComponent<PlayerInput>().inputIsActive)
             {
                 m_leaderBoard[i]++;
                 break;
@@ -257,16 +259,16 @@ public class GameManager : MonoBehaviour
         }
         //destroy the current stage and load a new one
         Destroy(m_currentStageObject);
-        int random = Random.Range(0, activePlayerControllers.Count - 1);
+        int random = Random.Range(0, stageList.Length);
         m_currentStageObject = Instantiate(stageList[random]);
         //reset player stats
         ResetPlayers();
         //randomize spawn order
         ShuffleSpawns(m_currentStageObject.GetComponent<Stage>().spawns);
         //for each player move it to a spawn
-        for (int i = 0; i < activePlayerControllers.Count; i++)
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
-            activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().spawns[i].position;
+            m_activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().spawns[i].position;
         }
         //keep track of what stage we are on
         m_currentStage++;
@@ -279,9 +281,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void ResetPlayers()
     {
-        for (int i = 0; i < activePlayerControllers.Count; i++)
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
-            activePlayerControllers[i].ResetPlayer();
+            m_activePlayerControllers[i].ResetPlayer();
         }
     }
 
@@ -300,7 +302,7 @@ public class GameManager : MonoBehaviour
     { 
         if (Keyboard.current.digit1Key.isPressed)
         {
-            activePlayerControllers[0].TakeDamage(1f);
+            m_activePlayerControllers[0].TakeDamage(1f);
         }
 
     }
@@ -341,9 +343,9 @@ public class GameManager : MonoBehaviour
     {
         //destroy the stage and players
         Destroy(m_currentStageObject);
-        for (int i = 0; i < activePlayerControllers.Count; i++)
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
-            Destroy(activePlayerControllers[i].gameObject);
+            Destroy(m_activePlayerControllers[i].gameObject);
         }
 
         //find the winner and that score
