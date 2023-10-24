@@ -11,6 +11,9 @@ public class Bullet : MonoBehaviour
     private Rigidbody m_rb;
     private float m_playerID;
 
+    public float minLifeTime;
+    public float maxLifeTime;
+
     [Header("Stats")]
     [SerializeField] private float m_damage;
     [SerializeField] private bool m_shouldBounce;
@@ -28,6 +31,8 @@ public class Bullet : MonoBehaviour
         m_shouldBounce = shouldBounce;
         m_rb.velocity = velocity;
         transform.rotation = Quaternion.LookRotation(velocity);
+        float random = Random.Range(minLifeTime, maxLifeTime);
+        Destroy(gameObject, random);
     }
 
     void Awake()
@@ -57,6 +62,11 @@ public class Bullet : MonoBehaviour
         {
             // Get the normal of the object the bullet just collided with
             // and bounce off it using that direction to flip the bullet's velocity
+        }
+
+        if(collision.gameObject.tag == "Platform")
+        {
+            collision.gameObject.GetComponent<Platform>().TakeDamage(m_damage);
         }
     }
 }

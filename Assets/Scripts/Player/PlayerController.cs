@@ -54,6 +54,14 @@ public class PlayerController : MonoBehaviour
         m_rb.AddForce(m_moveForce, ForceMode.Force); // apply the force to the player
     }
 
+    public void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Spike Ball")
+        {
+            maxHealth -= 7;
+        }
+    }
+
     public void OnMove(InputAction.CallbackContext value)
     {
         float inputValue = value.ReadValue<Vector2>().x; // Get the direction the player is trying to move
@@ -90,9 +98,9 @@ public class PlayerController : MonoBehaviour
         m_currentHealth -= damage;
         if (m_currentHealth <= 0) // if player is dead
         {
+            DisableInput();
             if (GameManager.Instance)
                 GameManager.Instance.deadPlayers++;
-            DisableInput();
         }
     }
 
@@ -102,7 +110,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="gun"></param>
     public void SetGun(Gun gun)
     {
-        if (m_currentGun) Destroy(m_currentGun);
+        if (m_currentGun) Destroy(m_currentGun.gameObject);
         m_currentGun = Instantiate(defaultGun, gameObject.transform);
 
         // Only sets an ammo capacity if the gun is a pickup gun and not the default
@@ -146,7 +154,7 @@ public class PlayerController : MonoBehaviour
     public void ResetPlayer()
     {
         m_currentHealth = maxHealth;
-        m_currentGun = defaultGun;
+        SetGun(defaultGun);
         m_currentAmmo = m_currentGun.ammoCapacity;
         m_fireRate = m_currentGun.baseFireRate;
     }
