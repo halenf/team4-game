@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Lava : MonoBehaviour
 {
-    public void OnTriggerEnter(Collision other)
+    public void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
