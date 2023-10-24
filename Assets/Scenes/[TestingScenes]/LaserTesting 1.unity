@@ -663,6 +663,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6754466201944174352, guid: 3b20c031798b56a41aeb78153aef7b84, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7548387770160233140, guid: 3b20c031798b56a41aeb78153aef7b84, type: 3}
       propertyPath: m_Name
       value: Lava

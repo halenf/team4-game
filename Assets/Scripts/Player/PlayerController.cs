@@ -54,6 +54,14 @@ public class PlayerController : MonoBehaviour
         m_rb.AddForce(m_moveForce, ForceMode.Force); // apply the force to the player
     }
 
+    public void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Spike Ball")
+        {
+            maxHealth -= 7;
+        }
+    }
+
     public void OnMove(InputAction.CallbackContext value)
     {
         float inputValue = value.ReadValue<Vector2>().x; // Get the direction the player is trying to move

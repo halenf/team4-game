@@ -17,7 +17,6 @@ public class Platform : MonoBehaviour
             {
                 int random = Random.Range(0, debris.Length);
                 GameObject currentDebris = Instantiate(debris[random], transform.position, Quaternion.identity);
-
                 Destroy(currentDebris, 2.0f);
             }
             Destroy(gameObject);
