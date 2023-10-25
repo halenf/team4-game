@@ -1,4 +1,4 @@
-//stage - Cameron, Halen
+// GameManager - Cameron, Halen
 // Manages level loading, round flow, mapping controller inputs, and UI
 // last edit 25/10/2023
 using System.Collections;
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     [Header("Canvases")]
     public StartUI startCanvas;
     public PauseUI pauseCanvas;
-    //public CanvasObject leaderBoardCanvas;
+    public LeaderboardUI leaderboardCanvas;
 
     public int deadPlayers
     {
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
                     LoadStage();
                 } else
                 {
-                    StartGameOver();
+                    EndGame();
                     //m_gameOver = true;
                 }
             }
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
         // UI
         startCanvas.gameObject.SetActive(true);
         pauseCanvas.gameObject.SetActive(false);
-        //leaderBoardCanvas.gameObject.SetActive(false);
+        leaderboardCanvas.gameObject.SetActive(false);
 
         // Set start game state
         m_gameState = GameState.Start;
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// checks if any stored controller has pressed start and if so loads the level and creates the appropriate players
     /// </summary>
-    private void LoadFirst()
+    public void LoadFirst()
     {
         // Only need one player when debugging - Halen
         int requiredPlayers = 2;
@@ -189,7 +189,6 @@ public class GameManager : MonoBehaviour
            // Set correct game state
            m_gameState = GameState.Playing;
         }
-        
     }
 
     /// <summary>
@@ -199,48 +198,44 @@ public class GameManager : MonoBehaviour
     public void TogglePause(PlayerController pauser)
     {
         m_isPaused = !m_isPaused; // Halen
+        pauseCanvas.gameObject.SetActive(m_isPaused);
 
-        if (m_isPaused == false) //if the game is not paused
+        if (m_isPaused) //if the game paused
         {
-            //keep track of the pauser
-            m_focusedPlayerController = pauser;
+            if (pauser != null) m_focusedPlayerController = pauser; // Can't pass a player through if pause is called by the button on the pause menu - Halen
+            else m_focusedPlayerController = null;
 
             //disable input for every player except the pauser
             for (int i = 0; i < m_activePlayerControllers.Count; i++)
             {
-                if (m_activePlayerControllers[i] != m_focusedPlayerController) m_activePlayerControllers[i].DisableInput();
+                if (m_activePlayerControllers[i] != m_focusedPlayerController)
+                {
+                    m_activePlayerControllers[i].DisableInput();
+
+                    // Update the PauseUI details - Halen
+                    pauseCanvas.SetDisplayDetails(i);
+                }
             }
             //give pauser menu controls instead of playing controls
             //m_focusedPlayerController.SetControllerMap("UI");
 
-            //show pause screen
-            pauseCanvas.gameObject.SetActive(true);
-
             //freeze time
             Time.timeScale = 0f;
         }
-        else // if the game is paused
+        else // if the game is unpaused
         {
             //enable the input on every player exept the unpauser
             for (int i = 0; i < m_activePlayerControllers.Count; i++)
             {
-                if (m_activePlayerControllers[i] != m_focusedPlayerController)
-                {
-                    m_activePlayerControllers[i].EnableInput();
-                }
+                m_activePlayerControllers[i].EnableInput();
             }
             //give unpauser playing controls
-            //m_focusedPlayerController.SetControllerMap("Player");
-
-            //stop the pause menu being visible - Halen
-            pauseCanvas.gameObject.SetActive(false);
+            // if (pauser != null) m_focusedPlayerController.SetControllerMap("Player");
 
             //unfreeze time
             Time.timeScale = 1f;
         }
-            
     }
-
 
     /// <summary>
     /// returns true if the amount of rounds hass reached the rounds per game
@@ -248,14 +243,8 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     private bool IsGameOver()
     {
-        if (m_currentStage <= roundsPerGame)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        if (m_currentStage <= roundsPerGame) return false;
+        else return true;
     }
 
     /// <summary>
@@ -277,10 +266,13 @@ public class GameManager : MonoBehaviour
         Destroy(m_currentStageObject);
         int random = Random.Range(0, stageList.Length);
         m_currentStageObject = Instantiate(stageList[random]);
+
         //reset player stats
         ResetPlayers();
+
         //randomize spawn order
         ShuffleSpawns(m_currentStageObject.GetComponent<Stage>().spawns);
+
         //for each player move it to a spawn
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
@@ -289,6 +281,7 @@ public class GameManager : MonoBehaviour
         }
         //keep track of what stage we are on
         m_currentStage++;
+
         //keep track of dead players
         m_deadPlayers = 0;
     }
@@ -356,7 +349,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// finds the winner and destroys the game
     /// </summary>
-    public void StartGameOver()
+    public void EndGame()
     {
         //destroy the stage and players
         Destroy(m_currentStageObject);
@@ -377,10 +370,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //this line wont be here at the end
-        gameOverText.text = "the winner is player " + (winnerIndex + 1) + " there score was " + topScore;
-        
-        //show game over screen
-        gameOverScreen.SetActive(true);
+        // Enable and update leaderboard canvas - Halen
+        leaderboardCanvas.gameObject.SetActive(true);
+        leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderBoard);
     }
 }

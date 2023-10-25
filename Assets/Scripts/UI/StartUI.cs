@@ -1,5 +1,5 @@
 // StartUI - Halen
-// Interface for editing the Start menu canvas
+// Interface for updating the Start menu canvas
 // Last edit: 25/10/23
 
 using System.Collections;

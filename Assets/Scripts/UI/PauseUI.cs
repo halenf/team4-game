@@ -1,3 +1,7 @@
+// PauseUI - Halen
+// Interface for updating the Pause menu canvas
+// Last edit: 25/10/23
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,12 +22,6 @@ public class PauseUI : MonoBehaviour
         labelDisplay.text = "Player 1";
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     /// <summary>
     /// Update all the display details of the canvas.
     /// </summary>
@@ -32,5 +30,20 @@ public class PauseUI : MonoBehaviour
         string text = labelDisplay.text;
         text = text.Remove(text.Length - 1).Insert(text.Length - 1, playerNumber.ToString());
         labelDisplay.text = text;
+    }
+
+    public void OnResume()
+    {
+        GameManager.Instance.TogglePause(null);
+    }
+
+    public void OnEndGame()
+    {
+        GameManager.Instance.EndGame();
+    }
+
+    public void OnMainMenu()
+    {
+        GameManager.Instance.ResetGame();
     }
 }
