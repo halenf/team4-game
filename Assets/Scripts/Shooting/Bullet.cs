@@ -1,6 +1,6 @@
-// Bullet - Halen
+// Bullet - Halen, Cameron
 // Determines bullet behaviour
-// Last edit: 20/10/23
+// Last edit: 25/10/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -30,7 +30,6 @@ public class Bullet : MonoBehaviour
         m_damage = damage;
         m_shouldBounce = shouldBounce;
         m_rb.velocity = velocity;
-        transform.rotation = Quaternion.LookRotation(velocity);
         float random = Random.Range(minLifeTime, maxLifeTime);
         Destroy(gameObject, random);
     }
@@ -58,10 +57,13 @@ public class Bullet : MonoBehaviour
             player.TakeDamage(m_damage);
             Destroy(gameObject);
         }
-        else if (m_shouldBounce)
+        
+        if (!m_shouldBounce)
         {
-            // Get the normal of the object the bullet just collided with
-            // and bounce off it using that direction to flip the bullet's velocity
+            Destroy(gameObject);
+        } else
+        {
+            m_shouldBounce = false;
         }
 
         if(collision.gameObject.tag == "Platform")

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &561948299764953094
+--- !u!1 &1604097675696554636
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4804845785601766676}
+  - component: {fileID: 1676410753910675609}
   m_Layer: 0
   m_Name: Bullet Spawn
   m_TagString: Untagged
@@ -16,15 +16,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4804845785601766676
+--- !u!4 &1676410753910675609
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561948299764953094}
+  m_GameObject: {fileID: 1604097675696554636}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.17, y: 0.619, z: 0.666}
+  m_LocalPosition: {x: 0.184, y: 0.591, z: 2.504}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1181
+  m_VersionIndex: 1178
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -369,9 +369,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4789882382446241979}
-  - component: {fileID: 1788972594773971130}
+  - component: {fileID: 7991177023550822976}
   m_Layer: 0
-  m_Name: Pistol
+  m_Name: Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -389,12 +389,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4804845785601766676}
+  - {fileID: 1676410753910675609}
   - {fileID: 623183205794268736}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1788972594773971130
+--- !u!114 &7991177023550822976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -403,20 +403,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4789882382446241977}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5c4476b02b78b2468416752471f9d8a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d063ac34f429474a9487ea1db6412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2271769695517889325, guid: 95da5109b21aeb34381908273ee0887b, type: 3}
-  spread: 5
-  bulletSpeed: 20
-  bulletDamage: 2
+  spread: 2
+  bulletSpeed: 40
+  bulletDamage: 40
   shouldBounce: 0
-  recoil: 25
-  baseFireRate: 1.4
-  ammoCapacity: 8
-  bulletSpawnTransform: {fileID: 4804845785601766676}
-  burstNumber: 3
-  shootingSpeed: 10
+  recoil: 50
+  baseFireRate: 4
+  ammoCapacity: 1
+  bulletSpawnTransform: {fileID: 1676410753910675609}
 --- !u!1 &6163763807624223822
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +476,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7466367511175030644}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.391, y: 0.382, z: 0.179}
+  m_LocalPosition: {x: 0.39103585, y: 0.3819996, z: 0.17900023}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -612,55 +610,55 @@ MonoBehaviour:
   - m_Vertices: 0b0000000e00000012000000
   m_SharedTextures: []
   m_Positions:
-  - {x: -0.7102258, y: 0.08838564, z: 0.16531146}
-  - {x: -0.41022584, y: 0.08838564, z: 0.16531146}
-  - {x: -0.7102258, y: 0.38838565, z: 0.16531146}
-  - {x: -0.41022584, y: 0.38838565, z: 0.16531146}
-  - {x: -0.41022584, y: 0.08838564, z: 0.16531146}
-  - {x: -0.41022584, y: 0.08838564, z: -0.84468853}
-  - {x: -0.41022584, y: 0.38838565, z: 0.16531146}
-  - {x: -0.41022584, y: 0.38838565, z: -0.84468853}
-  - {x: -0.41022584, y: 0.08838564, z: -0.84468853}
-  - {x: -0.7102258, y: 0.08838564, z: -0.84468853}
-  - {x: -0.41022584, y: 0.38838565, z: -0.84468853}
-  - {x: -0.7102258, y: 0.38838565, z: -0.84468853}
-  - {x: -0.7102258, y: 0.08838564, z: -0.84468853}
-  - {x: -0.7102258, y: 0.08838564, z: 0.16531146}
-  - {x: -0.7102258, y: 0.38838565, z: -0.84468853}
-  - {x: -0.7102258, y: 0.38838565, z: 0.16531146}
-  - {x: -0.7102258, y: 0.38838565, z: 0.16531146}
-  - {x: -0.41022584, y: 0.38838565, z: 0.16531146}
-  - {x: -0.7102258, y: 0.38838565, z: -0.84468853}
-  - {x: -0.41022584, y: 0.38838565, z: -0.84468853}
-  - {x: -0.7102258, y: 0.08838564, z: -0.84468853}
-  - {x: -0.41022584, y: 0.08838564, z: -0.84468853}
-  - {x: -0.7102258, y: 0.08838564, z: 0.16531146}
-  - {x: -0.41022584, y: 0.08838564, z: 0.16531146}
+  - {x: -0.7102617, y: 0.08838619, z: 0.1653105}
+  - {x: -0.41026172, y: 0.08838619, z: 0.1653105}
+  - {x: -0.7102617, y: 0.3883862, z: 0.1653105}
+  - {x: -0.41026172, y: 0.3883862, z: 0.1653105}
+  - {x: -0.41026172, y: 0.08838619, z: 0.1653105}
+  - {x: -0.41026172, y: 0.08838619, z: -2.6715345}
+  - {x: -0.41026172, y: 0.3883862, z: 0.1653105}
+  - {x: -0.41026172, y: 0.3883862, z: -2.6715345}
+  - {x: -0.41026172, y: 0.08838619, z: -2.6715345}
+  - {x: -0.7102617, y: 0.08838619, z: -2.6715345}
+  - {x: -0.41026172, y: 0.3883862, z: -2.6715345}
+  - {x: -0.7102617, y: 0.3883862, z: -2.6715345}
+  - {x: -0.7102617, y: 0.08838619, z: -2.6715345}
+  - {x: -0.7102617, y: 0.08838619, z: 0.1653105}
+  - {x: -0.7102617, y: 0.3883862, z: -2.6715345}
+  - {x: -0.7102617, y: 0.3883862, z: 0.1653105}
+  - {x: -0.7102617, y: 0.3883862, z: 0.1653105}
+  - {x: -0.41026172, y: 0.3883862, z: 0.1653105}
+  - {x: -0.7102617, y: 0.3883862, z: -2.6715345}
+  - {x: -0.41026172, y: 0.3883862, z: -2.6715345}
+  - {x: -0.7102617, y: 0.08838619, z: -2.6715345}
+  - {x: -0.41026172, y: 0.08838619, z: -2.6715345}
+  - {x: -0.7102617, y: 0.08838619, z: 0.1653105}
+  - {x: -0.41026172, y: 0.08838619, z: 0.1653105}
   m_Textures0:
-  - {x: 0.7102258, y: 0.08838564}
-  - {x: 0.41022584, y: 0.08838564}
-  - {x: 0.7102258, y: 0.38838565}
-  - {x: 0.41022584, y: 0.38838565}
-  - {x: 0.16531146, y: 0.08838564}
-  - {x: -0.84468853, y: 0.08838564}
-  - {x: 0.16531146, y: 0.38838565}
-  - {x: -0.84468853, y: 0.38838565}
-  - {x: -0.41022584, y: 0.08838564}
-  - {x: -0.7102258, y: 0.08838564}
-  - {x: -0.41022584, y: 0.38838565}
-  - {x: -0.7102258, y: 0.38838565}
-  - {x: 0.84468853, y: 0.08838564}
-  - {x: -0.16531146, y: 0.08838564}
-  - {x: 0.84468853, y: 0.38838565}
-  - {x: -0.16531146, y: 0.38838565}
-  - {x: -0.7102258, y: 0.16531146}
-  - {x: -0.41022584, y: 0.16531146}
-  - {x: -0.7102258, y: -0.84468853}
-  - {x: -0.41022584, y: -0.84468853}
-  - {x: 0.7102258, y: -0.84468853}
-  - {x: 0.41022584, y: -0.84468853}
-  - {x: 0.7102258, y: 0.16531146}
-  - {x: 0.41022584, y: 0.16531146}
+  - {x: 0.7102617, y: 0.08838619}
+  - {x: 0.41026172, y: 0.08838619}
+  - {x: 0.7102617, y: 0.3883862}
+  - {x: 0.41026172, y: 0.3883862}
+  - {x: 0.1653105, y: 0.08838619}
+  - {x: -2.6715345, y: 0.08838619}
+  - {x: 0.1653105, y: 0.3883862}
+  - {x: -2.6715345, y: 0.3883862}
+  - {x: -0.41026172, y: 0.08838619}
+  - {x: -0.7102617, y: 0.08838619}
+  - {x: -0.41026172, y: 0.3883862}
+  - {x: -0.7102617, y: 0.3883862}
+  - {x: 2.6715345, y: 0.08838619}
+  - {x: -0.1653105, y: 0.08838619}
+  - {x: 2.6715345, y: 0.3883862}
+  - {x: -0.1653105, y: 0.3883862}
+  - {x: -0.7102617, y: 0.1653105}
+  - {x: -0.41026172, y: 0.1653105}
+  - {x: -0.7102617, y: -2.6715345}
+  - {x: -0.41026172, y: -2.6715345}
+  - {x: 0.7102617, y: -2.6715345}
+  - {x: 0.41026172, y: -2.6715345}
+  - {x: 0.7102617, y: 0.1653105}
+  - {x: 0.41026172, y: 0.1653105}
   m_Textures2: []
   m_Textures3: []
   m_Tangents:
@@ -697,7 +695,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1691
+  m_VersionIndex: 3349
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -716,14 +714,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Shape:
     rid: 8376684767821955073
-  m_Size: {x: 0.3, y: 0.3, z: 1.01}
+  m_Size: {x: 0.3, y: 0.3, z: 2.836845}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
   m_PivotPosition: {x: 0, y: 0, z: 0}
-  m_UnmodifiedMeshVersion: 1688
+  m_UnmodifiedMeshVersion: 3349
   m_ShapeBox:
-    m_Center: {x: -0.56022584, y: 0.23838565, z: -0.33968854}
-    m_Extent: {x: 0.14999999, y: 0.15, z: 0.505}
+    m_Center: {x: -0.5602617, y: 0.23838618, z: -1.2531121}
+    m_Extent: {x: 0.14999999, y: 0.15, z: 1.4184225}
   references:
     version: 2
     RefIds:
