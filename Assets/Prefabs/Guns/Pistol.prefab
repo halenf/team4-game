@@ -415,6 +415,7 @@ MonoBehaviour:
   baseFireRate: 1.4
   ammoCapacity: 8
   bulletSpawnTransform: {fileID: 4804845785601766676}
+  gunPrefab: {fileID: 4789882382446241977}
   burstNumber: 3
   shootingSpeed: 10
 --- !u!1 &6163763807624223822
