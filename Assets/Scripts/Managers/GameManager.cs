@@ -1,12 +1,10 @@
-//stage - Cameron
-//in charge of level loading and start screen and end dcreen inputs
-// last edit 20/10/2023
+//stage - Cameron, Halen
+// Manages level loading, round flow, mapping controller inputs, and UI
+// last edit 25/10/2023
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
-using UnityEngine.VFX;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -30,22 +28,24 @@ public class GameManager : MonoBehaviour
     //keeps score
     [SerializeField]
     private List<int> m_leaderBoard;
-    
-    //bools
     private int m_deadPlayers;
+
+    private enum GameState
+    {
+        Start = 0,
+        Playing = 1,
+        Ended = 2
+    }
+    private GameState m_gameState;
     private bool m_isPaused;
-    private bool m_started = false;
-    private bool m_gameOver;   
     
     [Header("Player")]
     public GameObject playerPrefab;
 
-    //UI
-    [Header("UI")]
-    public Canvas pauseCanvas;
-    public GameObject gameOverScreen;
-    public TMP_Text controllerCount;
-    public TMP_Text gameOverText;
+    [Header("Canvases")]
+    public StartUI startCanvas;
+    public PauseUI pauseCanvas;
+    //public CanvasObject leaderBoardCanvas;
 
     public int deadPlayers
     {
@@ -61,13 +61,11 @@ public class GameManager : MonoBehaviour
                 } else
                 {
                     StartGameOver();
-                    m_gameOver = true;
-
+                    //m_gameOver = true;
                 }
             }
         }
     }
-    
 
     // Singleton instantiation
     private void Awake()
@@ -94,6 +92,15 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(Gamepad.all[i]);
         }
+
+        // UI
+        startCanvas.gameObject.SetActive(true);
+        pauseCanvas.gameObject.SetActive(false);
+        //leaderBoardCanvas.gameObject.SetActive(false);
+
+        // Set start game state
+        m_gameState = GameState.Start;
+        m_isPaused = false;
     }
 
     /// <summary>
@@ -101,20 +108,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+# if UNITY_EDITOR
         DebugUpdate();
-        if (!m_started)
+# endif
+        // Change behaviour based on game state
+        switch (m_gameState)
         {
-            controllerCount.text = "active players: " + m_controllers.Count.ToString();
-            CheckControllers();
-            LoadFirst();
-        } 
-        else if (!m_gameOver)
-        {
-
-        } 
-        else if (m_gameOver)
-        {
-            GameOverUpdate();
+            case GameState.Start:
+                CheckControllers();
+                LoadFirst();
+                break;
+            case GameState.Playing:
+                break;
+            case GameState.Ended:
+                GameOverUpdate();
+                break;
         }
     }
 
@@ -132,6 +140,9 @@ public class GameManager : MonoBehaviour
                 //store controller and add player to leaderboard
                 m_controllers.Add(Gamepad.all[i]);
                 m_leaderBoard.Add(0);
+
+                // Since the list of connected controllers was updated, we need to update the StartUI to reflect that
+                startCanvas.SetDisplayDetails(m_controllers);
             }
         }
     }
@@ -141,31 +152,43 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void LoadFirst()
     {
-        //if there are enogh players and player 1 presses start
-         if (m_controllers.Count > 0 && m_controllers[0].startButton.isPressed)
-         {
-             //load new stage
-             int random = Random.Range(0, stageList.Length);
-             m_currentStageObject = Instantiate(stageList[random]);
-             //keep the spawn locations in the stage
-             Transform[] spawns = FindObjectOfType<Stage>().spawns;
-             //randomize the spawns order
-             ShuffleSpawns(spawns);
-             //for every player
-             for (int j = 0; m_controllers.Count > j; j++)
-             {
-                 //create a player object and assign there specific controller
-                 GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: Gamepad.all[j]).gameObject;
-                 //move that player to a spawn
-                 newPlayer.transform.position = spawns[j].transform.position;
+        // Only need one player when debugging - Halen
+        int requiredPlayers = 2;
+# if UNITY_EDITOR
+        requiredPlayers = 1;
+# endif
+        //if there are enough players and player 1 presses start
+        if (m_controllers.Count >= requiredPlayers && m_controllers[0].startButton.isPressed)
+        {
+            // disable the StartUI canvas/turn off the start menu - Halen
+            startCanvas.gameObject.SetActive(false);
+            
+            //load new stage
+            int random = Random.Range(0, stageList.Length);
+            m_currentStageObject = Instantiate(stageList[random]);
+
+            //keep the spawn locations in the stage
+            Transform[] spawns = FindObjectOfType<Stage>().spawns;
+
+            //randomize the spawns order
+            ShuffleSpawns(spawns);
+            
+            //for every player
+            for (int j = 0; m_controllers.Count > j; j++)
+            {
+                //create a player object and assign their specific controller
+                GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
+
+                //set that player to a spawn
+                newPlayer.transform.position = spawns[j].transform.position;
+
                 // add player to list of players
                 m_activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
-             }
-             // destroy start screen
-             Destroy(controllerCount.gameObject);
-             // say that the game ahs begun
-             m_started = true;
-         }
+            }
+
+           // Set correct game state
+           m_gameState = GameState.Playing;
+        }
         
     }
 
@@ -175,31 +198,26 @@ public class GameManager : MonoBehaviour
     /// <param name="pauser"></param>
     public void TogglePause(PlayerController pauser)
     {
-        //if the game is not paused
-        if (m_isPaused == false)
+        m_isPaused = !m_isPaused; // Halen
+
+        if (m_isPaused == false) //if the game is not paused
         {
             //keep track of the pauser
             m_focusedPlayerController = pauser;
 
-            //disable input in ever player exept the pauser
+            //disable input for every player except the pauser
             for (int i = 0; i < m_activePlayerControllers.Count; i++)
             {
-                if (m_activePlayerControllers[i] != m_focusedPlayerController)
-                {
-                    m_activePlayerControllers[i].DisableInput();
-                }
+                if (m_activePlayerControllers[i] != m_focusedPlayerController) m_activePlayerControllers[i].DisableInput();
             }
             //give pauser menu controls instead of playing controls
             //m_focusedPlayerController.SetControllerMap("UI");
 
             //show pause screen
-            pauseCanvas.enabled = true;
+            pauseCanvas.gameObject.SetActive(true);
 
             //freeze time
             Time.timeScale = 0f;
-            //keep track of the fact the game is paused
-            m_isPaused = true;
-
         }
         else // if the game is paused
         {
@@ -214,13 +232,11 @@ public class GameManager : MonoBehaviour
             //give unpauser playing controls
             //m_focusedPlayerController.SetControllerMap("Player");
 
-            //stop teh puase menu being visible
-            pauseCanvas.enabled = false;
+            //stop the pause menu being visible - Halen
+            pauseCanvas.gameObject.SetActive(false);
 
             //unfreeze time
             Time.timeScale = 1f;
-            //keep track that the game is unpaused
-            m_isPaused = false;
         }
             
     }
