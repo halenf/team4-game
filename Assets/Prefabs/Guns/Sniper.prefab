@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d063ac34f429474a9487ea1db6412fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 2271769695517889325, guid: 95da5109b21aeb34381908273ee0887b, type: 3}
   spread: 2
   bulletSpeed: 40
   bulletDamage: 40
@@ -414,7 +414,7 @@ MonoBehaviour:
   recoil: 50
   baseFireRate: 4
   ammoCapacity: 1
-  bulletSpawnTransform: {fileID: 0}
+  bulletSpawnTransform: {fileID: 1676410753910675609}
 --- !u!1 &6163763807624223822
 GameObject:
   m_ObjectHideFlags: 0
