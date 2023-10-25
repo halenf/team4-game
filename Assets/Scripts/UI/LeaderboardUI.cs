@@ -1,3 +1,7 @@
+// LeaderboardUI - Halen
+// Interface for updating the Leaderboard UI canvas
+// Last edit: 25/10/23
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -23,7 +27,7 @@ public class LeaderboardUI : MonoBehaviour
     /// </summary>
     public void SetDisplayDetails(int winningPlayer, List<int> leaderboard)
     {
-        winnerDisplay.text = "Player " + winningPlayer + " wins!";
+        winnerDisplay.text = "Player " + winningPlayer + " is the victor!";
         for (int i = 0; i < leaderboard.Count; i++)
         {
             scoreListDisplay.text += "Player " + i + ": " + leaderboard[i];

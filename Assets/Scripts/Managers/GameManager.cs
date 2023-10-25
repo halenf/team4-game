@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Canvases")]
     public StartUI startCanvas;
+    public GameplayUI gameplayCanvas;
     public PauseUI pauseCanvas;
     public LeaderboardUI leaderboardCanvas;
 
@@ -95,6 +96,7 @@ public class GameManager : MonoBehaviour
 
         // UI
         startCanvas.gameObject.SetActive(true);
+        gameplayCanvas.gameObject.SetActive(false);
         pauseCanvas.gameObject.SetActive(false);
         leaderboardCanvas.gameObject.SetActive(false);
 
@@ -160,8 +162,9 @@ public class GameManager : MonoBehaviour
         //if there are enough players and player 1 presses start
         if (m_controllers.Count >= requiredPlayers && m_controllers[0].startButton.isPressed)
         {
-            // disable the StartUI canvas/turn off the start menu - Halen
+            // disable the StartUI canvas and enable the GameplayUI canvas - Halen
             startCanvas.gameObject.SetActive(false);
+            gameplayCanvas.gameObject.SetActive(true);
             
             //load new stage
             int random = Random.Range(0, stageList.Length);
@@ -186,8 +189,12 @@ public class GameManager : MonoBehaviour
                 m_activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
             }
 
-           // Set correct game state
-           m_gameState = GameState.Playing;
+            // deactivate start menu, activate gameplayUI - Halen
+            startCanvas.gameObject.SetActive(false);
+            gameplayCanvas.gameObject.SetActive(true);
+
+            // Set correct game state
+            m_gameState = GameState.Playing;
         }
     }
 
@@ -244,7 +251,12 @@ public class GameManager : MonoBehaviour
     private bool IsGameOver()
     {
         if (m_currentStage <= roundsPerGame) return false;
-        else return true;
+        else // Game has ended, deactivate gameplayUI and enable leaderboardUI - Halen
+        {
+            gameplayCanvas.gameObject.SetActive(false);
+            leaderboardCanvas.gameObject.SetActive(true);
+            return true;
+        }
     }
 
     /// <summary>
@@ -284,6 +296,8 @@ public class GameManager : MonoBehaviour
 
         //keep track of dead players
         m_deadPlayers = 0;
+
+        gameplayCanvas.StartCountdown();
     }
 
     /// <summary>
