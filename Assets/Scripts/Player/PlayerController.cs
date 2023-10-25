@@ -130,13 +130,16 @@ public class PlayerController : MonoBehaviour
     {
         if (value.performed && Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
         {
-            m_currentAmmo--;
+            if (m_currentAmmo != -1) m_currentAmmo--; //Cameron
+
             //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
             bool ricochet = false;
             if (m_currentPowerup == Powerup.Ricochet) ricochet = true;
 
             m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet);
+
             m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
+
             if (m_currentAmmo == 0)
             {
                 SetGun(defaultGun);
