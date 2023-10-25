@@ -24,6 +24,7 @@ public abstract class Gun : MonoBehaviour
     [Min(0)] public float baseFireRate;
     [Min(0)] public float ammoCapacity;
     public Transform bulletSpawnTransform;
+    public GameObject gunPrefab;
 
     /// <summary>
     /// Makes the gun shoot.
