@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
     public void SetGun(Gun gun)
     {
         if (m_currentGun) Destroy(m_currentGun.gameObject);
-        m_currentGun = Instantiate(gun.gunPrefab.GetComponent<Gun>(), gameObject.transform);
+        m_currentGun = Instantiate(gun, gameObject.transform);
 
         // Only sets an ammo capacity if the gun is a pickup gun and not the default
         if (gun != defaultGun) m_currentAmmo = gun.ammoCapacity;
