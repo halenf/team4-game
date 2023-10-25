@@ -1,3 +1,7 @@
+// Lava - Cameron
+// just kills player
+// Last edit: 25/10/23
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
