@@ -1,3 +1,7 @@
+// platform - Cameron
+// take damages and dies
+// Last edit: 25/10/23
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

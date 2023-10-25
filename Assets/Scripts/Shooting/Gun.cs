@@ -1,6 +1,6 @@
-// Gun - Halen
+// Gun - Halen, Cameron
 // Stores gun data
-// Last edit: 20/10/23
+// Last edit: 25/10/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +23,8 @@ public abstract class Gun : MonoBehaviour
     [Tooltip("Number of bullets the player can fire each second.")]
     [Min(0)] public float baseFireRate;
     [Min(0)] public float ammoCapacity;
+    public Transform bulletSpawnTransform;
+    public GameObject gunPrefab;
 
     /// <summary>
     /// Makes the gun shoot.
