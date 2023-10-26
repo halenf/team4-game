@@ -14,6 +14,8 @@ public class Bullet : MonoBehaviour
     public float minLifeTime;
     public float maxLifeTime;
     public float sizeScaler;
+    public GameObject explosion;
+    public float explosionLifetime;
 
     [Header("Stats")]
     [SerializeField] private float m_damage;
@@ -25,7 +27,7 @@ public class Bullet : MonoBehaviour
     /// <param name="playerID"></param>
     /// <param name="damage"></param>
     /// <param name="shouldBounce"></param>
-    public void Init(float playerID, float damage, bool shouldBounce, Vector3 velocity, bool isBig)
+    public void Init(float playerID, float damage, bool shouldBounce, Vector3 velocity, bool isBig, bool explode)
     {
         m_playerID = playerID;
         m_damage = damage;
@@ -36,7 +38,23 @@ public class Bullet : MonoBehaviour
         {
             transform.localScale = transform.localScale * sizeScaler;
         }
-        Destroy(gameObject, random);
+
+        if (explode)
+        {
+            StartCoroutine(Explode(random));
+        }
+        else
+        {
+            Destroy(gameObject, random);
+        }
+    }
+
+    private IEnumerator Explode(float lifeTime)
+    {
+        yield return new WaitForSeconds(lifeTime);
+        Instantiate(explosion, transform.position, Quaternion.identity);
+        Destroy(explosion, explosionLifetime);
+        Destroy(gameObject);
     }
 
     void Awake()

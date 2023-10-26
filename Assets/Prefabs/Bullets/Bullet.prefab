@@ -50,6 +50,8 @@ MonoBehaviour:
   minLifeTime: 5
   maxLifeTime: 10
   sizeScaler: 14
+  explosion: {fileID: 6687683863409229215, guid: b2550b170e9a0964684c5b4f6238616a, type: 3}
+  explosionLifetime: 20
   m_damage: 0
   m_shouldBounce: 0
 --- !u!54 &4081999047442605340

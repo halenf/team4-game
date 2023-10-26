@@ -16,13 +16,13 @@ public class Pistol : Gun
     [Min(0)] public float shootingSpeed;
     
    
-    public override void Shoot(int playerID, bool shouldBounce, bool isBig)
+    public override void Shoot(int playerID, bool shouldBounce, bool isBig, bool explode)
     {
-        StartCoroutine(BurstShot(playerID, shouldBounce, isBig));
+        StartCoroutine(BurstShot(playerID, shouldBounce, isBig, explode));
         
     }
 
-    private IEnumerator BurstShot(int playerID, bool shouldBounce, bool isBig)
+    private IEnumerator BurstShot(int playerID, bool shouldBounce, bool isBig, bool explode)
     {
         for (int i = 0; i < burstNumber; i++)
         {
@@ -31,7 +31,7 @@ public class Pistol : Gun
 
             // instantiate the bullet
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
-            bullet.Init(playerID, bulletDamage, shouldBounce, bullet.transform.forward * bulletSpeed, isBig);
+            bullet.Init(playerID, bulletDamage, shouldBounce, bullet.transform.forward * bulletSpeed, isBig, explode);
             // apply recoil to player
             transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
             // wait for next burst shot

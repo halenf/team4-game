@@ -16,7 +16,7 @@ public class ItemBox : PowerUp
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
             //pick power up
-            int choice = Random.Range(1, 5);
+            int choice = Random.Range(1, 6);
 
             //call choice in player
             switch (choice)
@@ -32,6 +32,9 @@ public class ItemBox : PowerUp
                     break;
                 case 4:
                     player.ActivateBigBullets();
+                    break;
+                case 5:
+                    player.ActivateExplodeBullets();
                     break;
             }
             //destroy self

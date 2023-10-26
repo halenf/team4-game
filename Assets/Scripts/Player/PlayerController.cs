@@ -47,7 +47,8 @@ public class PlayerController : MonoBehaviour
         Ricochet,
         FireRateUp,
         Shield, 
-        BigBullets
+        BigBullets, 
+        ExplodeBullets
     }
     private Powerup m_currentPowerup;
     public Powerup currentPowerup
@@ -92,7 +93,18 @@ public class PlayerController : MonoBehaviour
                     Destroy(m_shieldObjectReference);
                 }
                 m_powerupTimer = powerUpTime;
-            } else if (m_currentPowerup == Powerup.None)
+            }
+            else if (m_currentPowerup == Powerup.ExplodeBullets)
+            {
+                m_fireRate = m_currentGun.baseFireRate;
+                m_shieldCurrentHealth = 0;
+                if (m_shieldObjectReference != null)
+                {
+                    Destroy(m_shieldObjectReference);
+                }
+                m_powerupTimer = powerUpTime;
+            }
+            else if (m_currentPowerup == Powerup.None)
             {
                 m_fireRate = m_currentGun.baseFireRate;
                 m_shieldCurrentHealth = 0;
@@ -136,10 +148,12 @@ public class PlayerController : MonoBehaviour
                 //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
                 bool ricochet = false;
                 bool isBig = false;
+                bool explode = false;
                 if (m_currentPowerup == Powerup.Ricochet) ricochet = true;
                 if (m_currentPowerup == Powerup.BigBullets) isBig = true;
+                if (m_currentPowerup == Powerup.ExplodeBullets) explode = true;
 
-                m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet, isBig);
+                m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet, isBig, explode);
 
                 m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
 
@@ -257,6 +271,11 @@ public class PlayerController : MonoBehaviour
     public void ActivateBigBullets()
     {
         currentPowerup = Powerup.BigBullets;
+    }
+
+    public void ActivateExplodeBullets()
+    {
+        currentPowerup = Powerup.ExplodeBullets;
     }
 
     /// <summary>
