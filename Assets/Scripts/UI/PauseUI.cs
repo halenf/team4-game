@@ -1,18 +1,20 @@
 // PauseUI - Halen
 // Interface for updating the Pause menu canvas
-// Last edit: 25/10/23
+// Last edit: 26/10/23
 
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour
 {
     [Header("UI Elements")]
     [Tooltip("Label that displays which player has control of the menu.")]
     public TMP_Text labelDisplay;
+
+    [Header("Default Selected Object")]
+    public GameObject defaultSelectedObject;
     
     // Start is called before the first frame update
     void Start()

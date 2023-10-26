@@ -1,6 +1,6 @@
 // Player Controller - Halen, Cameron
 // Handles general player info, inputs, and actions
-// Last edit: 25/10/23
+// Last edit: 26/10/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_rb;
     private PlayerInput m_playerInput;
     [SerializeField]
-    private GameObject m_sheildObject;
+    private GameObject m_shieldObject;
     private GameObject m_shieldObjectReference;
 
     [Header("Default Stats")]
@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
             m_currentPowerup = value;
             switch (m_currentPowerup)
             {
-
                 case Powerup.FireRateUp:
                 {
                     m_fireRate *= fireRateMultiplier;
@@ -75,7 +74,7 @@ public class PlayerController : MonoBehaviour
                 case Powerup.Shield:
                 {
                     m_shieldCurrentHealth = shieldHealth;
-                    m_shieldObjectReference = Instantiate(m_sheildObject, transform);
+                    m_shieldObjectReference = Instantiate(m_shieldObject, transform);
                     m_fireRate = m_currentGun.baseFireRate;
                     m_powerupTimer = powerUpTime;
                         break;
@@ -124,7 +123,6 @@ public class PlayerController : MonoBehaviour
                         break;
                 }
             }
-            
         }
     }
 
@@ -132,15 +130,18 @@ public class PlayerController : MonoBehaviour
     public Gun defaultGun;
     private Gun m_currentGun; // gun the player currently has
     [Min(0)] public float gunHoldDistance;
-    
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
         m_playerInput = GetComponent<PlayerInput>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         m_aimDirection = transform.forward;
         SetGun(defaultGun);
-
     }
 
     // Update is called once per frame
@@ -294,7 +295,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="mapName"></param>
     public void SetControllerMap(string mapName)
     {
-        
+        Debug.Log(gameObject.GetInstanceID());
+        m_playerInput.SwitchCurrentActionMap(mapName);
+        Debug.Log(m_playerInput.currentActionMap);
     }
 
     /// <summary>
@@ -302,7 +305,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void EnableInput()
     {
-        Debug.Log(name + " player input enabled.");
         m_playerInput.ActivateInput();
     }
 
@@ -311,7 +313,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void DisableInput()
     {
-        Debug.Log(name + " player input disabled.");
         m_playerInput.DeactivateInput();
     }
 

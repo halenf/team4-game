@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5b869ff5c7edf447bacadb3cc257971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sheildObject: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
+  m_shieldObject: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
   moveSpeed: 40
   maxHealth: 10
   ricochetTimer: 40
@@ -128,34 +128,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 156a21f5-9167-4718-b46d-521597bcbbdc
     m_ActionName: UI/Cancel[/Keyboard/escape,/DualSenseGamepadHID/buttonEast]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 35a17343-1aac-4d12-89fa-3927bc1fbc37
-    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 73d10a45-90b3-4dac-9205-23b137bcb355
-    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e77e78ee-7a91-41cb-9ef1-eac007ea2ff4
-    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 39869ef3-518a-4602-a82f-e0f26cb9fd6c
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: df9b5b2d-555d-4cf6-ae11-3e6e241f8c2b
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0b1f220a-1bf4-477b-8866-b49d79f043fa
-    m_ActionName: UI/TrackedDevicePosition
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a3f4f3f8-df4b-4230-ade7-adbb56ed6018
-    m_ActionName: UI/TrackedDeviceOrientation
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5814125836590746918}
