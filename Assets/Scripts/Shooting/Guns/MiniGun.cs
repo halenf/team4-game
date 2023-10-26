@@ -1,12 +1,8 @@
-// Sniper - Cameron
-// just uses a basic shoot function
-// Last edit: 25/10/23
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sniper : Gun
+public class MiniGun : Gun
 {
     public override void Shoot(int playerID, bool shouldBounce, bool isBig, bool explode)
     {
@@ -19,5 +15,4 @@ public class Sniper : Gun
         // apply recoil to player
         transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
     }
-
 }
