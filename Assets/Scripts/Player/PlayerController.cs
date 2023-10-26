@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput m_playerInput;
     [SerializeField]
     private GameObject m_sheildObject;
+    private GameObject m_shieldObjectReference;
 
     [Header("Default Stats")]
     [Min(0)] public float moveSpeed;
@@ -38,6 +39,8 @@ public class PlayerController : MonoBehaviour
     public float powerUpTime;
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
+
+    private bool isShooting;
     public enum Powerup
     {
         None,
@@ -56,27 +59,36 @@ public class PlayerController : MonoBehaviour
             if (m_currentPowerup == Powerup.FireRateUp)
             {
                 m_fireRate *= fireRateMultiplier;
-                m_shieldCurrentHealth = 0;
-                m_sheildObject.SetActive(false);
+                m_shieldCurrentHealth = 0;                
                 m_powerupTimer = powerUpTime;
+                if (m_shieldObjectReference != null)
+                {
+                    Destroy(m_shieldObjectReference);
+                }
             }
             else if (m_currentPowerup == Powerup.Shield)
             {
                 m_shieldCurrentHealth = shieldHealth;
-                m_sheildObject.SetActive(true);
+                m_shieldObjectReference = Instantiate(m_sheildObject, transform);
                 m_fireRate = m_currentGun.baseFireRate;
                 m_powerupTimer = powerUpTime;
             } else if (m_currentPowerup == Powerup.Ricochet)
             {
                 m_fireRate = m_currentGun.baseFireRate;
                 m_shieldCurrentHealth = 0;
-                m_sheildObject.SetActive(false);
+                if (m_shieldObjectReference != null)
+                {
+                    Destroy(m_shieldObjectReference);
+                }
                 m_powerupTimer = powerUpTime;
             } else if (m_currentPowerup == Powerup.None)
             {
                 m_fireRate = m_currentGun.baseFireRate;
                 m_shieldCurrentHealth = 0;
-                m_sheildObject.SetActive(false);
+                if (m_shieldObjectReference != null)
+                {
+                    Destroy(m_shieldObjectReference);
+                }
             }
             
         }
@@ -104,6 +116,28 @@ public class PlayerController : MonoBehaviour
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
         if (currentPowerup != Powerup.Shield && m_powerupTimer <= 0 && currentPowerup != Powerup.None) currentPowerup = Powerup.None;
 
+        if(isShooting)
+        {
+            if (Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
+            {
+                if (m_currentAmmo != -1) m_currentAmmo--; //Cameron
+
+                //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
+                bool ricochet = false;
+                if (m_currentPowerup == Powerup.Ricochet) ricochet = true;
+
+                m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet);
+
+                m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
+
+                if (m_currentAmmo == 0)
+                {
+                    SetGun(defaultGun);
+                }
+
+            }
+        }
+
     }
 
     // FixedUpdate is called once per physic frame
@@ -128,24 +162,15 @@ public class PlayerController : MonoBehaviour
 
     public void OnShoot(InputAction.CallbackContext value)
     {
-        if (value.performed && Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
+        if (value.performed)
         {
-            if (m_currentAmmo != -1) m_currentAmmo--; //Cameron
-
-            //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
-            bool ricochet = false;
-            if (m_currentPowerup == Powerup.Ricochet) ricochet = true;
-
-            m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet);
-
-            m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
-
-            if (m_currentAmmo == 0)
-            {
-                SetGun(defaultGun);
-            }
-            
+            isShooting = true;
         }
+        if (value.canceled)
+        {
+            isShooting = false;
+        }
+        
     }
 
     public void Aim(InputAction.CallbackContext value)
@@ -170,7 +195,7 @@ public class PlayerController : MonoBehaviour
             m_shieldCurrentHealth--;
             if (m_shieldCurrentHealth == 0)
             {
-                m_sheildObject.SetActive(false);
+                Destroy(m_shieldObjectReference);
             }
             return;
         }
