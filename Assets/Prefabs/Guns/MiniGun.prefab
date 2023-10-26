@@ -411,7 +411,7 @@ MonoBehaviour:
   bulletSpeed: 20
   bulletDamage: 0.1
   shouldBounce: 0
-  recoil: 5
+  recoil: 15
   baseFireRate: 12
   ammoCapacity: 800
   bulletSpawnTransform: {fileID: 1676410753910675609}
