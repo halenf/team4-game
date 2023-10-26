@@ -1,6 +1,6 @@
 // Sniper - Cameron
 // just uses a basic shoot function
-// Last edit: 25/10/23
+// Last edit: 26/10/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ public class Sniper : Gun
         Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
 
         // instantiate the bullet
-        Bullet bullet = Instantiate(bulletPrefab, transform.position, transform.rotation * shootDirection);
+        Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
         bullet.Init(playerID, bulletDamage, shouldBounce, bullet.transform.forward * bulletSpeed, isBig, explode);
         // apply recoil to player
         transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);

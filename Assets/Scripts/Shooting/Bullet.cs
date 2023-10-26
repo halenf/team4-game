@@ -1,6 +1,6 @@
 // Bullet - Halen, Cameron
 // Determines bullet behaviour
-// Last edit: 25/10/23
+// Last edit: 26/10/23
 
 using System.Collections;
 using System.Collections.Generic;
