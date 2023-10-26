@@ -216,6 +216,11 @@ public class PlayerController : MonoBehaviour
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
     }
 
+    public void OnPause(InputAction.CallbackContext value)
+    {
+        if (value.performed) GameManager.Instance.TogglePause(this);
+    }
+
     /// <summary>
     /// Deal damage to the player and check if they are dead.
     /// </summary>
