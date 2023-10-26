@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_sheildObject: {fileID: 3870601814414162195}
-  moveSpeed: 40
+  moveSpeed: 100
   maxHealth: 10
   ricochetTimer: 40
   fireRateMultiplier: 2
