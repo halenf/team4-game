@@ -374,6 +374,10 @@ public class GameManager : MonoBehaviour
         {
             m_activePlayerControllers[0].TakeDamage(1f);
         }
+        if (Keyboard.current.digit2Key.isPressed)
+        {
+
+        }
     }
 
     /// <summary>
