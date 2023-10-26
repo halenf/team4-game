@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2271769695517889325}
   - component: {fileID: 4081999047442605340}
   - component: {fileID: 6307955325964683793}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,7 +65,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!136 &6307955325964683793
 CapsuleCollider:
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3506876666552394605}
   - component: {fileID: 5239546518618521064}
   - component: {fileID: 379677919089546624}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
