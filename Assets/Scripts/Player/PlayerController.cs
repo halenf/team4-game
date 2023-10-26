@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -57,60 +58,70 @@ public class PlayerController : MonoBehaviour
         set
         {
             m_currentPowerup = value;
+            switch (m_currentPowerup)
+            {
 
-            if (m_currentPowerup == Powerup.FireRateUp)
-            {
-                m_fireRate *= fireRateMultiplier;
-                m_shieldCurrentHealth = 0;
-                m_powerupTimer = powerUpTime;
-                if (m_shieldObjectReference != null)
+                case Powerup.FireRateUp:
                 {
-                    Destroy(m_shieldObjectReference);
+                    m_fireRate *= fireRateMultiplier;
+                    m_shieldCurrentHealth = 0;
+                    m_powerupTimer = powerUpTime;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                        break;
                 }
-            }
-            else if (m_currentPowerup == Powerup.Shield)
-            {
-                m_shieldCurrentHealth = shieldHealth;
-                m_shieldObjectReference = Instantiate(m_sheildObject, transform);
-                m_fireRate = m_currentGun.baseFireRate;
-                m_powerupTimer = powerUpTime;
-            } else if (m_currentPowerup == Powerup.Ricochet)
-            {
-                m_fireRate = m_currentGun.baseFireRate;
-                m_shieldCurrentHealth = 0;
-                if (m_shieldObjectReference != null)
+                case Powerup.Shield:
                 {
-                    Destroy(m_shieldObjectReference);
+                    m_shieldCurrentHealth = shieldHealth;
+                    m_shieldObjectReference = Instantiate(m_sheildObject, transform);
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_powerupTimer = powerUpTime;
+                        break;
                 }
-                m_powerupTimer = powerUpTime;
-            }
-            else if (m_currentPowerup == Powerup.BigBullets)
-            {
-                m_fireRate = m_currentGun.baseFireRate;
-                m_shieldCurrentHealth = 0;
-                if (m_shieldObjectReference != null)
+                case Powerup.Ricochet:
                 {
-                    Destroy(m_shieldObjectReference);
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_shieldCurrentHealth = 0;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                    m_powerupTimer = powerUpTime;
+                        break;
                 }
-                m_powerupTimer = powerUpTime;
-            }
-            else if (m_currentPowerup == Powerup.ExplodeBullets)
-            {
-                m_fireRate = m_currentGun.baseFireRate;
-                m_shieldCurrentHealth = 0;
-                if (m_shieldObjectReference != null)
+                case Powerup.BigBullets:
                 {
-                    Destroy(m_shieldObjectReference);
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_shieldCurrentHealth = 0;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                    m_powerupTimer = powerUpTime;
+                        break;
                 }
-                m_powerupTimer = powerUpTime;
-            }
-            else if (m_currentPowerup == Powerup.None)
-            {
-                m_fireRate = m_currentGun.baseFireRate;
-                m_shieldCurrentHealth = 0;
-                if (m_shieldObjectReference != null)
+                case Powerup.ExplodeBullets:
                 {
-                    Destroy(m_shieldObjectReference);
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_shieldCurrentHealth = 0;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                    m_powerupTimer = powerUpTime;
+                        break;
+                }
+                case Powerup.None:
+                {
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_shieldCurrentHealth = 0;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                        break;
                 }
             }
             
@@ -146,14 +157,8 @@ public class PlayerController : MonoBehaviour
                 if (m_currentAmmo != -1) m_currentAmmo--; //Cameron
 
                 //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
-                bool ricochet = false;
-                bool isBig = false;
-                bool explode = false;
-                if (m_currentPowerup == Powerup.Ricochet) ricochet = true;
-                if (m_currentPowerup == Powerup.BigBullets) isBig = true;
-                if (m_currentPowerup == Powerup.ExplodeBullets) explode = true;
 
-                m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet, isBig, explode);
+                m_currentGun.Shoot(gameObject.GetInstanceID(), m_currentPowerup == Powerup.Ricochet, m_currentPowerup == Powerup.BigBullets, m_currentPowerup == Powerup.ExplodeBullets);
 
                 m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
 

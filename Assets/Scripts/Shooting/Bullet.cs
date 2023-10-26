@@ -15,7 +15,6 @@ public class Bullet : MonoBehaviour
     public float maxLifeTime;
     public float sizeScaler;
     public GameObject explosion;
-    public float explosionLifetime;
 
     [Header("Stats")]
     [SerializeField] private float m_damage;
@@ -53,7 +52,6 @@ public class Bullet : MonoBehaviour
     {
         yield return new WaitForSeconds(lifeTime);
         Instantiate(explosion, transform.position, Quaternion.identity);
-        Destroy(explosion, explosionLifetime);
         Destroy(gameObject);
     }
 
