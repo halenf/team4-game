@@ -46,7 +46,8 @@ public class PlayerController : MonoBehaviour
         None,
         Ricochet,
         FireRateUp,
-        Shield
+        Shield, 
+        BigBullets
     }
     private Powerup m_currentPowerup;
     public Powerup currentPowerup
@@ -59,7 +60,7 @@ public class PlayerController : MonoBehaviour
             if (m_currentPowerup == Powerup.FireRateUp)
             {
                 m_fireRate *= fireRateMultiplier;
-                m_shieldCurrentHealth = 0;                
+                m_shieldCurrentHealth = 0;
                 m_powerupTimer = powerUpTime;
                 if (m_shieldObjectReference != null)
                 {
@@ -73,6 +74,16 @@ public class PlayerController : MonoBehaviour
                 m_fireRate = m_currentGun.baseFireRate;
                 m_powerupTimer = powerUpTime;
             } else if (m_currentPowerup == Powerup.Ricochet)
+            {
+                m_fireRate = m_currentGun.baseFireRate;
+                m_shieldCurrentHealth = 0;
+                if (m_shieldObjectReference != null)
+                {
+                    Destroy(m_shieldObjectReference);
+                }
+                m_powerupTimer = powerUpTime;
+            }
+            else if (m_currentPowerup == Powerup.BigBullets)
             {
                 m_fireRate = m_currentGun.baseFireRate;
                 m_shieldCurrentHealth = 0;
@@ -124,9 +135,11 @@ public class PlayerController : MonoBehaviour
 
                 //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
                 bool ricochet = false;
+                bool isBig = false;
                 if (m_currentPowerup == Powerup.Ricochet) ricochet = true;
+                if (m_currentPowerup == Powerup.BigBullets) isBig = true;
 
-                m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet);
+                m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet, isBig);
 
                 m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
 
@@ -239,6 +252,11 @@ public class PlayerController : MonoBehaviour
     public void ActivateSheild()
     {
         currentPowerup = Powerup.Shield;
+    }
+
+    public void ActivateBigBullets()
+    {
+        currentPowerup = Powerup.BigBullets;
     }
 
     /// <summary>

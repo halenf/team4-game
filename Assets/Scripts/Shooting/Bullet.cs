@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
 
     public float minLifeTime;
     public float maxLifeTime;
+    public float sizeScaler;
 
     [Header("Stats")]
     [SerializeField] private float m_damage;
@@ -24,13 +25,17 @@ public class Bullet : MonoBehaviour
     /// <param name="playerID"></param>
     /// <param name="damage"></param>
     /// <param name="shouldBounce"></param>
-    public void Init(float playerID, float damage, bool shouldBounce, Vector3 velocity)
+    public void Init(float playerID, float damage, bool shouldBounce, Vector3 velocity, bool isBig)
     {
         m_playerID = playerID;
         m_damage = damage;
         m_shouldBounce = shouldBounce;
         m_rb.velocity = velocity;
         float random = Random.Range(minLifeTime, maxLifeTime);
+        if (isBig)
+        {
+            transform.localScale = transform.localScale * sizeScaler;
+        }
         Destroy(gameObject, random);
     }
 

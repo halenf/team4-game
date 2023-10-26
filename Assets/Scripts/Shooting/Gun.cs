@@ -31,7 +31,7 @@ public abstract class Gun : MonoBehaviour
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="shouldBounce"></param>
-    public abstract void Shoot(int playerID, bool shouldBounce);
+    public abstract void Shoot(int playerID, bool shouldBounce, bool isBig);
 
     // Start is called before the first frame update
     void Start()
