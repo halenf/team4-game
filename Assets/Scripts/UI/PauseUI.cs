@@ -11,8 +11,6 @@ using UnityEngine.UI;
 public class PauseUI : MonoBehaviour
 {
     [Header("UI Elements")]
-    [Tooltip("Array of all the buttons that appear on the pause menu in order of appearance.")]
-    public Button[] options;
     [Tooltip("Label that displays which player has control of the menu.")]
     public TMP_Text labelDisplay;
     

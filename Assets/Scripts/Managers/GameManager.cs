@@ -1,6 +1,7 @@
 // GameManager - Cameron, Halen
 // Manages level loading, round flow, mapping controller inputs, and UI
-// last edit 25/10/2023
+// last edit 26/10/2023
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,19 +18,36 @@ public class GameManager : MonoBehaviour
     private List<Gamepad> m_controllers;
     private List<PlayerController> m_activePlayerControllers;
 
-    //level loading variables
-    [Header("Level loading")]
-    private GameObject m_currentStageObject;
-    [Tooltip("level prefabs")]
-    public GameObject[] stageList;
-    private int m_currentStage = 0;
-    public int roundsPerGame;
+    [Header("Canvases")]
+    public StartUI startCanvas;
+    public GameplayUI gameplayCanvas;
+    public PauseUI pauseCanvas;
+    public LeaderboardUI leaderboardCanvas;
 
-    //keeps score
-    [SerializeField]
-    private List<int> m_leaderBoard;
+    [Header("Player")]
+    public GameObject playerPrefab;
+
+    [Header("Game Info")]
+    public GameObject[] stageList;
+    public int numberOfRounds;
+
+    // stage tracking
+    private GameObject m_currentStageObject;
+    private int m_roundNumber = 0;
+
+    // score tracking
+    [SerializeField] private List<int> m_leaderBoard;
     private int m_deadPlayers;
 
+    // Game mode tracking
+    private enum GameMode
+    {
+        NumberOfWins = 0,
+        NumberOfRounds = 1
+    }
+    private GameMode m_gameMode;
+
+    // Game state tracking
     private enum GameState
     {
         Start = 0,
@@ -38,15 +56,6 @@ public class GameManager : MonoBehaviour
     }
     private GameState m_gameState;
     private bool m_isPaused;
-    
-    [Header("Player")]
-    public GameObject playerPrefab;
-
-    [Header("Canvases")]
-    public StartUI startCanvas;
-    public GameplayUI gameplayCanvas;
-    public PauseUI pauseCanvas;
-    public LeaderboardUI leaderboardCanvas;
 
     public int deadPlayers
     {
@@ -54,15 +63,16 @@ public class GameManager : MonoBehaviour
         set
         {
             m_deadPlayers = value;
-            if (m_deadPlayers == m_activePlayerControllers.Count - 1)
+            if (m_deadPlayers == m_activePlayerControllers.Count - 1) // if there is only one player left alive
             {
                 if (!IsGameOver())
                 {
                     LoadStage();
-                } else
+                }
+                else
                 {
+                    m_gameState = GameState.Ended;
                     EndGame();
-                    //m_gameOver = true;
                 }
             }
         }
@@ -81,8 +91,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    /// initalizing
+    // initalizing
     void Start()
     {
         m_controllers = new List<Gamepad>();
@@ -94,7 +103,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(Gamepad.all[i]);
         }
 
-        // UI
+        // UI states
         startCanvas.gameObject.SetActive(true);
         gameplayCanvas.gameObject.SetActive(false);
         pauseCanvas.gameObject.SetActive(false);
@@ -113,7 +122,7 @@ public class GameManager : MonoBehaviour
 # if UNITY_EDITOR
         DebugUpdate();
 # endif
-        // Change behaviour based on game state
+        // Change behaviour based on game state - Halen
         switch (m_gameState)
         {
             case GameState.Start:
@@ -248,22 +257,36 @@ public class GameManager : MonoBehaviour
     /// returns true if the amount of rounds hass reached the rounds per game
     /// </summary>
     /// <returns></returns>
-    private bool IsGameOver()
+    public bool IsGameOver()
     {
-        if (m_currentStage <= roundsPerGame) return false;
-        else // Game has ended, deactivate gameplayUI and enable leaderboardUI - Halen
+        bool isGameOver = false;
+        
+        // Check end conditions based on current game mode - Halen
+        switch (m_gameMode)
+        {
+            case GameMode.NumberOfWins:
+                foreach (int score in m_leaderBoard)
+                    if (score >= numberOfRounds) isGameOver = true;
+                break;
+            case GameMode.NumberOfRounds:
+                if (m_roundNumber > numberOfRounds) isGameOver = true;
+                break;
+        }
+        
+        // Game has ended, deactivate gameplayUI and enable leaderboardUI - Halen
+        if (isGameOver)
         {
             gameplayCanvas.gameObject.SetActive(false);
             leaderboardCanvas.gameObject.SetActive(true);
-            return true;
         }
+
+        return isGameOver;
     }
 
     /// <summary>
     /// will delete old stage and instantiate and set up a new one
     /// </summary>
-    /// <param name="newGame"></param>
-    private void LoadStage()
+    public void LoadStage()
     {
         //finds the only living player and adds score to its position in the leaderboard
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
@@ -289,25 +312,48 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
             m_activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().spawns[i].position;
-            m_activePlayerControllers[i].EnableInput();
         }
+
         //keep track of what stage we are on
-        m_currentStage++;
+        m_roundNumber++;
 
         //keep track of dead players
         m_deadPlayers = 0;
 
+        // Start round countdown, then enable all player input - Halen
         gameplayCanvas.StartCountdown();
+    }
+
+    /// <summary>
+    /// Enable all active players.
+    /// </summary>
+    public void EnablePlayers()
+    {
+        foreach (PlayerController player in m_activePlayerControllers)
+        {
+            player.EnableInput();
+        }
+    }    
+
+    /// <summary>
+    /// Disable all active players.
+    /// </summary>
+    public void DisablePlayers()
+    {
+        foreach (PlayerController player in m_activePlayerControllers)
+        {
+            player.DisableInput();
+        }
     }
 
     /// <summary>
     /// calls reset players on all players
     /// </summary>
-    private void ResetPlayers()
+    public void ResetPlayers()
     {
-        for (int i = 0; i < m_activePlayerControllers.Count; i++)
+        foreach (PlayerController player in m_activePlayerControllers)
         {
-            m_activePlayerControllers[i].ResetPlayer();
+            player.ResetPlayer();
         }
     }
 
@@ -322,13 +368,12 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// makes P1 take damage when you press 1
     /// </summary>
-    public void DebugUpdate()
+    private void DebugUpdate()
     { 
         if (Keyboard.current.digit1Key.isPressed)
         {
             m_activePlayerControllers[0].TakeDamage(1f);
         }
-
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 // StartUI - Halen
 // Interface for updating the Start menu canvas
-// Last edit: 25/10/23
+// Last edit: 26/10/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +11,11 @@ using UnityEngine.InputSystem;
 
 public class StartUI : MonoBehaviour
 {
+    [Header("Game icon goes here")]
+    public Sprite titleIcon;
+
     [Header("UI Elements")]
-    public Image titleIcon;
+    public Image titleImage;
     [Tooltip("Array for each of the text objects for the connected player displays.")]
     public TMP_Text[] playerConnectedDisplay;
     public TMP_Text startPromptDisplay;
@@ -27,13 +30,16 @@ public class StartUI : MonoBehaviour
 
     private void Start()
     {
-        // Set each player box text display to the default text
+        // Set each player text box display to the default text
         foreach(TMP_Text textObject in playerConnectedDisplay)
         {
-            textObject.text = fullControllerSlotText;
+            textObject.text = emptyControllerSlotText;
         }
 
+        // Empty the start prompt display
         startPromptDisplay.text = "";
+
+        titleImage.sprite = titleIcon;
     }
 
     /// <summary>
@@ -43,7 +49,7 @@ public class StartUI : MonoBehaviour
     {
         for (int i = 0; i < controllers.Count; i++)
         {
-            playerConnectedDisplay[i].text = emptyControllerSlotText;
+            playerConnectedDisplay[i].text = fullControllerSlotText;
         }
 
         if (controllers.Count > 1) startPromptDisplay.text = readyToStartText;
