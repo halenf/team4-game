@@ -1,6 +1,6 @@
 // LeaderboardUI - Halen
 // Interface for updating the Leaderboard UI canvas
-// Last edit: 25/10/23
+// Last edit: 27/10/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ public class LeaderboardUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scoreListDisplay.text = "";
+        
     }
 
     /// <summary>
@@ -27,12 +27,13 @@ public class LeaderboardUI : MonoBehaviour
     /// </summary>
     public void SetDisplayDetails(int winningPlayer, List<int> leaderboard)
     {
-        scoreListDisplay.text = "";
         winnerDisplay.text = "Player " + winningPlayer + " is the victor!";
+        string leaderboardText = "";
         for (int i = 0; i < leaderboard.Count; i++)
         {
-            scoreListDisplay.text += "Player " + i + 1 + ": " + leaderboard[i] + " \n";
+            leaderboardText += "Player " + (i + 1).ToString() + ": " + leaderboard[i] + " \n";
         }
+        scoreListDisplay.text = leaderboardText;
     }
 
     public void OnPlayAgain()

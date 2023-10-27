@@ -1,3 +1,7 @@
+// EventSystemManager - Halen
+// Updates the currently selected item for menus
+// Last edit: 25/10/23
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

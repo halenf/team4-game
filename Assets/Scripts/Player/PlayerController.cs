@@ -295,9 +295,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="mapName"></param>
     public void SetControllerMap(string mapName)
     {
-        Debug.Log(gameObject.GetInstanceID());
         m_playerInput.SwitchCurrentActionMap(mapName);
-        Debug.Log(m_playerInput.currentActionMap);
     }
 
     /// <summary>
@@ -305,7 +303,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void EnableInput()
     {
+        m_rb.isKinematic = false;
         m_playerInput.ActivateInput();
+        Debug.Log("Activate");
     }
 
     /// <summary>
@@ -313,6 +313,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void DisableInput()
     {
+        m_rb.isKinematic = true;
         m_playerInput.DeactivateInput();
     }
 

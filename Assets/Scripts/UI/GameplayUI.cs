@@ -35,6 +35,7 @@ public class GameplayUI : MonoBehaviour
 
     private IEnumerator Countdown()
     {
+        yield return new WaitForEndOfFrame();
         // Count down from 3
         for (int i = 3; i > 0; i--)
         {
