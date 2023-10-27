@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6369607398092397873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6369607398092397879}
+  - component: {fileID: 6369607398092397878}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6369607398092397879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369607398092397873}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6369607398092397878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6369607398092397873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7a5617a3ba715d4b8ffc95356663fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startCanvasPrefab: {fileID: 2439714855933294406, guid: 6622a677a4f986c4e91e8dea84a05e49, type: 3}
+  gameplayCanvasPrefab: {fileID: 1586734891889361706, guid: 213c2a27fe70fd44b84a1f733c9d89c4, type: 3}
+  pauseCanvasPrefab: {fileID: 8768610932739141917, guid: b61f58d3a8c70bb45a14d26606a7637b, type: 3}
+  leaderboardCanvasPrefab: {fileID: 6931777853157890115, guid: d80e4a176261e514c81fba0e75de5403, type: 3}
+  playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
+  stageList:
+  - {fileID: 6279050203965020814, guid: b585fbd85935a0b4aa5bdda6200c4e00, type: 3}
+  - {fileID: 6279050203965020814, guid: bf6e71dc87de07542a8a4b8ada061ac3, type: 3}
+  numberOfRounds: 5
+  m_leaderboard: 
