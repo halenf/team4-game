@@ -26,6 +26,8 @@ public class Pistol : Gun
     {
         for (int i = 0; i < burstNumber; i++)
         {
+            //rumble controller
+            transform.parent.gameObject.GetComponent<PlayerController>().Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
             //find spread rotation change
             Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
 
