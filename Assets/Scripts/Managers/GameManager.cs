@@ -1,73 +1,17 @@
-//stage - Cameron
-//in charge of level loading and start screen and end dcreen inputs
-// last edit 20/10/2023
+// GameManager - Cameron, Halen
+// Manages level loading, round flow, mapping controller inputs, and UI
+// last edit 27/10/2023
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
-using UnityEngine.VFX;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     // Static reference
     public static GameManager Instance { get; private set; }
-    
-    //input related variables
-    private PlayerController m_focusedPlayerController;
-    private List<Gamepad> m_controllers;
-    private List<PlayerController> m_activePlayerControllers;
-
-    //level loading variables
-    [Header("Level loading")]
-    private GameObject m_currentStageObject;
-    [Tooltip("level prefabs")]
-    public GameObject[] stageList;
-    private int m_currentStage = 0;
-    public int roundsPerGame;
-
-    //keeps score
-    [SerializeField]
-    private List<int> m_leaderBoard;
-    
-    //bools
-    private int m_deadPlayers;
-    private bool m_isPaused;
-    private bool m_started = false;
-    private bool m_gameOver;   
-    
-    [Header("Player")]
-    public GameObject playerPrefab;
-
-    //UI
-    [Header("UI")]
-    public Canvas pauseCanvas;
-    public GameObject gameOverScreen;
-    public TMP_Text controllerCount;
-    public TMP_Text gameOverText;
-
-    public int deadPlayers
-    {
-        get { return m_deadPlayers; }
-        set
-        {
-            m_deadPlayers = value;
-            if (m_deadPlayers == m_activePlayerControllers.Count - 1)
-            {
-                if (!IsGameOver())
-                {
-                    LoadStage();
-                } else
-                {
-                    StartGameOver();
-                    m_gameOver = true;
-
-                }
-            }
-        }
-    }
-    
 
     // Singleton instantiation
     private void Awake()
@@ -82,18 +26,90 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //input variables
+    private List<Gamepad> m_controllers;
+    private List<PlayerController> m_activePlayerControllers;
+    private PlayerController m_focusedPlayerController;
 
-    /// initalizing
+    [Header("Canvas Prefabs")]
+    public StartUI startCanvasPrefab;
+    public GameplayUI gameplayCanvasPrefab;
+    public PauseUI pauseCanvasPrefab;
+    public LeaderboardUI leaderboardCanvasPrefab;
+
+    // canvas references
+    private StartUI m_startCanvas;
+    private GameplayUI m_gameplayCanvas;
+    private PauseUI m_pauseCanvas;
+    private LeaderboardUI m_leaderboardCanvas;
+
+    [Header("Player")]
+    public GameObject playerPrefab;
+
+    [Header("Game Info")]
+    public GameObject[] stageList;
+    public int numberOfRounds;
+
+    // stage tracking
+    private GameObject m_currentStageObject;
+    private int m_roundNumber = 0;
+
+    // score tracking
+    [SerializeField] private List<int> m_leaderboard;
+    private int m_deadPlayers;
+
+    // Game mode tracking
+    private enum GameMode
+    {
+        NumberOfWins = 0,
+        NumberOfRounds = 1
+    }
+    private GameMode m_gameMode;
+
+    // Game state tracking
+    private enum GameState
+    {
+        Start = 0,
+        Playing = 1,
+        Ended = 2
+    }
+    private GameState m_gameState;
+    private bool m_isPaused;
+
+    public int deadPlayers
+    {
+        get { return m_deadPlayers; }
+        set
+        {
+            m_deadPlayers = value;
+            if (m_deadPlayers == m_activePlayerControllers.Count - 1) // if there is only one player left alive
+            {
+                // Add to the last living player's score
+                for (int i = 0; i < m_activePlayerControllers.Count; i++)
+                {
+                    if (m_activePlayerControllers[i].GetComponent<PlayerInput>().inputIsActive)
+                    {
+                        m_leaderboard[i]++;
+
+                        // Check if the game is over. If not, end the round. Otherwise, end the game
+                        if (!IsGameOver()) EndRound(i);
+                        else EndGame();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // initalizing
     void Start()
     {
-        m_controllers = new List<Gamepad>();
+        // Hide and lock the cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
-        m_activePlayerControllers = new List<PlayerController>();
-
-        for (int i = 0; i < Gamepad.all.Count; i++)
-        {
-            Debug.Log(Gamepad.all[i]);
-        }
+        // Initialise game manager
+        Init();
     }
 
     /// <summary>
@@ -101,21 +117,53 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void Update()
     {
+# if UNITY_EDITOR
         DebugUpdate();
-        if (!m_started)
+# endif
+        // Change behaviour based on game state - Halen
+        switch (m_gameState)
         {
-            controllerCount.text = "active players: " + m_controllers.Count.ToString();
-            CheckControllers();
-            LoadFirst();
-        } 
-        else if (!m_gameOver)
-        {
-
-        } 
-        else if (m_gameOver)
-        {
-            GameOverUpdate();
+            case GameState.Start:
+                CheckControllers();
+                LoadFirst();
+                break;
+            case GameState.Playing:
+                break;
+            case GameState.Ended:
+                break;
         }
+    }
+
+    private void Init()
+    {
+        // Set timescale in case game was paused when reset
+        Time.timeScale = 1.0f;
+
+        // set all private variables to default values
+        m_controllers = new List<Gamepad>();
+        m_focusedPlayerController = null;
+        m_activePlayerControllers = new List<PlayerController>();
+
+        m_currentStageObject = null;
+        m_roundNumber = 0;
+
+        m_leaderboard = new List<int>();
+        m_deadPlayers = 0;
+
+        // Set start game state
+        m_gameState = GameState.Start;
+        m_isPaused = false;
+
+        // Initialise canvases
+        m_startCanvas = Instantiate(startCanvasPrefab);
+        m_gameplayCanvas = Instantiate(gameplayCanvasPrefab);
+        m_pauseCanvas = Instantiate(pauseCanvasPrefab);
+        m_leaderboardCanvas = Instantiate(leaderboardCanvasPrefab);
+
+        m_startCanvas.gameObject.SetActive(true);
+        m_gameplayCanvas.gameObject.SetActive(false);
+        m_pauseCanvas.gameObject.SetActive(false);
+        m_leaderboardCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -131,7 +179,10 @@ public class GameManager : MonoBehaviour
             {
                 //store controller and add player to leaderboard
                 m_controllers.Add(Gamepad.all[i]);
-                m_leaderBoard.Add(0);
+                m_leaderboard.Add(0);
+
+                // Since the list of connected controllers was updated, we need to update the StartUI to reflect that
+                m_startCanvas.SetDisplayDetails(m_controllers);
             }
         }
     }
@@ -139,34 +190,36 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// checks if any stored controller has pressed start and if so loads the level and creates the appropriate players
     /// </summary>
-    private void LoadFirst()
+    public void LoadFirst()
     {
-        //if there are enogh players and player 1 presses start
-         if (m_controllers.Count > 0 && m_controllers[0].startButton.isPressed)
-         {
-             //load new stage
-             int random = Random.Range(0, stageList.Length);
-             m_currentStageObject = Instantiate(stageList[random]);
-             //keep the spawn locations in the stage
-             Transform[] spawns = FindObjectOfType<Stage>().spawns;
-             //randomize the spawns order
-             ShuffleSpawns(spawns);
-             //for every player
-             for (int j = 0; m_controllers.Count > j; j++)
-             {
-                 //create a player object and assign there specific controller
-                 GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: Gamepad.all[j]).gameObject;
-                 //move that player to a spawn
-                 newPlayer.transform.position = spawns[j].transform.position;
+        // Only need one player when debugging - Halen
+        int requiredPlayers = 2;
+# if UNITY_EDITOR
+        requiredPlayers = 1;
+# endif
+        //if there are enough players and player 1 presses start
+        if (m_controllers.Count >= requiredPlayers && m_controllers[0].startButton.isPressed)
+        {            
+            //for every player
+            for (int j = 0; m_controllers.Count > j; j++)
+            {
+                //create a player object and assign their specific controller
+                GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
+
                 // add player to list of players
                 m_activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
-             }
-             // destroy start screen
-             Destroy(controllerCount.gameObject);
-             // say that the game ahs begun
-             m_started = true;
-         }
-        
+            }
+
+            // deactivate start menu, activate gameplayUI - Halen
+            m_startCanvas.gameObject.SetActive(false);
+            m_gameplayCanvas.gameObject.SetActive(true);
+
+            // Set correct game state
+            m_gameState = GameState.Playing;
+
+            // Load the first stage
+            LoadStage();
+        }
     }
 
     /// <summary>
@@ -175,116 +228,168 @@ public class GameManager : MonoBehaviour
     /// <param name="pauser"></param>
     public void TogglePause(PlayerController pauser)
     {
-        //if the game is not paused
-        if (m_isPaused == false)
+        m_isPaused = !m_isPaused; // Halen
+        m_pauseCanvas.gameObject.SetActive(m_isPaused);
+
+        if (m_isPaused) // if the game paused
         {
-            //keep track of the pauser
             m_focusedPlayerController = pauser;
 
-            //disable input in ever player exept the pauser
-            for (int i = 0; i < m_activePlayerControllers.Count; i++)
-            {
-                if (m_activePlayerControllers[i] != m_focusedPlayerController)
-                {
-                    m_activePlayerControllers[i].DisableInput();
-                }
-            }
-            //give pauser menu controls instead of playing controls
-            //m_focusedPlayerController.SetControllerMap("UI");
-
-            //show pause screen
-            pauseCanvas.enabled = true;
+            // Halen
+            DisablePlayers(); // Disable all player inputs
+            m_focusedPlayerController.EnableInput(); // Re-enable input for the pauser
+            m_focusedPlayerController.SetControllerMap("UI"); // Let the pauser control the UI
+            m_pauseCanvas.SetDisplayDetails(GetPlayerID(m_focusedPlayerController) + 1); // Update the PauseUI details
+            EventSystemManager.Instance.SetCurrentSelectedGameObject(m_pauseCanvas.defaultSelectedObject);
+            // end Halen
 
             //freeze time
             Time.timeScale = 0f;
-            //keep track of the fact the game is paused
-            m_isPaused = true;
-
         }
-        else // if the game is paused
+        else // if the game is unpaused
         {
-            //enable the input on every player exept the unpauser
-            for (int i = 0; i < m_activePlayerControllers.Count; i++)
-            {
-                if (m_activePlayerControllers[i] != m_focusedPlayerController)
-                {
-                    m_activePlayerControllers[i].EnableInput();
-                }
-            }
-            //give unpauser playing controls
-            //m_focusedPlayerController.SetControllerMap("Player");
-
-            //stop teh puase menu being visible
-            pauseCanvas.enabled = false;
+            EnablePlayers(); // Enable input for all players - Halen
+            m_focusedPlayerController.SetControllerMap("Player");
 
             //unfreeze time
             Time.timeScale = 1f;
-            //keep track that the game is unpaused
-            m_isPaused = false;
         }
-            
     }
 
+    private void EndRound(int playerID)
+    {
+        DisablePlayers();
+        m_gameplayCanvas.StartRoundEnd(playerID);
+    }
 
     /// <summary>
     /// returns true if the amount of rounds hass reached the rounds per game
     /// </summary>
     /// <returns></returns>
-    private bool IsGameOver()
+    public bool IsGameOver()
     {
-        if (m_currentStage <= roundsPerGame)
+        bool isGameOver = false;
+        
+        // Check end conditions based on current game mode - Halen
+        switch (m_gameMode)
         {
-            return false;
+            case GameMode.NumberOfWins:
+                foreach (int score in m_leaderboard)
+                    if (score >= numberOfRounds) isGameOver = true;
+                break;
+            case GameMode.NumberOfRounds:
+                if (m_roundNumber > numberOfRounds) isGameOver = true;
+                break;
         }
-        else
-        {
-            return true;
-        }
+
+        return isGameOver;
     }
 
     /// <summary>
     /// will delete old stage and instantiate and set up a new one
     /// </summary>
-    /// <param name="newGame"></param>
-    private void LoadStage()
+    public void LoadStage()
     {
-        //finds the only living player and adds score to its position in the leaderboard
-        for (int i = 0; i < m_activePlayerControllers.Count; i++)
-        {
-            if (m_activePlayerControllers[i].GetComponent<PlayerInput>().inputIsActive)
-            {
-                m_leaderBoard[i]++;
-                break;
-            }
-        }
+        // Destroy any bullets that might remain in the level from the last level
+        GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
+        foreach (Object bullet in allRemainingBullets) Destroy(bullet);
+        
         //destroy the current stage and load a new one
-        Destroy(m_currentStageObject);
+        if (m_currentStageObject) Destroy(m_currentStageObject);
         int random = Random.Range(0, stageList.Length);
         m_currentStageObject = Instantiate(stageList[random]);
-        //reset player stats
+
+        //reset and disable all players
         ResetPlayers();
+        DisablePlayers();
+
         //randomize spawn order
         ShuffleSpawns(m_currentStageObject.GetComponent<Stage>().spawns);
-        //for each player move it to a spawn
+
+        // set each player to a spawn - Halen
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
             m_activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().spawns[i].position;
-            m_activePlayerControllers[i].EnableInput();
         }
+
         //keep track of what stage we are on
-        m_currentStage++;
+        m_roundNumber++;
+
         //keep track of dead players
         m_deadPlayers = 0;
+
+        // Start round countdown, then enable all player input - Halen
+        m_gameplayCanvas.gameObject.SetActive(true);
+        m_gameplayCanvas.StartCountdown();
+    }
+
+    /// <summary>
+    /// finds the winner and destroys the game
+    /// </summary>
+    public void EndGame()
+    {
+        // Halen
+        m_pauseCanvas.gameObject.SetActive(false);
+        m_gameplayCanvas.gameObject.SetActive(false);
+        m_leaderboardCanvas.gameObject.SetActive(true);
+        EventSystemManager.Instance.SetCurrentSelectedGameObject(m_leaderboardCanvas.defaultSelectedObject);
+        m_gameState = GameState.Ended;
+        // Halen
+
+        //destroy the stage and players
+        Destroy(m_currentStageObject);
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
+        {
+            Destroy(m_activePlayerControllers[i].gameObject);
+        }
+
+        //find the winner and that score
+        int winnerIndex = 0;
+        int topScore = 0;
+        for (int i = 0; i < m_leaderboard.Count; i++)
+        {
+            if (m_leaderboard[i] > topScore)
+            {
+                winnerIndex = i;
+                topScore = m_leaderboard[i];
+            }
+        }
+
+        // Enable and update leaderboard canvas - Halen
+        m_leaderboardCanvas.gameObject.SetActive(true);
+        m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+    }
+
+    /// <summary>
+    /// Enable all active players.
+    /// </summary>
+    public void EnablePlayers()
+    {
+        foreach (PlayerController player in m_activePlayerControllers)
+        {
+            player.EnableInput();
+        }
+    }    
+
+    /// <summary>
+    /// Disable all active players.
+    /// </summary>
+    public void DisablePlayers()
+    {
+        foreach (PlayerController player in m_activePlayerControllers)
+        {
+            player.DisableInput();
+        }
     }
 
     /// <summary>
     /// calls reset players on all players
     /// </summary>
-    private void ResetPlayers()
+    public void ResetPlayers()
     {
-        for (int i = 0; i < m_activePlayerControllers.Count; i++)
+        foreach (PlayerController player in m_activePlayerControllers)
         {
-            m_activePlayerControllers[i].ResetPlayer();
+            player.ResetPlayer();
         }
     }
 
@@ -293,19 +398,27 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGame()
     {
+        Init();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     /// <summary>
     /// makes P1 take damage when you press 1
     /// </summary>
-    public void DebugUpdate()
+    private void DebugUpdate()
     { 
         if (Keyboard.current.digit1Key.isPressed)
         {
             m_activePlayerControllers[0].TakeDamage(1f);
         }
-
+        if (Keyboard.current.digit2Key.isPressed)
+        {
+            deadPlayers = 0;
+        }
+        if (Keyboard.current.digit3Key.isPressed)
+        {
+            EndGame();
+        }
     }
 
     /// <summary>
@@ -325,46 +438,16 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// update for when the game is over just waits for player 1 to press a button
+    /// Returns the ID (or player number) of a specified player.
     /// </summary>
-    public void GameOverUpdate()
+    /// <param name="player"></param>
+    /// <returns></returns>
+    private int GetPlayerID(PlayerController player)
     {
-        //if p1 press start or east
-        if (m_controllers[0].startButton.isPressed || m_controllers[0].buttonEast.isPressed)
-        {
-            //reload scene
-            ResetGame();
-        }
-    }
-
-    /// <summary>
-    /// finds the winner and destroys the game
-    /// </summary>
-    public void StartGameOver()
-    {
-        //destroy the stage and players
-        Destroy(m_currentStageObject);
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
-            Destroy(m_activePlayerControllers[i].gameObject);
+            if (player == m_activePlayerControllers[i]) return i;
         }
-
-        //find the winner and that score
-        int winnerIndex = 0;
-        int topScore = 0;
-        for (int i = 0; i < m_leaderBoard.Count; i++)
-        {
-            if (m_leaderBoard[i] > topScore)
-            {
-                winnerIndex = i;
-                topScore = m_leaderBoard[i];
-            }
-        }
-
-        //this line wont be here at the end
-        gameOverText.text = "the winner is player " + (winnerIndex + 1) + " there score was " + topScore;
-        
-        //show game over screen
-        gameOverScreen.SetActive(true);
+        return -1;
     }
 }

@@ -1,6 +1,6 @@
 // Gun - Halen, Cameron
 // Stores gun data
-// Last edit: 25/10/23
+// Last edit: 26/10/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -24,13 +24,14 @@ public abstract class Gun : MonoBehaviour
     [Min(0)] public float baseFireRate;
     [Min(0)] public float ammoCapacity;
     public Transform bulletSpawnTransform;
+    public GameObject gunPrefab;
 
     /// <summary>
     /// Makes the gun shoot.
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="shouldBounce"></param>
-    public abstract void Shoot(int playerID, bool shouldBounce);
+    public abstract void Shoot(int playerID, bool shouldBounce, bool isBig, bool explode);
 
     // Start is called before the first frame update
     void Start()
