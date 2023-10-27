@@ -1,10 +1,11 @@
 // Player Controller - Halen, Cameron
 // Handles general player info, inputs, and actions
-// Last edit: 25/10/23
+// Last edit: 26/10/23
 
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_rb;
     private PlayerInput m_playerInput;
     [SerializeField]
-    private GameObject m_sheildObject;
+    private GameObject m_shieldObject;
     private GameObject m_shieldObjectReference;
 
     [Header("Default Stats")]
@@ -46,7 +47,9 @@ public class PlayerController : MonoBehaviour
         None,
         Ricochet,
         FireRateUp,
-        Shield
+        Shield, 
+        BigBullets, 
+        ExplodeBullets
     }
     private Powerup m_currentPowerup;
     public Powerup currentPowerup
@@ -55,42 +58,71 @@ public class PlayerController : MonoBehaviour
         set
         {
             m_currentPowerup = value;
-
-            if (m_currentPowerup == Powerup.FireRateUp)
+            switch (m_currentPowerup)
             {
-                m_fireRate *= fireRateMultiplier;
-                m_shieldCurrentHealth = 0;                
-                m_powerupTimer = powerUpTime;
-                if (m_shieldObjectReference != null)
+                case Powerup.FireRateUp:
                 {
-                    Destroy(m_shieldObjectReference);
+                    m_fireRate *= fireRateMultiplier;
+                    m_shieldCurrentHealth = 0;
+                    m_powerupTimer = powerUpTime;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                        break;
+                }
+                case Powerup.Shield:
+                {
+                    m_shieldCurrentHealth = shieldHealth;
+                    m_shieldObjectReference = Instantiate(m_shieldObject, transform);
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_powerupTimer = powerUpTime;
+                        break;
+                }
+                case Powerup.Ricochet:
+                {
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_shieldCurrentHealth = 0;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                    m_powerupTimer = powerUpTime;
+                        break;
+                }
+                case Powerup.BigBullets:
+                {
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_shieldCurrentHealth = 0;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                    m_powerupTimer = powerUpTime;
+                        break;
+                }
+                case Powerup.ExplodeBullets:
+                {
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_shieldCurrentHealth = 0;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                    m_powerupTimer = powerUpTime;
+                        break;
+                }
+                case Powerup.None:
+                {
+                    m_fireRate = m_currentGun.baseFireRate;
+                    m_shieldCurrentHealth = 0;
+                    if (m_shieldObjectReference != null)
+                    {
+                        Destroy(m_shieldObjectReference);
+                    }
+                        break;
                 }
             }
-            else if (m_currentPowerup == Powerup.Shield)
-            {
-                m_shieldCurrentHealth = shieldHealth;
-                m_shieldObjectReference = Instantiate(m_sheildObject, transform);
-                m_fireRate = m_currentGun.baseFireRate;
-                m_powerupTimer = powerUpTime;
-            } else if (m_currentPowerup == Powerup.Ricochet)
-            {
-                m_fireRate = m_currentGun.baseFireRate;
-                m_shieldCurrentHealth = 0;
-                if (m_shieldObjectReference != null)
-                {
-                    Destroy(m_shieldObjectReference);
-                }
-                m_powerupTimer = powerUpTime;
-            } else if (m_currentPowerup == Powerup.None)
-            {
-                m_fireRate = m_currentGun.baseFireRate;
-                m_shieldCurrentHealth = 0;
-                if (m_shieldObjectReference != null)
-                {
-                    Destroy(m_shieldObjectReference);
-                }
-            }
-            
         }
     }
 
@@ -98,15 +130,18 @@ public class PlayerController : MonoBehaviour
     public Gun defaultGun;
     private Gun m_currentGun; // gun the player currently has
     [Min(0)] public float gunHoldDistance;
-    
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
         m_playerInput = GetComponent<PlayerInput>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
         m_aimDirection = transform.forward;
         SetGun(defaultGun);
-
     }
 
     // Update is called once per frame
@@ -123,10 +158,8 @@ public class PlayerController : MonoBehaviour
                 if (m_currentAmmo != -1) m_currentAmmo--; //Cameron
 
                 //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
-                bool ricochet = false;
-                if (m_currentPowerup == Powerup.Ricochet) ricochet = true;
 
-                m_currentGun.Shoot(gameObject.GetInstanceID(), ricochet);
+                m_currentGun.Shoot(gameObject.GetInstanceID(), m_currentPowerup == Powerup.Ricochet, m_currentPowerup == Powerup.BigBullets, m_currentPowerup == Powerup.ExplodeBullets);
 
                 m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
 
@@ -182,6 +215,11 @@ public class PlayerController : MonoBehaviour
         Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
         m_currentGun.transform.localPosition = indicatorPosition;
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
+    }
+
+    public void OnPause(InputAction.CallbackContext value)
+    {
+        if (value.performed) GameManager.Instance.TogglePause(this);
     }
 
     /// <summary>
@@ -241,13 +279,23 @@ public class PlayerController : MonoBehaviour
         currentPowerup = Powerup.Shield;
     }
 
+    public void ActivateBigBullets()
+    {
+        currentPowerup = Powerup.BigBullets;
+    }
+
+    public void ActivateExplodeBullets()
+    {
+        currentPowerup = Powerup.ExplodeBullets;
+    }
+
     /// <summary>
     /// Change the player's controller mappings to a different set.
     /// </summary>
     /// <param name="mapName"></param>
     public void SetControllerMap(string mapName)
     {
-        
+        m_playerInput.SwitchCurrentActionMap(mapName);
     }
 
     /// <summary>
@@ -255,8 +303,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void EnableInput()
     {
-        Debug.Log(name + " player input enabled.");
+        m_rb.isKinematic = false;
         m_playerInput.ActivateInput();
+        Debug.Log("Activate");
     }
 
     /// <summary>
@@ -264,7 +313,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void DisableInput()
     {
-        Debug.Log(name + " player input disabled.");
+        m_rb.isKinematic = true;
         m_playerInput.DeactivateInput();
     }
 

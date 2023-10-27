@@ -1,6 +1,6 @@
 // Item box - Cameron
 // activates power up in player
-// Last edit: 25/10/23
+// Last edit: 26/10/23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +16,7 @@ public class ItemBox : PowerUp
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
             //pick power up
-            int choice = Random.Range(1, 4);
+            int choice = Random.Range(1, 6);
 
             //call choice in player
             switch (choice)
@@ -29,6 +29,12 @@ public class ItemBox : PowerUp
                     break;
                 case 3:
                     player.ActivateSheild();
+                    break;
+                case 4:
+                    player.ActivateBigBullets();
+                    break;
+                case 5:
+                    player.ActivateExplodeBullets();
                     break;
             }
             //destroy self
