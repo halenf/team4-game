@@ -208,6 +208,7 @@ public class GameManager : MonoBehaviour
 
                 // add player to list of players
                 m_activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
+                newPlayer.GetComponent<PlayerController>().controller = m_controllers[j];
             }
 
             // deactivate start menu, activate gameplayUI - Halen

@@ -9,6 +9,7 @@ public class MiniGun : Gun
 {
     public override void Shoot(int playerID, bool shouldBounce, bool isBig, bool explode)
     {
+        transform.parent.gameObject.GetComponent<PlayerController>().Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
         //find spread rotation change
         Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
 

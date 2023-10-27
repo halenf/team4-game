@@ -41,7 +41,9 @@ public class PlayerController : MonoBehaviour
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
 
-    private bool isShooting;
+    private bool m_isShooting;
+
+    public Gamepad controller;
     public enum Powerup
     {
         None,
@@ -141,7 +143,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_aimDirection = transform.forward;
-        SetGun(defaultGun);
+        SetGun(defaultGun);      
     }
 
     // Update is called once per frame
@@ -151,7 +153,7 @@ public class PlayerController : MonoBehaviour
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
         if (currentPowerup != Powerup.Shield && m_powerupTimer <= 0 && currentPowerup != Powerup.None) currentPowerup = Powerup.None;
 
-        if(isShooting)
+        if(m_isShooting)
         {
             if (Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
             {
@@ -183,7 +185,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            maxHealth -= 7;
+            m_currentHealth -= 7;
         }
     }
 
@@ -197,11 +199,11 @@ public class PlayerController : MonoBehaviour
     {
         if (value.performed)
         {
-            isShooting = true;
+            m_isShooting = true;
         }
         if (value.canceled)
         {
-            isShooting = false;
+            m_isShooting = false;
         }
         
     }
@@ -263,30 +265,27 @@ public class PlayerController : MonoBehaviour
         m_nextFireTime = Time.time;
     }
 
-
-   public void ActivateRicochet()
+    /// <summary>
+    /// set a power up
+    /// </summary>
+    /// <param name="powerUp"></param>
+   public void ActivatePowerUp(Powerup powerUp)
     {
-        currentPowerup = Powerup.Ricochet;
+        currentPowerup = powerUp;
     }
 
-    public void IncreaseFireRate()
+    //start rumble coroutine
+    public void Rumble(float lowFrequncy, float highFrequency, float time)
     {
-        currentPowerup = Powerup.FireRateUp;
+        StartCoroutine(RumbleCoroutine(lowFrequncy, highFrequency, time));
     }
 
-    public void ActivateSheild()
+    private IEnumerator RumbleCoroutine(float lowFrequency, float highFrequency, float time)
     {
-        currentPowerup = Powerup.Shield;
-    }
+        controller.SetMotorSpeeds(lowFrequency, highFrequency);
+        yield return new WaitForSeconds(time);
 
-    public void ActivateBigBullets()
-    {
-        currentPowerup = Powerup.BigBullets;
-    }
-
-    public void ActivateExplodeBullets()
-    {
-        currentPowerup = Powerup.ExplodeBullets;
+        controller.SetMotorSpeeds(0f, 0f);
     }
 
     /// <summary>
