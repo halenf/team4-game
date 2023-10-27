@@ -1,3 +1,6 @@
+//Gunbox - Cameron
+// sets player gun on collision
+// Last edit: 26/10/23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
