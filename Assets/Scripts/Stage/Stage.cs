@@ -1,5 +1,5 @@
-//stage - Cameron
-//just stores spawn locations
+// Stage - Cameron, Halen
+// Holds stage properties and details
 // last edit 27/10/2023
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
-    //array of spawn transforms
+    [Header("Spawn Transforms")]
     [Tooltip("put spawn transforms here")]
     public Transform[] spawns;
     [Tooltip("power up transforms")]
@@ -15,16 +15,22 @@ public class Stage : MonoBehaviour
     [Tooltip("gun box transforms")]
     public Transform[] gunBoxSpawns;
 
-    //box prefabs
+    [Header("Camera Properties")]
+    public Transform cameraPosition;
+    [Range(0, 180)] public float cameraFOV;
+
+    [Header("Box Prefabs")]
     public GameObject gunBox;
     public GameObject itemBox;
 
-    //used to make random timers
-    public float minGunTimer;
-    public float maxGunTimer;
+    [Header("Box spawn timers")]
+    public float minGunSpawnTimer;
+    public float maxGunSpawnTimer;
 
-    public float minPowerUpTimer;
-    public float maxPowerUpTimer;
+    [Space(10)]
+    
+    public float minPowerUpSpawnTimer;
+    public float maxPowerUpSpawnTimer;
 
     /// <summary>
     /// call functions to start coroutines
@@ -40,7 +46,7 @@ public class Stage : MonoBehaviour
     /// </summary>
     private void StartGunRoutine()
     {
-        float time = Random.Range(minGunTimer, maxGunTimer);
+        float time = Random.Range(minGunSpawnTimer, maxGunSpawnTimer);
         StartCoroutine(SpawnGunBox(time));
     }
 
@@ -52,7 +58,7 @@ public class Stage : MonoBehaviour
     private IEnumerator SpawnGunBox(float time)
     {
         yield return new WaitForSeconds(time);
-        int chosenBox = Random.Range(0, gunBoxSpawns.Length);
+        int chosenBox = Random.Range(0, gunBoxSpawns.Length - 1);
 
         for (int i = 0; i < gunBoxSpawns.Length; i++)
         {
@@ -69,7 +75,7 @@ public class Stage : MonoBehaviour
     /// </summary>
     private void StartPowerUpRoutine()
     {
-        float time = Random.Range(minPowerUpTimer, maxPowerUpTimer);
+        float time = Random.Range(minPowerUpSpawnTimer, maxPowerUpSpawnTimer);
         StartCoroutine(SpawnPowerUp(time));
     }
 
@@ -83,14 +89,8 @@ public class Stage : MonoBehaviour
         yield return new WaitForSeconds(time);
         int chosenBox = Random.Range(0, powerUpSpawns.Length);
 
-        for (int i = 0; i < powerUpSpawns.Length; i++)
-        {
-            if (i == chosenBox)
-            {
-                Instantiate(itemBox, powerUpSpawns[i].transform);
-            }
-        }
+        Instantiate(itemBox, powerUpSpawns[chosenBox].transform);
+
         StartPowerUpRoutine();
     }
-
 }
