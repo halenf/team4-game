@@ -15,28 +15,40 @@ public class Stage : MonoBehaviour
     [Tooltip("gun box transforms")]
     public Transform[] gunBoxSpawns;
 
+    //box prefabs
     public GameObject gunBox;
     public GameObject itemBox;
 
+    //used to make random timers
     public float minGunTimer;
     public float maxGunTimer;
 
     public float minPowerUpTimer;
     public float maxPowerUpTimer;
 
+    /// <summary>
+    /// call functions to start coroutines
+    /// </summary>
     private void Start()
     {
         StartGunRoutine();
         StartPowerUpRoutine();
     }
 
+    /// <summary>
+    /// makes the random time to spawn a gun for and then starts the gunbox spawn coroutine with that time
+    /// </summary>
     private void StartGunRoutine()
     {
         float time = Random.Range(minGunTimer, maxGunTimer);
         StartCoroutine(SpawnGunBox(time));
     }
 
-
+    /// <summary>
+    /// waits for its time to be over then finds a gunbox transform and spawns a gunbox there then restarts
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     private IEnumerator SpawnGunBox(float time)
     {
         yield return new WaitForSeconds(time);
@@ -52,13 +64,20 @@ public class Stage : MonoBehaviour
         StartGunRoutine();
     }
 
+    /// <summary>
+    /// makes the random time to spawn a item box for and then starts the itembox spawn coroutine with that time
+    /// </summary>
     private void StartPowerUpRoutine()
     {
         float time = Random.Range(minPowerUpTimer, maxPowerUpTimer);
         StartCoroutine(SpawnPowerUp(time));
     }
 
-
+    /// <summary>
+    /// waits for its time to be over then finds a itembox transform and spawns a itembox there then restarts
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     private IEnumerator SpawnPowerUp(float time)
     {
         yield return new WaitForSeconds(time);
