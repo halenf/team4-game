@@ -33,6 +33,11 @@ public class GameplayUI : MonoBehaviour
         StartCoroutine(Countdown());
     }
 
+    public void StartRoundEnd(int playerID)
+    {
+        StartCoroutine(RoundEnd(playerID));
+    }
+
     private IEnumerator Countdown()
     {
         yield return new WaitForEndOfFrame();
@@ -48,5 +53,15 @@ public class GameplayUI : MonoBehaviour
         countdownDisplay.text = "Go!";
         yield return new WaitForSeconds(1.5f); // Keep "Go!" up for 1.5 seconds
         countdownDisplay.text = "";
+    }
+
+    private IEnumerator RoundEnd(int playerID)
+    {
+        yield return new WaitForEndOfFrame();
+        // Show the player who won the round
+        roundWinnerDisplay.text = "Player " + (playerID + 1).ToString() + " wins!";
+        yield return new WaitForSeconds(3);
+        roundWinnerDisplay.text = "";
+        GameManager.Instance.LoadStage();
     }
 }

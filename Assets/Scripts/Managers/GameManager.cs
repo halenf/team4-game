@@ -90,17 +90,12 @@ public class GameManager : MonoBehaviour
                     if (m_activePlayerControllers[i].GetComponent<PlayerInput>().inputIsActive)
                     {
                         m_leaderboard[i]++;
+
+                        // Check if the game is over. If not, end the round. Otherwise, end the game
+                        if (!IsGameOver()) EndRound(i);
+                        else EndGame();
                         break;
                     }
-                }
-
-                if (!IsGameOver())
-                {
-                    LoadStage();
-                }
-                else
-                {
-                    EndGame();
                 }
             }
         }
@@ -259,6 +254,12 @@ public class GameManager : MonoBehaviour
             //unfreeze time
             Time.timeScale = 1f;
         }
+    }
+
+    private void EndRound(int playerID)
+    {
+        DisablePlayers();
+        m_gameplayCanvas.StartRoundEnd(playerID);
     }
 
     /// <summary>
