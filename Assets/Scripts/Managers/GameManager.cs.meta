@@ -3,7 +3,12 @@ guid: d7a5617a3ba715d4b8ffc95356663fb1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - startCanvas: {fileID: 2439714855933294406, guid: 6622a677a4f986c4e91e8dea84a05e49, type: 3}
+  - gameplayCanvas: {fileID: 1586734891889361706, guid: 213c2a27fe70fd44b84a1f733c9d89c4, type: 3}
+  - pauseCanvas: {fileID: 8768610932739141917, guid: b61f58d3a8c70bb45a14d26606a7637b, type: 3}
+  - leaderboardCanvas: {fileID: 6931777853157890115, guid: d80e4a176261e514c81fba0e75de5403, type: 3}
+  - playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
