@@ -13,7 +13,16 @@ public class FlameThower : Gun
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
         bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
         // apply recoil to player
-        transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
-        transform.parent.gameObject.GetComponent<PlayerController>().Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
+        PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+        player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
+
+        if (player.IsGrounded())
+        {
+            transform.parent.GetComponent<Rigidbody>().AddForce(groundRecoil * -transform.forward, ForceMode.Impulse);
+        }
+        else
+        {
+            transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
+        }
     }
 }

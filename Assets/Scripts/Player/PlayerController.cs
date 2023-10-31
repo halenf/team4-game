@@ -186,17 +186,6 @@ public class PlayerController : MonoBehaviour
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
         if (currentPowerup != Powerup.Shield && m_powerupTimer <= 0 && currentPowerup != Powerup.None) currentPowerup = Powerup.None;
 
-        //Cameron
-        //makes recoil less impactfull
-        if(IsGrounded())
-        {
-            m_rb.drag = groundDrag;
-        }
-        else
-        {
-            m_rb.drag = airDrag;
-        }
-
         if(m_isShooting)
         {
             if (Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
@@ -360,7 +349,7 @@ public class PlayerController : MonoBehaviour
         m_playerInput.DeactivateInput();
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, 1.1f);
     }

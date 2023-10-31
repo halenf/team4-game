@@ -9,7 +9,8 @@ public class MiniGun : Gun
 {
     public override void Shoot(int playerID, Bullet.Effect effect)
     {
-        transform.parent.gameObject.GetComponent<PlayerController>().Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
+        PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+        player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
         //find spread rotation change
         Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
 
@@ -17,6 +18,13 @@ public class MiniGun : Gun
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
         bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
         // apply recoil to player
-        transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
+        if (player.IsGrounded())
+        {
+            transform.parent.GetComponent<Rigidbody>().AddForce(groundRecoil * -transform.forward, ForceMode.Impulse);
+        }
+        else
+        {
+            transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
+        }
     }
 }

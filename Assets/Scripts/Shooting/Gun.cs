@@ -26,6 +26,7 @@ public abstract class Gun : MonoBehaviour
 
     [Header("Gun Properties")]
     [Min(0)] public float recoil;
+    [Min(0)] public float groundRecoil;
     [Tooltip("Number of bullets the player can fire each second.")]
     [Min(0)] public float baseFireRate;
     [Min(0)] public float ammoCapacity;

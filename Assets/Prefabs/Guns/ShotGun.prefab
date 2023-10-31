@@ -415,7 +415,8 @@ MonoBehaviour:
   lowRumbleFrequency: 0
   rumbleTime: 6
   bulletLifeTime: 10
-  recoil: 2.5
+  recoil: 25
+  groundRecoil: 10
   baseFireRate: 0.75
   ammoCapacity: 15
   bulletSpawnTransform: {fileID: 1676410753910675609}
