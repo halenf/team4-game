@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_moveForce;
     private Vector2 m_aimDirection;
     private float defualtMass;
+    public float groundDrag;
+    public float airDrag;
 
     [Header("Powerup Stats")]
     public float ricochetTimer;
@@ -183,6 +185,17 @@ public class PlayerController : MonoBehaviour
         // 
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
         if (currentPowerup != Powerup.Shield && m_powerupTimer <= 0 && currentPowerup != Powerup.None) currentPowerup = Powerup.None;
+
+        //Cameron
+        //makes recoil less impactfull
+        if(IsGrounded())
+        {
+            m_rb.drag = groundDrag;
+        }
+        else
+        {
+            m_rb.drag = airDrag;
+        }
 
         if(m_isShooting)
         {
@@ -345,6 +358,11 @@ public class PlayerController : MonoBehaviour
     {
         m_rb.isKinematic = true;
         m_playerInput.DeactivateInput();
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, 1.1f);
     }
 
     /// <summary>
