@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject m_shieldObject;
     private GameObject m_shieldObjectReference;
+    public TMP_Text playerCounter;
 
     [Header("Default Stats")]
     [Min(0)] public float moveSpeed;
@@ -29,19 +31,23 @@ public class PlayerController : MonoBehaviour
     private float m_nextFireTime;
     private Vector3 m_moveForce;
     private Vector2 m_aimDirection;
+    private float defualtMass;
 
     [Header("Powerup Stats")]
     public float ricochetTimer;
     public float fireRateMultiplier;
     public float fireRateTimer;
     public int shieldHealth;
+    public float lowGravityMass;
 
     // powerup tracking
     public float powerUpTime;
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
 
-    private bool isShooting;
+    private bool m_isShooting;
+
+    public Gamepad controller;
     public enum Powerup
     {
         None,
@@ -49,9 +55,11 @@ public class PlayerController : MonoBehaviour
         FireRateUp,
         Shield, 
         BigBullets, 
-        ExplodeBullets
+        ExplodeBullets, 
+        LowGravity
     }
     private Powerup m_currentPowerup;
+    Bullet.Effect effect;
     public Powerup currentPowerup
     {
         get { return m_currentPowerup; }
@@ -69,6 +77,8 @@ public class PlayerController : MonoBehaviour
                     {
                         Destroy(m_shieldObjectReference);
                     }
+                    m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.None;
                         break;
                 }
                 case Powerup.Shield:
@@ -77,6 +87,8 @@ public class PlayerController : MonoBehaviour
                     m_shieldObjectReference = Instantiate(m_shieldObject, transform);
                     m_fireRate = m_currentGun.baseFireRate;
                     m_powerupTimer = powerUpTime;
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.None;
                         break;
                 }
                 case Powerup.Ricochet:
@@ -88,6 +100,8 @@ public class PlayerController : MonoBehaviour
                         Destroy(m_shieldObjectReference);
                     }
                     m_powerupTimer = powerUpTime;
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.Bounce;
                         break;
                 }
                 case Powerup.BigBullets:
@@ -99,6 +113,8 @@ public class PlayerController : MonoBehaviour
                         Destroy(m_shieldObjectReference);
                     }
                     m_powerupTimer = powerUpTime;
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.Big;
                         break;
                 }
                 case Powerup.ExplodeBullets:
@@ -110,8 +126,22 @@ public class PlayerController : MonoBehaviour
                         Destroy(m_shieldObjectReference);
                     }
                     m_powerupTimer = powerUpTime;
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.Explode;
                         break;
                 }
+                case Powerup.LowGravity:
+                    {
+                        m_fireRate = m_currentGun.baseFireRate;
+                        m_shieldCurrentHealth = 0;
+                        if (m_shieldObjectReference != null)
+                        {
+                            Destroy(m_shieldObjectReference);
+                        }
+                        m_rb.mass = lowGravityMass;
+                        effect = Bullet.Effect.None;
+                        break;
+                    }
                 case Powerup.None:
                 {
                     m_fireRate = m_currentGun.baseFireRate;
@@ -120,6 +150,8 @@ public class PlayerController : MonoBehaviour
                     {
                         Destroy(m_shieldObjectReference);
                     }
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.None;
                         break;
                 }
             }
@@ -134,6 +166,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
+        defualtMass = m_rb.mass;
         m_playerInput = GetComponent<PlayerInput>();
     }
 
@@ -141,7 +174,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_aimDirection = transform.forward;
-        SetGun(defaultGun);
+        SetGun(defaultGun);      
     }
 
     // Update is called once per frame
@@ -151,7 +184,7 @@ public class PlayerController : MonoBehaviour
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
         if (currentPowerup != Powerup.Shield && m_powerupTimer <= 0 && currentPowerup != Powerup.None) currentPowerup = Powerup.None;
 
-        if(isShooting)
+        if(m_isShooting)
         {
             if (Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
             {
@@ -159,7 +192,7 @@ public class PlayerController : MonoBehaviour
 
                 //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
 
-                m_currentGun.Shoot(gameObject.GetInstanceID(), m_currentPowerup == Powerup.Ricochet, m_currentPowerup == Powerup.BigBullets, m_currentPowerup == Powerup.ExplodeBullets);
+                m_currentGun.Shoot(gameObject.GetInstanceID(), effect);
 
                 m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
 
@@ -183,7 +216,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            maxHealth -= 7;
+            m_currentHealth -= 7;
         }
     }
 
@@ -197,11 +230,11 @@ public class PlayerController : MonoBehaviour
     {
         if (value.performed)
         {
-            isShooting = true;
+            m_isShooting = true;
         }
         if (value.canceled)
         {
-            isShooting = false;
+            m_isShooting = false;
         }
         
     }
@@ -263,30 +296,27 @@ public class PlayerController : MonoBehaviour
         m_nextFireTime = Time.time;
     }
 
-
-   public void ActivateRicochet()
+    /// <summary>
+    /// set a power up
+    /// </summary>
+    /// <param name="powerUp"></param>
+   public void ActivatePowerUp(Powerup powerUp)
     {
-        currentPowerup = Powerup.Ricochet;
+        currentPowerup = powerUp;
     }
 
-    public void IncreaseFireRate()
+    //start rumble coroutine
+    public void Rumble(float lowFrequncy, float highFrequency, float time)
     {
-        currentPowerup = Powerup.FireRateUp;
+        StartCoroutine(RumbleCoroutine(lowFrequncy, highFrequency, time));
     }
 
-    public void ActivateSheild()
+    private IEnumerator RumbleCoroutine(float lowFrequency, float highFrequency, float time)
     {
-        currentPowerup = Powerup.Shield;
-    }
+        controller.SetMotorSpeeds(lowFrequency, highFrequency);
+        yield return new WaitForSeconds(time);
 
-    public void ActivateBigBullets()
-    {
-        currentPowerup = Powerup.BigBullets;
-    }
-
-    public void ActivateExplodeBullets()
-    {
-        currentPowerup = Powerup.ExplodeBullets;
+        controller.SetMotorSpeeds(0f, 0f);
     }
 
     /// <summary>

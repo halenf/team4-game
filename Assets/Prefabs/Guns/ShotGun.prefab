@@ -411,6 +411,10 @@ MonoBehaviour:
   bulletSpeed: 10
   bulletDamage: 0.1
   shouldBounce: 0
+  highRumbleFrequency: 1
+  lowRumbleFrequency: 0
+  rumbleTime: 6
+  bulletLifeTime: 10
   recoil: 2.5
   baseFireRate: 0.75
   ammoCapacity: 15

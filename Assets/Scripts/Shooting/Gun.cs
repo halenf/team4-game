@@ -18,6 +18,12 @@ public abstract class Gun : MonoBehaviour
     [Tooltip("Will be true when the player has the Ricochet powerup.")]
     public bool shouldBounce;
 
+    [Range(0, 1)]public float highRumbleFrequency;
+    [Range(0, 1)]public float lowRumbleFrequency;
+    [Min(0)]public float rumbleTime;
+
+    public float bulletLifeTime;
+
     [Header("Gun Properties")]
     [Min(0)] public float recoil;
     [Tooltip("Number of bullets the player can fire each second.")]
@@ -31,7 +37,7 @@ public abstract class Gun : MonoBehaviour
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="shouldBounce"></param>
-    public abstract void Shoot(int playerID, bool shouldBounce, bool isBig, bool explode);
+    public abstract void Shoot(int playerID, Bullet.Effect effect);
 
     // Start is called before the first frame update
     void Start()
