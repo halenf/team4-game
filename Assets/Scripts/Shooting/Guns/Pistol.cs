@@ -16,24 +16,29 @@ public class Pistol : Gun
     [Min(0)] public float shootingSpeed;
     
    
-    public override void Shoot(int playerID, bool shouldBounce, bool isBig, bool explode)
+    public override void Shoot(int playerID, Bullet.Effect effect)
     {
-        StartCoroutine(BurstShot(playerID, shouldBounce, isBig, explode));
+        StartCoroutine(BurstShot(playerID, effect));
         
     }
 
-    private IEnumerator BurstShot(int playerID, bool shouldBounce, bool isBig, bool explode)
+    private IEnumerator BurstShot(int playerID, Bullet.Effect effect)
     {
         for (int i = 0; i < burstNumber; i++)
         {
+            //rumble controller
+            PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+            player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
             //find spread rotation change
             Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
 
             // instantiate the bullet
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
-            bullet.Init(playerID, bulletDamage, shouldBounce, bullet.transform.forward * bulletSpeed, isBig, explode);
+            bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
             // apply recoil to player
-            transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
+            float tempRecoil = recoil;
+            if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
+            transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
             // wait for next burst shot
             if (i != burstNumber - 1) yield return new WaitForSeconds(1f / shootingSpeed);
         }

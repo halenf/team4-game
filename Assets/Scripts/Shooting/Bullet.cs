@@ -11,8 +11,6 @@ public class Bullet : MonoBehaviour
     private Rigidbody m_rb;
     private float m_playerID;
 
-    public float minLifeTime;
-    public float maxLifeTime;
     public float sizeScaler;
     public GameObject explosion;
 
@@ -20,31 +18,52 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float m_damage;
     [SerializeField] private bool m_shouldBounce;
 
+    public enum Effect
+    {
+        None,
+        Bounce, 
+        Big, 
+        Explode
+    }
+
+    private Effect m_currentEffect;
+
     /// <summary>
     /// For setting bullet details after being instantiated
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="damage"></param>
     /// <param name="shouldBounce"></param>
-    public void Init(float playerID, float damage, bool shouldBounce, Vector3 velocity, bool isBig, bool explode)
+    public void Init(float playerID, float damage, Vector3 velocity, float lifeTime, Effect effect)
     {
         m_playerID = playerID;
         m_damage = damage;
-        m_shouldBounce = shouldBounce;
         m_rb.velocity = velocity;
-        float random = Random.Range(minLifeTime, maxLifeTime);
-        if (isBig)
-        {
-            transform.localScale = transform.localScale * sizeScaler;
-        }
 
-        if (explode)
+        switch(effect)
         {
-            StartCoroutine(Explode(random));
-        }
-        else
-        {
-            Destroy(gameObject, random);
+            case Effect.Bounce:
+            { 
+                m_shouldBounce = true;
+                    Destroy(gameObject, lifeTime);
+                    break;
+            }
+            case Effect.Big:
+            {
+                transform.localScale = transform.localScale * sizeScaler;
+                    Destroy(gameObject, lifeTime);
+                    break;
+            }
+            case Effect.Explode:
+                {
+                    StartCoroutine(Explode(lifeTime));
+                    break;
+                }
+            case Effect.None:
+                {
+                    Destroy(gameObject, lifeTime);
+                    break;
+                }
         }
     }
 

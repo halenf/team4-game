@@ -9,7 +9,7 @@ public class ShotGun : Gun
 {
     public int minBulletAmount;
     public int maxBulletAmount;
-    public override void Shoot(int playerID, bool shouldBounce, bool isBig, bool explode)
+    public override void Shoot(int playerID, Bullet.Effect effect)
     {
         int bulletAmount = Random.Range(minBulletAmount, maxBulletAmount);
 
@@ -20,11 +20,14 @@ public class ShotGun : Gun
 
             // instantiate the bullet
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
-            bullet.Init(playerID, bulletDamage, shouldBounce, bullet.transform.forward * bulletSpeed, isBig, explode);
+            bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
             // apply recoil to player
-            transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
         }
+        PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+        player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
 
-        transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
+        float tempRecoil = recoil;
+        if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
+        transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
     }
 }

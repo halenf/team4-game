@@ -26,6 +26,9 @@ public class GunBox : PowerUp
 
             player.SetGun(currentGun);
 
+            //tell the stage to start the timer again
+            stage.StartGunRoutine();
+
             //destroy self
             Destroy(gameObject);
         }

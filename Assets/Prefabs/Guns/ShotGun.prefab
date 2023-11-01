@@ -411,7 +411,12 @@ MonoBehaviour:
   bulletSpeed: 10
   bulletDamage: 0.1
   shouldBounce: 0
-  recoil: 2.5
+  highRumbleFrequency: 1
+  lowRumbleFrequency: 0
+  rumbleTime: 6
+  bulletLifeTime: 10
+  recoil: 25
+  groundMultiplyer: 0.5
   baseFireRate: 0.75
   ammoCapacity: 15
   bulletSpawnTransform: {fileID: 1676410753910675609}

@@ -2,8 +2,10 @@
 // Manages level loading, round flow, mapping controller inputs, and UI
 // last edit 27/10/2023
 
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -42,6 +44,10 @@ public class GameManager : MonoBehaviour
     private GameplayUI m_gameplayCanvas;
     private PauseUI m_pauseCanvas;
     private LeaderboardUI m_leaderboardCanvas;
+
+    [Header("Cinemachine Cameras")]
+    public CinemachineVirtualCamera staticCamera;
+    public CinemachineVirtualCamera gameplayCamera;
 
     [Header("Player")]
     public GameObject playerPrefab;
@@ -154,6 +160,10 @@ public class GameManager : MonoBehaviour
         m_gameState = GameState.Start;
         m_isPaused = false;
 
+        // Setup cameras
+        staticCamera.gameObject.SetActive(true);
+        gameplayCamera.gameObject.SetActive(false);
+
         // Initialise canvases
         m_startCanvas = Instantiate(startCanvasPrefab);
         m_gameplayCanvas = Instantiate(gameplayCanvasPrefab);
@@ -206,8 +216,12 @@ public class GameManager : MonoBehaviour
                 //create a player object and assign their specific controller
                 GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
 
+                PlayerController playerComponent = newPlayer.GetComponent<PlayerController>();
+
                 // add player to list of players
-                m_activePlayerControllers.Add(newPlayer.GetComponent<PlayerController>());
+                m_activePlayerControllers.Add(playerComponent);
+                playerComponent.controller = m_controllers[j];
+                playerComponent.playerCounter.text = (j + 1).ToString();
             }
 
             // deactivate start menu, activate gameplayUI - Halen
@@ -216,6 +230,24 @@ public class GameManager : MonoBehaviour
 
             // Set correct game state
             m_gameState = GameState.Playing;
+
+            // Cinemachine camera setup
+            // Set current active camera
+            staticCamera.gameObject.SetActive(false);
+            gameplayCamera.gameObject.SetActive(true);
+
+            // Add the players to the target group target array
+            List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
+            for (int i = 0; i < m_activePlayerControllers.Count; i++)
+            {
+                CinemachineTargetGroup.Target target;
+                target.target = m_activePlayerControllers[i].transform;
+                target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
+                target.radius = 5f;
+                targets.Add(target);
+            }
+            GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>().m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
+            // End Cinemachine camera setup
 
             // Load the first stage
             LoadStage();
@@ -299,6 +331,9 @@ public class GameManager : MonoBehaviour
         int random = Random.Range(0, stageList.Length);
         m_currentStageObject = Instantiate(stageList[random]);
 
+        // Reset camera to default position
+        CameraManager.Instance.SetCameraPosition(m_currentStageObject.GetComponent<Stage>().cameraDefaultTransform);
+
         //reset and disable all players
         ResetPlayers();
         DisablePlayers();
@@ -329,12 +364,16 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         // Halen
+        // Disable canvases
         m_pauseCanvas.gameObject.SetActive(false);
         m_gameplayCanvas.gameObject.SetActive(false);
-        m_leaderboardCanvas.gameObject.SetActive(true);
+
+        // Set which button the player defaults to in the leaderboard menu
         EventSystemManager.Instance.SetCurrentSelectedGameObject(m_leaderboardCanvas.defaultSelectedObject);
+
+        // Set correct gamestate
         m_gameState = GameState.Ended;
-        // Halen
+        // End Halen
 
         //destroy the stage and players
         Destroy(m_currentStageObject);
@@ -354,6 +393,10 @@ public class GameManager : MonoBehaviour
                 topScore = m_leaderboard[i];
             }
         }
+
+        // Change to the static camera from the gameplay camera - Halen
+        gameplayCamera.gameObject.SetActive(false);
+        staticCamera.gameObject.SetActive(true);
 
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
@@ -403,7 +446,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// makes P1 take damage when you press 1
+    /// various tools for debugging
     /// </summary>
     private void DebugUpdate()
     { 
