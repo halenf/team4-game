@@ -27,7 +27,8 @@ public class Pistol : Gun
         for (int i = 0; i < burstNumber; i++)
         {
             //rumble controller
-            transform.parent.gameObject.GetComponent<PlayerController>().Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
+            PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+            player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
             //find spread rotation change
             Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
 
@@ -35,7 +36,9 @@ public class Pistol : Gun
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
             bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
             // apply recoil to player
-            transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
+            float tempRecoil = recoil;
+            if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
+            transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
             // wait for next burst shot
             if (i != burstNumber - 1) yield return new WaitForSeconds(1f / shootingSpeed);
         }
