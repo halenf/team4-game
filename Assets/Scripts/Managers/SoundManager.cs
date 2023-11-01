@@ -20,6 +20,8 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip defaultClip;
 
+    public string soundDirectory = "Sounds";
+
     // Singleton instantiation
     private void Awake()
     {
@@ -48,6 +50,12 @@ public class SoundManager : MonoBehaviour
     /// <param name="clip"></param>
     public void PlaySound(AudioClip clip)
     {
+        soundSource.PlayOneShot(clip);
+    }
+
+    public void PlaySound(string filename)
+    {
+        AudioClip clip = (AudioClip) Resources.Load(soundDirectory + "/" + filename);
         soundSource.PlayOneShot(clip);
     }
 
