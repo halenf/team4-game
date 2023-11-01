@@ -16,7 +16,7 @@ public class Stage : MonoBehaviour
     public Transform[] gunBoxSpawns;
 
     [Header("Camera Properties")]
-    public Transform cameraPosition;
+    public Transform cameraDefaultTransform;
     [Range(0, 180)] public float cameraFOV;
 
     [Header("Box Prefabs")]
@@ -24,12 +24,16 @@ public class Stage : MonoBehaviour
     public GameObject itemBox;
 
     [Header("Box spawn timers")]
+    [Tooltip("Minimum amount of time for a gun item box to spawn during gameplay.")]
     public float minGunSpawnTimer;
+    [Tooltip("Maximum amount of time for a gun item box to spawn during gameplay.")]
     public float maxGunSpawnTimer;
 
     [Space(10)]
-    
+
+    [Tooltip("Minimum amount of time for a powerup item box to spawn during gameplay.")]
     public float minPowerUpSpawnTimer;
+    [Tooltip("Maximum amount of time for a powerup item box to spawn during gameplay.")]
     public float maxPowerUpSpawnTimer;
 
     /// <summary>
@@ -87,7 +91,7 @@ public class Stage : MonoBehaviour
     private IEnumerator SpawnPowerUp(float time)
     {
         yield return new WaitForSeconds(time);
-        int chosenBox = Random.Range(0, powerUpSpawns.Length);
+        int chosenBox = Random.Range(0, powerUpSpawns.Length - 1);
 
         Instantiate(itemBox, powerUpSpawns[chosenBox].transform);
 

@@ -28,14 +28,10 @@ public class CameraManager : MonoBehaviour
     // timer for screen-shake
     private float m_timer;
 
-    // should the camera be tracking the players
-    private bool m_isTracking;
-
     /// <summary>
     /// Set the position, rotation, and FOV of the camera.
     /// </summary>
     /// <param name="_transform"></param>
-    /// <param name="fov"></param>
     public void SetCameraPosition(Transform _transform)
     {
         transform.position = _transform.position;
