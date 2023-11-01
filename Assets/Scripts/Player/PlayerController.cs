@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_moveForce;
     private Vector2 m_aimDirection;
     private float defualtMass;
+    public float groundDrag;
+    public float airDrag;
 
     [Header("Powerup Stats")]
     public float ricochetTimer;
@@ -345,6 +347,11 @@ public class PlayerController : MonoBehaviour
     {
         m_rb.isKinematic = true;
         m_playerInput.DeactivateInput();
+    }
+
+    public bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, 1.1f);
     }
 
     /// <summary>
