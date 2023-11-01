@@ -414,6 +414,7 @@ MonoBehaviour:
   highRumbleFrequency: 0.5
   lowRumbleFrequency: 0.5
   rumbleTime: 0.5
+  bulletLifeTime: 10
   recoil: 15
   baseFireRate: 12
   ammoCapacity: 800

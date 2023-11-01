@@ -1,12 +1,8 @@
-// Sniper - Cameron
-// just uses a basic shoot function
-// Last edit: 26/10/23
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sniper : Gun
+public class FlameThower : Gun
 {
     public override void Shoot(int playerID, Bullet.Effect effect)
     {
@@ -20,7 +16,4 @@ public class Sniper : Gun
         transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
         transform.parent.gameObject.GetComponent<PlayerController>().Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
     }
-
-    
-
 }

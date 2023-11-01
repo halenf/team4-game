@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject m_shieldObject;
     private GameObject m_shieldObjectReference;
+    public TMP_Text playerCounter;
 
     [Header("Default Stats")]
     [Min(0)] public float moveSpeed;
@@ -29,12 +31,14 @@ public class PlayerController : MonoBehaviour
     private float m_nextFireTime;
     private Vector3 m_moveForce;
     private Vector2 m_aimDirection;
+    private float defualtMass;
 
     [Header("Powerup Stats")]
     public float ricochetTimer;
     public float fireRateMultiplier;
     public float fireRateTimer;
     public int shieldHealth;
+    public float lowGravityMass;
 
     // powerup tracking
     public float powerUpTime;
@@ -51,9 +55,11 @@ public class PlayerController : MonoBehaviour
         FireRateUp,
         Shield, 
         BigBullets, 
-        ExplodeBullets
+        ExplodeBullets, 
+        LowGravity
     }
     private Powerup m_currentPowerup;
+    Bullet.Effect effect;
     public Powerup currentPowerup
     {
         get { return m_currentPowerup; }
@@ -71,6 +77,8 @@ public class PlayerController : MonoBehaviour
                     {
                         Destroy(m_shieldObjectReference);
                     }
+                    m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.None;
                         break;
                 }
                 case Powerup.Shield:
@@ -79,6 +87,8 @@ public class PlayerController : MonoBehaviour
                     m_shieldObjectReference = Instantiate(m_shieldObject, transform);
                     m_fireRate = m_currentGun.baseFireRate;
                     m_powerupTimer = powerUpTime;
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.None;
                         break;
                 }
                 case Powerup.Ricochet:
@@ -90,6 +100,8 @@ public class PlayerController : MonoBehaviour
                         Destroy(m_shieldObjectReference);
                     }
                     m_powerupTimer = powerUpTime;
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.Bounce;
                         break;
                 }
                 case Powerup.BigBullets:
@@ -101,6 +113,8 @@ public class PlayerController : MonoBehaviour
                         Destroy(m_shieldObjectReference);
                     }
                     m_powerupTimer = powerUpTime;
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.Big;
                         break;
                 }
                 case Powerup.ExplodeBullets:
@@ -112,8 +126,22 @@ public class PlayerController : MonoBehaviour
                         Destroy(m_shieldObjectReference);
                     }
                     m_powerupTimer = powerUpTime;
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.Explode;
                         break;
                 }
+                case Powerup.LowGravity:
+                    {
+                        m_fireRate = m_currentGun.baseFireRate;
+                        m_shieldCurrentHealth = 0;
+                        if (m_shieldObjectReference != null)
+                        {
+                            Destroy(m_shieldObjectReference);
+                        }
+                        m_rb.mass = lowGravityMass;
+                        effect = Bullet.Effect.None;
+                        break;
+                    }
                 case Powerup.None:
                 {
                     m_fireRate = m_currentGun.baseFireRate;
@@ -122,6 +150,8 @@ public class PlayerController : MonoBehaviour
                     {
                         Destroy(m_shieldObjectReference);
                     }
+                        m_rb.mass = defualtMass;
+                        effect = Bullet.Effect.None;
                         break;
                 }
             }
@@ -136,6 +166,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
+        defualtMass = m_rb.mass;
         m_playerInput = GetComponent<PlayerInput>();
     }
 
@@ -161,7 +192,7 @@ public class PlayerController : MonoBehaviour
 
                 //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
 
-                m_currentGun.Shoot(gameObject.GetInstanceID(), m_currentPowerup == Powerup.Ricochet, m_currentPowerup == Powerup.BigBullets, m_currentPowerup == Powerup.ExplodeBullets);
+                m_currentGun.Shoot(gameObject.GetInstanceID(), effect);
 
                 m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
 
