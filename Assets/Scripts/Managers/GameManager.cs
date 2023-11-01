@@ -1,6 +1,6 @@
 // GameManager - Cameron, Halen
 // Manages level loading, round flow, mapping controller inputs, and UI
-// last edit 27/10/2023
+// last edit 1/11/2023
 
 using Cinemachine;
 using System.Collections;
@@ -38,12 +38,14 @@ public class GameManager : MonoBehaviour
     public GameplayUI gameplayCanvasPrefab;
     public PauseUI pauseCanvasPrefab;
     public LeaderboardUI leaderboardCanvasPrefab;
+    public DisconnectUI disconnectCanvasPrefab;
 
     // canvas references
     private StartUI m_startCanvas;
     private GameplayUI m_gameplayCanvas;
     private PauseUI m_pauseCanvas;
     private LeaderboardUI m_leaderboardCanvas;
+    private DisconnectUI m_disconnectCanvas;
 
     [Header("Cinemachine Cameras")]
     public CinemachineVirtualCamera staticCamera;
@@ -169,11 +171,13 @@ public class GameManager : MonoBehaviour
         m_gameplayCanvas = Instantiate(gameplayCanvasPrefab);
         m_pauseCanvas = Instantiate(pauseCanvasPrefab);
         m_leaderboardCanvas = Instantiate(leaderboardCanvasPrefab);
+        m_disconnectCanvas = Instantiate(disconnectCanvasPrefab);
 
         m_startCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.gameObject.SetActive(false);
         m_pauseCanvas.gameObject.SetActive(false);
         m_leaderboardCanvas.gameObject.SetActive(false);
+        m_disconnectCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -286,6 +290,18 @@ public class GameManager : MonoBehaviour
             //unfreeze time
             Time.timeScale = 1f;
         }
+    }
+
+    public void Dissconected(PlayerController disconnectedPlayer)
+    {
+        int playerID = GetPlayerID(disconnectedPlayer) + 1;
+        m_disconnectCanvas.gameObject.SetActive(true); 
+        m_disconnectCanvas.SetText(playerID);
+    }
+
+    public void Reconnected()
+    {
+        m_disconnectCanvas.gameObject.SetActive(false);
     }
 
     private void EndRound(int playerID)
