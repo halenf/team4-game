@@ -18,13 +18,8 @@ public class MiniGun : Gun
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
         bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
         // apply recoil to player
-        if (player.IsGrounded())
-        {
-            transform.parent.GetComponent<Rigidbody>().AddForce(groundRecoil * -transform.forward, ForceMode.Impulse);
-        }
-        else
-        {
-            transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
-        }
+        float tempRecoil = recoil;
+        if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
+        transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
     }
 }

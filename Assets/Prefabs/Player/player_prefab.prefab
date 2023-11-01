@@ -187,9 +187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_shieldObject: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
   playerCounter: {fileID: 325361806248802721}
+  moveSpeed: 40
   maxHealth: 10
-  groundMoveSpeed: 350
-  airMoveSpeed: 40
   groundDrag: 28
   airDrag: 8
   ricochetTimer: 40

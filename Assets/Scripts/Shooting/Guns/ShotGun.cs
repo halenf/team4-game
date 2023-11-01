@@ -26,13 +26,8 @@ public class ShotGun : Gun
         PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
 
-        if (player.IsGrounded())
-        {
-            transform.parent.GetComponent<Rigidbody>().AddForce(groundRecoil * -transform.forward, ForceMode.Impulse);
-        }
-        else
-        {
-            transform.parent.GetComponent<Rigidbody>().AddForce(recoil * -transform.forward, ForceMode.Impulse);
-        }
+        float tempRecoil = recoil;
+        if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
+        transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
     }
 }
