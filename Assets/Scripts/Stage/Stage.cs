@@ -15,15 +15,25 @@ public class Stage : MonoBehaviour
     [Tooltip("gun box transforms")]
     public Transform[] gunBoxSpawns;
 
+    public Transform cameraDefaultTransform;
+
     //box prefabs
+    [Tooltip("gun box prefab")]
     public GameObject gunBox;
+    [Tooltip("power up prefab")]
     public GameObject itemBox;
 
     //used to make random timers
+    [Tooltip("minimum time a gun box will appear in")]
     public float minGunTimer;
+    [Tooltip("maximum time a gun box will appear in")]
     public float maxGunTimer;
 
+    [Space(10)]
+
+    [Tooltip("minimum time a power up will appear in")]
     public float minPowerUpTimer;
+    [Tooltip("maximum time a power up will appear in")]
     public float maxPowerUpTimer;
 
     /// <summary>
@@ -52,7 +62,7 @@ public class Stage : MonoBehaviour
     private IEnumerator SpawnGunBox(float time)
     {
         yield return new WaitForSeconds(time);
-        int chosenBox = Random.Range(0, gunBoxSpawns.Length);
+        int chosenBox = Random.Range(0, gunBoxSpawns.Length - 1);
 
         for (int i = 0; i < gunBoxSpawns.Length; i++)
         {
@@ -80,7 +90,7 @@ public class Stage : MonoBehaviour
     private IEnumerator SpawnPowerUp(float time)
     {
         yield return new WaitForSeconds(time);
-        int chosenBox = Random.Range(0, powerUpSpawns.Length);
+        int chosenBox = Random.Range(0, powerUpSpawns.Length - 1);
 
         for (int i = 0; i < powerUpSpawns.Length; i++)
         {
