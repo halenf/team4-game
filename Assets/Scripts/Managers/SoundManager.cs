@@ -1,15 +1,24 @@
 // EventSystemManager - Halen
 // Updates the currently selected item for menus
-// Last edit: 25/10/23
+// Last edit: 1/11/23
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SoundManager : MonoBehaviour
 {
     // Static reference
     public static SoundManager Instance;
+
+    [Header("Sound Sources")]
+    public AudioSource musicSource;
+    public AudioSource soundSource;
+
+    [Space(10)]
+
+    public AudioClip defaultClip;
 
     // Singleton instantiation
     private void Awake()
@@ -24,6 +33,24 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Use to play music through the SoundManager.
+    /// </summary>
+    /// <param name="clip"></param>
+    public void PlayMusic(AudioClip clip)
+    {
+        musicSource.PlayOneShot(clip);
+    }
+
+    /// <summary>
+    /// Use to play sound effects through the SoundManager.
+    /// </summary>
+    /// <param name="clip"></param>
+    public void PlaySound(AudioClip clip)
+    {
+        soundSource.PlayOneShot(clip);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +60,9 @@ public class SoundManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // debug method
+# if UNITY_EDITOR
+        if (defaultClip && Keyboard.current.wKey.isPressed) PlayMusic(defaultClip);
+# endif
     }
 }
