@@ -1,6 +1,6 @@
 // Bullet - Halen, Cameron
 // Determines bullet behaviour
-// Last edit: 26/10/23
+// Last edit: 1/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -91,6 +91,7 @@ public class Bullet : MonoBehaviour
     // When bullet collides with another object
     private void OnCollisionEnter(Collision collision)
     {
+        
         if (collision.gameObject.tag == "Player" && collision.gameObject.GetInstanceID() != m_playerID)
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
@@ -100,8 +101,10 @@ public class Bullet : MonoBehaviour
         
         if (!m_shouldBounce && collision.gameObject.tag != "Player")
         {
+            
             Destroy(gameObject);
-        } else
+        }
+        else
         {
             m_shouldBounce = false;
         }
