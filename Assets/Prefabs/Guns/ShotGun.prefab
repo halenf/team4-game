@@ -415,9 +415,9 @@ MonoBehaviour:
   lowRumbleFrequency: 0
   rumbleTime: 6
   bulletLifeTime: 10
-  recoil: 25
-  groundMultiplyer: 0.5
-  baseFireRate: 0.75
+  recoil: 85
+  groundMultiplyer: 0.955
+  baseFireRate: 1
   ammoCapacity: 15
   bulletSpawnTransform: {fileID: 1676410753910675609}
   gunPrefab: {fileID: 4789882382446241977}
