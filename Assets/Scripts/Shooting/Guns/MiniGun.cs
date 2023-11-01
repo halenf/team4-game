@@ -1,6 +1,6 @@
 //Minigun - Cameron
 // shoot function for minigun
-// Last edit: 26/10/23
+// Last edit: 1/11/23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

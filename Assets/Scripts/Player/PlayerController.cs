@@ -252,6 +252,17 @@ public class PlayerController : MonoBehaviour
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
     }
 
+    public void OnDisconnect()
+    {
+        GameManager.Instance.TogglePause(this);
+        GameManager.Instance.Dissconected(this);
+    }
+
+    public void OnConnect()
+    {
+        GameManager.Instance.Reconnected();
+    }
+
     public void OnPause(InputAction.CallbackContext value)
     {
         if (value.performed) GameManager.Instance.TogglePause(this);
