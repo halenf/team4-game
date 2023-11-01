@@ -38,7 +38,7 @@ public class Stage : MonoBehaviour
     /// <summary>
     /// makes the random time to spawn a gun for and then starts the gunbox spawn coroutine with that time
     /// </summary>
-    private void StartGunRoutine()
+    public void StartGunRoutine()
     {
         float time = Random.Range(minGunTimer, maxGunTimer);
         StartCoroutine(SpawnGunBox(time));
@@ -58,16 +58,15 @@ public class Stage : MonoBehaviour
         {
             if (i == chosenBox)
             {
-                Instantiate(gunBox, gunBoxSpawns[i].transform);
+                Instantiate(gunBox, gunBoxSpawns[i].transform).GetComponent<PowerUp>().stage = this;
             }
         }
-        StartGunRoutine();
     }
 
     /// <summary>
     /// makes the random time to spawn a item box for and then starts the itembox spawn coroutine with that time
     /// </summary>
-    private void StartPowerUpRoutine()
+    public void StartPowerUpRoutine()
     {
         float time = Random.Range(minPowerUpTimer, maxPowerUpTimer);
         StartCoroutine(SpawnPowerUp(time));
@@ -87,10 +86,9 @@ public class Stage : MonoBehaviour
         {
             if (i == chosenBox)
             {
-                Instantiate(itemBox, powerUpSpawns[i].transform);
+                Instantiate(itemBox, powerUpSpawns[i].transform).GetComponent<PowerUp>().stage = this;
             }
         }
-        StartPowerUpRoutine();
     }
 
 }

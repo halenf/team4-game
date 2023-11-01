@@ -20,6 +20,10 @@ public class ItemBox : PowerUp
             int choice = UnityEngine.Random.Range(1, Enum.GetNames(typeof(PlayerController.Powerup)).Length);
 
             player.ActivatePowerUp((PlayerController.Powerup)choice);
+
+            //tell the stage to start the timer again
+            stage.StartGunRoutine();
+
             //destroy self
             Destroy(gameObject);
         }

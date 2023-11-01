@@ -347,7 +347,7 @@ MonoBehaviour:
   gunBoxSpawns:
   - {fileID: 8328985472066323503}
   gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
-  itemBox: {fileID: 7186940273359724510, guid: 678df13942696044aa79bc49f6085ce3, type: 3}
+  itemBox: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
   minGunTimer: 3
   maxGunTimer: 20
   minPowerUpTimer: 30
