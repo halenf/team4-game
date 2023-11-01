@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: {fileID: 0}
+  lifeTime: 10
 --- !u!135 &1309768621452261183
 SphereCollider:
   m_ObjectHideFlags: 0
