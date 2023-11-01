@@ -1,6 +1,6 @@
 // Gun - Halen, Cameron
 // Stores gun data
-// Last edit: 26/10/23
+// Last edit: 1/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -46,10 +46,10 @@ public abstract class Gun : MonoBehaviour
         // instantiate the bullet
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
         bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
-        // apply recoil to player
+        
         PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
-
+        // apply recoil to player
         float tempRecoil = recoil;
         if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
         transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
