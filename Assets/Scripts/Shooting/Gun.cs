@@ -26,6 +26,7 @@ public abstract class Gun : MonoBehaviour
 
     [Header("Gun Properties")]
     [Min(0)] public float recoil;
+    [Range(0, 1)] public float groundMultiplyer;
     [Tooltip("Number of bullets the player can fire each second.")]
     [Min(0)] public float baseFireRate;
     [Min(0)] public float ammoCapacity;
@@ -37,7 +38,22 @@ public abstract class Gun : MonoBehaviour
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="shouldBounce"></param>
-    public abstract void Shoot(int playerID, Bullet.Effect effect);
+    public virtual void Shoot(int playerID, Bullet.Effect effect)
+    {
+        //find spread rotation change
+        Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
+
+        // instantiate the bullet
+        Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
+        bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
+        // apply recoil to player
+        PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+        player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
+
+        float tempRecoil = recoil;
+        if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
+        transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+    }
 
     // Start is called before the first frame update
     void Start()

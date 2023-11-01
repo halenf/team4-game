@@ -189,6 +189,8 @@ MonoBehaviour:
   playerCounter: {fileID: 325361806248802721}
   moveSpeed: 40
   maxHealth: 10
+  groundDrag: 28
+  airDrag: 8
   ricochetTimer: 40
   fireRateMultiplier: 2
   fireRateTimer: 40
