@@ -17,12 +17,13 @@ public class PlayerController : MonoBehaviour
     private PlayerInput m_playerInput;
     [SerializeField]
     private GameObject m_shieldObject;
-    private GameObject m_shieldObjectReference;
+    private GameObject m_shieldGameObject;
     public TMP_Text playerCounter;
 
     [Header("Default Stats")]
     [Min(0)] public float moveSpeed;
     [Min(0)] public float maxHealth;
+    [Min(0)] public float defaultMass;
 
     // player's current stats
     private float m_currentHealth;
@@ -31,23 +32,26 @@ public class PlayerController : MonoBehaviour
     private float m_nextFireTime;
     private Vector3 m_moveForce;
     private Vector2 m_aimDirection;
-    private float defualtMass;
+
+    [Header("Gun")]
+    public Gun defaultGun;
+    private Gun m_currentGun; // gun the player currently has
+    [Min(0)] public float gunHoldDistance;
+    private bool m_isShooting;
+
+    [Header("Input Properties")]
+    public Gamepad controller;
 
     [Header("Powerup Stats")]
-    public float ricochetTimer;
-    public float fireRateMultiplier;
-    public float fireRateTimer;
-    public int shieldHealth;
-    public float lowGravityMass;
+    [Min(0)] public float powerupTime;
+    [Space(20)]
+    [Min(0)] public int maxShieldHealth;
+    [Range(0, 1)] public float fireRateScalar;
+    [Range(0, 1)] public float lowGravityScalar;
 
-    // powerup tracking
-    public float powerUpTime;
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
 
-    private bool m_isShooting;
-
-    public Gamepad controller;
     public enum Powerup
     {
         None,
@@ -58,115 +62,66 @@ public class PlayerController : MonoBehaviour
         ExplodeBullets, 
         LowGravity
     }
-    private Powerup m_currentPowerup;
-    Bullet.Effect effect;
+    [SerializeField] private Powerup m_currentPowerup;
+
     public Powerup currentPowerup
     {
         get { return m_currentPowerup; }
         set
         {
+            // reset values
+            m_fireRate = m_currentGun.baseFireRate;
+            m_shieldCurrentHealth = 0;
+            m_rb.mass = defaultMass;
+            if (m_shieldGameObject != null) Destroy(m_shieldGameObject);
+
+            // only set timer if the powerup is not shield
+            if (value != Powerup.Shield) m_powerupTimer = powerupTime;
+
+            // set powerup
             m_currentPowerup = value;
             switch (m_currentPowerup)
             {
                 case Powerup.FireRateUp:
                 {
-                    m_fireRate *= fireRateMultiplier;
-                    m_shieldCurrentHealth = 0;
-                    m_powerupTimer = powerUpTime;
-                    if (m_shieldObjectReference != null)
-                    {
-                        Destroy(m_shieldObjectReference);
-                    }
-                    m_rb.mass = defualtMass;
-                        effect = Bullet.Effect.None;
-                        break;
+                    m_fireRate *= fireRateScalar;
+                    break;
                 }
                 case Powerup.Shield:
                 {
-                    m_shieldCurrentHealth = shieldHealth;
-                    m_shieldObjectReference = Instantiate(m_shieldObject, transform);
-                    m_fireRate = m_currentGun.baseFireRate;
-                    m_powerupTimer = powerUpTime;
-                        m_rb.mass = defualtMass;
-                        effect = Bullet.Effect.None;
-                        break;
+                    m_shieldCurrentHealth = maxShieldHealth;
+                    m_shieldGameObject = Instantiate(m_shieldObject, transform);
+                    break;
                 }
                 case Powerup.Ricochet:
-                {
-                    m_fireRate = m_currentGun.baseFireRate;
-                    m_shieldCurrentHealth = 0;
-                    if (m_shieldObjectReference != null)
-                    {
-                        Destroy(m_shieldObjectReference);
-                    }
-                    m_powerupTimer = powerUpTime;
-                        m_rb.mass = defualtMass;
-                        effect = Bullet.Effect.Bounce;
-                        break;
+                { 
+                    break;
                 }
                 case Powerup.BigBullets:
                 {
-                    m_fireRate = m_currentGun.baseFireRate;
-                    m_shieldCurrentHealth = 0;
-                    if (m_shieldObjectReference != null)
-                    {
-                        Destroy(m_shieldObjectReference);
-                    }
-                    m_powerupTimer = powerUpTime;
-                        m_rb.mass = defualtMass;
-                        effect = Bullet.Effect.Big;
-                        break;
+                    break;
                 }
                 case Powerup.ExplodeBullets:
                 {
-                    m_fireRate = m_currentGun.baseFireRate;
-                    m_shieldCurrentHealth = 0;
-                    if (m_shieldObjectReference != null)
-                    {
-                        Destroy(m_shieldObjectReference);
-                    }
-                    m_powerupTimer = powerUpTime;
-                        m_rb.mass = defualtMass;
-                        effect = Bullet.Effect.Explode;
-                        break;
+                    break;
                 }
                 case Powerup.LowGravity:
-                    {
-                        m_fireRate = m_currentGun.baseFireRate;
-                        m_shieldCurrentHealth = 0;
-                        if (m_shieldObjectReference != null)
-                        {
-                            Destroy(m_shieldObjectReference);
-                        }
-                        m_rb.mass = lowGravityMass;
-                        effect = Bullet.Effect.None;
-                        break;
-                    }
+                {
+                    m_rb.mass *= lowGravityScalar;
+                    break;
+                }
                 case Powerup.None:
                 {
-                    m_fireRate = m_currentGun.baseFireRate;
-                    m_shieldCurrentHealth = 0;
-                    if (m_shieldObjectReference != null)
-                    {
-                        Destroy(m_shieldObjectReference);
-                    }
-                        m_rb.mass = defualtMass;
-                        effect = Bullet.Effect.None;
-                        break;
+                    break;
                 }
             }
         }
     }
 
-    [Header("Gun")]
-    public Gun defaultGun;
-    private Gun m_currentGun; // gun the player currently has
-    [Min(0)] public float gunHoldDistance;
-
     private void Awake()
     {
+        // Find attached components 
         m_rb = GetComponent<Rigidbody>();
-        defualtMass = m_rb.mass;
         m_playerInput = GetComponent<PlayerInput>();
     }
 
@@ -174,36 +129,57 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_aimDirection = transform.forward;
+        m_rb.mass = defaultMass;
         SetGun(defaultGun);      
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 
+        // update powerup timer
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
+        // if the current powerup isn't the sheld, powerup timer is less than or equal to 0, disable the powerup
         if (currentPowerup != Powerup.Shield && m_powerupTimer <= 0 && currentPowerup != Powerup.None) currentPowerup = Powerup.None;
 
+        // if player is shooting
         if(m_isShooting)
         {
             if (Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
             {
-                if (m_currentAmmo != -1) m_currentAmmo--; //Cameron
-
+                // old recoil force
                 //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
 
-                m_currentGun.Shoot(gameObject.GetInstanceID(), effect);
-
-                m_nextFireTime = Time.time + (1f / m_fireRate); // Set the next time the player can shoot based on their fire rate
-
-                if (m_currentAmmo == 0)
+                // Determine if the current powerup affects shooting
+                Bullet.BulletEffect bulletEffect;
+                switch (m_currentPowerup)
                 {
-                    SetGun(defaultGun);
+                    case Powerup.Ricochet:
+                        bulletEffect = Bullet.BulletEffect.Ricochet;
+                        break;
+                    case Powerup.BigBullets:
+                        bulletEffect = Bullet.BulletEffect.Big;
+                        break;
+                    case Powerup.ExplodeBullets:
+                        bulletEffect = Bullet.BulletEffect.Explode;
+                        break;
+                    default:
+                        bulletEffect = Bullet.BulletEffect.None;
+                        break;
                 }
 
+                // shoot gun
+                m_currentGun.Shoot(gameObject.GetInstanceID(), bulletEffect);
+
+                // ammo is only reduced if the player is not holding their default gun
+                if (m_currentAmmo != -1) m_currentAmmo--;
+
+                // Set the next time the player can shoot based on their fire rate
+                m_nextFireTime = Time.time + (1f / m_fireRate);
+
+                // If the player has run out of ammo, reset their gun
+                if (m_currentAmmo == 0) SetGun(defaultGun);
             }
         }
-
     }
 
     // FixedUpdate is called once per physic frame
@@ -236,7 +212,6 @@ public class PlayerController : MonoBehaviour
         {
             m_isShooting = false;
         }
-        
     }
 
     public void Aim(InputAction.CallbackContext value)
@@ -277,7 +252,7 @@ public class PlayerController : MonoBehaviour
             m_shieldCurrentHealth--;
             if (m_shieldCurrentHealth == 0)
             {
-                Destroy(m_shieldObjectReference);
+                Destroy(m_shieldGameObject);
             }
             return;
         }

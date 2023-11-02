@@ -47,13 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b322403b599a3c499530be1f490d894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minLifeTime: 5
-  maxLifeTime: 10
-  sizeScaler: 14
-  explosion: {fileID: 6687683863409229215, guid: b2550b170e9a0964684c5b4f6238616a, type: 3}
-  explosionLifetime: 20
   m_damage: 0
   m_shouldBounce: 0
+  m_playerID: 0
+  sizeScalar: 0
+  explosionPrefab: {fileID: 0}
+  sparksPrefab: {fileID: -4343892208976721057, guid: b6ebd225944abff4a9fb50e24c1148e0, type: 3}
 --- !u!54 &4081999047442605340
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -69,7 +68,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &6307955325964683793
 CapsuleCollider:
   m_ObjectHideFlags: 0

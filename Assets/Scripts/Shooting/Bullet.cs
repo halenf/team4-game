@@ -1,6 +1,6 @@
 // Bullet - Halen, Cameron
 // Determines bullet behaviour
-// Last edit: 1/11/23
+// Last edit: 2/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,69 +8,77 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    // component references
     private Rigidbody m_rb;
-    private float m_playerID;
 
-    public float sizeScaler;
-    public GameObject explosion;
-
-    [Header("Stats")]
+    [Header("Properties")]
     [SerializeField] private float m_damage;
-    [SerializeField] private bool m_shouldBounce;
+    [SerializeField] private float m_playerID;
 
-    public enum Effect
+    public enum BulletEffect
     {
         None,
-        Bounce, 
+        Ricochet, 
         Big, 
         Explode
     }
 
-    private Effect m_currentEffect;
+    [SerializeField] [InspectorName("Bullet Effect")] private BulletEffect m_currentEffect;
+
+    [Header("Particle Effects")]
+    public ParticleSystem sparksPrefab;
+
+    [Space(10)]
+    public Explosion explosionPrefab;
 
     /// <summary>
     /// For setting bullet details after being instantiated
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="damage"></param>
-    /// <param name="shouldBounce"></param>
-    public void Init(float playerID, float damage, Vector3 velocity, float lifeTime, Effect effect)
+    /// <param name="velocity"></param>
+    /// <param name="lifeTime"></param>
+    /// <param name="effect"></param>
+    public void Init(float playerID, float damage, Vector3 velocity, float lifeTime, BulletEffect effect)
     {
         m_playerID = playerID;
         m_damage = damage;
         m_rb.velocity = velocity;
 
+        // Set the colour of the particle system to default - Halen
+        var particleSettings = sparksPrefab.main;
+        particleSettings.startColor = Color.yellow;
+
         switch(effect)
         {
-            case Effect.Bounce:
+            case BulletEffect.Ricochet:
             { 
-                m_shouldBounce = true;
-                    Destroy(gameObject, lifeTime);
-                    break;
+                Destroy(gameObject, lifeTime);
+                break;
             }
-            case Effect.Big:
+            case BulletEffect.Big:
             {
-                transform.localScale = transform.localScale * sizeScaler;
-                    Destroy(gameObject, lifeTime);
-                    break;
+                transform.localScale = transform.localScale * 2;
+                Destroy(gameObject, lifeTime);
+                break;
             }
-            case Effect.Explode:
-                {
-                    StartCoroutine(Explode(lifeTime));
-                    break;
-                }
-            case Effect.None:
-                {
-                    Destroy(gameObject, lifeTime);
-                    break;
-                }
+            case BulletEffect.Explode:
+            {
+                StartCoroutine(Explode(lifeTime));
+                break;
+            }
+            case BulletEffect.None:
+            {
+                Destroy(gameObject, lifeTime);
+                break;
+            }
         }
     }
 
     private IEnumerator Explode(float lifeTime)
     {
         yield return new WaitForSeconds(lifeTime);
-        Instantiate(explosion, transform.position, Quaternion.identity);
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
@@ -91,27 +99,46 @@ public class Bullet : MonoBehaviour
     // When bullet collides with another object
     private void OnCollisionEnter(Collision collision)
     {
+        // editing particle system properties
+        var particleSettings = sparksPrefab.main;
         
+        // specific collisions
+
+        // If the bullet collides with a player that isn't the one who shot it
         if (collision.gameObject.tag == "Player" && collision.gameObject.GetInstanceID() != m_playerID)
         {
+            // deal damage to player
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             player.TakeDamage(m_damage);
-            Destroy(gameObject);
-        }
-        
-        if (!m_shouldBounce && collision.gameObject.tag != "Player")
-        {
-            
-            Destroy(gameObject);
-        }
-        else
-        {
-            m_shouldBounce = false;
+
+            // make particle effect red because blood
+            particleSettings.startColor = Color.red;
         }
 
-        if(collision.gameObject.tag == "Platform")
+        // if the bullet hits a destructible platform
+        if (collision.gameObject.tag == "Platform")
         {
             collision.gameObject.GetComponent<Platform>().TakeDamage(m_damage);
         }
+
+        // general collisions
+
+        // if the bullet should bounce, then don't destroy it on collision
+        if (m_currentEffect == BulletEffect.Ricochet)
+        {
+            particleSettings.startColor = Color.blue;
+            m_currentEffect = BulletEffect.None;
+        }
+        else
+        {
+            particleSettings.startColor = Color.yellow;
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // create particle effect on all collisions
+        ParticleSystem effect = Instantiate(sparksPrefab, transform.position, transform.rotation);
     }
 }

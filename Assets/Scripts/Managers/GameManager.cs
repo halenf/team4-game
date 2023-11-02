@@ -220,12 +220,12 @@ public class GameManager : MonoBehaviour
                 //create a player object and assign their specific controller
                 GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
 
-                PlayerController playerComponent = newPlayer.GetComponent<PlayerController>();
+                PlayerController playerController = newPlayer.GetComponent<PlayerController>();
 
                 // add player to list of players
-                m_activePlayerControllers.Add(playerComponent);
-                playerComponent.controller = m_controllers[j];
-                playerComponent.playerCounter.text = (j + 1).ToString();
+                m_activePlayerControllers.Add(playerController);
+                playerController.controller = m_controllers[j];
+                playerController.playerCounter.text = (j + 1).ToString();
             }
 
             // deactivate start menu, activate gameplayUI - Halen
