@@ -1,6 +1,6 @@
 // Player Controller - Halen, Cameron
 // Handles general player info, inputs, and actions
-// Last edit: 26/10/23
+// Last edit: 2/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -42,11 +42,12 @@ public class PlayerController : MonoBehaviour
     [Header("Input Properties")]
     public Gamepad controller;
 
-    [Header("Powerup Stats")]
+    [Header("Powerup Properties")]
+    [SerializeField] private Powerup m_currentPowerup;
     [Min(0)] public float powerupTime;
     [Space(20)]
     [Min(0)] public int maxShieldHealth;
-    [Range(0, 1)] public float fireRateScalar;
+    [Min(1)] public float fireRateScalar;
     [Range(0, 1)] public float lowGravityScalar;
 
     private float m_powerupTimer;
@@ -57,12 +58,11 @@ public class PlayerController : MonoBehaviour
         None,
         Ricochet,
         FireRateUp,
-        Shield, 
-        BigBullets, 
-        ExplodeBullets, 
+        Shield,
+        BigBullets,
+        ExplodeBullets,
         LowGravity
     }
-    [SerializeField] private Powerup m_currentPowerup;
 
     public Powerup currentPowerup
     {
@@ -321,7 +321,6 @@ public class PlayerController : MonoBehaviour
     {
         m_rb.isKinematic = false;
         m_playerInput.ActivateInput();
-        Debug.Log("Activate");
     }
 
     /// <summary>

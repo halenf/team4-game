@@ -11,9 +11,9 @@ public class Bullet : MonoBehaviour
     // component references
     private Rigidbody m_rb;
 
-    [Header("Properties")]
-    [SerializeField] private float m_damage;
-    [SerializeField] private float m_playerID;
+    // properties
+    private float m_damage;
+    private float m_playerID;
 
     public enum BulletEffect
     {
@@ -22,14 +22,12 @@ public class Bullet : MonoBehaviour
         Big, 
         Explode
     }
-
+    [Header("Bullet Effects")]
     [SerializeField] [InspectorName("Bullet Effect")] private BulletEffect m_currentEffect;
+    public Explosion explosionPrefab;
 
     [Header("Particle Effects")]
     public ParticleSystem sparksPrefab;
-
-    [Space(10)]
-    public Explosion explosionPrefab;
 
     /// <summary>
     /// For setting bullet details after being instantiated
@@ -138,7 +136,9 @@ public class Bullet : MonoBehaviour
 
     private void OnDestroy()
     {
-        // create particle effect on all collisions
-        ParticleSystem effect = Instantiate(sparksPrefab, transform.position, transform.rotation);
+        // instantiate explosion if player has exploding bullets
+        // otherwise instantiate sparks
+        if (m_currentEffect == BulletEffect.Explode) Instantiate(explosionPrefab);
+        else Instantiate(sparksPrefab, transform.position, transform.rotation);
     }
 }

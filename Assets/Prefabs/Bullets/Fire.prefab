@@ -47,10 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b322403b599a3c499530be1f490d894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeScaler: 14
-  explosion: {fileID: 6687683863409229215, guid: b2550b170e9a0964684c5b4f6238616a, type: 3}
-  m_damage: 0
-  m_shouldBounce: 0
+  m_currentEffect: 0
+  explosionPrefab: {fileID: 8821883338272630741, guid: a382766b8b320394197bb30a677620b7, type: 3}
+  sparksPrefab: {fileID: -4343892208976721057, guid: b6ebd225944abff4a9fb50e24c1148e0, type: 3}
 --- !u!136 &6307955325964683793
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -58,9 +57,9 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539746001957454929}
-  m_Material: {fileID: 13400000, guid: f5d42a0b39f8cfc4194bf16c536f2c0e, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.09
   m_Height: 0.3
   m_Direction: 2

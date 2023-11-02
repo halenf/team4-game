@@ -1,6 +1,6 @@
 // Gun - Halen, Cameron
 // Stores gun data
-// Last edit: 1/11/23
+// Last edit: 2/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,20 +8,6 @@ using UnityEngine;
 
 public abstract class Gun : MonoBehaviour
 {
-    public Bullet bulletPrefab;
-
-    [Header("Bullet Properties")]
-    [Tooltip("Angle on either side of the player's aim direction in degrees that a bullet can be randomly added to bullet velocity.")]
-    [Min(0)] public float spread;
-    [Min(0)] public float bulletSpeed;
-    [Min(0)] public float bulletDamage;
-
-    [Range(0, 1)]public float highRumbleFrequency;
-    [Range(0, 1)]public float lowRumbleFrequency;
-    [Min(0)]public float rumbleTime;
-
-    public float bulletLifeTime;
-
     [Header("Gun Properties")]
     [Min(0)] public float baseRecoil;
     [Range(0, 1)] public float groundedRecoilScalar;
@@ -30,6 +16,19 @@ public abstract class Gun : MonoBehaviour
     [Min(0)] public float ammoCapacity;
     public Transform bulletSpawnTransform;
     public GameObject gunPrefab;
+
+    [Header("Bullet Properties")]
+    [InspectorName("Prefab")] public Bullet bulletPrefab;
+    [Tooltip("Angle on either side of the player's aim direction in degrees that a bullet can be randomly added to bullet velocity.")]
+    [Min(0)] public float spread;
+    [Min(0)] public float bulletSpeed;
+    [Min(0)] public float bulletDamage;
+    public float bulletLifeTime;
+
+    [Header("Rumble")]
+    [Range(0, 1)]public float highRumbleFrequency;
+    [Range(0, 1)]public float lowRumbleFrequency;
+    [Min(0)]public float rumbleTime;
 
     /// <summary>
     /// Makes the gun shoot.
@@ -52,12 +51,6 @@ public abstract class Gun : MonoBehaviour
         // apply recoil to player
         float tempRecoil = baseRecoil;
         if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
-        transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
+        transform.parent.gameObject.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
     }
 }
