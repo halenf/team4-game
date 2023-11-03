@@ -15,6 +15,10 @@ public class GunBox : PowerUp
     void Start()
     {
         currentGun = Guns[Random.Range(0, Guns.Length)];
+        
+        
+        StartCoroutine(Die());
+        
     }
 
     public override void OnCollisionEnter(Collision other)
@@ -32,5 +36,15 @@ public class GunBox : PowerUp
             //destroy self
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator Die()
+    {
+        yield return new WaitForSeconds(lifeTime);
+        //tell the stage to start the timer again
+        stage.StartGunRoutine();
+
+        //destroy self
+        Destroy(gameObject);
     }
 }

@@ -9,4 +9,6 @@ public abstract class PowerUp : MonoBehaviour
 {
     public Stage stage;
     public abstract void OnCollisionEnter(Collision other);
+
+    public float lifeTime;
 }
