@@ -49,7 +49,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_currentEffect: 0
   explosionPrefab: {fileID: 8821883338272630741, guid: a382766b8b320394197bb30a677620b7, type: 3}
+  explosionDamage: 0
+  explosionRadius: 0
+  explosionLifetime: 0
   sparksPrefab: {fileID: -4343892208976721057, guid: b6ebd225944abff4a9fb50e24c1148e0, type: 3}
+  bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
 --- !u!136 &6307955325964683793
 CapsuleCollider:
   m_ObjectHideFlags: 0
