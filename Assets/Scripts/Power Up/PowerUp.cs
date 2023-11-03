@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class PowerUp : MonoBehaviour
 {
     public Stage stage;
-    public abstract void OnCollisionEnter(Collision other);
+    public abstract void OnTriggerEnter(Collider other);
 
     public float lifeTime;
 }

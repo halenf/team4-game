@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // shoot gun
-                m_currentGun.Shoot(gameObject.GetInstanceID(), bulletEffect);
+                m_currentGun.Shoot(GameManager.Instance.GetPlayerID(this), bulletEffect);
 
                 // ammo is only reduced if the player is not holding their default gun
                 if (m_currentAmmo != -1) m_currentAmmo--;
@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
     public void OnDisconnect()
     {
         GameManager.Instance.TogglePause(this);
-        GameManager.Instance.Dissconected(this);
+        GameManager.Instance.Disconnected(this);
     }
 
     public void OnConnect()
@@ -260,8 +260,7 @@ public class PlayerController : MonoBehaviour
         if (m_currentHealth <= 0) // if player is dead
         {
             DisableInput();
-            if (GameManager.Instance)
-                GameManager.Instance.deadPlayers++;
+            if (GameManager.Instance) GameManager.Instance.deadPlayers++;
         }
     }
 

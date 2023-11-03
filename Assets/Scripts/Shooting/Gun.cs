@@ -1,6 +1,6 @@
 // Gun - Halen, Cameron
 // Stores gun data
-// Last edit: 2/11/23
+// Last edit: 3/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ public abstract class Gun : MonoBehaviour
     [Range(0, 1)] public float groundedRecoilScalar;
     [Tooltip("Number of bullets the player can fire each second.")]
     [Min(0)] public float baseFireRate;
-    [Min(0)] public float ammoCapacity;
+    [Min(0)] public int ammoCapacity;
     public Transform bulletSpawnTransform;
     public GameObject gunPrefab;
 
@@ -23,7 +23,7 @@ public abstract class Gun : MonoBehaviour
     [Min(0)] public float spread;
     [Min(0)] public float bulletSpeed;
     [Min(0)] public float bulletDamage;
-    public float bulletLifeTime;
+    [Min(0)] public float bulletLifeTime;
 
     [Header("Rumble")]
     [Range(0, 1)]public float highRumbleFrequency;

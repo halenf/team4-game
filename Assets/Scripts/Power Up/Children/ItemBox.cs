@@ -12,7 +12,8 @@ public class ItemBox : PowerUp
     {
         StartCoroutine(Die());
     }
-    public override void OnCollisionEnter(Collision other)
+
+    public override void OnTriggerEnter(Collider other)
     {
         //if colliding with player
         if (other.gameObject.tag == "Player")
@@ -25,9 +26,6 @@ public class ItemBox : PowerUp
 
             player.ActivatePowerUp((PlayerController.Powerup)choice);
 
-            //tell the stage to start the timer again
-            stage.StartGunRoutine();
-
             //destroy self
             Destroy(gameObject);
         }
@@ -36,10 +34,13 @@ public class ItemBox : PowerUp
     private IEnumerator Die()
     {
         yield return new WaitForSeconds(lifeTime);
-        //tell the stage to start the timer again
-        stage.StartGunRoutine();
 
         //destroy self
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        stage.StartPowerUpRoutine();
     }
 }

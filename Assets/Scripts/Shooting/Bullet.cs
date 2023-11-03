@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
 
     // properties
     private float m_damage;
-    private float m_playerID;
+    private int m_playerID;
 
     public enum BulletEffect
     {
@@ -25,9 +25,18 @@ public class Bullet : MonoBehaviour
     [Header("Bullet Effects")]
     [SerializeField] [InspectorName("Bullet Effect")] private BulletEffect m_currentEffect;
     public Explosion explosionPrefab;
+    [Space(10)]
+    [Min(0)] public float explosionDamage;
+    [Min(0)] public float explosionRadius;
+    [Tooltip("Time the explosion hitbox is active for in seconds.")]
+    [Min(0)] public float explosionLifetime;
 
     [Header("Particle Effects")]
     public ParticleSystem sparksPrefab;
+    public ParticleSystem bloodPrefab;
+
+    // tracks which particle to instantiate when the bullet is destroyed
+    private ParticleSystem m_particle;
 
     /// <summary>
     /// For setting bullet details after being instantiated
@@ -37,17 +46,17 @@ public class Bullet : MonoBehaviour
     /// <param name="velocity"></param>
     /// <param name="lifeTime"></param>
     /// <param name="effect"></param>
-    public void Init(float playerID, float damage, Vector3 velocity, float lifeTime, BulletEffect effect)
+    public void Init(int playerID, float damage, Vector3 velocity, float lifeTime, BulletEffect effect)
     {
         m_playerID = playerID;
         m_damage = damage;
         m_rb.velocity = velocity;
+        m_currentEffect = effect;
 
-        // Set the colour of the particle system to default - Halen
-        var particleSettings = sparksPrefab.main;
-        particleSettings.startColor = Color.yellow;
+        // Set the particle system to default - Halen
+        m_particle = sparksPrefab;
 
-        switch(effect)
+        switch(m_currentEffect)
         {
             case BulletEffect.Ricochet:
             { 
@@ -76,7 +85,8 @@ public class Bullet : MonoBehaviour
     private IEnumerator Explode(float lifeTime)
     {
         yield return new WaitForSeconds(lifeTime);
-        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Explosion explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        explosion.Init(m_playerID, explosionDamage, explosionRadius, explosionLifetime);
         Destroy(gameObject);
     }
 
@@ -97,20 +107,22 @@ public class Bullet : MonoBehaviour
     // When bullet collides with another object
     private void OnCollisionEnter(Collision collision)
     {
-        // editing particle system properties
-        var particleSettings = sparksPrefab.main;
-        
-        // specific collisions
+        // default particle effect
+        m_particle = sparksPrefab;
 
         // If the bullet collides with a player that isn't the one who shot it
-        if (collision.gameObject.tag == "Player" && collision.gameObject.GetInstanceID() != m_playerID)
+        if (collision.gameObject.tag == "Player"
+            && GameManager.Instance.GetPlayerID(collision.gameObject.GetComponent<PlayerController>()) != m_playerID)
         {
-            // deal damage to player
-            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            player.TakeDamage(m_damage);
+            // deal damage to player if the bullet is not an exploding bullet
+            if (m_currentEffect != BulletEffect.Explode)
+            {
+                PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+                player.TakeDamage(m_damage);
+            }
 
-            // make particle effect red because blood
-            particleSettings.startColor = Color.red;
+            // set the particle effect to blood
+            m_particle = bloodPrefab;
         }
 
         // if the bullet hits a destructible platform
@@ -119,17 +131,14 @@ public class Bullet : MonoBehaviour
             collision.gameObject.GetComponent<Platform>().TakeDamage(m_damage);
         }
 
-        // general collisions
-
-        // if the bullet should bounce, then don't destroy it on collision
+        // destroy or bounce bullet
         if (m_currentEffect == BulletEffect.Ricochet)
         {
-            particleSettings.startColor = Color.blue;
+            // special particle effect for ricochet? ********
             m_currentEffect = BulletEffect.None;
         }
         else
         {
-            particleSettings.startColor = Color.yellow;
             Destroy(gameObject);
         }
     }
@@ -138,7 +147,7 @@ public class Bullet : MonoBehaviour
     {
         // instantiate explosion if player has exploding bullets
         // otherwise instantiate sparks
-        if (m_currentEffect == BulletEffect.Explode) Instantiate(explosionPrefab);
-        else Instantiate(sparksPrefab, transform.position, transform.rotation);
+        if (m_currentEffect == BulletEffect.Explode) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        else Instantiate(m_particle, transform.position, transform.rotation);
     }
 }

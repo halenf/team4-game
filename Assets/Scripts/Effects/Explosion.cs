@@ -1,16 +1,18 @@
-// explosion - Cameron
-// destroys self after life time
-// Last edit: 2/11/23
+// explosion - Halen
+// Creates damaging hitbox and spawns explosion particle system
+// Last edit: 3/11/23
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    [Tooltip("Amount of time the explosion hitbox is active for.")]
-    [Min(0)] public float lifeTime;
-    [Tooltip("Radius of the explosion.")]
-    [Min(0)] public float radius;
+    private int m_playerID;
+    
+    [Header("Properties")]
+    [Tooltip("Damage dealt by the explosion to players.")]
+    [Min(0)] public float damage;
 
     [Header("Particle Systems")]
     public ParticleSystem fragments;
@@ -19,6 +21,14 @@ public class Explosion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    public void Init(int playerID, float damage, float radius, float lifetime)
+    {
+        m_playerID = playerID;
+        this.damage = damage;
+        
         // Create the explosion collider
         SphereCollider collider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
         collider.isTrigger = true;
@@ -26,20 +36,32 @@ public class Explosion : MonoBehaviour
         collider.center = Vector3.zero;
 
         // set details of the particle systems
-        var fragmentsModule = fragments.GetComponent<ParticleSystem.MainModule>();
+        var fragmentsModule = fragments.main;
         fragmentsModule.startSpeed = radius * 3.75f;
 
-        var blastModule = blast.GetComponent<ParticleSystem.MainModule>();
+        var blastModule = blast.main;
         blastModule.startSize = radius;
 
-        StartCoroutine(Explode());
+        // i'm tired, figure it out
+        StartCoroutine(Explode(lifetime));
         Instantiate(fragments, transform.position, Quaternion.identity);
         Instantiate(blast, transform.position, Quaternion.identity);
+        Destroy(gameObject, blastModule.startLifetime.constant);
     }
 
-    private IEnumerator Explode()
+    private IEnumerator Explode(float lifetime)
     {
-        yield return new WaitForSeconds(lifeTime);
-        Destroy(gameObject);
+        yield return new WaitForSeconds(lifetime);
+        GetComponent<SphereCollider>().enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if the explosion hits a player
+        PlayerController player = other.gameObject.GetComponent<PlayerController>();
+        if (player)
+        {
+            player.TakeDamage(damage);
+        }
     }
 }

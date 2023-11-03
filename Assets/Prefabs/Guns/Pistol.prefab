@@ -417,7 +417,7 @@ MonoBehaviour:
   spread: 5
   bulletSpeed: 20
   bulletDamage: 2
-  bulletLifeTime: 20
+  bulletLifeTime: 3
   highRumbleFrequency: 0.846
   lowRumbleFrequency: 0.3
   rumbleTime: 0.05

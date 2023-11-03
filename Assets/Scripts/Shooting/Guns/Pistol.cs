@@ -1,6 +1,6 @@
 // Pistol - Halen, Cameron
 // specific script for the pistol gun
-// Last edit: 1/11/23
+// Last edit: 3/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +19,6 @@ public class Pistol : Gun
     public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
         StartCoroutine(BurstShot(playerID, effect));
-        
     }
 
     private IEnumerator BurstShot(int playerID, Bullet.BulletEffect effect)

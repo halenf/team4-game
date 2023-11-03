@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// checks if any controller has pressed east and stores them if so
     /// </summary>
-    private void CheckControllers()
+    public void CheckControllers()
     {
         //for all of the controllers connected to the computer
         for (int i = 0; i < Gamepad.all.Count; i++)
@@ -292,7 +292,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Dissconected(PlayerController disconnectedPlayer)
+    public void Disconnected(PlayerController disconnectedPlayer)
     {
         int playerID = GetPlayerID(disconnectedPlayer) + 1;
         m_disconnectCanvas.gameObject.SetActive(true); 
@@ -304,7 +304,7 @@ public class GameManager : MonoBehaviour
         m_disconnectCanvas.gameObject.SetActive(false);
     }
 
-    private void EndRound(int playerID)
+    public void EndRound(int playerID)
     {
         DisablePlayers();
         m_gameplayCanvas.StartRoundEnd(playerID);
@@ -484,7 +484,7 @@ public class GameManager : MonoBehaviour
     /// randomizes the spawns in the array to spawn players at random locations
     /// </summary>
     /// <param name="spawns"></param>
-    private void ShuffleSpawns(Transform[] spawns)
+    public void ShuffleSpawns(Transform[] spawns)
     {
         // Knuth shuffle algorithm
         for (int i = 0; i < spawns.Length; i++)
@@ -501,7 +501,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    private int GetPlayerID(PlayerController player)
+    public int GetPlayerID(PlayerController player)
     {
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
