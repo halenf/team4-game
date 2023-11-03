@@ -16,6 +16,10 @@ public class SoundManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource soundSource;
 
+    [Header("Resource Directories")]
+    public string soundDirectory = "Sound/SoundEffects";
+    public string musicDirectory = "Sound/Music";
+
     [Space(10)]
 
     public AudioClip defaultClip;
@@ -48,6 +52,18 @@ public class SoundManager : MonoBehaviour
     /// <param name="clip"></param>
     public void PlaySound(AudioClip clip)
     {
+        soundSource.PlayOneShot(clip);
+    }
+
+    public void PlayMusic(string filename)
+    {
+        AudioClip clip = (AudioClip) Resources.Load(musicDirectory + "/" + filename);
+        soundSource.PlayOneShot(clip);
+    }
+
+    public void PlaySound(string filename)
+    {
+        AudioClip clip = (AudioClip) Resources.Load(soundDirectory + "/" + filename);
         soundSource.PlayOneShot(clip);
     }
 
