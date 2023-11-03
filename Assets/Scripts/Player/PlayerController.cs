@@ -32,8 +32,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_moveForce;
     private Vector2 m_aimDirection;
     private float defualtMass;
-    public float groundDrag;
-    public float airDrag;
 
     [Header("Powerup Stats")]
     public float ricochetTimer;

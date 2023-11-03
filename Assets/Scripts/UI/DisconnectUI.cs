@@ -1,3 +1,6 @@
+// Disconnect UI - Cameron
+// has settable text
+// Last edit: 1/11/23
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
