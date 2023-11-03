@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6393995999401474302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8881114855285329760}
+  m_Layer: 0
+  m_Name: CameraPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8881114855285329760
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393995999401474302}
+  m_LocalRotation: {x: 0.02210198, y: -0, z: -0, w: 0.99975574}
+  m_LocalPosition: {x: -9.246983, y: 9.391838, z: -15.005302}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7952906463279250587}
+  m_RootOrder: 164
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7952906462148911859
 GameObject:
   m_ObjectHideFlags: 0
@@ -14188,7 +14219,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7952906463279250585}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 16.456982, y: -1.2500006, z: -41.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14357,6 +14388,7 @@ Transform:
   - {fileID: 7952906463277059726}
   - {fileID: 7952906463192875230}
   - {fileID: 7952906463369336113}
+  - {fileID: 8881114855285329760}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14385,6 +14417,7 @@ MonoBehaviour:
   - {fileID: 7952906463040737210}
   - {fileID: 7952906463550444543}
   - {fileID: 7952906462434681308}
+  cameraDefaultTransform: {fileID: 8881114855285329760}
   gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   itemBox: {fileID: 7186940273359724510, guid: 678df13942696044aa79bc49f6085ce3, type: 3}
   minGunTimer: 10
