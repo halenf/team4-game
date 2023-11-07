@@ -568,7 +568,11 @@ PrefabInstance:
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: disconnectCanvasPrefab
       value: 
-      objectReference: {fileID: 2559865700041908714, guid: b7c5eeff026122b40be11e4ab94474df, type: 3}
+      objectReference: {fileID: 2559865700041908714, guid: ac8428efec677244b89fb469854fee69, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[0]
+      value: 
+      objectReference: {fileID: 6279050203965020814, guid: b585fbd85935a0b4aa5bdda6200c4e00, type: 3}
     - target: {fileID: 6369607398092397879, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_RootOrder
       value: 1

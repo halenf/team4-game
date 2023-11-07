@@ -226,6 +226,7 @@ public class GameManager : MonoBehaviour
                 m_activePlayerControllers.Add(playerController);
                 playerController.controller = m_controllers[j];
                 playerController.playerCounter.text = (j + 1).ToString();
+                playerController.Rumble(.25f, .85f, 5f);
             }
 
             // deactivate start menu, activate gameplayUI - Halen
