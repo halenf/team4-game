@@ -94,7 +94,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6146957387454679208}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.71, y: 1, z: 1}
@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7eb54ed846b47b4781659f6a25280ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stage: {fileID: 0}
+  lifeTime: 0
   Guns:
   - {fileID: 7557321546389718272, guid: 33b9e3908e9af964fa614bc03795cb03, type: 3}
 --- !u!1001 &2197539689644248670

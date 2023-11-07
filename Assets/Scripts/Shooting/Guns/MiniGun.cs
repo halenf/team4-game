@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MiniGun : Gun
 {
-    public override void Shoot(int playerID, Bullet.Effect effect)
+    public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
         PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
@@ -18,8 +18,8 @@ public class MiniGun : Gun
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
         bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
         // apply recoil to player
-        float tempRecoil = recoil;
-        if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
+        float tempRecoil = baseRecoil;
+        if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
         transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
     }
 }

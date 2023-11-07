@@ -1,6 +1,6 @@
 // Pistol - Halen, Cameron
 // specific script for the pistol gun
-// Last edit: 1/11/23
+// Last edit: 3/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -16,13 +16,12 @@ public class Pistol : Gun
     [Min(0)] public float shootingSpeed;
     
    
-    public override void Shoot(int playerID, Bullet.Effect effect)
+    public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
         StartCoroutine(BurstShot(playerID, effect));
-        
     }
 
-    private IEnumerator BurstShot(int playerID, Bullet.Effect effect)
+    private IEnumerator BurstShot(int playerID, Bullet.BulletEffect effect)
     {
         for (int i = 0; i < burstNumber; i++)
         {
@@ -36,8 +35,8 @@ public class Pistol : Gun
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
             bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
             // apply recoil to player
-            float tempRecoil = recoil;
-            if (player.IsGrounded()) tempRecoil *= groundMultiplyer;
+            float tempRecoil = baseRecoil;
+            if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
             transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
             // wait for next burst shot
             if (i != burstNumber - 1) yield return new WaitForSeconds(1f / shootingSpeed);

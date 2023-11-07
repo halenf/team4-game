@@ -21,7 +21,7 @@ public class GunBox : PowerUp
         
     }
 
-    public override void OnCollisionEnter(Collision other)
+    public override void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -29,9 +29,6 @@ public class GunBox : PowerUp
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
             player.SetGun(currentGun);
-
-            //tell the stage to start the timer again
-            stage.StartGunRoutine();
 
             //destroy self
             Destroy(gameObject);
@@ -46,5 +43,10 @@ public class GunBox : PowerUp
 
         //destroy self
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        stage.StartGunRoutine();
     }
 }

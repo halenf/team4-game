@@ -407,21 +407,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c4476b02b78b2468416752471f9d8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2271769695517889325, guid: 95da5109b21aeb34381908273ee0887b, type: 3}
-  spread: 5
-  bulletSpeed: 20
-  bulletDamage: 2
-  shouldBounce: 0
-  highRumbleFrequency: 0.846
-  lowRumbleFrequency: 0.3
-  rumbleTime: 0.05
-  bulletLifeTime: 20
-  recoil: 25
-  groundMultiplyer: 0.5
+  baseRecoil: 25
+  groundedRecoilScalar: 0.75
   baseFireRate: 1.4
   ammoCapacity: 8
   bulletSpawnTransform: {fileID: 4804845785601766676}
   gunPrefab: {fileID: 4789882382446241977}
+  bulletPrefab: {fileID: 2271769695517889325, guid: 95da5109b21aeb34381908273ee0887b, type: 3}
+  spread: 5
+  bulletSpeed: 20
+  bulletDamage: 2
+  bulletLifeTime: 3
+  highRumbleFrequency: 0.846
+  lowRumbleFrequency: 0.3
+  rumbleTime: 0.05
   burstNumber: 3
   shootingSpeed: 10
 --- !u!1 &6163763807624223822

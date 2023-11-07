@@ -3,7 +3,10 @@ guid: 614ba74c08e935144bfbe2dab8e802e2
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cameraDefaultTransform: {instanceID: 0}
+  - gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
+  - itemBox: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

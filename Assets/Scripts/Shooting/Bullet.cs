@@ -1,6 +1,6 @@
 // Bullet - Halen, Cameron
 // Determines bullet behaviour
-// Last edit: 26/10/23
+// Last edit: 2/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -8,69 +8,89 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    // component references
     private Rigidbody m_rb;
-    private float m_playerID;
 
-    public float sizeScaler;
-    public GameObject explosion;
+    // properties
+    private float m_damage;
+    private int m_playerID;
 
-    [Header("Stats")]
-    [SerializeField] private float m_damage;
-    [SerializeField] private bool m_shouldBounce;
-
-    public enum Effect
+    public enum BulletEffect
     {
         None,
-        Bounce, 
+        Ricochet, 
         Big, 
         Explode
     }
+    [Header("Bullet Effects")]
+    [SerializeField] [InspectorName("Bullet Effect")] private BulletEffect m_currentEffect;
+    public Explosion explosionPrefab;
+    [Space(10)]
+    [Min(0)] public float explosionDamage;
+    [Min(0)] public float explosionRadius;
+    [Tooltip("Time the explosion hitbox is active for in seconds.")]
+    [Min(0)] public float explosionLifetime;
 
-    private Effect m_currentEffect;
+    [Header("Particle Effects")]
+    public ParticleSystem sparksPrefab;
+    public ParticleSystem bloodPrefab;
+
+    // tracks which particle to instantiate when the bullet is destroyed
+    private ParticleSystem m_particle;
 
     /// <summary>
     /// For setting bullet details after being instantiated
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="damage"></param>
-    /// <param name="shouldBounce"></param>
-    public void Init(float playerID, float damage, Vector3 velocity, float lifeTime, Effect effect)
+    /// <param name="velocity"></param>
+    /// <param name="lifeTime"></param>
+    /// <param name="effect"></param>
+    public void Init(int playerID, float damage, Vector3 velocity, float lifeTime, BulletEffect effect)
     {
         m_playerID = playerID;
         m_damage = damage;
         m_rb.velocity = velocity;
+        m_currentEffect = effect;
 
-        switch(effect)
+        // Set the particle system to default - Halen
+        m_particle = sparksPrefab;
+
+        switch(m_currentEffect)
         {
-            case Effect.Bounce:
+            case BulletEffect.Ricochet:
             { 
-                m_shouldBounce = true;
-                    Destroy(gameObject, lifeTime);
-                    break;
+                Destroy(gameObject, lifeTime);
+                break;
             }
-            case Effect.Big:
+            case BulletEffect.Big:
             {
-                transform.localScale = transform.localScale * sizeScaler;
-                    Destroy(gameObject, lifeTime);
-                    break;
+                transform.localScale = transform.localScale * 2;
+                Destroy(gameObject, lifeTime);
+                break;
             }
-            case Effect.Explode:
-                {
-                    StartCoroutine(Explode(lifeTime));
-                    break;
-                }
-            case Effect.None:
-                {
-                    Destroy(gameObject, lifeTime);
-                    break;
-                }
+            case BulletEffect.Explode:
+            {
+                StartCoroutine(Explode(lifeTime));
+                break;
+            }
+            case BulletEffect.None:
+            {
+                Destroy(gameObject, lifeTime);
+                break;
+            }
         }
+
+        // Set the bullet trail materials
+        TrailRenderer trail = GetComponentInChildren<TrailRenderer>();
+        trail.material = (Material) Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
     }
 
     private IEnumerator Explode(float lifeTime)
     {
         yield return new WaitForSeconds(lifeTime);
-        Instantiate(explosion, transform.position, Quaternion.identity);
+        Explosion explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        explosion.Init(m_playerID, explosionDamage, explosionRadius, explosionLifetime);
         Destroy(gameObject);
     }
 
@@ -91,24 +111,47 @@ public class Bullet : MonoBehaviour
     // When bullet collides with another object
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player" && collision.gameObject.GetInstanceID() != m_playerID)
+        // default particle effect
+        m_particle = sparksPrefab;
+
+        // If the bullet collides with a player that isn't the one who shot it
+        if (collision.gameObject.tag == "Player"
+            && GameManager.Instance.GetPlayerID(collision.gameObject.GetComponent<PlayerController>()) != m_playerID)
         {
-            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            player.TakeDamage(m_damage);
-            Destroy(gameObject);
-        }
-        
-        if (!m_shouldBounce && collision.gameObject.tag != "Player")
-        {
-            Destroy(gameObject);
-        } else
-        {
-            m_shouldBounce = false;
+            // deal damage to player if the bullet is not an exploding bullet
+            if (m_currentEffect != BulletEffect.Explode)
+            {
+                PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+                player.TakeDamage(m_damage);
+            }
+
+            // set the particle effect to blood
+            m_particle = bloodPrefab;
         }
 
-        if(collision.gameObject.tag == "Platform")
+        // if the bullet hits a destructible platform
+        if (collision.gameObject.tag == "Platform")
         {
             collision.gameObject.GetComponent<Platform>().TakeDamage(m_damage);
         }
+
+        // destroy or bounce bullet
+        if (m_currentEffect == BulletEffect.Ricochet)
+        {
+            // special particle effect for ricochet? ********
+            m_currentEffect = BulletEffect.None;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // instantiate explosion if player has exploding bullets
+        // otherwise instantiate sparks
+        if (m_currentEffect == BulletEffect.Explode) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        else Instantiate(m_particle, transform.position, transform.rotation);
     }
 }
