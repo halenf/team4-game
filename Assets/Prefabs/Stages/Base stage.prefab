@@ -487,6 +487,7 @@ MonoBehaviour:
   minPowerUpTimer: 30
   maxPowerUpTimer: 50
   roundTime: 5
+  dangerTimer: 3
 --- !u!1 &6462120597273632950
 GameObject:
   m_ObjectHideFlags: 0

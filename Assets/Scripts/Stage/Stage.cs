@@ -44,6 +44,8 @@ public class Stage : MonoBehaviour
     //regular timers
     [Tooltip("time till the end lasers show up")]
     public float roundTime;
+    [Tooltip("time to display danger")]
+    public float dangerTimer;
 
     //
     private bool madeLasers = false;
@@ -137,6 +139,7 @@ public class Stage : MonoBehaviour
         {
             Instantiate(endLaser, endLaserSpawns[i].transform);
         }
+        GameManager.Instance.ShowDanger(dangerTimer);
     }
 
 }

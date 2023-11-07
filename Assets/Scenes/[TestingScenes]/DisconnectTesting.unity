@@ -562,6 +562,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 854257976}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: dangerCanvasPrefab
+      value: 
+      objectReference: {fileID: -4508779246074093925, guid: ea6e811e9e3b1584590b5d1d26b252c3, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.size
       value: 1
       objectReference: {fileID: 0}
