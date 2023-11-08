@@ -1,6 +1,6 @@
 // GameManager - Cameron, Halen
 // Manages level loading, round flow, mapping controller inputs, and UI
-// last edit 27/10/2023
+// last edit 1/11/2023
 
 using Cinemachine;
 using System.Collections;
@@ -38,12 +38,16 @@ public class GameManager : MonoBehaviour
     public GameplayUI gameplayCanvasPrefab;
     public PauseUI pauseCanvasPrefab;
     public LeaderboardUI leaderboardCanvasPrefab;
+    public DisconnectUI disconnectCanvasPrefab;
+    public DangerUI dangerCanvasPrefab;
 
     // canvas references
     private StartUI m_startCanvas;
     private GameplayUI m_gameplayCanvas;
     private PauseUI m_pauseCanvas;
     private LeaderboardUI m_leaderboardCanvas;
+    private DisconnectUI m_disconnectCanvas;
+    private DangerUI m_dangerCanvas;
 
     [Header("Cinemachine Cameras")]
     public CinemachineVirtualCamera staticCamera;
@@ -169,17 +173,21 @@ public class GameManager : MonoBehaviour
         m_gameplayCanvas = Instantiate(gameplayCanvasPrefab);
         m_pauseCanvas = Instantiate(pauseCanvasPrefab);
         m_leaderboardCanvas = Instantiate(leaderboardCanvasPrefab);
+        m_disconnectCanvas = Instantiate(disconnectCanvasPrefab);
+        m_dangerCanvas = Instantiate(dangerCanvasPrefab);
 
         m_startCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.gameObject.SetActive(false);
         m_pauseCanvas.gameObject.SetActive(false);
         m_leaderboardCanvas.gameObject.SetActive(false);
+        m_disconnectCanvas.gameObject.SetActive(false);
+        m_dangerCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
     /// checks if any controller has pressed east and stores them if so
     /// </summary>
-    private void CheckControllers()
+    public void CheckControllers()
     {
         //for all of the controllers connected to the computer
         for (int i = 0; i < Gamepad.all.Count; i++)
@@ -216,12 +224,13 @@ public class GameManager : MonoBehaviour
                 //create a player object and assign their specific controller
                 GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
 
-                PlayerController playerComponent = newPlayer.GetComponent<PlayerController>();
+                PlayerController playerController = newPlayer.GetComponent<PlayerController>();
 
                 // add player to list of players
-                m_activePlayerControllers.Add(playerComponent);
-                playerComponent.controller = m_controllers[j];
-                playerComponent.playerCounter.text = (j + 1).ToString();
+                m_activePlayerControllers.Add(playerController);
+                playerController.controller = m_controllers[j];
+                playerController.playerCounter.text = (j + 1).ToString();
+                playerController.Rumble(.25f, .85f, 5f);
             }
 
             // deactivate start menu, activate gameplayUI - Halen
@@ -288,7 +297,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void EndRound(int playerID)
+    public void Disconnected(PlayerController disconnectedPlayer)
+    {
+        int playerID = GetPlayerID(disconnectedPlayer) + 1;
+        m_disconnectCanvas.gameObject.SetActive(true); 
+        m_disconnectCanvas.SetText(playerID);
+    }
+
+    public void Reconnected()
+    {
+        m_disconnectCanvas.gameObject.SetActive(false);
+    }
+
+    public void EndRound(int playerID)
     {
         DisablePlayers();
         m_gameplayCanvas.StartRoundEnd(playerID);
@@ -403,6 +424,18 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
     }
 
+    public void ShowDanger(float displayTime)
+    {
+        m_dangerCanvas.gameObject.SetActive(true);
+        StartCoroutine(TurnOffDanger(displayTime));
+    }
+
+    private IEnumerator TurnOffDanger(float displayTime)
+    {
+        yield return new WaitForSeconds(displayTime);
+        m_dangerCanvas.gameObject.SetActive(false);
+    }
+
     /// <summary>
     /// Enable all active players.
     /// </summary>
@@ -468,7 +501,7 @@ public class GameManager : MonoBehaviour
     /// randomizes the spawns in the array to spawn players at random locations
     /// </summary>
     /// <param name="spawns"></param>
-    private void ShuffleSpawns(Transform[] spawns)
+    public void ShuffleSpawns(Transform[] spawns)
     {
         // Knuth shuffle algorithm
         for (int i = 0; i < spawns.Length; i++)
@@ -485,7 +518,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="player"></param>
     /// <returns></returns>
-    private int GetPlayerID(PlayerController player)
+    public int GetPlayerID(PlayerController player)
     {
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {

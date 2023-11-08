@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4323402439503292132
 Transform:
   m_ObjectHideFlags: 0
@@ -51,8 +51,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 4883814422248433969, guid: fdc938de4844e39418745e53de26fc9a, type: 3}
+  m_Follow: {fileID: 4883814422248433969, guid: fdc938de4844e39418745e53de26fc9a, type: 3}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5

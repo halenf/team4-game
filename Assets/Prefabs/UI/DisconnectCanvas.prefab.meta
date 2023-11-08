@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Managers/SoundManager.prefab.meta
+guid: ac8428efec677244b89fb469854fee69
+========
+guid: 7e5afd9d2ac20894cae7a96b28bc0fde
+>>>>>>>> c69176dd386fbd2445affa6bf95681722ff25d7b:Assets/Prefabs/UI/DisconnectCanvas.prefab.meta
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

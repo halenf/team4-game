@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 576618691883989526}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Platform
+  m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,10 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6356d674f18e34ba833ae67eee2ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debris:
-  - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
+  debris: []
+  debrisDestroyTimer: 0
   health: 20
+  destroyEffect: {fileID: 0}
 --- !u!65 &576618691883989526
 BoxCollider:
   m_ObjectHideFlags: 0

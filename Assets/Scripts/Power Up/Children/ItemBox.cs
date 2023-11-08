@@ -8,7 +8,12 @@ using UnityEngine;
 
 public class ItemBox : PowerUp
 {
-    public override void OnCollisionEnter(Collision other)
+    public void Start()
+    {
+        StartCoroutine(Die());
+    }
+
+    public override void OnTriggerEnter(Collider other)
     {
         //if colliding with player
         if (other.gameObject.tag == "Player")
@@ -21,11 +26,21 @@ public class ItemBox : PowerUp
 
             player.ActivatePowerUp((PlayerController.Powerup)choice);
 
-            //tell the stage to start the timer again
-            stage.StartGunRoutine();
-
             //destroy self
             Destroy(gameObject);
         }
+    }
+
+    private IEnumerator Die()
+    {
+        yield return new WaitForSeconds(lifeTime);
+
+        //destroy self
+        Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        stage.StartPowerUpRoutine();
     }
 }
