@@ -257,8 +257,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
         m_currentHealth -= damage;
+        Rumble(.2f, .5f, 1.5f);
         if (m_currentHealth <= 0) // if player is dead
         {
+            Rumble(1f, 1f, 120f);
             DisableInput();
             if (GameManager.Instance) GameManager.Instance.deadPlayers++;
         }

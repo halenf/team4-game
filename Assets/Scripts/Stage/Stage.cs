@@ -3,6 +3,7 @@
 // last edit 1/11/2023
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Stage : MonoBehaviour
@@ -14,6 +15,8 @@ public class Stage : MonoBehaviour
     public Transform[] powerUpSpawns;
     [Tooltip("gun box transforms")]
     public Transform[] gunBoxSpawns;
+    [Tooltip("end game laser transforms")]
+    public Transform[] endLaserSpawns;
 
     public Transform cameraDefaultTransform;
 
@@ -22,6 +25,8 @@ public class Stage : MonoBehaviour
     public GameObject gunBox;
     [Tooltip("power up prefab")]
     public GameObject itemBox;
+    [Tooltip("end laser prefab")]
+    public GameObject endLaser;
 
     //used to make random timers
     [Tooltip("minimum time a gun box will appear in")]
@@ -36,6 +41,15 @@ public class Stage : MonoBehaviour
     [Tooltip("maximum time a power up will appear in")]
     public float maxPowerUpTimer;
 
+    //regular timers
+    [Tooltip("time till the end lasers show up")]
+    public float roundTime;
+    [Tooltip("time to display danger")]
+    public float dangerTimer;
+
+    //
+    private bool madeLasers = false;
+
     /// <summary>
     /// call functions to start coroutines
     /// </summary>
@@ -45,6 +59,7 @@ public class Stage : MonoBehaviour
         StartPowerUpRoutine();
     }
 
+
     /// <summary>
     /// makes the random time to spawn a gun for and then starts the gunbox spawn coroutine with that time
     /// </summary>
@@ -52,6 +67,23 @@ public class Stage : MonoBehaviour
     {
         float time = Random.Range(minGunTimer, maxGunTimer);
         StartCoroutine(SpawnGunBox(time));
+    }
+
+    private void Update()
+    {
+        if (!madeLasers)
+        {
+            if (roundTime > 0)
+            {
+                roundTime -= Time.deltaTime;
+            }
+            else
+            {
+                MakeLasers();
+                madeLasers = true;
+            }
+        }
+        
     }
 
     /// <summary>
@@ -99,6 +131,15 @@ public class Stage : MonoBehaviour
                 Instantiate(itemBox, powerUpSpawns[i].transform).GetComponent<PowerUp>().stage = this;
             }
         }
+    }
+
+    private void MakeLasers()
+    {
+        for (int i = 0; i < endLaserSpawns.Length; i++)
+        {
+            Instantiate(endLaser, endLaserSpawns[i].transform);
+        }
+        GameManager.Instance.ShowDanger(dangerTimer);
     }
 
 }
