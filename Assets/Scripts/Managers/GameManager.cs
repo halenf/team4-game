@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public PauseUI pauseCanvasPrefab;
     public LeaderboardUI leaderboardCanvasPrefab;
     public DisconnectUI disconnectCanvasPrefab;
+    public DangerUI dangerCanvasPrefab;
 
     // canvas references
     private StartUI m_startCanvas;
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
     private PauseUI m_pauseCanvas;
     private LeaderboardUI m_leaderboardCanvas;
     private DisconnectUI m_disconnectCanvas;
+    private DangerUI m_dangerCanvas;
 
     [Header("Cinemachine Cameras")]
     public CinemachineVirtualCamera staticCamera;
@@ -172,12 +174,14 @@ public class GameManager : MonoBehaviour
         m_pauseCanvas = Instantiate(pauseCanvasPrefab);
         m_leaderboardCanvas = Instantiate(leaderboardCanvasPrefab);
         m_disconnectCanvas = Instantiate(disconnectCanvasPrefab);
+        m_dangerCanvas = Instantiate(dangerCanvasPrefab);
 
         m_startCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.gameObject.SetActive(false);
         m_pauseCanvas.gameObject.SetActive(false);
         m_leaderboardCanvas.gameObject.SetActive(false);
         m_disconnectCanvas.gameObject.SetActive(false);
+        m_dangerCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -226,6 +230,7 @@ public class GameManager : MonoBehaviour
                 m_activePlayerControllers.Add(playerController);
                 playerController.controller = m_controllers[j];
                 playerController.playerCounter.text = (j + 1).ToString();
+                playerController.Rumble(.25f, .85f, 5f);
             }
 
             // deactivate start menu, activate gameplayUI - Halen
@@ -417,6 +422,18 @@ public class GameManager : MonoBehaviour
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
         m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+    }
+
+    public void ShowDanger(float displayTime)
+    {
+        m_dangerCanvas.gameObject.SetActive(true);
+        StartCoroutine(TurnOffDanger(displayTime));
+    }
+
+    private IEnumerator TurnOffDanger(float displayTime)
+    {
+        yield return new WaitForSeconds(displayTime);
+        m_dangerCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
