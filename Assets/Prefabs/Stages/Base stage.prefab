@@ -486,8 +486,8 @@ MonoBehaviour:
   maxGunTimer: 20
   minPowerUpTimer: 30
   maxPowerUpTimer: 50
-  roundTime: 5
-  dangerTimer: 3
+  roundTime: 120
+  dangerTimer: 10
 --- !u!1 &6462120597273632950
 GameObject:
   m_ObjectHideFlags: 0

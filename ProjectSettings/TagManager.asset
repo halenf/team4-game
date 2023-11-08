@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Platform
   - Spike Ball
   - Bullet
   - TargetGroup
+  - Breakable
   layers:
   - Default
   - TransparentFX

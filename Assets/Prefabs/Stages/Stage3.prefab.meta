@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/LevelObjects/Stage_Corner_Inner_GEO_Export_01.prefab.meta
+guid: 1dbe8234bfc50bc4b9f4bb323b8612f5
+========
 guid: ac8a42abfcebb9640a66caf308a008d3
+>>>>>>>> 77b6a15d0afb1c1f40402fcd0c0d5f2f177f916a:Assets/Prefabs/Stages/Stage3.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

@@ -49,6 +49,7 @@ MonoBehaviour:
   pauseCanvasPrefab: {fileID: 8768610932739141917, guid: b61f58d3a8c70bb45a14d26606a7637b, type: 3}
   leaderboardCanvasPrefab: {fileID: 6931777853157890115, guid: d80e4a176261e514c81fba0e75de5403, type: 3}
   disconnectCanvasPrefab: {fileID: 2559865700041908714, guid: ac8428efec677244b89fb469854fee69, type: 3}
+  dangerCanvasPrefab: {fileID: -4508779246074093925, guid: ea6e811e9e3b1584590b5d1d26b252c3, type: 3}
   staticCamera: {fileID: 0}
   gameplayCamera: {fileID: 0}
   playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}

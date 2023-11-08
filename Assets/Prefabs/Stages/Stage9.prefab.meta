@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/LevelObjects/Stage_Diagonal_GEO.prefab.meta
+guid: 9c8476849d455824eb4866b62a61ef68
+========
 guid: 7588f707fedad694d91699a7095f55db
+>>>>>>>> 77b6a15d0afb1c1f40402fcd0c0d5f2f177f916a:Assets/Prefabs/Stages/Stage9.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

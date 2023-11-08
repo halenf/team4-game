@@ -7,6 +7,10 @@ using UnityEngine;
 
 public class MiniGun : Gun
 {
+    [Tooltip("the max differance in angle of force applied as recoil")]
+    [Min(0)]public float randomRecoilAngle;
+    [Tooltip("the max amount that the recoil can change by in percent")]
+    [Min(0)] public float randomRecoilStrength;
     public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
         PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
@@ -20,6 +24,11 @@ public class MiniGun : Gun
         // apply recoil to player
         float tempRecoil = baseRecoil;
         if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
-        transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+        //find a random recoil change percentage
+        float randomRecoilForce = Random.Range(tempRecoil - randomRecoilStrength, tempRecoil + randomRecoilStrength);
+        
+        //find a random direction from the direction the gun is facing in the bounds of -randomRecoilAngle and positive randomrecoil angle
+        Vector3 ForceDirection = Quaternion.AngleAxis(Random.Range(-randomRecoilAngle, randomRecoilAngle), Vector3.forward) * -transform.forward;
+        transform.parent.GetComponent<Rigidbody>().AddForce(randomRecoilForce * ForceDirection, ForceMode.Impulse);
     }
 }
