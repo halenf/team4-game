@@ -465,6 +465,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (PlayerController player in m_activePlayerControllers)
         {
+            player.gameObject.SetActive(true);
             player.ResetPlayer();
         }
     }

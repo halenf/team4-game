@@ -13,8 +13,9 @@ public class PlayerController : MonoBehaviour
     // component references
     private Rigidbody m_rb;
     private PlayerInput m_playerInput;
-    [SerializeField]
-    private GameObject m_shieldObject;
+
+    // private objects
+    [SerializeField] private GameObject m_shieldObject;
     private GameObject m_shieldGameObject;
     public TMP_Text playerCounter;
 
@@ -267,18 +268,17 @@ public class PlayerController : MonoBehaviour
         // if player is dead
         if (m_currentHealth <= 0)
         {
+            // controller rumble
             Rumble(1f, 1f, 1.2f);
-            DisableInput();
-            if (GameManager.Instance) GameManager.Instance.deadPlayers++;
 
-            // disable the player body
-            MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer renderer in renderers)
-                renderer.enabled = false;
+            // let game manager know somebody died
+            if (GameManager.Instance) GameManager.Instance.deadPlayers++;
 
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
+
+            gameObject.SetActive(false);
         }
     }
 
@@ -364,9 +364,5 @@ public class PlayerController : MonoBehaviour
         m_currentAmmo = m_currentGun.ammoCapacity;
         m_fireRate = m_currentGun.baseFireRate;
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
-
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
-        foreach (MeshRenderer renderer in renderers)
-            renderer.enabled = true;
     }
 }
