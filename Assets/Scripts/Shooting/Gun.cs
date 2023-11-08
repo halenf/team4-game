@@ -15,7 +15,7 @@ public abstract class Gun : MonoBehaviour
     [Min(0)] public float baseFireRate;
     [Min(0)] public int ammoCapacity;
     public Transform bulletSpawnTransform;
-    public GameObject gunPrefab;
+    public ParticleSystem muzzleFlash;
 
     [Header("Bullet Properties")]
     [InspectorName("Prefab")] public Bullet bulletPrefab;
@@ -43,6 +43,9 @@ public abstract class Gun : MonoBehaviour
         // instantiate the bullet
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
         bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
+
+        // Activate the muzzle flash
+        if (muzzleFlash) muzzleFlash.Play();
         
         // Make the player's controller rumble
         PlayerController player = transform.parent.GetComponent<PlayerController>();

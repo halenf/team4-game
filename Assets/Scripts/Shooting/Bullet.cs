@@ -4,6 +4,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -33,6 +34,7 @@ public class Bullet : MonoBehaviour
 
     [Header("Particle Effects")]
     public ParticleSystem sparksPrefab;
+    public ParticleSystem ricochetPrefab;
     public ParticleSystem bloodPrefab;
 
     // tracks which particle to instantiate when the bullet is destroyed
@@ -127,6 +129,9 @@ public class Bullet : MonoBehaviour
 
             // set the particle effect to blood
             m_particle = bloodPrefab;
+
+            Destroy(gameObject);
+            return;
         }
 
         // if the bullet hits a destructible platform
@@ -138,7 +143,7 @@ public class Bullet : MonoBehaviour
         // destroy or bounce bullet
         if (m_currentEffect == BulletEffect.Ricochet)
         {
-            // special particle effect for ricochet? ********
+            Instantiate(ricochetPrefab, transform.position, transform.rotation);
             m_currentEffect = BulletEffect.None;
         }
         else
