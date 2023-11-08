@@ -85,7 +85,7 @@ public class Bullet : MonoBehaviour
 
         // Set the bullet trail materials
         TrailRenderer trail = GetComponentInChildren<TrailRenderer>();
-        trail.material = (Material) Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
+        if (trail) trail.material = (Material) Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
     }
 
     private IEnumerator Explode(float lifeTime)
@@ -135,9 +135,9 @@ public class Bullet : MonoBehaviour
         }
 
         // if the bullet hits a destructible platform
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Breakable")
         {
-            collision.gameObject.GetComponent<Platform>().TakeDamage(m_damage);
+            collision.gameObject.GetComponent<BreakableObject>().TakeDamage(m_damage);
         }
 
         // destroy or bounce bullet

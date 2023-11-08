@@ -9,6 +9,7 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     private int m_playerID;
+    private bool m_shouldDisableCollider;
     
     [Header("Properties")]
     [Tooltip("Damage dealt by the explosion to players.")]
@@ -18,10 +19,9 @@ public class Explosion : MonoBehaviour
     public ParticleSystem fragments;
     public ParticleSystem blast;
 
-    // Start is called before the first frame update
-    void Start()
+    void Update()
     {
-        
+        if (m_shouldDisableCollider) GetComponent<SphereCollider>().enabled = false;
     }
 
     public void Init(int playerID, float damage, float radius, float lifetime)
@@ -57,11 +57,19 @@ public class Explosion : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the explosion hits a player
-        PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        if (player)
+        // Check if the explosion hits a player that isn't the player who created it
+        if (other.gameObject.tag == "Player")
         {
-            player.TakeDamage(damage);
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (GameManager.Instance.GetPlayerID(player) != m_playerID) player.TakeDamage(damage);
+            m_shouldDisableCollider = true;
+        }
+
+        // check if the explosion hits a breakable object
+        if (other.gameObject.tag == "Breakable")
+        {
+            other.gameObject.GetComponent<BreakableObject>().TakeDamage(damage);
+            m_shouldDisableCollider = true;
         }
     }
 }

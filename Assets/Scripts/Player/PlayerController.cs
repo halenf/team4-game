@@ -4,9 +4,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private GameObject m_shieldObject;
     private GameObject m_shieldGameObject;
     public TMP_Text playerCounter;
+
+    [Header("Particle Effects")]
+    public ParticleSystem bloodPrefab;
 
     [Header("Default Stats")]
     [Min(0)] public float moveSpeed;
@@ -256,13 +257,28 @@ public class PlayerController : MonoBehaviour
             }
             return;
         }
+
+        // deal damage
         m_currentHealth -= damage;
+
+        // rumble controller
         Rumble(.2f, .5f, 1.5f);
-        if (m_currentHealth <= 0) // if player is dead
+
+        // if player is dead
+        if (m_currentHealth <= 0)
         {
-            Rumble(1f, 1f, 120f);
+            Rumble(1f, 1f, 1.2f);
             DisableInput();
             if (GameManager.Instance) GameManager.Instance.deadPlayers++;
+
+            // disable the player body
+            MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer renderer in renderers)
+                renderer.enabled = false;
+
+            // explode into blood
+            for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
+                Instantiate(bloodPrefab, transform.position, Random.rotation);
         }
     }
 
@@ -347,5 +363,10 @@ public class PlayerController : MonoBehaviour
         SetGun(defaultGun);
         m_currentAmmo = m_currentGun.ammoCapacity;
         m_fireRate = m_currentGun.baseFireRate;
+        if (m_shieldGameObject) Destroy(m_shieldGameObject);
+
+        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer renderer in renderers)
+            renderer.enabled = true;
     }
 }

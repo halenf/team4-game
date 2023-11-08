@@ -411,11 +411,11 @@ MonoBehaviour:
   baseFireRate: 20
   ammoCapacity: 100
   bulletSpawnTransform: {fileID: 1676410753910675609}
-  gunPrefab: {fileID: 0}
+  muzzleFlash: {fileID: 0}
   bulletPrefab: {fileID: 2271769695517889325, guid: 1fd930c455b1d034dbddf541530112c3, type: 3}
   spread: 20
-  bulletSpeed: 0
-  bulletDamage: 0.1
+  bulletSpeed: 3
+  bulletDamage: 0.5
   bulletLifeTime: 0.3
   highRumbleFrequency: 1
   lowRumbleFrequency: 0
