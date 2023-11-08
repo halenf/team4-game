@@ -135,9 +135,9 @@ public class Bullet : MonoBehaviour
         }
 
         // if the bullet hits a destructible platform
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Breakable")
         {
-            collision.gameObject.GetComponent<Platform>().TakeDamage(m_damage);
+            collision.gameObject.GetComponent<BreakableObject>().TakeDamage(m_damage);
         }
 
         // destroy or bounce bullet
