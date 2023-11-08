@@ -85,7 +85,7 @@ public class Bullet : MonoBehaviour
 
         // Set the bullet trail materials
         TrailRenderer trail = GetComponentInChildren<TrailRenderer>();
-        trail.material = (Material) Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
+        if (trail) trail.material = (Material) Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
     }
 
     private IEnumerator Explode(float lifeTime)
