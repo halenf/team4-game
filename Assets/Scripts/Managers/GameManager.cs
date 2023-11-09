@@ -360,6 +360,7 @@ public class GameManager : MonoBehaviour
         // Disable canvases
         m_pauseCanvas.gameObject.SetActive(false);
         m_gameplayCanvas.gameObject.SetActive(false);
+        m_disconnectCanvas.gameObject.SetActive(false);
 
         // Set which button the player defaults to in the leaderboard menu
         EventSystemManager.Instance.SetCurrentSelectedGameObject(m_leaderboardCanvas.defaultSelectedObject);
@@ -452,11 +453,13 @@ public class GameManager : MonoBehaviour
         int playerID = disconnectedPlayerID + 1;
         m_disconnectCanvas.gameObject.SetActive(true);
         m_disconnectCanvas.SetText(playerID);
+        Time.timeScale = 0f;
     }
 
     public void Reconnected()
     {
         m_disconnectCanvas.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void EndRound(int winningPlayerID)

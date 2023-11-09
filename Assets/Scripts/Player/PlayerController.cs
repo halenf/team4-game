@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnDisconnect()
     {
-        GameManager.Instance.TogglePause(id);
+        //GameManager.Instance.TogglePause(id);
         GameManager.Instance.Disconnected(id);
     }
 
