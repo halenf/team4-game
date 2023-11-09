@@ -14,13 +14,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_rb;
     private PlayerInput m_playerInput;
 
-    // private objects
-    [SerializeField] private GameObject m_shieldObject;
-    private GameObject m_shieldGameObject;
-    public TMP_Text playerCounter;
+    // player ID
+    public int id;
 
-    [Header("Particle Effects")]
-    public ParticleSystem bloodPrefab;
+    [Space(10)]
 
     [Header("Default Stats")]
     [Min(0)] public float moveSpeed;
@@ -33,7 +30,12 @@ public class PlayerController : MonoBehaviour
     private float m_currentAmmo;
     private float m_nextFireTime;
     private Vector3 m_moveForce;
-    private Vector2 m_aimDirection;
+    private Vector2 m_aimDirection = Vector3.right;
+
+    public bool isDead
+    {
+        get { return m_currentHealth <= 0; }
+    }
 
     [Header("Gun")]
     public Gun defaultGun;
@@ -47,13 +49,20 @@ public class PlayerController : MonoBehaviour
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
     [Min(0)] public float powerupTime;
-    [Space(20)]
+    [Space(10)]
     [Min(0)] public int maxShieldHealth;
     [Min(1)] public float fireRateScalar;
     [Range(0, 1)] public float lowGravityScalar;
 
+    [Space(10)]
+    public GameObject m_shieldPrefab;
+    private GameObject m_shieldGameObject;
+
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
+
+    [Header("Particle Effects")]
+    public ParticleSystem bloodPrefab;
 
     public enum Powerup
     {
@@ -92,7 +101,7 @@ public class PlayerController : MonoBehaviour
                 case Powerup.Shield:
                 {
                     m_shieldCurrentHealth = maxShieldHealth;
-                    m_shieldGameObject = Instantiate(m_shieldObject, transform);
+                    m_shieldGameObject = Instantiate(m_shieldPrefab, transform);
                     break;
                 }
                 case Powerup.Ricochet:
@@ -170,7 +179,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // shoot gun
-                m_currentGun.Shoot(GameManager.Instance.GetPlayerID(this), bulletEffect);
+                m_currentGun.Shoot(id, bulletEffect);
 
                 // ammo is only reduced if the player is not holding their default gun
                 if (m_currentAmmo != -1) m_currentAmmo--;
@@ -271,12 +280,12 @@ public class PlayerController : MonoBehaviour
             // controller rumble
             Rumble(1f, 1f, 1.2f);
 
-            // let game manager know somebody died
-            if (GameManager.Instance) GameManager.Instance.deadPlayers++;
-
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
+
+            // let game manager know somebody died
+            GameManager.Instance.CheckIsRoundOver();
 
             gameObject.SetActive(false);
         }
@@ -297,6 +306,11 @@ public class PlayerController : MonoBehaviour
 
         m_fireRate = m_currentGun.baseFireRate;
         m_nextFireTime = Time.time;
+
+        // Sets the gun's aim
+        Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
+        m_currentGun.transform.localPosition = indicatorPosition;
+        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
     }
 
     /// <summary>
