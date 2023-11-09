@@ -5017,7 +5017,7 @@ MonoBehaviour:
   ammoCapacity: 1000
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 4472028151643701755}
-  bulletPrefab: {fileID: 2271769695517889325, guid: 95da5109b21aeb34381908273ee0887b, type: 3}
+  bulletPrefab: {fileID: 2271769695517889325, guid: a815a8b8aac8cdb429e358dbf8186aa8, type: 3}
   spread: 8
   bulletSpeed: 20
   bulletDamage: 1.4
