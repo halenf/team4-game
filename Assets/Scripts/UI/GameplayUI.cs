@@ -28,14 +28,21 @@ public class GameplayUI : MonoBehaviour
         roundWinnerDisplay.text = "Player " + winningPlayer + " wins!";
     }
 
+    /// <summary>
+    /// Count down to the start of the new round, then start it.
+    /// </summary>
     public void StartCountdown()
     {
         StartCoroutine(Countdown());
     }
 
-    public void StartRoundEnd(int playerID)
+    /// <summary>
+    /// Display the player who won the round, then load the next round.
+    /// </summary>
+    /// <param name="winningPlayerID"></param>
+    public void StartRoundEnd(int winningPlayerID)
     {
-        StartCoroutine(RoundEnd(playerID));
+        StartCoroutine(RoundEnd(winningPlayerID));
     }
 
     private IEnumerator Countdown()
@@ -55,11 +62,11 @@ public class GameplayUI : MonoBehaviour
         countdownDisplay.text = "";
     }
 
-    private IEnumerator RoundEnd(int playerID)
+    private IEnumerator RoundEnd(int winningPlayerID)
     {
         yield return new WaitForEndOfFrame();
         // Show the player who won the round
-        roundWinnerDisplay.text = "Player " + (playerID + 1).ToString() + " wins!";
+        roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
         yield return new WaitForSeconds(3);
         roundWinnerDisplay.text = "";
         GameManager.Instance.LoadStage();
