@@ -118,7 +118,7 @@ public class Bullet : MonoBehaviour
 
         // If the bullet collides with a player that isn't the one who shot it
         if (collision.gameObject.tag == "Player"
-            && GameManager.Instance.GetPlayerID(collision.gameObject.GetComponent<PlayerController>()) != m_playerID)
+            && collision.gameObject.GetComponent<PlayerController>().id != m_playerID)
         {
             // deal damage to player if the bullet is not an exploding bullet
             if (m_currentEffect != BulletEffect.Explode)
