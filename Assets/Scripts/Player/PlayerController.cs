@@ -61,6 +61,8 @@ public class PlayerController : MonoBehaviour
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
 
+    private Vector3 m_indicatorPosition;
+
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
 
@@ -147,6 +149,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_currentGun.transform.localPosition = m_indicatorPosition;
+        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
+
         // update powerup timer
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
         // if the current powerup isn't the sheld, powerup timer is less than or equal to 0, disable the powerup
@@ -231,9 +236,8 @@ public class PlayerController : MonoBehaviour
             m_aimDirection = Vector3.Normalize(value.ReadValue<Vector2>()); // Get the direction the player is aiming
 
         // Set the position and rotation of the aim indicator
-        Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
-        m_currentGun.transform.localPosition = indicatorPosition;
-        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
+        m_indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
+        
     }
 
     public void OnDisconnect()
