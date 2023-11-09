@@ -57,6 +57,9 @@ public class GameManager : MonoBehaviour
     [Header("Player")]
     public GameObject playerPrefab;
 
+    public GameObject controlCube;
+    private GameObject endController;
+
     [Header("Game Info")]
     public GameObject[] stageList;
     public int numberOfRounds;
@@ -111,7 +114,17 @@ public class GameManager : MonoBehaviour
         {
             case GameState.Start:
                 CheckControllers();
-                LoadFirst();
+
+                // Only need one player when debugging - Halen
+                int requiredPlayers = 2;
+#if UNITY_EDITOR
+                requiredPlayers = 1;
+#endif
+                //if there are enough players and player 1 presses start
+                if (m_controllers.Count >= requiredPlayers && m_controllers[0].startButton.isPressed)
+                {
+                    LoadFirst();
+                }
                 break;
             case GameState.Playing:
                 break;
@@ -185,65 +198,58 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadFirst()
     {
-        // Only need one player when debugging - Halen
-        int requiredPlayers = 2;
-# if UNITY_EDITOR
-        requiredPlayers = 1;
-# endif
-        //if there are enough players and player 1 presses start
-        if (m_controllers.Count >= requiredPlayers && m_controllers[0].startButton.isPressed)
-        {            
-            //for every player
-            for (int j = 0; m_controllers.Count > j; j++)
-            {
-                //create a player object and assign their specific controller
-                GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
+        m_activePlayerControllers = new List<PlayerController>();
+        //for every player
+        for (int j = 0; m_controllers.Count > j; j++)
+        {
+            //create a player object and assign their specific controller
+            GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
 
-                // Set the player's colour based on their id
-                newPlayer.gameObject.GetComponent<MeshRenderer>().material = (Material)Resources.Load("Materials/Player/Player" + (j + 1).ToString());
+            // Set the player's colour based on their id
+            newPlayer.gameObject.GetComponent<MeshRenderer>().material = (Material)Resources.Load("Materials/Player/Player" + (j + 1).ToString());
 
-                // get the PlayerController component from the newly instantiated player
-                PlayerController playerController = newPlayer.GetComponent<PlayerController>();
+            // get the PlayerController component from the newly instantiated player
+            PlayerController playerController = newPlayer.GetComponent<PlayerController>();
 
-                // Set player details
-                playerController.controller = m_controllers[j];
-                playerController.id = j;
+            // Set player details
+            playerController.controller = m_controllers[j];
+            playerController.id = j;
 
-                // make their controller rumble
-                playerController.Rumble(.25f, .85f, 3f);
+            // make their controller rumble
+            playerController.Rumble(.25f, .85f, 3f);
 
-                // add player to list of players
-                m_activePlayerControllers.Add(playerController);
-            }
-
-            // deactivate start menu, activate gameplayUI - Halen
-            m_startCanvas.gameObject.SetActive(false);
-            m_gameplayCanvas.gameObject.SetActive(true);
-
-            // Set correct game state
-            m_gameState = GameState.Playing;
-
-            // Cinemachine camera setup
-            // Set current active camera
-            staticCamera.gameObject.SetActive(false);
-            gameplayCamera.gameObject.SetActive(true);
-
-            // Add the players to the target group target array
-            List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
-            for (int i = 0; i < m_activePlayerControllers.Count; i++)
-            {
-                CinemachineTargetGroup.Target target;
-                target.target = m_activePlayerControllers[i].transform;
-                target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
-                target.radius = 5f;
-                targets.Add(target);
-            }
-            GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>().m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
-            // End Cinemachine camera setup
-
-            // Load the first stage
-            LoadStage();
+            // add player to list of players
+            m_activePlayerControllers.Add(playerController);
         }
+
+        // deactivate start menu/leaderboardUI, activate gameplayUI - Halen
+        m_startCanvas.gameObject.SetActive(false);
+        m_leaderboardCanvas.gameObject.SetActive(false);
+        m_gameplayCanvas.gameObject.SetActive(true);
+
+        // Set correct game state
+        m_gameState = GameState.Playing;
+
+        // Cinemachine camera setup
+        // Set current active camera
+        staticCamera.gameObject.SetActive(false);
+        gameplayCamera.gameObject.SetActive(true);
+
+        // Add the players to the target group target array
+        List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
+        {
+            CinemachineTargetGroup.Target target;
+            target.target = m_activePlayerControllers[i].transform;
+            target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
+            target.radius = 5f;
+            targets.Add(target);
+        }
+        GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>().m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
+        // End Cinemachine camera setup
+
+        // Load the first stage
+        LoadStage();
     }
 
     /// <summary>
@@ -282,6 +288,7 @@ public class GameManager : MonoBehaviour
         // Start round countdown, then enable all player input - Halen
         m_gameplayCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.StartCountdown();
+        Time.timeScale = 0f;
     }
     /// <summary>
     /// A public method to be called by a player before it dies
@@ -395,6 +402,10 @@ public class GameManager : MonoBehaviour
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
         m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+
+        GameObject newPlayer = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
+
+        EventSystemManager.Instance.SetPlayerToControl(controlCube.GetComponent<PlayerController>());
     }
 
     /// <summary>
