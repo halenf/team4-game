@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: StageFlat_MAT
-    second: {fileID: 2100000, guid: 0ac934a21dc7b494eb29b799374415dc, type: 2}
+    second: {fileID: 2100000, guid: a5a487b447642f44a9f768b32c6bf2a5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
