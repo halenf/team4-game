@@ -120,7 +120,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -737,7 +737,7 @@ ParticleSystem:
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 1
+    radiusThickness: 0.66
     donutRadius: 0.2
     m_Position: {x: -0.000000021352308, y: 0, z: -0.029261027}
     m_Rotation: {x: 0, y: -0.00029943974, z: 0}
@@ -820,7 +820,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.1677656
+      value: 0.13
       mode: 0
       spread: 0
       speed:
@@ -878,7 +878,7 @@ ParticleSystem:
           m_RotationOrder: 4
     arc:
       value: 360
-      mode: 1
+      mode: 0
       spread: 0
       speed:
         serializedVersion: 2
@@ -4919,7 +4919,7 @@ MonoBehaviour:
   baseRecoil: 20
   groundedRecoilScalar: 1
   baseFireRate: 12
-  ammoCapacity: 1000
+  ammoCapacity: 80
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 4472028151643701755}
   bulletPrefab: {fileID: 2271769695517889325, guid: a815a8b8aac8cdb429e358dbf8186aa8, type: 3}
