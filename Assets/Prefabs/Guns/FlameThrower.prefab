@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4789882382446241979}
   - component: {fileID: 2639462504726439464}
+  - component: {fileID: 7110224535071332244}
   m_Layer: 0
   m_Name: FlameThrower
   m_TagString: Untagged
@@ -91,6 +92,20 @@ MonoBehaviour:
   highRumbleFrequency: 1
   lowRumbleFrequency: 0
   rumbleTime: 0.25
+  timeToColliderOff: 1
+--- !u!65 &7110224535071332244
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4789882382446241977}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.42, y: 0.79, z: 1.22}
+  m_Center: {x: 0, y: 0, z: 1.69}
 --- !u!1001 &3552147408548531246
 PrefabInstance:
   m_ObjectHideFlags: 0
