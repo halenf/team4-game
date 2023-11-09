@@ -187,6 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_shieldObject: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
   playerCounter: {fileID: 325361806248802721}
+  bloodPrefab: {fileID: 0}
   moveSpeed: 120
   maxHealth: 10
   defaultMass: 1
@@ -195,8 +196,8 @@ MonoBehaviour:
   m_currentPowerup: 0
   powerupTime: 5
   maxShieldHealth: 3
-  fireRateScalar: 1
-  lowGravityScalar: 0.6
+  fireRateScalar: 1.4
+  lowGravityScalar: 0.7
 --- !u!114 &5814125836590746924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,7 +314,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 4.7
-  m_AngularDrag: 100
+  m_AngularDrag: 40
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
