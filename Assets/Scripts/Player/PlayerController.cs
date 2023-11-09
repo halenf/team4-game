@@ -13,13 +13,11 @@ public class PlayerController : MonoBehaviour
     // component references
     private Rigidbody m_rb;
     private PlayerInput m_playerInput;
-    [SerializeField]
-    private GameObject m_shieldObject;
-    private GameObject m_shieldGameObject;
-    public TMP_Text playerCounter;
 
-    [Header("Particle Effects")]
-    public ParticleSystem bloodPrefab;
+    // player ID
+    public int id;
+
+    [Space(10)]
 
     [Header("Default Stats")]
     [Min(0)] public float moveSpeed;
@@ -32,7 +30,12 @@ public class PlayerController : MonoBehaviour
     private float m_currentAmmo;
     private float m_nextFireTime;
     private Vector3 m_moveForce;
-    private Vector2 m_aimDirection;
+    private Vector2 m_aimDirection = Vector3.right;
+
+    public bool isDead
+    {
+        get { return m_currentHealth <= 0; }
+    }
 
     [Header("Gun")]
     public Gun defaultGun;
@@ -46,13 +49,22 @@ public class PlayerController : MonoBehaviour
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
     [Min(0)] public float powerupTime;
-    [Space(20)]
+    [Space(10)]
     [Min(0)] public int maxShieldHealth;
     [Min(1)] public float fireRateScalar;
     [Range(0, 1)] public float lowGravityScalar;
 
+    [Space(10)]
+    public GameObject m_shieldPrefab;
+    private GameObject m_shieldGameObject;
+
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
+
+    private Vector3 m_indicatorPosition;
+
+    [Header("Particle Effects")]
+    public ParticleSystem bloodPrefab;
 
     public enum Powerup
     {
@@ -91,7 +103,7 @@ public class PlayerController : MonoBehaviour
                 case Powerup.Shield:
                 {
                     m_shieldCurrentHealth = maxShieldHealth;
-                    m_shieldGameObject = Instantiate(m_shieldObject, transform);
+                    m_shieldGameObject = Instantiate(m_shieldPrefab, transform);
                     break;
                 }
                 case Powerup.Ricochet:
@@ -137,6 +149,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_currentGun.transform.localPosition = m_indicatorPosition;
+        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
+
         // update powerup timer
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
         // if the current powerup isn't the sheld, powerup timer is less than or equal to 0, disable the powerup
@@ -169,7 +184,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // shoot gun
-                m_currentGun.Shoot(GameManager.Instance.GetPlayerID(this), bulletEffect);
+                m_currentGun.Shoot(id, bulletEffect);
 
                 // ammo is only reduced if the player is not holding their default gun
                 if (m_currentAmmo != -1) m_currentAmmo--;
@@ -221,15 +236,14 @@ public class PlayerController : MonoBehaviour
             m_aimDirection = Vector3.Normalize(value.ReadValue<Vector2>()); // Get the direction the player is aiming
 
         // Set the position and rotation of the aim indicator
-        Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
-        m_currentGun.transform.localPosition = indicatorPosition;
-        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
+        m_indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
+        
     }
 
     public void OnDisconnect()
     {
-        GameManager.Instance.TogglePause(this);
-        GameManager.Instance.Disconnected(this);
+        //GameManager.Instance.TogglePause(id);
+        GameManager.Instance.Disconnected(id);
     }
 
     public void OnConnect()
@@ -239,7 +253,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPause(InputAction.CallbackContext value)
     {
-        if (value.performed) GameManager.Instance.TogglePause(this);
+        if (value.performed) GameManager.Instance.TogglePause(id);
     }
 
     /// <summary>
@@ -248,6 +262,10 @@ public class PlayerController : MonoBehaviour
     /// <param name="damage"></param>
     public void TakeDamage(float damage)
     {
+        // if the player is already dead, don't make them take damage
+        if (isDead) return;
+        
+        // shield will block damage
         if (m_shieldCurrentHealth > 0)
         {
             m_shieldCurrentHealth--;
@@ -267,18 +285,15 @@ public class PlayerController : MonoBehaviour
         // if player is dead
         if (m_currentHealth <= 0)
         {
-            Rumble(1f, 1f, 1.2f);
-            DisableInput();
-            if (GameManager.Instance) GameManager.Instance.deadPlayers++;
-
-            // disable the player body
-            MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer renderer in renderers)
-                renderer.enabled = false;
-
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
+
+            // let game manager know somebody died
+            GameManager.Instance.CheckIsRoundOver();
+
+            // deactivate player object
+            gameObject.SetActive(false);
         }
     }
 
@@ -297,6 +312,11 @@ public class PlayerController : MonoBehaviour
 
         m_fireRate = m_currentGun.baseFireRate;
         m_nextFireTime = Time.time;
+
+        // Sets the gun's aim
+        Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
+        m_currentGun.transform.localPosition = indicatorPosition;
+        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
     }
 
     /// <summary>
@@ -364,9 +384,5 @@ public class PlayerController : MonoBehaviour
         m_currentAmmo = m_currentGun.ammoCapacity;
         m_fireRate = m_currentGun.baseFireRate;
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
-
-        MeshRenderer[] renderers = GetComponentsInChildren<MeshRenderer>();
-        foreach (MeshRenderer renderer in renderers)
-            renderer.enabled = true;
     }
 }

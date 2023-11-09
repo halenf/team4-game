@@ -32,6 +32,9 @@ public class Stage : MonoBehaviour
     [Tooltip("spike ball prefab")]
     public GameObject spikeBall;
 
+    private GameObject m_currentItemBox;
+    private GameObject m_currentGunBox;
+
     //used to make random timers
     [Tooltip("minimum time a gun box will appear in")]
     public float minGunTimer;
@@ -112,9 +115,31 @@ public class Stage : MonoBehaviour
         {
             if (i == chosenBox)
             {
-                Instantiate(gunBox, gunBoxSpawns[i].transform).GetComponent<PowerUp>().stage = this;
+                m_currentGunBox = Instantiate(gunBox, gunBoxSpawns[i].transform);
+                m_currentGunBox.GetComponent<PowerUp>().stage = this;
             }
         }
+
+        StartKillGunBox();
+    }
+
+    private void StartKillGunBox()
+    {
+        StartCoroutine(KillGunBoxRoutine());
+    }
+
+    private IEnumerator KillGunBoxRoutine()
+    {
+        if (m_currentGunBox != null)
+        {
+            yield return new WaitForSeconds(m_currentGunBox.GetComponent<PowerUp>().lifeTime);
+            Destroy(m_currentGunBox);
+        }
+        else
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        StartGunRoutine();
     }
 
     public void StartSpikeBallRoutine()
@@ -142,6 +167,27 @@ public class Stage : MonoBehaviour
                 Instantiate(spikeBall, spikeBallSpawns[i].transform);
             }
         }
+
+        StartKillItemBox();
+    }
+
+    private void StartKillItemBox()
+    {
+        StartCoroutine(KillItemBox());
+    }
+
+    private IEnumerator KillItemBox()
+    {
+        if (m_currentItemBox != null)
+        {
+            yield return new WaitForSeconds(m_currentItemBox.GetComponent<PowerUp>().lifeTime);
+            Destroy(m_currentItemBox);
+        }
+        else
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        StartPowerUpRoutine();
     }
 
     /// <summary>
@@ -167,7 +213,8 @@ public class Stage : MonoBehaviour
         {
             if (i == chosenBox)
             {
-                Instantiate(itemBox, powerUpSpawns[i].transform).GetComponent<PowerUp>().stage = this;
+                m_currentItemBox = Instantiate(itemBox, powerUpSpawns[i].transform);
+                m_currentItemBox.GetComponent<PowerUp>().stage = this;
             }
         }
     }
