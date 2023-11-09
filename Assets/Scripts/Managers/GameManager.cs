@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -29,9 +30,9 @@ public class GameManager : MonoBehaviour
     }
 
     //input variables
-    private List<Gamepad> m_controllers;
-    private List<PlayerController> m_activePlayerControllers;
-    private PlayerController m_focusedPlayerController;
+    private List<Gamepad> m_controllers; // list of connected controllers
+    private List<PlayerController> m_activePlayerControllers; // currently instantiated players
+    private PlayerController m_focusedPlayerController; // for pause controls
 
     [Header("Canvas Prefabs")]
     public StartUI startCanvasPrefab;
@@ -64,9 +65,9 @@ public class GameManager : MonoBehaviour
     private GameObject m_currentStageObject;
     private int m_roundNumber = 0;
 
-    // score tracking
+    [Space(10)]
+
     [SerializeField] private List<int> m_leaderboard;
-    private int m_deadPlayers;
 
     // Game mode tracking
     private enum GameMode
@@ -85,31 +86,6 @@ public class GameManager : MonoBehaviour
     }
     private GameState m_gameState;
     private bool m_isPaused;
-
-    public int deadPlayers
-    {
-        get { return m_deadPlayers; }
-        set
-        {
-            m_deadPlayers = value;
-            if (m_deadPlayers == m_activePlayerControllers.Count - 1) // if there is only one player left alive
-            {
-                // Add to the last living player's score
-                for (int i = 0; i < m_activePlayerControllers.Count; i++)
-                {
-                    if (m_activePlayerControllers[i].GetComponent<PlayerInput>().inputIsActive)
-                    {
-                        m_leaderboard[i]++;
-
-                        // Check if the game is over. If not, end the round. Otherwise, end the game
-                        if (!IsGameOver()) EndRound(i);
-                        else EndGame();
-                        break;
-                    }
-                }
-            }
-        }
-    }
 
     // initalizing
     void Start()
@@ -158,7 +134,6 @@ public class GameManager : MonoBehaviour
         m_roundNumber = 0;
 
         m_leaderboard = new List<int>();
-        m_deadPlayers = 0;
 
         // Set start game state
         m_gameState = GameState.Start;
@@ -192,8 +167,8 @@ public class GameManager : MonoBehaviour
         //for all of the controllers connected to the computer
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
-            //check if the current gamepad has pressed east and is not stored
-            if (Gamepad.all[i].buttonEast.isPressed && !m_controllers.Contains(Gamepad.all[i]))
+            //check if the current gamepad has a button pressed and is not stored
+            if (Gamepad.all[i].allControls.Any(x => x is ButtonControl button && x.IsPressed() && !x.synthetic) && !m_controllers.Contains(Gamepad.all[i]))
             {
                 //store controller and add player to leaderboard
                 m_controllers.Add(Gamepad.all[i]);
@@ -206,7 +181,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// checks if any stored controller has pressed start and if so loads the level and creates the appropriate players
+    /// checks if any stored controller has pressed start and if so loads the first level and instantiates all connected players
     /// </summary>
     public void LoadFirst()
     {
@@ -224,13 +199,21 @@ public class GameManager : MonoBehaviour
                 //create a player object and assign their specific controller
                 GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
 
+                // Set the player's colour based on their id
+                newPlayer.gameObject.GetComponent<MeshRenderer>().material = (Material)Resources.Load("Materials/Player/Player" + (j + 1).ToString());
+
+                // get the PlayerController component from the newly instantiated player
                 PlayerController playerController = newPlayer.GetComponent<PlayerController>();
+
+                // Set player details
+                playerController.controller = m_controllers[j];
+                playerController.id = j;
+
+                // make their controller rumble
+                playerController.Rumble(.25f, .85f, 3f);
 
                 // add player to list of players
                 m_activePlayerControllers.Add(playerController);
-                playerController.controller = m_controllers[j];
-                playerController.playerCounter.text = (j + 1).ToString();
-                playerController.Rumble(.25f, .85f, 5f);
             }
 
             // deactivate start menu, activate gameplayUI - Halen
@@ -264,82 +247,7 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// enables and isables inputs for pressing pause
-    /// </summary>
-    /// <param name="pauser"></param>
-    public void TogglePause(PlayerController pauser)
-    {
-        m_isPaused = !m_isPaused; // Halen
-        m_pauseCanvas.gameObject.SetActive(m_isPaused);
-
-        if (m_isPaused) // if the game paused
-        {
-            m_focusedPlayerController = pauser;
-
-            // Halen
-            DisablePlayers(); // Disable all player inputs
-            m_focusedPlayerController.EnableInput(); // Re-enable input for the pauser
-            m_focusedPlayerController.SetControllerMap("UI"); // Let the pauser control the UI
-            m_pauseCanvas.SetDisplayDetails(GetPlayerID(m_focusedPlayerController) + 1); // Update the PauseUI details
-            EventSystemManager.Instance.SetCurrentSelectedGameObject(m_pauseCanvas.defaultSelectedObject);
-            // end Halen
-
-            //freeze time
-            Time.timeScale = 0f;
-        }
-        else // if the game is unpaused
-        {
-            EnablePlayers(); // Enable input for all players - Halen
-            m_focusedPlayerController.SetControllerMap("Player");
-
-            //unfreeze time
-            Time.timeScale = 1f;
-        }
-    }
-
-    public void Disconnected(PlayerController disconnectedPlayer)
-    {
-        int playerID = GetPlayerID(disconnectedPlayer) + 1;
-        m_disconnectCanvas.gameObject.SetActive(true); 
-        m_disconnectCanvas.SetText(playerID);
-    }
-
-    public void Reconnected()
-    {
-        m_disconnectCanvas.gameObject.SetActive(false);
-    }
-
-    public void EndRound(int playerID)
-    {
-        DisablePlayers();
-        m_gameplayCanvas.StartRoundEnd(playerID);
-    }
-
-    /// <summary>
-    /// returns true if the amount of rounds hass reached the rounds per game
-    /// </summary>
-    /// <returns></returns>
-    public bool IsGameOver()
-    {
-        bool isGameOver = false;
-        
-        // Check end conditions based on current game mode - Halen
-        switch (m_gameMode)
-        {
-            case GameMode.NumberOfWins:
-                foreach (int score in m_leaderboard)
-                    if (score >= numberOfRounds) isGameOver = true;
-                break;
-            case GameMode.NumberOfRounds:
-                if (m_roundNumber > numberOfRounds) isGameOver = true;
-                break;
-        }
-
-        return isGameOver;
-    }
-
-    /// <summary>
-    /// will delete old stage and instantiate and set up a new one
+    /// will delete the old stage and instantiate and set up a new one
     /// </summary>
     public void LoadStage()
     {
@@ -371,12 +279,76 @@ public class GameManager : MonoBehaviour
         //keep track of what stage we are on
         m_roundNumber++;
 
-        //keep track of dead players
-        m_deadPlayers = 0;
-
         // Start round countdown, then enable all player input - Halen
         m_gameplayCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.StartCountdown();
+    }
+    /// <summary>
+    /// A public method to be called by a player before it dies
+    /// </summary>
+    public void CheckIsRoundOver()
+    {
+        if (IsRoundOver())
+        {
+            // id of the winning player
+            int playerID = 0;
+            
+            // increase the score of the last living player
+            foreach (PlayerController player in m_activePlayerControllers)
+            {
+                if (!player.isDead)
+                {
+                    playerID = player.id;
+                    m_leaderboard[player.id]++;
+                    break;
+                }
+            }
+
+            if (!IsGameOver()) EndRound(playerID);
+            else EndGame();
+        }
+    }
+
+    /// <summary>
+    /// Returns if enough players have died to end the round
+    /// </summary>
+    /// <returns></returns>
+    public bool IsRoundOver()
+    {
+        // track the number of dead players
+        int deadPlayers = 0;
+
+        // check how many players are dead
+        foreach (PlayerController player in m_activePlayerControllers)
+        {
+            if (player.isDead) deadPlayers++;
+        }
+
+        if (deadPlayers == m_activePlayerControllers.Count - 1) return true;
+        return false;
+    }
+
+    /// <summary>
+    /// returns true if the end condition has been met
+    /// </summary>
+    /// <returns></returns>
+    public bool IsGameOver()
+    {
+        bool isGameOver = false;
+
+        // Check end conditions based on current game mode - Halen
+        switch (m_gameMode)
+        {
+            case GameMode.NumberOfWins:
+                foreach (int score in m_leaderboard)
+                    if (score >= numberOfRounds) isGameOver = true;
+                break;
+            case GameMode.NumberOfRounds:
+                if (m_roundNumber > numberOfRounds) isGameOver = true;
+                break;
+        }
+
+        return isGameOver;
     }
 
     /// <summary>
@@ -398,9 +370,9 @@ public class GameManager : MonoBehaviour
 
         //destroy the stage and players
         Destroy(m_currentStageObject);
-        for (int i = 0; i < m_activePlayerControllers.Count; i++)
+        foreach (PlayerController player in m_activePlayerControllers)
         {
-            Destroy(m_activePlayerControllers[i].gameObject);
+            Destroy(player.gameObject);
         }
 
         //find the winner and that score
@@ -422,6 +394,74 @@ public class GameManager : MonoBehaviour
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
         m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+    }
+
+    /// <summary>
+    /// randomizes the spawns in the array to spawn players at random locations
+    /// </summary>
+    /// <param name="spawns"></param>
+    public void ShuffleSpawns(Transform[] spawns)
+    {
+        // Knuth shuffle algorithm
+        for (int i = 0; i < spawns.Length; i++)
+        {
+            Transform tmp = spawns[i];
+            int r = Random.Range(i, spawns.Length);
+            spawns[i] = spawns[r];
+            spawns[r] = tmp;
+        }
+    }
+
+    /// <summary>
+    /// toggles the game's pause menu
+    /// </summary>
+    /// <param name="pauser"></param>
+    public void TogglePause(PlayerController pauser)
+    {
+        m_isPaused = !m_isPaused; // Halen
+        m_pauseCanvas.gameObject.SetActive(m_isPaused);
+
+        if (m_isPaused) // if the game paused
+        {
+            m_focusedPlayerController = pauser;
+
+            // Halen
+            DisablePlayers(); // Disable all player inputs
+            m_focusedPlayerController.EnableInput(); // Re-enable input for the pauser
+            m_focusedPlayerController.SetControllerMap("UI"); // Let the pauser control the UI
+            m_pauseCanvas.SetDisplayDetails(m_focusedPlayerController.id + 1); // Update the PauseUI details
+            EventSystemManager.Instance.SetCurrentSelectedGameObject(m_pauseCanvas.defaultSelectedObject);
+            // end Halen
+
+            //freeze time
+            Time.timeScale = 0f;
+        }
+        else // if the game is unpaused
+        {
+            EnablePlayers(); // Enable input for all players - Halen
+            m_focusedPlayerController.SetControllerMap("Player");
+
+            //unfreeze time
+            Time.timeScale = 1f;
+        }
+    }
+
+    public void Disconnected(PlayerController disconnectedPlayer)
+    {
+        int playerID = disconnectedPlayer.id + 1;
+        m_disconnectCanvas.gameObject.SetActive(true);
+        m_disconnectCanvas.SetText(playerID);
+    }
+
+    public void Reconnected()
+    {
+        m_disconnectCanvas.gameObject.SetActive(false);
+    }
+
+    public void EndRound(int winningPlayerID)
+    {
+        DisablePlayers();
+        m_gameplayCanvas.StartRoundEnd(winningPlayerID);
     }
 
     public void ShowDanger(float displayTime)
@@ -465,6 +505,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (PlayerController player in m_activePlayerControllers)
         {
+            player.gameObject.SetActive(true);
             player.ResetPlayer();
         }
     }
@@ -489,7 +530,7 @@ public class GameManager : MonoBehaviour
         }
         if (Keyboard.current.digit2Key.isPressed)
         {
-            deadPlayers = 0;
+            
         }
         if (Keyboard.current.digit3Key.isPressed)
         {
@@ -497,33 +538,5 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// randomizes the spawns in the array to spawn players at random locations
-    /// </summary>
-    /// <param name="spawns"></param>
-    public void ShuffleSpawns(Transform[] spawns)
-    {
-        // Knuth shuffle algorithm
-        for (int i = 0; i < spawns.Length; i++)
-        {
-            Transform tmp = spawns[i];
-            int r = Random.Range(i, spawns.Length);
-            spawns[i] = spawns[r];
-            spawns[r] = tmp;
-        }
-    }
-
-    /// <summary>
-    /// Returns the ID (or player number) of a specified player.
-    /// </summary>
-    /// <param name="player"></param>
-    /// <returns></returns>
-    public int GetPlayerID(PlayerController player)
-    {
-        for (int i = 0; i < m_activePlayerControllers.Count; i++)
-        {
-            if (player == m_activePlayerControllers[i]) return i;
-        }
-        return -1;
-    }
+    
 }

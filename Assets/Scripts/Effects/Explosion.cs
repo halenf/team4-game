@@ -61,7 +61,7 @@ public class Explosion : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
-            if (GameManager.Instance.GetPlayerID(player) != m_playerID) player.TakeDamage(damage);
+            if (player.id != m_playerID) player.TakeDamage(damage);
             m_shouldDisableCollider = true;
         }
 
