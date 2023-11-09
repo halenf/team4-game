@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
 
     public GameObject controlCube;
-    private GameObject endController;
+    private GameObject m_endController;
 
     [Header("Game Info")]
     public GameObject[] stageList;
@@ -257,6 +257,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadStage()
     {
+        if (m_endController) Destroy(m_endController);
         // Destroy any bullets that might remain in the level from the last level
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
@@ -288,7 +289,7 @@ public class GameManager : MonoBehaviour
         // Start round countdown, then enable all player input - Halen
         m_gameplayCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.StartCountdown();
-        Time.timeScale = 0f;
+        m_isPaused = false;
     }
     /// <summary>
     /// A public method to be called by a player before it dies
@@ -403,7 +404,7 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas.gameObject.SetActive(true);
         m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
 
-        GameObject newPlayer = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
+        m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
 
         EventSystemManager.Instance.SetPlayerToControl(controlCube.GetComponent<PlayerController>());
     }
