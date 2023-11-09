@@ -6,16 +6,18 @@ using static UnityEngine.ParticleSystem;
 
 public class FlameThower : Gun
 {
-    public GameObject hurtObject;
+    private Collider m_collider;
     public float timeToColliderOff;
     private float m_timeToColliderOff;
     private int m_playerID;
-    private BulletEffect m_currentEffect;
-
+    public void Start()
+    {
+        m_collider = GetComponent<Collider>();
+    }
     public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
         m_playerID = playerID;
-        hurtObject.SetActive(true);
+        m_collider.enabled = true;
         m_timeToColliderOff = timeToColliderOff;
         // Activate the muzzle flash
         if (muzzleFlash) muzzleFlash.Play();
@@ -30,6 +32,8 @@ public class FlameThower : Gun
         transform.parent.gameObject.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
     }
 
+    
+
     public void Update()
     {
         if (m_timeToColliderOff > 0)
@@ -38,28 +42,21 @@ public class FlameThower : Gun
         }
         else
         {
-            hurtObject.SetActive(false);
+            m_collider.enabled = false;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerStay(Collider collision)
     {
-        // default particle effect
-        m_particle = sparksPrefab;
 
-        // If the bullet collides with a player that isn't the one who shot it
+        // If collides with a player that isn't the one who shot it
         if (collision.gameObject.tag == "Player"
             && GameManager.Instance.GetPlayerID(collision.gameObject.GetComponent<PlayerController>()) != m_playerID)
         {
-            // deal damage to player if the bullet is not an exploding bullet
-            if (m_currentEffect != BulletEffect.Explode)
-            {
-                PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-                player.TakeDamage(m_damage);
-            }
-
-            // set the particle effect to blood
-            m_particle = bloodPrefab;
+            
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.TakeDamage(bulletDamage);
+            
 
             //BulletDestroy();
             return;
@@ -68,7 +65,7 @@ public class FlameThower : Gun
         // if the bullet hits a destructible platform
         if (collision.gameObject.tag == "Breakable")
         {
-            collision.gameObject.GetComponent<BreakableObject>().TakeDamage(m_damage);
+            collision.gameObject.GetComponent<BreakableObject>().TakeDamage(bulletDamage);
         }
     }
 }
