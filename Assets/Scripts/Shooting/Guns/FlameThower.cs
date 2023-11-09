@@ -4,8 +4,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Bullet;
-using static UnityEngine.ParticleSystem;
 
 public class FlameThower : Gun
 {
@@ -13,10 +11,16 @@ public class FlameThower : Gun
     public float timeToColliderOff;
     private float m_timeToColliderOff;
     private int m_playerID;
-    public void Start()
+
+    private ParticleSystem m_fireParticleEffect;
+    private bool m_isShooting;
+
+    private void Awake()
     {
         m_collider = GetComponent<Collider>();
+        m_fireParticleEffect = GetComponentInChildren<ParticleSystem>();
     }
+
     public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
         //get player ID so it is impossible to damage shooter
@@ -24,8 +28,9 @@ public class FlameThower : Gun
         //enable damage
         m_collider.enabled = true;
         m_timeToColliderOff = timeToColliderOff;
-        // Activate the muzzle flash
-        if (muzzleFlash) muzzleFlash.Play();
+
+        // Activate the fire particle system
+        m_isShooting = true;
 
         // Make the player's controller rumble
         PlayerController player = transform.parent.GetComponent<PlayerController>();
@@ -37,8 +42,6 @@ public class FlameThower : Gun
         transform.parent.gameObject.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
     }
 
-    
-
     public void Update()
     {
         //turn off the damage if the buttun hasnt been held in the timer time
@@ -49,7 +52,15 @@ public class FlameThower : Gun
         else
         {
             m_collider.enabled = false;
+            m_isShooting = false;
         }
+
+        // enabling and disabling the fire particle effect
+        if (m_isShooting)
+        {
+            if (!m_fireParticleEffect.isPlaying) m_fireParticleEffect.Play();
+        }
+        else m_fireParticleEffect.Stop();
     }
 
     private void OnTriggerStay(Collider collision)
