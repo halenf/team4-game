@@ -1,3 +1,6 @@
+// Flamethrower - Cameron
+// custum behaviour for the flamethrower
+// Last edit: 9/11/23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +19,9 @@ public class FlameThower : Gun
     }
     public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
+        //get player ID so it is impossible to damage shooter
         m_playerID = playerID;
+        //enable damage
         m_collider.enabled = true;
         m_timeToColliderOff = timeToColliderOff;
         // Activate the muzzle flash
@@ -36,6 +41,7 @@ public class FlameThower : Gun
 
     public void Update()
     {
+        //turn off the damage if the buttun hasnt been held in the timer time
         if (m_timeToColliderOff > 0)
         {
             m_timeToColliderOff -= Time.deltaTime;
@@ -48,6 +54,7 @@ public class FlameThower : Gun
 
     private void OnTriggerStay(Collider collision)
     {
+        //i took this from the bullets on collision
 
         // If collides with a player that isn't the one who shot it
         if (collision.gameObject.tag == "Player"
