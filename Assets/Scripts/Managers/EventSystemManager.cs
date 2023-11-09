@@ -26,6 +26,7 @@ public class EventSystemManager : MonoBehaviour
         {
             Instance = this;
         }
+
     }
 
     [Header("Component References")]
@@ -51,4 +52,5 @@ public class EventSystemManager : MonoBehaviour
     {
         GetComponentInChildren<InputSystemUIInputModule>().actionsAsset = playerController.gameObject.GetComponent<PlayerInput>().actions;
     }
+
 }
