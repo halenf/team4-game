@@ -4,8 +4,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Bullet;
-using static UnityEngine.ParticleSystem;
 
 public class FlameThower : Gun
 {
@@ -23,7 +21,7 @@ public class FlameThower : Gun
         m_fireParticleEffect = GetComponentInChildren<ParticleSystem>();
     }
 
-    public override void Shoot(int playerID, BulletEffect effect)
+    public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
         //get player ID so it is impossible to damage shooter
         m_playerID = playerID;
