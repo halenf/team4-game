@@ -58,7 +58,7 @@ public class FlameThower : Gun
 
         // If collides with a player that isn't the one who shot it
         if (collision.gameObject.tag == "Player"
-            && GameManager.Instance.GetPlayerID(collision.gameObject.GetComponent<PlayerController>()) != m_playerID)
+            && collision.gameObject.GetComponent<PlayerController>().id != m_playerID)
         {
             
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
