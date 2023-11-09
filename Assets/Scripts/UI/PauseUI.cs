@@ -34,7 +34,7 @@ public class PauseUI : MonoBehaviour
 
     public void OnResume()
     {
-        GameManager.Instance.TogglePause(null);
+        GameManager.Instance.TogglePause(0);
     }
 
     public void OnEndGame()
