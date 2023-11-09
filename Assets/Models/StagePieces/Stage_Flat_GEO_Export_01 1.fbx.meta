@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 810451c554ed4364182e0e512e056f5b
+guid: bf8d23653b0a22349954081d99c0ceda
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StageFlat_MAT
+    second: {fileID: 2100000, guid: 0ac934a21dc7b494eb29b799374415dc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

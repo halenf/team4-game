@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 65bbb6e1c07b1a142b2250e9eac214e7
+guid: b969a50d9de64b547a01224e2f345702
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StageDiagonal_MAT
+    second: {fileID: 2100000, guid: ddf293f701f1d564a92002700f141384, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
