@@ -416,14 +416,14 @@ public class GameManager : MonoBehaviour
     /// toggles the game's pause menu
     /// </summary>
     /// <param name="pauser"></param>
-    public void TogglePause(PlayerController pauser)
+    public void TogglePause(int playerID)
     {
         m_isPaused = !m_isPaused; // Halen
         m_pauseCanvas.gameObject.SetActive(m_isPaused);
 
         if (m_isPaused) // if the game paused
         {
-            m_focusedPlayerController = pauser;
+            m_focusedPlayerController = m_activePlayerControllers[playerID];
 
             // Halen
             DisablePlayers(); // Disable all player inputs
@@ -431,6 +431,7 @@ public class GameManager : MonoBehaviour
             m_focusedPlayerController.SetControllerMap("UI"); // Let the pauser control the UI
             m_pauseCanvas.SetDisplayDetails(m_focusedPlayerController.id + 1); // Update the PauseUI details
             EventSystemManager.Instance.SetCurrentSelectedGameObject(m_pauseCanvas.defaultSelectedObject);
+            EventSystemManager.Instance.SetPlayerToControl(m_focusedPlayerController);
             // end Halen
 
             //freeze time
@@ -446,9 +447,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Disconnected(PlayerController disconnectedPlayer)
+    public void Disconnected(int disconnectedPlayerID)
     {
-        int playerID = disconnectedPlayer.id + 1;
+        int playerID = disconnectedPlayerID + 1;
         m_disconnectCanvas.gameObject.SetActive(true);
         m_disconnectCanvas.SetText(playerID);
     }

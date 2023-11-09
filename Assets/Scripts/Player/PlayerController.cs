@@ -238,8 +238,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnDisconnect()
     {
-        GameManager.Instance.TogglePause(this);
-        GameManager.Instance.Disconnected(this);
+        GameManager.Instance.TogglePause(id);
+        GameManager.Instance.Disconnected(id);
     }
 
     public void OnConnect()
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPause(InputAction.CallbackContext value)
     {
-        if (value.performed) GameManager.Instance.TogglePause(this);
+        if (value.performed) GameManager.Instance.TogglePause(id);
     }
 
     /// <summary>
@@ -258,6 +258,10 @@ public class PlayerController : MonoBehaviour
     /// <param name="damage"></param>
     public void TakeDamage(float damage)
     {
+        // if the player is already dead, don't make them take damage
+        if (isDead) return;
+        
+        // shield will block damage
         if (m_shieldCurrentHealth > 0)
         {
             m_shieldCurrentHealth--;
@@ -277,9 +281,6 @@ public class PlayerController : MonoBehaviour
         // if player is dead
         if (m_currentHealth <= 0)
         {
-            // controller rumble
-            Rumble(1f, 1f, 1.2f);
-
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
@@ -287,6 +288,7 @@ public class PlayerController : MonoBehaviour
             // let game manager know somebody died
             GameManager.Instance.CheckIsRoundOver();
 
+            // deactivate player object
             gameObject.SetActive(false);
         }
     }
