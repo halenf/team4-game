@@ -1,6 +1,6 @@
 // shot gun - Cameron
 // justa shoot function
-// Last edit: 1/11/23
+// Last edit: 9/11/23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,11 +21,16 @@ public class ShotGun : Gun
             // instantiate the bullet
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
             bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
-            // apply recoil to player
         }
+        // Activate the muzzle flash
+        muzzleFlash.Play();
+
         PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+
+        // make their controller rumble
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
 
+        // apply recoil to player
         float tempRecoil = baseRecoil;
         if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
         transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);

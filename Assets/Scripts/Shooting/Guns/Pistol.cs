@@ -1,10 +1,9 @@
 // Pistol - Halen, Cameron
 // specific script for the pistol gun
-// Last edit: 3/11/23
+// Last edit: 9/11/23
 
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Pistol : Gun
