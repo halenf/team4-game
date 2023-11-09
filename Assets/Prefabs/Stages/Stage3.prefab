@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1303027771384386839}
   m_LocalRotation: {x: -0, y: -0, z: -1, w: 0.0000005215405}
-  m_LocalPosition: {x: 4.25, y: 9, z: 0}
+  m_LocalPosition: {x: 5, y: 9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -601,8 +601,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485002350181537
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,8 +813,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485002355466458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,8 +1048,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485002372508746
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1505,8 +1508,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485002427154746
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1668,8 +1672,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485002441328024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,8 +1787,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485002441862161
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,8 +3257,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485002624961227
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3899,8 +3906,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485002671698864
 GameObject:
   m_ObjectHideFlags: 0
@@ -6613,8 +6621,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485003048707280
 GameObject:
   m_ObjectHideFlags: 0
@@ -7080,8 +7089,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485003101630274
 GameObject:
   m_ObjectHideFlags: 0
@@ -8231,8 +8241,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485003199717013
 GameObject:
   m_ObjectHideFlags: 0
@@ -8514,8 +8525,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485003230367723
 GameObject:
   m_ObjectHideFlags: 0
@@ -9114,14 +9126,18 @@ MonoBehaviour:
   endLaserSpawns:
   - {fileID: 7087266591149209054}
   - {fileID: 8761776288971694479}
+  spikeBallSpawns: []
   cameraDefaultTransform: {fileID: 4756880296736257699}
   gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   itemBox: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
   endLaser: {fileID: 4602441095069155359, guid: 61389d90fddf326488d95e90fb54352f, type: 3}
+  spikeBall: {fileID: 4872935802854433896, guid: 735331b7140807f4a8021a133db25238, type: 3}
   minGunTimer: 6
   maxGunTimer: 12
   minPowerUpTimer: 10
   maxPowerUpTimer: 15
+  minSpikeBallTimer: 7
+  maxSpikeBallTimer: 14
   roundTime: 60
   dangerTimer: 3
 --- !u!1 &4261485003307604590
@@ -10043,8 +10059,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485003457298775
 GameObject:
   m_ObjectHideFlags: 0
@@ -10351,8 +10368,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485003482208352
 GameObject:
   m_ObjectHideFlags: 0
@@ -11644,8 +11662,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485003561093224
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11868,8 +11887,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485003588865400
 GameObject:
   m_ObjectHideFlags: 0
@@ -11969,8 +11989,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485003588865406
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15171,8 +15192,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485003880308112
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16272,8 +16294,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485004085430031
 GameObject:
   m_ObjectHideFlags: 0
@@ -16580,8 +16603,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485004106259412
 GameObject:
   m_ObjectHideFlags: 0
@@ -16845,8 +16869,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485004133014575
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17983,8 +18008,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 0}
-  debrisCount: 5
+  debrisDestroyTimer: 0
   health: 5
+  destroyEffect: {fileID: 0}
 --- !u!1 &4261485004339634890
 GameObject:
   m_ObjectHideFlags: 0
@@ -18181,8 +18207,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485004347460587
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18295,8 +18322,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debris:
   - {fileID: 9179719182485939646, guid: 51cf19cffc8106f4f8c3d532f8c25623, type: 3}
-  debrisCount: 5
-  health: 20
+  debrisDestroyTimer: 0
+  health: 5
+  destroyEffect: {fileID: 0}
 --- !u!65 &4261485004363630993
 BoxCollider:
   m_ObjectHideFlags: 0
