@@ -290,13 +290,21 @@ public class GameManager : MonoBehaviour
     {
         if (IsRoundOver())
         {
+            // id of the winning player
+            int playerID = 0;
+            
             // increase the score of the last living player
             foreach (PlayerController player in m_activePlayerControllers)
             {
-                if (!player.isDead) m_leaderboard[player.id]++;
+                if (!player.isDead)
+                {
+                    playerID = player.id;
+                    m_leaderboard[player.id]++;
+                    break;
+                }
             }
 
-            if (IsGameOver()) LoadStage();
+            if (!IsGameOver()) EndRound(playerID);
             else EndGame();
         }
     }
@@ -450,10 +458,10 @@ public class GameManager : MonoBehaviour
         m_disconnectCanvas.gameObject.SetActive(false);
     }
 
-    public void EndRound(int playerID)
+    public void EndRound(int winningPlayerID)
     {
         DisablePlayers();
-        m_gameplayCanvas.StartRoundEnd(playerID);
+        m_gameplayCanvas.StartRoundEnd(winningPlayerID);
     }
 
     public void ShowDanger(float displayTime)
