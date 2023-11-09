@@ -8,10 +8,6 @@ using UnityEngine;
 
 public class ItemBox : PowerUp
 {
-    public void Start()
-    {
-        StartCoroutine(Die());
-    }
 
     public override void OnTriggerEnter(Collider other)
     {
@@ -31,16 +27,4 @@ public class ItemBox : PowerUp
         }
     }
 
-    private IEnumerator Die()
-    {
-        yield return new WaitForSeconds(lifeTime);
-
-        //destroy self
-        Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
-        stage.StartPowerUpRoutine();
-    }
 }

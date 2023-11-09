@@ -14,7 +14,8 @@ public class Explosion : MonoBehaviour
     [Header("Properties")]
     [Tooltip("Damage dealt by the explosion to players.")]
     [Min(0)] public float damage;
-
+    public float radius;
+    public float lifetime;
     [Header("Particle Systems")]
     public ParticleSystem fragments;
     public ParticleSystem blast;
@@ -24,16 +25,13 @@ public class Explosion : MonoBehaviour
         if (m_shouldDisableCollider) GetComponent<SphereCollider>().enabled = false;
     }
 
-    public void Init(int playerID, float damage, float radius, float lifetime)
+    public void Awake()
     {
-        m_playerID = playerID;
-        this.damage = damage;
-        
         // Create the explosion collider
         SphereCollider collider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
         collider.isTrigger = true;
         collider.radius = radius;
-        collider.center = Vector3.zero;
+        collider.center = transform.position;
 
         // set details of the particle systems
         var fragmentsModule = fragments.main;
@@ -43,6 +41,33 @@ public class Explosion : MonoBehaviour
         blastModule.startSize = radius;
 
         // i'm tired, figure it out
+        /// :(
+        StartCoroutine(Explode(lifetime));
+        Instantiate(fragments, transform.position, Quaternion.identity);
+        Instantiate(blast, transform.position, Quaternion.identity);
+        Destroy(gameObject, blastModule.startLifetime.constant);
+    }
+
+    public void Init(float damage, float radius, float lifetime)
+    {
+        this.damage = damage;
+        
+
+        // Create the explosion collider
+        SphereCollider collider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
+        collider.isTrigger = true;
+        collider.radius = radius;
+        collider.center = transform.position;
+
+        // set details of the particle systems
+        var fragmentsModule = fragments.main;
+        fragmentsModule.startSpeed = radius * 3.75f;
+
+        var blastModule = blast.main;
+        blastModule.startSize = radius;
+
+        // i'm tired, figure it out
+        /// :(
         StartCoroutine(Explode(lifetime));
         Instantiate(fragments, transform.position, Quaternion.identity);
         Instantiate(blast, transform.position, Quaternion.identity);
@@ -61,7 +86,7 @@ public class Explosion : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
-            if (GameManager.Instance.GetPlayerID(player) != m_playerID) player.TakeDamage(damage);
+            player.TakeDamage(damage);
             m_shouldDisableCollider = true;
         }
 

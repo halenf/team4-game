@@ -4918,6 +4918,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 4
+  radius: 5
+  lifetime: 5
   fragments: {fileID: 7095177697174510587}
   blast: {fileID: 7785448750215647882}
 --- !u!1 &8024243766073461282

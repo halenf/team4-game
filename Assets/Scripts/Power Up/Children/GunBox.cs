@@ -14,10 +14,7 @@ public class GunBox : PowerUp
     // Start is called before the first frame update
     void Start()
     {
-        currentGun = Guns[Random.Range(0, Guns.Length)];
-        
-        
-        StartCoroutine(Die());
+        currentGun = Guns[Random.Range(0, Guns.Length)];        
         
     }
 
@@ -33,20 +30,5 @@ public class GunBox : PowerUp
             //destroy self
             Destroy(gameObject);
         }
-    }
-
-    private IEnumerator Die()
-    {
-        yield return new WaitForSeconds(lifeTime);
-        //tell the stage to start the timer again
-        stage.StartGunRoutine();
-
-        //destroy self
-        Destroy(gameObject);
-    }
-
-    private void OnDestroy()
-    {
-        stage.StartGunRoutine();
     }
 }

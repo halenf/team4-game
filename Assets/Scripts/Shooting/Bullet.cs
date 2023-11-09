@@ -92,7 +92,7 @@ public class Bullet : MonoBehaviour
     {
         yield return new WaitForSeconds(lifeTime);
         Explosion explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        explosion.Init(m_playerID, explosionDamage, explosionRadius, explosionLifetime);
+        explosion.Init(explosionDamage, explosionRadius, explosionLifetime);
         BulletDestroy();
     }
 
@@ -156,7 +156,11 @@ public class Bullet : MonoBehaviour
     {
         // instantiate explosion if player has exploding bullets
         // otherwise instantiate sparks
-        if (m_currentEffect == BulletEffect.Explode) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        if (m_currentEffect == BulletEffect.Explode)
+        {
+            Explosion explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            explosion.Init(explosionDamage, explosionRadius, explosionLifetime);
+        }
         else Instantiate(m_particle, transform.position, transform.rotation);
     }
 
