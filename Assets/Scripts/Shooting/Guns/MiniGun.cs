@@ -1,6 +1,6 @@
 //Minigun - Cameron
 // shoot function for minigun
-// Last edit: 1/11/23
+// Last edit: 9/11/23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,14 +21,21 @@ public class MiniGun : Gun
         // instantiate the bullet
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
         bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
+
+        // Activate the muzzle flash
+        muzzleFlash.Play();
+
         // apply recoil to player
         float tempRecoil = baseRecoil;
         if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
+
         //find a random recoil change percentage
         float randomRecoilForce = Random.Range(tempRecoil - randomRecoilStrength, tempRecoil + randomRecoilStrength);
         
         //find a random direction from the direction the gun is facing in the bounds of -randomRecoilAngle and positive randomrecoil angle
         Vector3 ForceDirection = Quaternion.AngleAxis(Random.Range(-randomRecoilAngle, randomRecoilAngle), Vector3.forward) * -transform.forward;
+
+        // apply recoil to the player
         transform.parent.GetComponent<Rigidbody>().AddForce(randomRecoilForce * ForceDirection, ForceMode.Impulse);
     }
 }

@@ -62,13 +62,13 @@ public class Bullet : MonoBehaviour
         {
             case BulletEffect.Ricochet:
             { 
-                Destroy(gameObject, lifeTime);
+                BulletDestroy(lifeTime);
                 break;
             }
             case BulletEffect.Big:
             {
                 transform.localScale = transform.localScale * 2;
-                Destroy(gameObject, lifeTime);
+                BulletDestroy(lifeTime);
                 break;
             }
             case BulletEffect.Explode:
@@ -78,7 +78,7 @@ public class Bullet : MonoBehaviour
             }
             case BulletEffect.None:
             {
-                Destroy(gameObject, lifeTime);
+                BulletDestroy(lifeTime);
                 break;
             }
         }
@@ -93,7 +93,7 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(lifeTime);
         Explosion explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         explosion.Init(m_playerID, explosionDamage, explosionRadius, explosionLifetime);
-        Destroy(gameObject);
+        BulletDestroy();
     }
 
     void Awake()
@@ -130,7 +130,7 @@ public class Bullet : MonoBehaviour
             // set the particle effect to blood
             m_particle = bloodPrefab;
 
-            Destroy(gameObject);
+            BulletDestroy();
             return;
         }
 
@@ -148,7 +148,7 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            BulletDestroy();
         }
     }
 
@@ -158,5 +158,15 @@ public class Bullet : MonoBehaviour
         // otherwise instantiate sparks
         if (m_currentEffect == BulletEffect.Explode) Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         else Instantiate(m_particle, transform.position, transform.rotation);
+    }
+
+    public virtual void BulletDestroy()
+    {
+        Destroy(gameObject);
+    }
+
+    public virtual void BulletDestroy(float lifeTime)
+    {
+        Destroy(gameObject, lifeTime);
     }
 }
