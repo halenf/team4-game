@@ -4922,7 +4922,7 @@ MonoBehaviour:
   ammoCapacity: 1
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 1407886214849153807}
-  bulletPrefab: {fileID: 2271769695517889325, guid: 95da5109b21aeb34381908273ee0887b, type: 3}
+  bulletPrefab: {fileID: 2271769695517889325, guid: 4fbb5bbebbab77e4f8a3bd4aa1afc423, type: 3}
   spread: 2
   bulletSpeed: 40
   bulletDamage: 40
