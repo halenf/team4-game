@@ -56,4 +56,10 @@ public abstract class Gun : MonoBehaviour
         if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
         transform.parent.gameObject.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
     }
+
+    public void ChangeMat(int playerID)
+    {
+        gameObject.GetComponentInChildren<MeshRenderer>().material.color = ((Material)Resources.Load("Materials/Player/Player" + (playerID + 1).ToString())).color;
+        Debug.Log("worked");
+    }
 }
