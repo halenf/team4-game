@@ -89,12 +89,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 5261406578183737188, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6457267319164671743, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
 --- !u!4 &6538972885358540156 stripped
 Transform:
@@ -156,12 +151,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 5261406578183737188, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6457267319164671743, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
 --- !u!4 &5142545012235886635 stripped
 Transform:
@@ -223,12 +213,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 5261406578183737188, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
+    - target: {fileID: 5959832708133609870, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6457267319164671743, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d02d665ce51ffbb479667f5532a64a64, type: 3}
 --- !u!4 &8685071574953597934 stripped
 Transform:
