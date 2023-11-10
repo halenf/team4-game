@@ -4916,17 +4916,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cab2ea4fa5b4a7d488f49f773c3b8bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseRecoil: 80
+  baseRecoil: 90
   groundedRecoilScalar: 0.8
-  baseFireRate: 1
-  ammoCapacity: 5
+  baseFireRate: 1.1
+  ammoCapacity: 6
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 5502464817876774055}
   bulletPrefab: {fileID: 2271769695517889325, guid: 15ef51ede76b142468b93acdca306149, type: 3}
   spread: 20
-  bulletSpeed: 10
-  bulletDamage: 2.5
-  bulletLifeTime: 2.5
+  bulletSpeed: 12
+  bulletDamage: 0.2
+  bulletLifeTime: 10
   highRumbleFrequency: 1
   lowRumbleFrequency: 0
   rumbleTime: 0.3

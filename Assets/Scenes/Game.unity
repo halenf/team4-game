@@ -554,6 +554,10 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: controlCube
+      value: 
+      objectReference: {fileID: 5814125836590746925, guid: 3eb93a620c640a24ab6aa0d51dd88c17, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: staticCamera
       value: 
       objectReference: {fileID: 1588727230}
@@ -562,9 +566,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 854257976}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[0]
       value: 
-      objectReference: {fileID: 3771888446113775381, guid: ca8869b86fab90746a761fd42e221a31, type: 3}
+      objectReference: {fileID: 4770942145306659813, guid: 10daa7e31fc56804b8962eb76ffbbe84, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[1]
+      value: 
+      objectReference: {fileID: 2248171847380003527, guid: 3ae8ff37af8e23445acc247cb2548e13, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[2]
+      value: 
+      objectReference: {fileID: 7952906463279250585, guid: 9c8476849d455824eb4866b62a61ef68, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[3]
+      value: 
+      objectReference: {fileID: 9021264646537508016, guid: 1dbe8234bfc50bc4b9f4bb323b8612f5, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[4]
+      value: 
+      objectReference: {fileID: 4770942145306659813, guid: 10daa7e31fc56804b8962eb76ffbbe84, type: 3}
     - target: {fileID: 6369607398092397879, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_RootOrder
       value: 1
