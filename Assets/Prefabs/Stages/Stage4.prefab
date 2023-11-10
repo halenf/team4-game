@@ -5463,7 +5463,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7478121448339789582}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9090217305816703598
 MeshFilter:
@@ -6388,6 +6388,41 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4228700494892067033, guid: 6fa7b6cbbd1e9044e8bc0cbd3272a51f, type: 3}
+--- !u!1 &892232473943979949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7616126483180092323}
+  m_Layer: 0
+  m_Name: LaserSpawns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7616126483180092323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892232473943979949}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -22.16611, y: -3.3233438, z: -0.50863886}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2332186949024137057}
+  - {fileID: 4289324477452028914}
+  - {fileID: 3373112676298827495}
+  - {fileID: 1230570149554853979}
+  m_Father: {fileID: 2248171848231757325}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &955360479272265549
 GameObject:
   m_ObjectHideFlags: 0
@@ -14788,12 +14823,16 @@ MonoBehaviour:
   - {fileID: 642994780878581677}
   - {fileID: 642994782132279516}
   - {fileID: 642994780225395236}
-  endLaserSpawns: []
+  endLaserSpawns:
+  - {fileID: 2332186949024137057}
+  - {fileID: 4289324477452028914}
+  - {fileID: 3373112676298827495}
+  - {fileID: 1230570149554853979}
   spikeBallSpawns: []
   cameraDefaultTransform: {fileID: 6865083607852594061}
   gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   itemBox: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
-  endLaser: {fileID: 0}
+  endLaser: {fileID: 4602441095069155359, guid: 7f70c04c1abb89f438fd56b4c5f93c07, type: 3}
   spikeBall: {fileID: 0}
   minGunTimer: 5
   maxGunTimer: 15
@@ -14801,8 +14840,8 @@ MonoBehaviour:
   maxPowerUpTimer: 20
   minSpikeBallTimer: 0
   maxSpikeBallTimer: 0
-  roundTime: 0
-  dangerTimer: 0
+  roundTime: 60
+  dangerTimer: 3
 --- !u!1 &2248171847382809471
 GameObject:
   m_ObjectHideFlags: 0
@@ -20326,6 +20365,7 @@ Transform:
   - {fileID: 2248171848209428090}
   - {fileID: 2248171846807344624}
   - {fileID: 2248171848189940397}
+  - {fileID: 7616126483180092323}
   m_Father: {fileID: 2248171847380003525}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21458,6 +21498,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 400, y: 400.00003, z: 400}
   m_Center: {x: 200, y: 199.99998, z: 167.31985}
+--- !u!1 &2405414994685903422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4289324477452028914}
+  m_Layer: 0
+  m_Name: Laser2Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4289324477452028914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2405414994685903422}
+  m_LocalRotation: {x: -0, y: -0, z: -0.000000059604638, w: 1}
+  m_LocalPosition: {x: -7.749996, y: -35.499985, z: 14}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7616126483180092323}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2421032105217940892
 GameObject:
   m_ObjectHideFlags: 0
@@ -23571,6 +23642,37 @@ Transform:
   m_Father: {fileID: 2248171846779929199}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5404422507590322001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3373112676298827495}
+  m_Layer: 0
+  m_Name: Laser3Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3373112676298827495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5404422507590322001}
+  m_LocalRotation: {x: -0.00000013411044, y: -0.0000009058876, z: 0.7071068, w: -0.70710677}
+  m_LocalPosition: {x: -11.249998, y: 19.500004, z: 14.000023}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7616126483180092323}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -360, y: 0, z: -90}
 --- !u!1 &5444634854744140455
 GameObject:
   m_ObjectHideFlags: 0
@@ -23738,7 +23840,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3598262669797766361}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8271754559722049941
 MeshFilter:
@@ -23803,6 +23905,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0000006, y: 1, z: 0.99999994}
   m_Center: {x: -0.5000003, y: 0.5, z: -0.4182996}
+--- !u!1 &5720787954876283713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2332186949024137057}
+  m_Layer: 0
+  m_Name: Laser1Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2332186949024137057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720787954876283713}
+  m_LocalRotation: {x: -0.7071065, y: -0.7071071, z: 0.00000007488918, w: 0.000000044703476}
+  m_LocalPosition: {x: -7.9999733, y: -25.250008, z: 14}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7616126483180092323}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 90}
 --- !u!1 &6079815054267540346
 GameObject:
   m_ObjectHideFlags: 0
@@ -24657,7 +24790,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8907277918461263953}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3004282552130522273
 MeshFilter:
@@ -24851,7 +24984,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2141853259636628614}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1218621471313007580
 MeshFilter:
@@ -25788,6 +25921,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 400, y: 400.00003, z: 400}
   m_Center: {x: 200, y: 199.99998, z: 167.31985}
+--- !u!1 &8938385553527162702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1230570149554853979}
+  m_Layer: 0
+  m_Name: Laser4Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1230570149554853979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938385553527162702}
+  m_LocalRotation: {x: 0.000000014773679, y: -0.9914449, z: 0.0000000019449966, w: 0.13052654}
+  m_LocalPosition: {x: 59.500008, y: -21.25, z: 14}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7616126483180092323}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: -165, z: 0}
 --- !u!1 &8968202004117120544
 GameObject:
   m_ObjectHideFlags: 0
