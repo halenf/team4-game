@@ -3,7 +3,12 @@ guid: 37b6b397866516a458e0c42a9429d89a
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: minigun_MAT
+    second: {fileID: 2100000, guid: 1f27740cb4429e744910934423be5f15, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
