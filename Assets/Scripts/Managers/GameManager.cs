@@ -236,8 +236,21 @@ public class GameManager : MonoBehaviour
         gameplayCamera.gameObject.SetActive(true);
 
         UpdateCameraTargetGroup();
-        
+        // Add the players to the target group target array
+        List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
+        {
+           
+            CinemachineTargetGroup.Target target;
+            target.target = m_activePlayerControllers[i].transform;
+            target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
+            target.radius = 5f;
+            targets.Add(target);
+            
+        }
+        GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>().m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
         // End Cinemachine camera setup
+
 
         // Load the first stage
         LoadStage();
@@ -259,6 +272,7 @@ public class GameManager : MonoBehaviour
             }
         }
         GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>().m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
+        // End Cinemachine camera setup
     }
 
     /// <summary>
