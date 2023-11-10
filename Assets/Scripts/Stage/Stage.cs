@@ -223,7 +223,7 @@ public class Stage : MonoBehaviour
     {
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
-            Instantiate(endLaser, endLaserSpawns[i].transform);
+            Instantiate(endLaser, endLaserSpawns[i].transform.position, endLaserSpawns[i].transform.rotation);
         }
         GameManager.Instance.ShowDanger(dangerTimer);
     }
