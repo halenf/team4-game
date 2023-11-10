@@ -113,6 +113,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e8dfe3d01b0784fa75031d80d2befa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3000426335532260815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 638976792088701892}
+  m_Layer: 0
+  m_Name: EndLaser1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &638976792088701892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3000426335532260815}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.5, y: -7.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1152175692325495869}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3889284055849277313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3785439569335193290}
+  m_Layer: 0
+  m_Name: EndLaser2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3785439569335193290
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3889284055849277313}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.000000104308114}
+  m_LocalPosition: {x: 19.75, y: -7.5, z: -0.0000015050173}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1152175692325495869}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!1 &4013881455696590900
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +426,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e8dfe3d01b0784fa75031d80d2befa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6866874724608740097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1152175692325495869}
+  m_Layer: 0
+  m_Name: EndLaserSpawns
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1152175692325495869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6866874724608740097}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 17.31128, y: -28.75996, z: -67.6879}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 638976792088701892}
+  - {fileID: 3785439569335193290}
+  m_Father: {fileID: 8668325928449901220}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6999131408729992658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1010,6 +1105,7 @@ Transform:
   - {fileID: 8668325927281599667}
   - {fileID: 1591879144327000135}
   - {fileID: 7267922268366027439}
+  - {fileID: 1152175692325495869}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1038,12 +1134,14 @@ MonoBehaviour:
   - {fileID: 8668325928225171646}
   - {fileID: 8668325927446670851}
   - {fileID: 8668325928683780126}
-  endLaserSpawns: []
+  endLaserSpawns:
+  - {fileID: 638976792088701892}
+  - {fileID: 3785439569335193290}
   spikeBallSpawns: []
   cameraDefaultTransform: {fileID: 1591879144327000135}
   gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   itemBox: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
-  endLaser: {fileID: 0}
+  endLaser: {fileID: 4602441095069155359, guid: 7f70c04c1abb89f438fd56b4c5f93c07, type: 3}
   spikeBall: {fileID: 0}
   minGunTimer: 5
   maxGunTimer: 10

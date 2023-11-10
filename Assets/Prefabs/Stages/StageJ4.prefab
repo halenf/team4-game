@@ -14801,8 +14801,8 @@ MonoBehaviour:
   maxPowerUpTimer: 20
   minSpikeBallTimer: 0
   maxSpikeBallTimer: 0
-  roundTime: 0
-  dangerTimer: 0
+  roundTime: 60
+  dangerTimer: 3
 --- !u!1 &2248171847382809471
 GameObject:
   m_ObjectHideFlags: 0
