@@ -369,6 +369,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gameplay Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 6489618517708429735, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_BiasY
+      value: 0.000000037252903
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489618517708429735, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_ScreenY
+      value: -0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489618517708429735, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_CameraDistance
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
 --- !u!1001 &4356245220508455341
