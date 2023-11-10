@@ -187,18 +187,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_shieldObject: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
   playerCounter: {fileID: 325361806248802721}
+  bloodPrefab: {fileID: 0}
   moveSpeed: 120
   maxHealth: 10
-  groundDrag: 28
-  airDrag: 8
-  ricochetTimer: 40
-  fireRateMultiplier: 2
-  fireRateTimer: 40
-  shieldHealth: 3
-  lowGravityMass: 0.5
-  powerUpTime: 40
+  defaultMass: 1
   defaultGun: {fileID: 1788972594773971130, guid: fbac1fa5d84274140b2863d100c4fa70, type: 3}
   gunHoldDistance: 1
+  m_currentPowerup: 0
+  powerupTime: 0
+  maxShieldHealth: 0
+  fireRateScalar: 0
+  lowGravityScalar: 0
 --- !u!114 &5814125836590746924
 MonoBehaviour:
   m_ObjectHideFlags: 0

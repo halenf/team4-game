@@ -4580,7 +4580,7 @@ GameObject:
   - component: {fileID: 4770942145306659815}
   - component: {fileID: 4770942145306659812}
   m_Layer: 0
-  m_Name: Stage1
+  m_Name: StageJ1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
