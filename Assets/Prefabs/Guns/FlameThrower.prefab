@@ -82,7 +82,7 @@ MonoBehaviour:
   baseRecoil: 5
   groundedRecoilScalar: 0.624
   baseFireRate: 35
-  ammoCapacity: 85
+  ammoCapacity: 90
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 0}
   bulletPrefab: {fileID: 2271769695517889325, guid: 1fd930c455b1d034dbddf541530112c3, type: 3}
@@ -94,7 +94,6 @@ MonoBehaviour:
   lowRumbleFrequency: 0
   rumbleTime: 0.25
   timeToColliderOff: 1
-  fireParticleEffect: {fileID: 7707442766258973678}
 --- !u!65 &7110224535071332244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -168,11 +167,6 @@ PrefabInstance:
 --- !u!4 &2921978365601905907 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3298653599815124046, guid: 5e05301b1d61e1d44892ac2981649376, type: 3}
-  m_PrefabInstance: {fileID: 381636291111467197}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &7707442766258973678 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: -1171623701383376045, guid: 5e05301b1d61e1d44892ac2981649376, type: 3}
   m_PrefabInstance: {fileID: 381636291111467197}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3552147408548531246
