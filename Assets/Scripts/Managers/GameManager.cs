@@ -309,6 +309,8 @@ public class GameManager : MonoBehaviour
         //keep track of what stage we are on
         m_roundNumber++;
 
+        UpdateCameraTargetGroup();
+
         // Start round countdown, then enable all player input - Halen
         m_gameplayCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.StartCountdown();
