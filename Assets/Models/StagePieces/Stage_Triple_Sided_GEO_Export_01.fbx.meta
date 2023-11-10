@@ -3,7 +3,12 @@ guid: c22e6dc59ff06b14aac32358c56c14f1
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stage_Triple_Sided_MAT
+    second: {fileID: 2100000, guid: eefe4cf2b30940a41bb79f7c0df44ae5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

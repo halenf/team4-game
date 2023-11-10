@@ -3,7 +3,12 @@ guid: 887c4671b55d2ee42b58df8dc505eece
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StageCorner_Inner_MAT
+    second: {fileID: 2100000, guid: 596436b93ac89944a9d044026232eed6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

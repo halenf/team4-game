@@ -53,8 +53,9 @@ MonoBehaviour:
   staticCamera: {fileID: 0}
   gameplayCamera: {fileID: 0}
   playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
-  controlCube: {fileID: 0}
+  controlCube: {fileID: 5814125836590746925, guid: 3eb93a620c640a24ab6aa0d51dd88c17, type: 3}
   stageList:
-  - {fileID: 5814125836590746925, guid: 3eb93a620c640a24ab6aa0d51dd88c17, type: 3}
+  - {fileID: 4770942145306659813, guid: 10daa7e31fc56804b8962eb76ffbbe84, type: 3}
+  - {fileID: 2248171847380003527, guid: 3ae8ff37af8e23445acc247cb2548e13, type: 3}
   numberOfRounds: 5
   m_leaderboard: 

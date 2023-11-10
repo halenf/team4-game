@@ -3,7 +3,12 @@ guid: e4d55eb8c7e0b274b83cf331bec41d83
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Flamethrower_MAT
+    second: {fileID: 2100000, guid: 39777eeb3d5f80a4591f258c7fa90c2f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
