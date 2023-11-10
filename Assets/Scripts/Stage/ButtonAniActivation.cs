@@ -9,9 +9,12 @@ public class ButtonAniActivation : MonoBehaviour
 {
     public Animator[] animators;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        foreach (Animator animator in animators)
-            animator.Play("Play");
+        if (collision.gameObject.tag == "Player")
+        {
+            foreach (Animator animator in animators)
+                animator.Play("Play");
+        }
     }
 }
