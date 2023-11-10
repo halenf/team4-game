@@ -285,6 +285,7 @@ public class PlayerController : MonoBehaviour
         // if player is dead
         if (m_currentHealth <= 0)
         {
+            GameManager.Instance.UpdateCameraTargetGroup();
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);

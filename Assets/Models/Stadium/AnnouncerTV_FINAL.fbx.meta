@@ -3,7 +3,32 @@ guid: ca83709a4d16d2b4dba1d96889212a55
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LowerRing_MAT
+    second: {fileID: 2100000, guid: a061f0f617639f644b8fb44eed3aacbe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TVCenter_MAT
+    second: {fileID: 2100000, guid: 53a9aa3a6b739fd4d86df3a1451f951e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TVL_MAT
+    second: {fileID: 2100000, guid: 4b2f86caa9b7c734dab70338d37b3733, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TVR_MAT
+    second: {fileID: 2100000, guid: 1440b6b021f28f04fa56fac1b6ecb069, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UpperRing_MAT
+    second: {fileID: 2100000, guid: 1a93f88940411434f9f25d84d82758a9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
