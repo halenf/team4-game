@@ -51,8 +51,11 @@ public class GameplayUI : MonoBehaviour
         // Count down from 3
         for (int i = 3; i > 0; i--)
         {
+            Debug.Log("starting " + i);
             countdownDisplay.text = i.ToString();
+            Time.timeScale = 1f;
             yield return new WaitForSeconds(1);
+            Debug.Log("finished " + i);
         }
 
         // Enable player inputs and start round
