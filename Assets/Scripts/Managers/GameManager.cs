@@ -235,21 +235,44 @@ public class GameManager : MonoBehaviour
         staticCamera.gameObject.SetActive(false);
         gameplayCamera.gameObject.SetActive(true);
 
+        UpdateCameraTargetGroup();
         // Add the players to the target group target array
         List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
+           
             CinemachineTargetGroup.Target target;
             target.target = m_activePlayerControllers[i].transform;
             target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
             target.radius = 5f;
             targets.Add(target);
+            
         }
         GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>().m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
         // End Cinemachine camera setup
 
+
         // Load the first stage
         LoadStage();
+    }
+
+    public void UpdateCameraTargetGroup()
+    {
+        // Add the players to the target group target array
+        List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
+        {
+            if (!m_activePlayerControllers[i].isDead)
+            {
+                CinemachineTargetGroup.Target target;
+                target.target = m_activePlayerControllers[i].transform;
+                target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
+                target.radius = 5f;
+                targets.Add(target);
+            }
+        }
+        GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>().m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
+        // End Cinemachine camera setup
     }
 
     /// <summary>
@@ -285,6 +308,8 @@ public class GameManager : MonoBehaviour
 
         //keep track of what stage we are on
         m_roundNumber++;
+
+        UpdateCameraTargetGroup();
 
         // Start round countdown, then enable all player input - Halen
         m_gameplayCanvas.gameObject.SetActive(true);
