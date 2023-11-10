@@ -1779,9 +1779,13 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: controlCube
+      value: 
+      objectReference: {fileID: 5814125836590746925, guid: 3eb93a620c640a24ab6aa0d51dd88c17, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: playerPrefab
       value: 
-      objectReference: {fileID: 5814125836590746925, guid: 2fb489fc2e2bbc5488a50d4f75558873, type: 3}
+      objectReference: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: staticCamera
       value: 
@@ -1801,7 +1805,7 @@ PrefabInstance:
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[0]
       value: 
-      objectReference: {fileID: 4814597662439916621, guid: 7628fa53cb532af4abb3bed76cafff2c, type: 3}
+      objectReference: {fileID: 5274120905060637909, guid: d6364d577a154ed44901f70dcfed2c99, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[1]
       value: 
