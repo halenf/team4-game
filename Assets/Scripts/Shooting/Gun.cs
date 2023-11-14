@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 
 public abstract class Gun : MonoBehaviour
 {
@@ -29,6 +30,14 @@ public abstract class Gun : MonoBehaviour
     [Range(0, 1)]public float highRumbleFrequency;
     [Range(0, 1)]public float lowRumbleFrequency;
     [Min(0)]public float rumbleTime;
+
+    private Material m_material;
+
+    public void Awake()
+    {
+        m_material = gameObject.GetComponentInChildren<MeshRenderer>().material;
+        m_material.EnableKeyword("_EMISSION");
+    }
 
     /// <summary>
     /// Makes the gun shoot.
@@ -59,7 +68,8 @@ public abstract class Gun : MonoBehaviour
 
     public void ChangeMat(int playerID)
     {
-        gameObject.GetComponentInChildren<MeshRenderer>().material.color = ((Material)Resources.Load("Materials/Player/Player" + (playerID + 1).ToString())).color;
+        Material playerMaterial = (Material)Resources.Load("Materials/Player/Player" + (playerID + 1).ToString());
+        m_material.SetColor("_EmissionColor", playerMaterial.color);
         Debug.Log("worked");
     }
 }
