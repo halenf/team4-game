@@ -206,7 +206,7 @@ public class GameManager : MonoBehaviour
             GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
 
             // Set the player's colour based on their id
-            newPlayer.gameObject.GetComponent<MeshRenderer>().material = (Material)Resources.Load("Materials/Player/Player" + (j + 1).ToString());
+            //newPlayer.gameObject.GetComponent<MeshRenderer>().material = (Material)Resources.Load("Materials/Player/Player" + (j + 1).ToString());
 
             // get the PlayerController component from the newly instantiated player
             PlayerController playerController = newPlayer.GetComponent<PlayerController>();

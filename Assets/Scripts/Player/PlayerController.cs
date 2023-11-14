@@ -314,6 +314,9 @@ public class PlayerController : MonoBehaviour
         m_fireRate = m_currentGun.baseFireRate;
         m_nextFireTime = Time.time;
 
+        //change gun material
+        m_currentGun.ChangeMat(id);
+
         // Sets the gun's aim
         Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
         m_currentGun.transform.localPosition = indicatorPosition;
