@@ -3,7 +3,12 @@ guid: 7dc2692ae56d28b4da3a531cac5125b9
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Powerup_Rapidfire_MAT
+    second: {fileID: 2100000, guid: b6485482107a6f0429caa1d6c427bbd0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
