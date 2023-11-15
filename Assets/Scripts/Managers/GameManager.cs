@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Info")]
     public GameObject[] stageList;
     public int numberOfRounds;
+    public float scoreViewingTime;
 
     // stage tracking
     private GameObject m_currentStageObject;
@@ -392,6 +393,7 @@ public class GameManager : MonoBehaviour
     {
         DisablePlayers();
         m_gameplayCanvas.StartRoundEnd(winningPlayerID);
+        m_dangerCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -404,6 +406,7 @@ public class GameManager : MonoBehaviour
         m_pauseCanvas.gameObject.SetActive(false);
         m_gameplayCanvas.gameObject.SetActive(false);
         m_disconnectCanvas.gameObject.SetActive(false);
+        m_dangerCanvas.gameObject.SetActive(false);
 
         // Set which button the player defaults to in the leaderboard menu
         EventSystemManager.Instance.SetCurrentSelectedGameObject(m_leaderboardCanvas.defaultSelectedObject);
@@ -416,7 +419,10 @@ public class GameManager : MonoBehaviour
         Destroy(m_currentStageObject);
         foreach (PlayerController player in m_activePlayerControllers)
         {
-            Destroy(player.gameObject);
+            if (player != null)
+            {
+                Destroy(player.gameObject);
+            }
         }
 
         //find the winner and that score
@@ -440,9 +446,26 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas.gameObject.SetActive(true);
         m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
 
+        if(IsGameOver())
+        {
+            Debug.Log("game over");
+            m_leaderboardCanvas.buttons.SetActive(true);
+        } else
+        {
+            Debug.Log("game NOT over");
+            m_leaderboardCanvas.buttons.SetActive(false);
+            StartCoroutine(StartAfterScore());
+        }
+
         m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
 
         EventSystemManager.Instance.SetPlayerToControl(controlCube.GetComponent<PlayerController>());
+    }
+
+    private IEnumerator StartAfterScore()
+    {
+        yield return new WaitForSeconds(scoreViewingTime);
+        LoadFirst();
     }
 
     /// <summary>

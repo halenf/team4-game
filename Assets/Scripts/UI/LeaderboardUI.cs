@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LeaderboardUI : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class LeaderboardUI : MonoBehaviour
 
     [Header("Default Selected Object")]
     public GameObject defaultSelectedObject;
+
+    public GameObject buttons;
+    public GameObject contents;
+
+    public float timeBeforeShowing;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +40,15 @@ public class LeaderboardUI : MonoBehaviour
             leaderboardText += "Player " + (i + 1).ToString() + ": " + leaderboard[i] + " \n";
         }
         scoreListDisplay.text = leaderboardText;
+        contents.SetActive(false);
+
+        StartCoroutine(ShowResults());
+    }
+
+    private IEnumerator ShowResults()
+    {
+        yield return new WaitForSeconds(timeBeforeShowing);
+        contents.SetActive(true);
     }
 
     public void OnPlayAgain()
