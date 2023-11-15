@@ -192,6 +192,18 @@ public class GameManager : MonoBehaviour
                 m_startCanvas.SetDisplayDetails(m_controllers);
             }
         }
+
+        for (int i = 0; i < m_controllers.Count; i++)
+        {
+            if (m_controllers[i].allControls.Any(x => x is ButtonControl button && x.IsPressed() && !x.synthetic))
+            {
+                m_startCanvas.ShowPlayerInput(true, i);
+            }
+            else
+            {
+                m_startCanvas.ShowPlayerInput(false, i);
+            }
+        }
     }
 
     /// <summary>
