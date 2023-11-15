@@ -18,6 +18,7 @@ public class StartUI : MonoBehaviour
     public Image titleImage;
     [Tooltip("Array for each of the text objects for the connected player displays.")]
     public TMP_Text[] playerConnectedDisplay;
+    public GameObject[] inputImages;
     public TMP_Text startPromptDisplay;
 
     [Header("Default Strings")]
@@ -53,5 +54,10 @@ public class StartUI : MonoBehaviour
         }
 
         if (controllers.Count > 1) startPromptDisplay.text = readyToStartText;
+    }
+
+    public void ShowPlayerInput(bool show, int id)
+    {
+        inputImages[id].SetActive(show);
     }
 }
