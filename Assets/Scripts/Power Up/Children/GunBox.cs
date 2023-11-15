@@ -27,6 +27,8 @@ public class GunBox : PowerUp
 
             player.SetGun(currentGun);
 
+            player.CreateOverhead(currentGun.gameObject);
+
             //destroy self
             Destroy(gameObject);
         }
