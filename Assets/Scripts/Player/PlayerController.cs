@@ -1,6 +1,6 @@
 // Player Controller - Halen, Cameron
 // Handles general player info, inputs, and actions
-// Last edit: 2/11/23
+// Last edit: 15/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     // component references
     private Rigidbody m_rb;
     private PlayerInput m_playerInput;
+    private Gamepad m_controller;
 
     // player ID
     public int id;
@@ -42,9 +43,6 @@ public class PlayerController : MonoBehaviour
     private Gun m_currentGun; // gun the player currently has
     [Min(0)] public float gunHoldDistance;
     private bool m_isShooting;
-
-    [Header("Input Properties")]
-    public Gamepad controller;
 
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
@@ -131,18 +129,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Init(Gamepad _controller, int _id, Color colour)
+    {
+        m_controller = _controller;
+        id = _id;
+        GetComponentInChildren<SetColour>().Set(colour); // Set player colour
+    }
+
     private void Awake()
     {
         // Find attached components 
         m_rb = GetComponent<Rigidbody>();
+        m_rb.mass = defaultMass;
         m_playerInput = GetComponent<PlayerInput>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        m_aimDirection = transform.forward;
-        m_rb.mass = defaultMass;
+        m_aimDirection = transform.right;
         SetGun(defaultGun);      
     }
 
@@ -311,8 +316,12 @@ public class PlayerController : MonoBehaviour
         if (gun != defaultGun) m_currentAmmo = gun.ammoCapacity;
         else m_currentAmmo = -1;
 
+        // set fire rate details
         m_fireRate = m_currentGun.baseFireRate;
-        m_nextFireTime = Time.time;
+        m_nextFireTime = Time.time + (1f / m_fireRate);
+
+        //change gun material
+        m_currentGun.ChangeMat(id);
 
         // Sets the gun's aim
         Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
@@ -337,10 +346,10 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator RumbleCoroutine(float lowFrequency, float highFrequency, float time)
     {
-        controller.SetMotorSpeeds(lowFrequency, highFrequency);
+        m_controller.SetMotorSpeeds(lowFrequency, highFrequency);
         yield return new WaitForSeconds(time);
 
-        controller.SetMotorSpeeds(0f, 0f);
+        m_controller.SetMotorSpeeds(0f, 0f);
     }
 
     /// <summary>
