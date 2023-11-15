@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
 
-    private Vector3 m_indicatorPosition;
+    private Vector3 m_indicatorPosition = new Vector3(1f, 0f, 0);
     
     [Header("power up display")]
     public GameObject[] powerUpIndicators;
