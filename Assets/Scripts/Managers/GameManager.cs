@@ -303,12 +303,12 @@ public class GameManager : MonoBehaviour
         DisablePlayers();
 
         //randomize spawn order
-        ShuffleSpawns(m_currentStageObject.GetComponent<Stage>().spawns);
+        ShuffleSpawns(m_currentStageObject.GetComponent<Stage>().playerSpawns);
 
         // set each player to a spawn - Halen
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
-            m_activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().spawns[i].position;
+            m_activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().playerSpawns[i].position;
         }
 
         //keep track of what stage we are on
@@ -552,18 +552,19 @@ public class GameManager : MonoBehaviour
     public void Reconnected()
     {
         m_disconnectCanvas.gameObject.SetActive(false);
-        Time.timeScale = 1f;
+        // only reset timescale if game isn't paused
+        if (!m_pauseCanvas.gameObject.activeSelf) Time.timeScale = 1f;
     }
 
-    public void ShowDanger(float displayTime)
+    public void ShowDanger()
     {
         m_dangerCanvas.gameObject.SetActive(true);
-        StartCoroutine(TurnOffDanger(displayTime));
+        StartCoroutine(TurnOffDanger());
     }
 
-    private IEnumerator TurnOffDanger(float displayTime)
+    private IEnumerator TurnOffDanger()
     {
-        yield return new WaitForSeconds(displayTime);
+        yield return new WaitForSeconds(3);
         m_dangerCanvas.gameObject.SetActive(false);
     }
 

@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         m_currentGun.transform.localPosition = m_indicatorPosition;
-        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
+        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - transform.position);
 
         // update powerup timer
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;

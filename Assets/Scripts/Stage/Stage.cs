@@ -10,7 +10,7 @@ public class Stage : MonoBehaviour
 {
     //array of spawn transforms
     [Tooltip("put spawn transforms here")]
-    public Transform[] spawns;
+    public Transform[] playerSpawns;
     [Tooltip("power up transforms")]
     public Transform[] powerUpSpawns;
     [Tooltip("gun box transforms")]
@@ -23,14 +23,10 @@ public class Stage : MonoBehaviour
     public Transform cameraDefaultTransform;
 
     //box prefabs
-    [Tooltip("gun box prefab")]
-    public GameObject gunBox;
-    [Tooltip("power up prefab")]
-    public GameObject itemBox;
-    [Tooltip("end laser prefab")]
-    public GameObject endLaser;
-    [Tooltip("spike ball prefab")]
-    public GameObject spikeBall;
+    public GameObject gunBoxPrefab;
+    public GameObject itemBoxPrefab;
+    public GameObject endLaserPrefab;
+    public GameObject spikeBallPrefab;
 
     private GameObject m_currentItemBox;
     private GameObject m_currentGunBox;
@@ -58,8 +54,6 @@ public class Stage : MonoBehaviour
     //regular timers
     [Tooltip("time till the end lasers show up")]
     public float roundTime;
-    [Tooltip("time to display danger")]
-    public float dangerTimer;
 
     //
     private bool madeLasers = false;
@@ -99,8 +93,6 @@ public class Stage : MonoBehaviour
         StartCoroutine(SpawnGunBox(time));
     }
 
-    
-
     /// <summary>
     /// waits for its time to be over then finds a gunbox transform and spawns a gunbox there then restarts
     /// </summary>
@@ -115,7 +107,7 @@ public class Stage : MonoBehaviour
         {
             if (i == chosenBox)
             {
-                m_currentGunBox = Instantiate(gunBox, gunBoxSpawns[i].transform);
+                m_currentGunBox = Instantiate(gunBoxPrefab, gunBoxSpawns[i].transform);
                 m_currentGunBox.GetComponent<PowerUp>().stage = this;
             }
         }
@@ -148,8 +140,6 @@ public class Stage : MonoBehaviour
         StartCoroutine(SpawnSpikeBall(time));
     }
 
-
-
     /// <summary>
     /// waits for its time to be over then finds a gunbox transform and spawns a gunbox there then restarts
     /// </summary>
@@ -164,7 +154,7 @@ public class Stage : MonoBehaviour
         {
             if (i == chosenBall)
             {
-                Instantiate(spikeBall, spikeBallSpawns[i].transform);
+                Instantiate(spikeBallPrefab, spikeBallSpawns[i].transform);
             }
         }
 
@@ -213,7 +203,7 @@ public class Stage : MonoBehaviour
         {
             if (i == chosenBox)
             {
-                m_currentItemBox = Instantiate(itemBox, powerUpSpawns[i].transform);
+                m_currentItemBox = Instantiate(itemBoxPrefab, powerUpSpawns[i].transform);
                 m_currentItemBox.GetComponent<PowerUp>().stage = this;
             }
         }
@@ -223,9 +213,8 @@ public class Stage : MonoBehaviour
     {
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
-            Instantiate(endLaser, endLaserSpawns[i].transform.position, endLaserSpawns[i].transform.rotation);
+            Instantiate(endLaserPrefab, endLaserSpawns[i].transform.position, endLaserSpawns[i].transform.rotation);
         }
-        GameManager.Instance.ShowDanger(dangerTimer);
+        GameManager.Instance.ShowDanger();
     }
-
 }
