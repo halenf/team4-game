@@ -67,6 +67,11 @@ public class SoundManager : MonoBehaviour
         soundSource.PlayOneShot(clip);
     }
 
+    public void PlayFromSource(AudioSource source, AudioClip clip)
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {

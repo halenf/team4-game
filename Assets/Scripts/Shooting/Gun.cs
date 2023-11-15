@@ -33,7 +33,7 @@ public abstract class Gun : MonoBehaviour
 
     private Material m_material;
 
-    public void Awake()
+    public virtual void Awake()
     {
         m_material = gameObject.GetComponentInChildren<MeshRenderer>().material;
         m_material.EnableKeyword("_EMISSION");
