@@ -50,8 +50,9 @@ MonoBehaviour:
   leaderboardCanvasPrefab: {fileID: 6931777853157890115, guid: d80e4a176261e514c81fba0e75de5403, type: 3}
   disconnectCanvasPrefab: {fileID: 2559865700041908714, guid: ac8428efec677244b89fb469854fee69, type: 3}
   dangerCanvasPrefab: {fileID: -4508779246074093925, guid: ea6e811e9e3b1584590b5d1d26b252c3, type: 3}
-  staticCamera: {fileID: 0}
-  gameplayCamera: {fileID: 0}
+  staticCameraPrefab: {fileID: 4361120844145390752, guid: bb1e58192ade96e4ea3d69033afdb51c, type: 3}
+  gameplayCameraPrefab: {fileID: 4323402439503292133, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+  targetGroupPrefab: {fileID: 4883814422248433968, guid: fdc938de4844e39418745e53de26fc9a, type: 3}
   playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
   playerColours:
   - {r: 0.12941173, g: 0.3607843, b: 1, a: 1}
@@ -60,7 +61,6 @@ MonoBehaviour:
   - {r: 0.34117648, g: 1, b: 0.011764706, a: 1}
   controlCube: {fileID: 5814125836590746925, guid: 3eb93a620c640a24ab6aa0d51dd88c17, type: 3}
   stageList:
-  - {fileID: 4770942145306659813, guid: 10daa7e31fc56804b8962eb76ffbbe84, type: 3}
-  - {fileID: 2248171847380003527, guid: 3ae8ff37af8e23445acc247cb2548e13, type: 3}
+  - {fileID: 3771888446113775381, guid: ca8869b86fab90746a761fd42e221a31, type: 3}
   numberOfRounds: 5
   m_leaderboard: 
