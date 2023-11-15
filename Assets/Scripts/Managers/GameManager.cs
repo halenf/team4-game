@@ -211,6 +211,20 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadFirst()
     {
+        for (int i = 0; i < m_controllers.Count; i++)
+        {
+            bool found = false;
+            for(int j = 0; j < Gamepad.all.Count; j++)
+            {
+                if (m_controllers[i].deviceId == Gamepad.all[j].deviceId)
+                    found = true;
+            }
+
+            if (!found)
+            {
+                return;
+            }
+        }
         m_activePlayerControllers = new List<PlayerController>();
         //for every player
         for (int j = 0; m_controllers.Count > j; j++)
