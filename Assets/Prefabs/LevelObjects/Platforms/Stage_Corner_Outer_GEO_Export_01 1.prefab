@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5288975423371805012}
   m_Layer: 0
-  m_Name: Stage_Corner_Outer_GEO_Export_01
+  m_Name: Stage_Corner_Outer_GEO_Export_01 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94,7 +94,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d58f8fbd291caff4293b4b2674d7dad6, type: 2}
+  - {fileID: 2100000, guid: 32b1bf40b4775184cb6d2ad876d983d1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

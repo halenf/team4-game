@@ -256,7 +256,7 @@ MonoBehaviour:
   cameraDefaultTransform: {fileID: 5292164183168417312}
   gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   itemBox: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
-  endLaser: {fileID: 4602441095069155359, guid: 61389d90fddf326488d95e90fb54352f, type: 3}
+  endLaser: {fileID: 4602441095069155359, guid: 7f70c04c1abb89f438fd56b4c5f93c07, type: 3}
   spikeBall: {fileID: 0}
   minGunTimer: 6
   maxGunTimer: 12
