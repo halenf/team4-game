@@ -97,46 +97,40 @@ public class PlayerController : MonoBehaviour
 
             // set powerup
             m_currentPowerup = value;
+            CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
             switch (m_currentPowerup)
             {
                 case Powerup.Ricochet:
                 {
-                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
                     break;
                 }
                 case Powerup.FireRateUp:
-                {
-                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
-                        m_fireRate *= fireRateScalar;
+                {  
+                    m_fireRate *= fireRateScalar;
                     break;
                 }
                 case Powerup.Shield:
                 {
-                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
-                        m_shieldCurrentHealth = maxShieldHealth;
+                    m_shieldCurrentHealth = maxShieldHealth;
                     m_shieldGameObject = Instantiate(m_shieldPrefab, transform);
                     break;
                 }
                 case Powerup.BigBullets:
                 {
-                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
-                        break;
+                    break;
                 }
                 case Powerup.ExplodeBullets:
                 {
-                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
-                        break;
+                    break;
                 }
                 case Powerup.LowGravity:
                 {
-                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
-                        m_rb.mass *= lowGravityScalar;
+                    m_rb.mass *= lowGravityScalar;
                     break;
                 }
                 case Powerup.None:
                 {
-                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
-                        break;
+                    break;
                 }
             }
         }
