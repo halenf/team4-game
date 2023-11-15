@@ -55,11 +55,17 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
     public GameObject m_shieldPrefab;
     private GameObject m_shieldGameObject;
+    
 
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
 
     private Vector3 m_indicatorPosition;
+    
+    [Header("power up display")]
+    public GameObject[] powerUpIndicators;
+    public Transform overhead;
+    public float overheadLifetime;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -91,10 +97,15 @@ public class PlayerController : MonoBehaviour
 
             // set powerup
             m_currentPowerup = value;
+            CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
             switch (m_currentPowerup)
             {
-                case Powerup.FireRateUp:
+                case Powerup.Ricochet:
                 {
+                    break;
+                }
+                case Powerup.FireRateUp:
+                {  
                     m_fireRate *= fireRateScalar;
                     break;
                 }
@@ -102,10 +113,6 @@ public class PlayerController : MonoBehaviour
                 {
                     m_shieldCurrentHealth = maxShieldHealth;
                     m_shieldGameObject = Instantiate(m_shieldPrefab, transform);
-                    break;
-                }
-                case Powerup.Ricochet:
-                { 
                     break;
                 }
                 case Powerup.BigBullets:
@@ -338,7 +345,22 @@ public class PlayerController : MonoBehaviour
         currentPowerup = powerUp;
     }
 
-    //start rumble coroutine
+    /// <summary>
+    /// creates an object at the the overhead transform and destroys it after overhead lifetime
+    /// </summary>
+    /// <param name="overheadObject"></param>
+    public void CreateOverhead(GameObject overheadObject)
+    {
+        GameObject objectReference = Instantiate(overheadObject, overhead);
+        Destroy(objectReference, overheadLifetime);
+    }
+
+    /// <summary>
+    /// start rumble coroutine
+    /// </summary>
+    /// <param name="lowFrequncy"></param>
+    /// <param name="highFrequency"></param>
+    /// <param name="time"></param>
     public void Rumble(float lowFrequncy, float highFrequency, float time)
     {
         StartCoroutine(RumbleCoroutine(lowFrequncy, highFrequency, time));
@@ -379,6 +401,10 @@ public class PlayerController : MonoBehaviour
         m_playerInput.DeactivateInput();
     }
 
+    /// <summary>
+    /// check for collisions 1.1 in the down direction
+    /// </summary>
+    /// <returns></returns>
     public bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, 1.1f);
