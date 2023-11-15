@@ -50,9 +50,14 @@ public class GameManager : MonoBehaviour
     private DisconnectUI m_disconnectCanvas;
     private DangerUI m_dangerCanvas;
 
-    [Header("Cinemachine Cameras")]
-    public CinemachineVirtualCamera staticCamera;
-    public CinemachineVirtualCamera gameplayCamera;
+    [Header("Cinemachine Prefabs")]
+    public CinemachineVirtualCamera staticCameraPrefab;
+    public CinemachineVirtualCamera gameplayCameraPrefab;
+    public CinemachineTargetGroup targetGroupPrefab;
+
+    private CinemachineVirtualCamera m_staticCamera;
+    private CinemachineVirtualCamera m_gameplayCamera;
+    private CinemachineTargetGroup m_targetGroup;
 
     [Header("Player")]
     public GameObject playerPrefab;
@@ -153,9 +158,17 @@ public class GameManager : MonoBehaviour
         m_gameState = GameState.Start;
         m_isPaused = false;
 
-        // Setup cameras
-        staticCamera.gameObject.SetActive(true);
-        gameplayCamera.gameObject.SetActive(false);
+        // Setup Cinemachine cameras and target group
+        m_staticCamera = Instantiate(staticCameraPrefab);
+        m_gameplayCamera = Instantiate(gameplayCameraPrefab);
+        m_targetGroup = Instantiate(targetGroupPrefab);
+
+        m_gameplayCamera.Follow = m_targetGroup.transform;
+        m_gameplayCamera.LookAt = m_targetGroup.transform;
+
+        m_staticCamera.gameObject.SetActive(true);
+        m_gameplayCamera.gameObject.SetActive(false);
+        m_targetGroup.gameObject.SetActive(false);
 
         // Initialise canvases
         m_startCanvas = Instantiate(startCanvasPrefab);
@@ -255,33 +268,15 @@ public class GameManager : MonoBehaviour
 
         // Cinemachine camera setup
         // Set current active camera
-        staticCamera.gameObject.SetActive(false);
-        gameplayCamera.gameObject.SetActive(true);
+        m_staticCamera.gameObject.SetActive(false);
+        m_gameplayCamera.gameObject.SetActive(true);
+        m_targetGroup.gameObject.SetActive(true);
 
         // update cinemachine camera
         UpdateCameraTargetGroup();
 
         // Load the first stage
         LoadStage();
-    }
-
-    public void UpdateCameraTargetGroup()
-    {
-        // Add the players to the target group target array
-        List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
-        for (int i = 0; i < m_activePlayerControllers.Count; i++)
-        {
-            if (!m_activePlayerControllers[i].isDead)
-            {
-                CinemachineTargetGroup.Target target;
-                target.target = m_activePlayerControllers[i].transform;
-                target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
-                target.radius = 5f;
-                targets.Add(target);
-            }
-        }
-        GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>().m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
-        // End Cinemachine camera setup
     }
 
     /// <summary>
@@ -393,6 +388,12 @@ public class GameManager : MonoBehaviour
         return isGameOver;
     }
 
+    private void EndRound(int winningPlayerID)
+    {
+        DisablePlayers();
+        m_gameplayCanvas.StartRoundEnd(winningPlayerID);
+    }
+
     /// <summary>
     /// finds the winner and destroys the game
     /// </summary>
@@ -431,8 +432,9 @@ public class GameManager : MonoBehaviour
         }
 
         // Change to the static camera from the gameplay camera - Halen
-        gameplayCamera.gameObject.SetActive(false);
-        staticCamera.gameObject.SetActive(true);
+        m_gameplayCamera.gameObject.SetActive(false);
+        m_targetGroup.gameObject.SetActive(false);
+        m_staticCamera.gameObject.SetActive(true);
 
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
@@ -441,22 +443,6 @@ public class GameManager : MonoBehaviour
         m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
 
         EventSystemManager.Instance.SetPlayerToControl(controlCube.GetComponent<PlayerController>());
-    }
-
-    /// <summary>
-    /// randomizes the spawns in the array to spawn players at random locations
-    /// </summary>
-    /// <param name="spawns"></param>
-    public void ShuffleSpawns(Transform[] spawns)
-    {
-        // Knuth shuffle algorithm
-        for (int i = 0; i < spawns.Length; i++)
-        {
-            Transform tmp = spawns[i];
-            int r = Random.Range(i, spawns.Length);
-            spawns[i] = spawns[r];
-            spawns[r] = tmp;
-        }
     }
 
     /// <summary>
@@ -494,6 +480,44 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the array of targets that the CinemachineTargetGroup object tracks for the Gameplay Camera to follow.
+    /// </summary>
+    public void UpdateCameraTargetGroup()
+    {
+        // Add the players to the target group target array
+        List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
+        for (int i = 0; i < m_activePlayerControllers.Count; i++)
+        {
+            if (!m_activePlayerControllers[i].isDead)
+            {
+                CinemachineTargetGroup.Target target;
+                target.target = m_activePlayerControllers[i].transform;
+                target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
+                target.radius = 5f;
+                targets.Add(target);
+            }
+        }
+        m_targetGroup.m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
+        // End Cinemachine camera setup
+    }
+
+    /// <summary>
+    /// randomizes the spawns in the array to spawn players at random locations
+    /// </summary>
+    /// <param name="spawns"></param>
+    private void ShuffleSpawns(Transform[] spawns)
+    {
+        // Knuth shuffle algorithm
+        for (int i = 0; i < spawns.Length; i++)
+        {
+            Transform tmp = spawns[i];
+            int r = Random.Range(i, spawns.Length);
+            spawns[i] = spawns[r];
+            spawns[r] = tmp;
+        }
+    }
+
     public void Disconnected(int disconnectedPlayerID)
     {
         int playerID = disconnectedPlayerID + 1;
@@ -506,12 +530,6 @@ public class GameManager : MonoBehaviour
     {
         m_disconnectCanvas.gameObject.SetActive(false);
         Time.timeScale = 1f;
-    }
-
-    public void EndRound(int winningPlayerID)
-    {
-        DisablePlayers();
-        m_gameplayCanvas.StartRoundEnd(winningPlayerID);
     }
 
     public void ShowDanger(float displayTime)

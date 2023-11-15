@@ -39,6 +39,12 @@ public abstract class Gun : MonoBehaviour
         m_material.EnableKeyword("_EMISSION");
     }
 
+    public void GetMaterial()
+    {
+        m_material = gameObject.GetComponentInChildren<MeshRenderer>().material;
+        m_material.EnableKeyword("_EMISSION");
+    }
+
     /// <summary>
     /// Makes the gun shoot.
     /// </summary>

@@ -19,6 +19,7 @@ public class FlameThower : Gun
     {
         m_collider = GetComponent<Collider>();
         m_fireParticleEffect = GetComponentInChildren<ParticleSystem>();
+        GetMaterial();
     }
 
     public override void Shoot(int playerID, Bullet.BulletEffect effect)
