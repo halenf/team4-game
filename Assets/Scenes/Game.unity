@@ -313,6 +313,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 302942162, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_LookaheadTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 302942162, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_MinimumDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 302942162, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_VerticalDamping
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 302942162, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_HorizontalDamping
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 302942162, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_LookaheadSmoothing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4323402439503292132, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -561,6 +581,14 @@ PrefabInstance:
       propertyPath: gameplayCamera
       value: 
       objectReference: {fileID: 854257976}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[0]
+      value: 
+      objectReference: {fileID: 2460579616950664996, guid: ecca86ffc05e42c4aadc1ebd295b7470, type: 3}
     - target: {fileID: 6369607398092397879, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_RootOrder
       value: 1
