@@ -53,6 +53,11 @@ MonoBehaviour:
   staticCamera: {fileID: 0}
   gameplayCamera: {fileID: 0}
   playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
+  playerColours:
+  - {r: 0.12941173, g: 0.3607843, b: 1, a: 1}
+  - {r: 1, g: 0.07058824, b: 0, a: 1}
+  - {r: 1, g: 0.45882353, b: 0.05490196, a: 1}
+  - {r: 0.34117648, g: 1, b: 0.011764706, a: 1}
   controlCube: {fileID: 5814125836590746925, guid: 3eb93a620c640a24ab6aa0d51dd88c17, type: 3}
   stageList:
   - {fileID: 4770942145306659813, guid: 10daa7e31fc56804b8962eb76ffbbe84, type: 3}
