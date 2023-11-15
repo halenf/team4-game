@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 79247aefe6e167245aaeeb5b4d86303d
+guid: ec6bb7c9faa41a340944d9f3c903dbeb
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SpikeBall_MAT
+    second: {fileID: 2100000, guid: 48bdcaecdb68b95479b4721f7d3fbba5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
