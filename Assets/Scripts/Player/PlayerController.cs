@@ -55,9 +55,14 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
     public GameObject m_shieldPrefab;
     private GameObject m_shieldGameObject;
+    public Transform overhead;
+
+    public float overheadLifetime;
 
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
+
+    public GameObject[] powerUpIndicators;
 
     private Vector3 m_indicatorPosition;
 
@@ -93,37 +98,44 @@ public class PlayerController : MonoBehaviour
             m_currentPowerup = value;
             switch (m_currentPowerup)
             {
+                case Powerup.Ricochet:
+                {
+                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+                    break;
+                }
                 case Powerup.FireRateUp:
                 {
-                    m_fireRate *= fireRateScalar;
+                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+                        m_fireRate *= fireRateScalar;
                     break;
                 }
                 case Powerup.Shield:
                 {
-                    m_shieldCurrentHealth = maxShieldHealth;
+                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+                        m_shieldCurrentHealth = maxShieldHealth;
                     m_shieldGameObject = Instantiate(m_shieldPrefab, transform);
-                    break;
-                }
-                case Powerup.Ricochet:
-                { 
                     break;
                 }
                 case Powerup.BigBullets:
                 {
-                    break;
+                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+                        break;
                 }
                 case Powerup.ExplodeBullets:
                 {
-                    break;
+                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+                        break;
                 }
                 case Powerup.LowGravity:
                 {
-                    m_rb.mass *= lowGravityScalar;
+                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+                        m_rb.mass *= lowGravityScalar;
                     break;
                 }
                 case Powerup.None:
                 {
-                    break;
+                        CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+                        break;
                 }
             }
         }
@@ -336,6 +348,12 @@ public class PlayerController : MonoBehaviour
    public void ActivatePowerUp(Powerup powerUp)
     {
         currentPowerup = powerUp;
+    }
+
+    public void CreateOverhead(GameObject overheadObject)
+    {
+        GameObject objectReference = Instantiate(overheadObject, overhead);
+        Destroy(objectReference, overheadLifetime);
     }
 
     //start rumble coroutine
