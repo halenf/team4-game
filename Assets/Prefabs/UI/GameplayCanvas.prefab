@@ -56,6 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdownDisplay: {fileID: 6928750777268711370}
   roundWinnerDisplay: {fileID: 6928750777772236827}
+  fadeOut: {fileID: 2178254363965789420, guid: 1dda453d7f7444848b13c283eb78b9d4, type: 3}
 --- !u!223 &1586734891889361708
 Canvas:
   m_ObjectHideFlags: 0

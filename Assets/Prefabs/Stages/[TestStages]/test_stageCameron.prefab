@@ -157,16 +157,20 @@ MonoBehaviour:
   gunBoxSpawns:
   - {fileID: 640607906567511287}
   endLaserSpawns: []
+  spikeBallSpawns: []
   cameraDefaultTransform: {fileID: 8919700940776469527}
   gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   itemBox: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
   endLaser: {fileID: 4602441095069155359, guid: 61389d90fddf326488d95e90fb54352f, type: 3}
+  spikeBall: {fileID: 0}
   minGunTimer: 3
   maxGunTimer: 6
   minPowerUpTimer: 4
   maxPowerUpTimer: 8
-  roundTime: 0
-  dangerTimer: 0
+  minSpikeBallTimer: 0
+  maxSpikeBallTimer: 0
+  roundTime: 10
+  dangerTimer: 5
 --- !u!1 &4087839892788789785
 GameObject:
   m_ObjectHideFlags: 0

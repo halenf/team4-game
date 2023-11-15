@@ -76,6 +76,5 @@ public abstract class Gun : MonoBehaviour
     {
         Material playerMaterial = (Material)Resources.Load("Materials/Player/Player" + (playerID + 1).ToString());
         m_material.SetColor("_EmissionColor", playerMaterial.color);
-        Debug.Log("worked");
     }
 }

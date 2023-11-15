@@ -12,6 +12,8 @@ public class GameplayUI : MonoBehaviour
     [Header("UI Elements")]
     public TMP_Text countdownDisplay;
     public TMP_Text roundWinnerDisplay;
+
+    public GameObject fadeOut;
     
     // Start is called before the first frame update
     void Start()
@@ -51,11 +53,9 @@ public class GameplayUI : MonoBehaviour
         // Count down from 3
         for (int i = 3; i > 0; i--)
         {
-            Debug.Log("starting " + i);
             countdownDisplay.text = i.ToString();
             Time.timeScale = 1f;
             yield return new WaitForSeconds(1);
-            Debug.Log("finished " + i);
         }
 
         // Enable player inputs and start round
@@ -72,6 +72,7 @@ public class GameplayUI : MonoBehaviour
         roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
         yield return new WaitForSeconds(3);
         roundWinnerDisplay.text = "";
-        GameManager.Instance.LoadStage();
+        //GameManager.Instance.LoadStage();
+        Instantiate(fadeOut);
     }
 }
