@@ -29517,13 +29517,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614ba74c08e935144bfbe2dab8e802e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawns:
+  playerSpawns:
   - {fileID: 2051145874934884692}
   - {fileID: 8568386804425333542}
   - {fileID: 5085051802446543859}
   - {fileID: 2383229630193651658}
-  - {fileID: 2383229630193651658}
-  - {fileID: 2383229630193651658}
+  - {fileID: 4880516260117817285}
+  - {fileID: 1977236145488913449}
   powerUpSpawns:
   - {fileID: 7577827039225791146}
   - {fileID: 8533789833643713238}
@@ -29537,18 +29537,17 @@ MonoBehaviour:
   - {fileID: 5370934661914882389}
   spikeBallSpawns: []
   cameraDefaultTransform: {fileID: 5757813968239163772}
-  gunBox: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
-  itemBox: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
-  endLaser: {fileID: 4602441095069155359, guid: 47497e341a409254f9f33269a94d8865, type: 3}
-  spikeBall: {fileID: 0}
+  gunBoxPrefab: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
+  itemBoxPrefab: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
+  endLaserPrefab: {fileID: 4602441095069155359, guid: 47497e341a409254f9f33269a94d8865, type: 3}
+  spikeBallPrefab: {fileID: 0}
   minGunTimer: 4
   maxGunTimer: 8
   minPowerUpTimer: 4
   maxPowerUpTimer: 8
   minSpikeBallTimer: 0
   maxSpikeBallTimer: 0
-  roundTime: 4
-  dangerTimer: 3
+  roundTime: 60
 --- !u!1 &6020532711089702294
 GameObject:
   m_ObjectHideFlags: 0
