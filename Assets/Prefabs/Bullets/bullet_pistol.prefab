@@ -196,6 +196,7 @@ MonoBehaviour:
   sparksPrefab: {fileID: -4343892208976721057, guid: b6ebd225944abff4a9fb50e24c1148e0, type: 3}
   ricochetPrefab: {fileID: 6647730250613079163, guid: 8cb2db274e759c64a983744e95e0501f, type: 3}
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
+  emissionIntensity: 0
 --- !u!54 &4081999047442605340
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -293,6 +294,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 647e95a463e325842a787edcec8d94cb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 34d46aa2e53b6f441ba0c53dc927a153, type: 2}
     - target: {fileID: 919132149155446097, guid: 647e95a463e325842a787edcec8d94cb, type: 3}
       propertyPath: m_Name
       value: Pistol_Round
