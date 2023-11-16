@@ -15,7 +15,10 @@ public class PauseUI : MonoBehaviour
 
     [Header("Default Selected Object")]
     public GameObject defaultSelectedObject;
-    
+
+    public GameObject fadeOut;
+    public GameObject fadeOutReset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,11 +42,13 @@ public class PauseUI : MonoBehaviour
 
     public void OnEndGame()
     {
-        GameManager.Instance.EndGame();
+        Time.timeScale = 1f;
+        Instantiate(fadeOut);
     }
 
     public void OnMainMenu()
     {
-        GameManager.Instance.ResetGame();
+        Time.timeScale = 1f;
+        Instantiate(fadeOutReset);
     }
 }

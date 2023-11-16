@@ -1006,6 +1006,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   labelDisplay: {fileID: 8768610931262699363}
   defaultSelectedObject: {fileID: 8768610931302392276}
+  fadeOut: {fileID: 2178254363965789420, guid: 1dda453d7f7444848b13c283eb78b9d4, type: 3}
+  fadeOutReset: {fileID: 2178254363965789420, guid: dfca51aa96ab0f549a5552b6e7edfebf, type: 3}
 --- !u!223 &8768610932739141918
 Canvas:
   m_ObjectHideFlags: 0
