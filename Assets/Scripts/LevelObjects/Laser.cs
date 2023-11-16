@@ -20,7 +20,7 @@ public class Laser : MonoBehaviour
     /// <summary>
     /// do a ray cast out of the laser box and draw a line between its 2 ends and if it doesnt end just draw 100 in the local up direction
     /// </summary>
-    void FixedUpdate()
+    void Update()
     {
         //do a raycast
         RaycastHit hit;
