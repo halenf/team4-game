@@ -5060,8 +5060,7 @@ MonoBehaviour:
   lowRumbleFrequency: 0.5
   rumbleTime: 0.5
   shootClip: {fileID: 8300000, guid: 030d213a34c2a684991e66a90d350040, type: 3}
-  gunAudioSource: {fileID: 9002716343565609653}
-  audioSourceObject: {fileID: 4271201915965123480}
+  equipClip: {fileID: 8300000, guid: 4aada1462c56fb14ba231f031688b03e, type: 3}
   randomRecoilAngle: 30
   randomRecoilStrength: 15
 --- !u!1001 &554512363508149523

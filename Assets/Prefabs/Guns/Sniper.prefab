@@ -5060,8 +5060,7 @@ MonoBehaviour:
   lowRumbleFrequency: 0
   rumbleTime: 10
   shootClip: {fileID: 8300000, guid: b8ffa54252a673b46b82537064fd40ce, type: 3}
-  gunAudioSource: {fileID: 3710789697817354024}
-  audioSourceObject: {fileID: 2593216631303862553}
+  equipClip: {fileID: 8300000, guid: 98ab9fa1c53ea884fa72032187a8436a, type: 3}
 --- !u!1001 &3463409947533569460
 PrefabInstance:
   m_ObjectHideFlags: 0

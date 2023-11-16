@@ -5060,8 +5060,7 @@ MonoBehaviour:
   lowRumbleFrequency: 0.3
   rumbleTime: 0.05
   shootClip: {fileID: 8300000, guid: 62cdcee7bbb7673429c412d0e0db51d8, type: 3}
-  gunAudioSource: {fileID: 8180506645594921018}
-  audioSourceObject: {fileID: 2515255186835582514}
+  equipClip: {fileID: 8300000, guid: 6fbcf3f99122e1443ba4305aed557ddf, type: 3}
   burstNumber: 3
   shootingSpeed: 10
 --- !u!1001 &7833833468656834714
