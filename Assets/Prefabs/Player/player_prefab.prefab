@@ -61,16 +61,16 @@ MonoBehaviour:
   fireRateScalar: 1.4
   lowGravityScalar: 0.7
   m_shieldPrefab: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
+  powerUpIndicators:
+  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
+  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
+  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
+  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
+  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
+  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
+  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
   overhead: {fileID: 5321779024680455449}
   overheadLifetime: 5
-  powerUpIndicators:
-  - {fileID: 0}
-  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
-  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
-  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
-  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
-  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
-  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
 --- !u!114 &5814125836590746924
 MonoBehaviour:
@@ -264,7 +264,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7281389468376242248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.251, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []

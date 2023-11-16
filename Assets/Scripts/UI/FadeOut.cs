@@ -21,6 +21,7 @@ public class FadeOut : StateMachineBehaviour
     {
         Debug.Log("state exited");
         GameManager.Instance.EndGame();
+        Time.timeScale = 1f;
         Destroy(animator.gameObject.GetComponentInParent<Canvas>().gameObject);
 
     }
