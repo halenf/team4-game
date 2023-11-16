@@ -39,8 +39,7 @@ public abstract class Gun : MonoBehaviour
 
     public virtual void Awake()
     {
-        m_material = gameObject.GetComponentInChildren<MeshRenderer>().material;
-        m_material.EnableKeyword("_EMISSION");
+        GetMaterial();
         SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
     }
 
@@ -83,6 +82,7 @@ public abstract class Gun : MonoBehaviour
     public void ChangeMat(int playerID)
     {
         Material playerMaterial = (Material)Resources.Load("Materials/Player/Player" + (playerID + 1).ToString());
-        m_material.SetColor("_EmissionColor", playerMaterial.color);
+        m_material.SetColor("_EmissionColor", playerMaterial.color * 2);
+        m_material.color = playerMaterial.color;
     }
 }
