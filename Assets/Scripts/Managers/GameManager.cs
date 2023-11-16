@@ -459,6 +459,8 @@ public class GameManager : MonoBehaviour
 
         m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
 
+        Time.timeScale = 1f;
+
         EventSystemManager.Instance.SetPlayerToControl(controlCube.GetComponent<PlayerController>());
     }
 

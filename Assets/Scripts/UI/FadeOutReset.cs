@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FadeOut : StateMachineBehaviour
+public class FadeOutReset : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,8 +20,8 @@ public class FadeOut : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Debug.Log("state exited");
-        GameManager.Instance.EndGame();
-        Time.timeScale = 1f;
+        GameManager.Instance.ResetGame();
+        Time.timeScale = 1.0f;
         Destroy(animator.gameObject.GetComponentInParent<Canvas>().gameObject);
 
     }
