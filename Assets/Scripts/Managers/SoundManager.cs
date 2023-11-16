@@ -67,6 +67,45 @@ public class SoundManager : MonoBehaviour
         soundSource.PlayOneShot(clip);
     }
 
+    public void PlayFromSource(AudioSource source, AudioClip clip)
+    {
+        source.PlayOneShot(clip);
+    }
+
+    public void PlayFromSource(AudioSource source, string filename)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        source.PlayOneShot(clip);
+    }
+
+    public void PlayAudioAtPoint(Vector3 position, AudioClip clip)
+    {
+        AudioSource.PlayClipAtPoint(clip, position);
+    }
+
+    public void PlayAudioAtPoint(Transform position, AudioClip clip)
+    {
+        AudioSource.PlayClipAtPoint(clip, position.position);
+    }
+
+    public void PlayAudioAtPoint(Vector3 position, string filename)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        if (clip != null)
+        {
+            AudioSource.PlayClipAtPoint(clip, position);
+        }
+    }
+
+    public void PlayAudioAtPoint(Transform position, string filename)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        if (clip != null)
+        {
+            AudioSource.PlayClipAtPoint(clip, position.position);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

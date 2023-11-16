@@ -31,9 +31,12 @@ public abstract class Gun : MonoBehaviour
     [Range(0, 1)]public float lowRumbleFrequency;
     [Min(0)]public float rumbleTime;
 
+    [Header("Audio")]
+    public AudioClip shootClip;
+
     private Material m_material;
 
-    public void Awake()
+    public virtual void Awake()
     {
         m_material = gameObject.GetComponentInChildren<MeshRenderer>().material;
         m_material.EnableKeyword("_EMISSION");
@@ -70,6 +73,9 @@ public abstract class Gun : MonoBehaviour
         float tempRecoil = baseRecoil;
         if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
         transform.parent.gameObject.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+
+        //play shoot sound
+        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip);
     }
 
     public void ChangeMat(int playerID)

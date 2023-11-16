@@ -34,5 +34,6 @@ public class ShotGun : Gun
         float tempRecoil = baseRecoil;
         if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
         transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip);
     }
 }
