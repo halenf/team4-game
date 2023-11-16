@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - TargetGroup
   - Breakable
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - Bullet
-  - 
+  - Debris
   - 
   - 
   - 
