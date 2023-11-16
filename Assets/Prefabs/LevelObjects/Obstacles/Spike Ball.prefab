@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sparks: {fileID: -4343892208976721057, guid: b6ebd225944abff4a9fb50e24c1148e0, type: 3}
-  reqiuerdSpeed: 20
+  sparkDifficulty: 50
 --- !u!1001 &3606246224007470791
 PrefabInstance:
   m_ObjectHideFlags: 0

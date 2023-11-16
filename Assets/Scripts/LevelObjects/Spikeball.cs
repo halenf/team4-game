@@ -6,7 +6,9 @@ public class Spikeball : MonoBehaviour
 {
     public ParticleSystem sparks;
 
-    public float reqiuerdSpeed;
+    public float sparkFrequency;
+
+    private float m_currentDifficulty;
 
     private SphereCollider m_collider;
 
@@ -16,18 +18,19 @@ public class Spikeball : MonoBehaviour
     {
         m_collider = GetComponent<SphereCollider>();
         m_rb = GetComponent<Rigidbody>();
+        m_currentDifficulty = sparkFrequency;
     }
 
-    public void OnCollisionEnter(Collision collision)
+
+    public void OnCollisionStay(Collision collision)
     {
-        if (m_rb.velocity.magnitude > reqiuerdSpeed)
+        
+        m_currentDifficulty -= m_rb.velocity.magnitude;
+        if(m_currentDifficulty < 0)
         {
-            MakeSparks();
+            Instantiate(sparks, collision.contacts[0].point, Quaternion.identity);
+            m_currentDifficulty = sparkFrequency;
         }
-    }
-
-    private void MakeSparks()
-    {
-        Instantiate(sparks, -transform.up * m_collider.radius, Quaternion.identity);
+        
     }
 }
