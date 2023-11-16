@@ -43,6 +43,9 @@ public class Pistol : Gun
             if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
             transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
 
+            //play shoot sound
+            SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip);
+
             // wait for next burst shot
             if (i != burstNumber - 1) yield return new WaitForSeconds(1f / shootingSpeed);
         }

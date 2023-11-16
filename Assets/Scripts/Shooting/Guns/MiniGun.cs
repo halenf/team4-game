@@ -37,5 +37,8 @@ public class MiniGun : Gun
 
         // apply recoil to the player
         transform.parent.GetComponent<Rigidbody>().AddForce(randomRecoilForce * ForceDirection, ForceMode.Impulse);
+
+        //play sound
+        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip);
     }
 }
