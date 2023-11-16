@@ -58,8 +58,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4789882382446241977}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.24, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1.1169}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1676410753910675609}
@@ -93,6 +93,7 @@ MonoBehaviour:
   highRumbleFrequency: 1
   lowRumbleFrequency: 0
   rumbleTime: 0.25
+  shootClip: {fileID: 0}
   timeToColliderOff: 1
 --- !u!65 &7110224535071332244
 BoxCollider:
@@ -103,10 +104,10 @@ BoxCollider:
   m_GameObject: {fileID: 4789882382446241977}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.42, y: 0.64, z: 1.5}
-  m_Center: {x: 0, y: 0.08, z: 1.85}
+  m_Size: {x: 0.42, y: 0.64, z: 2.7066398}
+  m_Center: {x: 8.951988e-15, y: 0.07999998, z: 2.4533253}
 --- !u!1001 &381636291111467197
 PrefabInstance:
   m_ObjectHideFlags: 0
