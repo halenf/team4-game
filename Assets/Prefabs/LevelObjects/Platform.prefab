@@ -97,7 +97,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6356d674f18e34ba833ae67eee2ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debris: []
+  debris:
+  - {fileID: 764237163864986437, guid: 06f45b5082758f5449c36a53ba77267e, type: 3}
+  - {fileID: 3090195600302211673, guid: f13cda93396b9a540b2e3fcc87fe0a7a, type: 3}
+  - {fileID: 9103141122626716058, guid: c6f78e012cc06a44f886992b997b6c1b, type: 3}
+  - {fileID: 7782376077944495284, guid: 881c08c06613fa040a6edcda73ac6b72, type: 3}
+  - {fileID: 8208676566311459339, guid: 8a69a41fe6675234fa50c545b4cd31c7, type: 3}
+  - {fileID: 3590670008837436656, guid: 9b415d9524721094cbb710ef8fd99100, type: 3}
+  - {fileID: 8480115765907047407, guid: 91e2a0f2a56c506408f8212e5a321c30, type: 3}
+  - {fileID: 491264291755305189, guid: 10819dabbbb7c4143a9067577f3e4bc8, type: 3}
   debrisDestroyTimer: 0
   health: 20
   destroyEffect: {fileID: 0}

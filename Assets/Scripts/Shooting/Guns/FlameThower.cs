@@ -15,11 +15,12 @@ public class FlameThower : Gun
     private ParticleSystem m_fireParticleEffect;
     private bool m_isShooting;
 
-    private void Awake()
+    public override void Awake()
     {
         m_collider = GetComponent<Collider>();
         m_fireParticleEffect = GetComponentInChildren<ParticleSystem>();
         GetMaterial();
+        SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
     }
 
     public override void Shoot(int playerID, Bullet.BulletEffect effect)

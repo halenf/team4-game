@@ -96,8 +96,12 @@ public class PlayerController : MonoBehaviour
             if (value != Powerup.Shield) m_powerupTimer = powerupTime;
 
             // set powerup
+            Powerup oldPowerUp = m_currentPowerup;
             m_currentPowerup = value;
-            CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+            if (m_currentPowerup != Powerup.None)
+            {
+                CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+            }
             switch (m_currentPowerup)
             {
                 case Powerup.Ricochet:
@@ -105,18 +109,21 @@ public class PlayerController : MonoBehaviour
                     break;
                 }
                 case Powerup.FireRateUp:
-                {  
+                {
+                    SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREACTIVATE");
                     m_fireRate *= fireRateScalar;
                     break;
                 }
                 case Powerup.Shield:
                 {
+                    SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-SHIELDACTIVATE");
                     m_shieldCurrentHealth = maxShieldHealth;
                     m_shieldGameObject = Instantiate(m_shieldPrefab, transform);
                     break;
                 }
                 case Powerup.BigBullets:
                 {
+                    SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-BIGBULLETSACTIVATE");
                     break;
                 }
                 case Powerup.ExplodeBullets:
@@ -125,11 +132,27 @@ public class PlayerController : MonoBehaviour
                 }
                 case Powerup.LowGravity:
                 {
+                    SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYACTIVATE");
                     m_rb.mass *= lowGravityScalar;
                     break;
                 }
                 case Powerup.None:
                 {
+                    m_powerupTimer = 0f;
+                    switch(oldPowerUp)
+                    {
+                        case(Powerup.LowGravity):
+                            {
+                                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYDEACTIVATE");
+                                break;
+                            }
+                        case (Powerup.FireRateUp):
+                            {
+                                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREDEACTIVATE");
+                                break;
+                            }
+                    }
+                    
                     break;
                 }
             }
@@ -162,7 +185,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         m_currentGun.transform.localPosition = m_indicatorPosition;
-        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
+        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - transform.position);
 
         // update powerup timer
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
@@ -281,8 +304,10 @@ public class PlayerController : MonoBehaviour
         if (m_shieldCurrentHealth > 0)
         {
             m_shieldCurrentHealth--;
+            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/PWR-SHIELDDEFLECT");
             if (m_shieldCurrentHealth == 0)
             {
+                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/PWR-SHIELDDEACTIVATE");
                 Destroy(m_shieldGameObject);
             }
             return;
@@ -305,8 +330,13 @@ public class PlayerController : MonoBehaviour
             // let game manager know somebody died
             GameManager.Instance.CheckIsRoundOver();
 
+            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+
             // deactivate player object
             gameObject.SetActive(false);
+        } else
+        {
+            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDAMAGE");
         }
     }
 
