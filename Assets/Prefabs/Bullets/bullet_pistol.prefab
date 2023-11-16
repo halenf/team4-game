@@ -196,7 +196,7 @@ MonoBehaviour:
   sparksPrefab: {fileID: -4343892208976721057, guid: b6ebd225944abff4a9fb50e24c1148e0, type: 3}
   ricochetPrefab: {fileID: 6647730250613079163, guid: 8cb2db274e759c64a983744e95e0501f, type: 3}
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
-  emissionIntensity: 0
+  emissionIntensity: 1.5
 --- !u!54 &4081999047442605340
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -89,19 +89,19 @@ public class Bullet : MonoBehaviour
         }
 
         // Set the bullet material colour and emission intensity
-        Material bulletMaterial = GetComponentInChildren<MeshRenderer>().material;
-        if (bulletMaterial)
+        MeshRenderer bullet = GetComponentInChildren<MeshRenderer>();
+        if (bullet)
         {
-            bulletMaterial = (Material)Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString());
-            bulletMaterial.SetColor("_EmissionColor", bulletMaterial.color * emissionIntensity);
+            bullet.material = (Material)Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString());
+            bullet.material.SetColor("_EmissionColor", bullet.material.color * emissionIntensity);
         }
 
         // Set the bullet trail material colour and emission intensity
-        Material trailMaterial = GetComponentInChildren<TrailRenderer>().material;
-        if (trailMaterial)
+        TrailRenderer trail = GetComponentInChildren<TrailRenderer>();
+        if (trail)
         {
-            trailMaterial = (Material)Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
-            trailMaterial.SetColor("_EmissionColor", trailMaterial.color * emissionIntensity);
+            trail.material = (Material)Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
+            trail.material.SetColor("_EmissionColor", trail.material.color * emissionIntensity);
         }
     }
 
