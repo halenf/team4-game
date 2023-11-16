@@ -1,6 +1,6 @@
 // Bullet - Halen, Cameron
 // Determines bullet behaviour
-// Last edit: 2/11/23
+// Last edit: 16/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +36,11 @@ public class Bullet : MonoBehaviour
     public ParticleSystem sparksPrefab;
     public ParticleSystem ricochetPrefab;
     public ParticleSystem bloodPrefab;
+
+    [Space(10)]
+
+    [Tooltip("How intense the glow of the bullet and bullet trail are.")]
+    [Range(-5, 5)] public float emissionIntensity;
 
     // tracks which particle to instantiate when the bullet is destroyed
     private ParticleSystem m_particle;
@@ -83,9 +88,21 @@ public class Bullet : MonoBehaviour
             }
         }
 
-        // Set the bullet trail materials
+        // Set the bullet material colour and emission intensity
+        MeshRenderer bullet = GetComponentInChildren<MeshRenderer>();
+        if (bullet)
+        {
+            bullet.material = (Material)Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString());
+            bullet.material.SetColor("_EmissionColor", bullet.material.color * emissionIntensity);
+        }
+
+        // Set the bullet trail material colour and emission intensity
         TrailRenderer trail = GetComponentInChildren<TrailRenderer>();
-        if (trail) trail.material = (Material) Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
+        if (trail)
+        {
+            trail.material = (Material)Resources.Load("Materials/Player/Player" + (m_playerID + 1).ToString() + "_alt");
+            trail.material.SetColor("_EmissionColor", trail.material.color * emissionIntensity);
+        }
     }
 
     private IEnumerator Explode(float lifeTime)
@@ -102,12 +119,6 @@ public class Bullet : MonoBehaviour
         m_rb.drag = 0;
         m_rb.angularDrag = 0;
         m_rb.useGravity = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // When bullet collides with another object
