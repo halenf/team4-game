@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class ItemBox : PowerUp
 {
+    
 
     public override void OnTriggerEnter(Collider other)
     {

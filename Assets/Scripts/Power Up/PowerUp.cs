@@ -7,7 +7,14 @@ using UnityEngine;
 
 public abstract class PowerUp : MonoBehaviour
 {
-    public Stage stage;
+
+    public void Start()
+    {
+        if (lifeTime != 0)
+        {
+            Destroy(gameObject, lifeTime);
+        }
+    }
     public abstract void OnTriggerEnter(Collider other);
 
     public float lifeTime;
