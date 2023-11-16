@@ -4932,8 +4932,7 @@ MonoBehaviour:
   lowRumbleFrequency: 0
   rumbleTime: 0.3
   shootClip: {fileID: 8300000, guid: 4cffb29ace09e25478dcb6825e026b22, type: 3}
-  gunAudioSource: {fileID: 2280769725682343014}
-  audioSourceObject: {fileID: 7972454674124651198}
+  equipClip: {fileID: 8300000, guid: 6fbcf3f99122e1443ba4305aed557ddf, type: 3}
   minBulletAmount: 8
   maxBulletAmount: 8
 --- !u!1 &7972454674124651198

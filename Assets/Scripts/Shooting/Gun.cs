@@ -33,6 +33,7 @@ public abstract class Gun : MonoBehaviour
 
     [Header("Audio")]
     public AudioClip shootClip;
+    public AudioClip equipClip;
 
     private Material m_material;
 
@@ -40,6 +41,7 @@ public abstract class Gun : MonoBehaviour
     {
         m_material = gameObject.GetComponentInChildren<MeshRenderer>().material;
         m_material.EnableKeyword("_EMISSION");
+        SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
     }
 
     public void GetMaterial()
