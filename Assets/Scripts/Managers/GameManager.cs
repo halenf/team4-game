@@ -53,13 +53,9 @@ public class GameManager : MonoBehaviour
     private SubtitleUI m_subtitleCanvas;
 
     [Header("Cinemachine Prefabs")]
-    public CinemachineVirtualCamera staticCameraPrefab;
-    public CinemachineVirtualCamera gameplayCameraPrefab;
-    public CinemachineTargetGroup targetGroupPrefab;
-
-    private CinemachineVirtualCamera m_staticCamera;
-    private CinemachineVirtualCamera m_gameplayCamera;
-    private CinemachineTargetGroup m_targetGroup;
+    [SerializeField] private CinemachineVirtualCamera m_staticCamera;
+    [SerializeField] private CinemachineVirtualCamera m_gameplayCamera;
+    [SerializeField] private CinemachineTargetGroup m_targetGroup;
 
     [Header("Player")]
     public GameObject playerPrefab;
@@ -163,13 +159,6 @@ public class GameManager : MonoBehaviour
         m_isPaused = false;
 
         // Setup Cinemachine cameras and target group
-        m_staticCamera = Instantiate(staticCameraPrefab);
-        m_gameplayCamera = Instantiate(gameplayCameraPrefab);
-        m_targetGroup = Instantiate(targetGroupPrefab);
-
-        m_gameplayCamera.Follow = m_targetGroup.transform;
-        m_gameplayCamera.LookAt = m_targetGroup.transform;
-
         m_staticCamera.gameObject.SetActive(true);
         m_gameplayCamera.gameObject.SetActive(false);
         m_targetGroup.gameObject.SetActive(false);
@@ -463,6 +452,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("game NOT over");
             m_leaderboardCanvas.buttons.SetActive(false);
             StartCoroutine(StartAfterScore());
+        }
+
+        PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
+        for(int i = 0; i < allPowerUps.Length; i++)
+        {
+            Destroy(allPowerUps[i].gameObject);
         }
 
         m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;

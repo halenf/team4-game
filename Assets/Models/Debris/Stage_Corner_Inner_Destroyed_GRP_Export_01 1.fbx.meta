@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 93e9be75556f3874fbcf2402936687c9
+guid: 3a685dc7bb4514e4b8c7d103677ee5ab
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stage_Corner_Inner_Destroyed_MAT
+    second: {fileID: 2100000, guid: a3ce6bb8a7dac964894f82dc9510d565, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
