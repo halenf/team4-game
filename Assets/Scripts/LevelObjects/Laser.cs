@@ -37,7 +37,7 @@ public class Laser : MonoBehaviour
                 //get player
                 PlayerController hitPlayer = hit.collider.gameObject.GetComponent<PlayerController>();
                 //do max damage
-                hitPlayer.TakeDamage(hitPlayer.maxHealth);
+                hitPlayer.TakeDamage(hitPlayer.maxHealth, "this death was sponserd by laser corp get the new 3000 wat model today");
             }
         } else //just draw line from here to 1000 up
         {

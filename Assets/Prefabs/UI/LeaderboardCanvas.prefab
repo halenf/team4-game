@@ -1016,7 +1016,7 @@ MonoBehaviour:
   defaultSelectedObject: {fileID: 3238041805642738367}
   buttons: {fileID: 3238041806309958433}
   contents: {fileID: 3238041804644741017}
-  timeBeforeShowing: 3
+  timeBeforeShowing: 1
 --- !u!223 &6931777853157890126
 Canvas:
   m_ObjectHideFlags: 0

@@ -75,7 +75,7 @@ public class FlameThower : Gun
         {
             
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            player.TakeDamage(bulletDamage);
+            player.TakeDamage(bulletDamage, "too toasty for you huh?");
             
 
             //BulletDestroy();

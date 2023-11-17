@@ -86,7 +86,7 @@ public class Explosion : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
-            player.TakeDamage(damage);
+            player.TakeDamage(damage, "oh jeez they almost landed on me");
             m_shouldDisableCollider = true;
         }
 
