@@ -51,9 +51,10 @@ MonoBehaviour:
   disconnectCanvasPrefab: {fileID: 2559865700041908714, guid: ac8428efec677244b89fb469854fee69, type: 3}
   dangerCanvasPrefab: {fileID: -4508779246074093925, guid: ea6e811e9e3b1584590b5d1d26b252c3, type: 3}
   subtitleCanvasPrefab: {fileID: 1750427500097721667, guid: d4b8559dc193f084ba2044ee277ea33e, type: 3}
-  staticCameraPrefab: {fileID: 4361120844145390752, guid: bb1e58192ade96e4ea3d69033afdb51c, type: 3}
-  gameplayCameraPrefab: {fileID: 4323402439503292133, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
-  targetGroupPrefab: {fileID: 4883814422248433968, guid: fdc938de4844e39418745e53de26fc9a, type: 3}
+  m_staticCamera: {fileID: 0}
+  m_gameplayCamera: {fileID: 0}
+  m_targetGroup: {fileID: 0}
+  cinemachineRadius: 1
   playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
   playerColours:
   - {r: 0.12941173, g: 0.3607843, b: 1, a: 1}
