@@ -315,25 +315,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: subtitleTime
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: gameplayCamera
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: numberOfRounds
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: scoreViewingTime
-      value: 15
+      value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: subtitleCanvasPrefab
-      value: 
-      objectReference: {fileID: 1750427500097721667, guid: d4b8559dc193f084ba2044ee277ea33e, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[0]
       value: 

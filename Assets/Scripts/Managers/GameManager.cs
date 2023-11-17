@@ -396,10 +396,11 @@ public class GameManager : MonoBehaviour
 
     private void EndRound(int winningPlayerID)
     {
-        DisablePlayers();
-        m_gameplayCanvas.StartRoundEnd(winningPlayerID);
         m_dangerCanvas.gameObject.SetActive(false);
         m_subtitleCanvas.gameObject.SetActive(false);
+        DisablePlayers();
+        m_gameplayCanvas.StartRoundEnd(winningPlayerID);
+        
     }
 
     /// <summary>
@@ -413,6 +414,7 @@ public class GameManager : MonoBehaviour
         m_gameplayCanvas.gameObject.SetActive(false);
         m_disconnectCanvas.gameObject.SetActive(false);
         m_dangerCanvas.gameObject.SetActive(false);
+        m_subtitleCanvas.gameObject.SetActive(false);
 
         // Set which button the player defaults to in the leaderboard menu
         EventSystemManager.Instance.SetCurrentSelectedGameObject(m_leaderboardCanvas.defaultSelectedObject);
