@@ -1,6 +1,6 @@
 // Lava - Cameron
 // just kills player
-// Last edit: 25/10/23
+// Last edit: 17/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ public class Lava : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             PlayerController victim = other.gameObject.GetComponent<PlayerController>();
-            victim.TakeDamage(victim.maxHealth);
+            victim.TakeDamage(victim.maxHealth, "death by lava");
         }
     }
 }

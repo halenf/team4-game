@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public LeaderboardUI leaderboardCanvasPrefab;
     public DisconnectUI disconnectCanvasPrefab;
     public DangerUI dangerCanvasPrefab;
+    public SubtitleUI subtitleCanvasPrefab;
 
     // canvas references
     private StartUI m_startCanvas;
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
     private LeaderboardUI m_leaderboardCanvas;
     private DisconnectUI m_disconnectCanvas;
     private DangerUI m_dangerCanvas;
+    private SubtitleUI m_subtitleCanvas;
 
     [Header("Cinemachine Prefabs")]
     public CinemachineVirtualCamera staticCameraPrefab;
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] stageList;
     public int numberOfRounds;
     public float scoreViewingTime;
+    public float subtitleTime;
 
     // stage tracking
     private GameObject m_currentStageObject;
@@ -178,6 +181,7 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas = Instantiate(leaderboardCanvasPrefab);
         m_disconnectCanvas = Instantiate(disconnectCanvasPrefab);
         m_dangerCanvas = Instantiate(dangerCanvasPrefab);
+        m_subtitleCanvas = Instantiate(subtitleCanvasPrefab);
 
         m_startCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.gameObject.SetActive(false);
@@ -185,6 +189,7 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas.gameObject.SetActive(false);
         m_disconnectCanvas.gameObject.SetActive(false);
         m_dangerCanvas.gameObject.SetActive(false);
+        m_subtitleCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -394,6 +399,7 @@ public class GameManager : MonoBehaviour
         DisablePlayers();
         m_gameplayCanvas.StartRoundEnd(winningPlayerID);
         m_dangerCanvas.gameObject.SetActive(false);
+        m_subtitleCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -503,6 +509,19 @@ public class GameManager : MonoBehaviour
             //unfreeze time
             Time.timeScale = 1f;
         }
+    }
+
+    public void DeathAnnouncment(string deathSubtitle)
+    {
+        StartCoroutine(AnnounceDeath(deathSubtitle));
+    }
+
+    private IEnumerator AnnounceDeath(string deathSubtitle)
+    {
+        m_subtitleCanvas.gameObject.SetActive(true);
+        m_subtitleCanvas.subtitle.text = deathSubtitle;
+        yield return new WaitForSeconds(subtitleTime);
+        m_subtitleCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -620,7 +639,7 @@ public class GameManager : MonoBehaviour
     { 
         if (Keyboard.current.digit1Key.isPressed)
         {
-            m_activePlayerControllers[0].TakeDamage(1f);
+            m_activePlayerControllers[0].TakeDamage(1f, "fella just got debugged outta here");
         }
         if (Keyboard.current.digit2Key.isPressed)
         {
