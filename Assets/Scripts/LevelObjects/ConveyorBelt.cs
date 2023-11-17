@@ -19,32 +19,19 @@ public class ConveyorBelt : MonoBehaviour
         set
         {
             m_movesPositive = value;
-
-            // set direction value
-            if (m_movesPositive) m_beltSpeed = -Mathf.Abs(m_beltSpeed);
-            else m_beltSpeed = Mathf.Abs(m_beltSpeed);
-
-            // set animation direction in animator
-            m_animator.SetFloat("Direction", m_beltSpeed);
+            ToggleBeltAnimation();
         }
     }
 
-    private float m_beltSpeed;
-
     [Tooltip("Whether or not the conveyor belt is activated")]
     [SerializeField] private bool m_isActive = true;
-
     public bool isActive
     {
         get { return m_isActive; }
         set
         {
+            if (m_isActive != value) ToggleBeltAnimation();
             m_isActive = value;
-            if (m_animator)
-            {
-                if (m_isActive) m_animator.Play("ConveyorBelt");
-                else m_animator.Play("Inactive");
-            }
         }
     }
 
@@ -54,15 +41,9 @@ public class ConveyorBelt : MonoBehaviour
     {
         m_animator = GetComponent<Animator>();
 
-        if (m_movesPositive) m_beltSpeed = speed;
-        else m_beltSpeed = -speed;
-
         // set initial belt speed and start belt
-        if (m_animator)
-        {
-            m_animator.SetFloat("Direction", m_beltSpeed);
-            if (m_isActive) m_animator.Play("ConveyorBelt");
-        }
+        if (m_animator) m_animator.Play("ConveyorBelt");
+        ToggleBeltAnimation();
     }
 
     private void OnTriggerStay(Collider other)
@@ -73,7 +54,19 @@ public class ConveyorBelt : MonoBehaviour
         if (rb)
         {
             // apply the force
-            rb.AddForce(new Vector3(m_beltSpeed, 0, 0) * speed, ForceMode.Force);
+            rb.AddForce(Vector3.right * (m_movesPositive ? speed : -speed), ForceMode.Force);
         }
+    }
+
+    private void ToggleBeltAnimation()
+    {
+        if (!m_animator) return;
+
+        // if the belt is active, animate in the appropriate direction, otherwise disable/set speed to zero
+        float _speed = m_isActive ? (m_movesPositive ? speed : -speed) : 0;
+        m_animator.SetFloat("Speed", _speed);
+
+        Debug.Log("Speed: " + _speed);
+        Debug.Log("Animator speed: " + m_animator.speed);
     }
 }
