@@ -520,6 +520,7 @@ public class GameManager : MonoBehaviour
     {
         m_subtitleCanvas.gameObject.SetActive(true);
         m_subtitleCanvas.subtitle.text = deathSubtitle;
+        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTER" + Random.Range(1, 3));
         yield return new WaitForSeconds(subtitleTime);
         m_subtitleCanvas.gameObject.SetActive(false);
     }
