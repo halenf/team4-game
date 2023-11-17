@@ -1,12 +1,12 @@
 // Conveyor Belt - Halen
 // Moves stuff when its standing or sitting on top of it.
-// Last edit: 15/11/23
+// Last edit: 17/11/23
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConveyorBelt : MonoBehaviour
+public class ConveyorBelt : Obstacle
 {
     [Tooltip("The strength of the force the belt applies to objects standing on it.")]
     [Min(0)] public float speed;
@@ -35,6 +35,9 @@ public class ConveyorBelt : MonoBehaviour
         }
     }
 
+    [Space(10)]
+    [Tooltip("For scaling the speed of the animation.")]
+    [Range(0, 1)] public float animationSpeedScalar;
     private Animator m_animator;
 
     private void Start()
@@ -63,10 +66,17 @@ public class ConveyorBelt : MonoBehaviour
         if (!m_animator) return;
 
         // if the belt is active, animate in the appropriate direction, otherwise disable/set speed to zero
-        float _speed = m_isActive ? (m_movesPositive ? speed : -speed) : 0;
-        m_animator.SetFloat("Speed", _speed);
+        float _speed = m_isActive ? (m_movesPositive ? -speed : speed) : 0;
+        m_animator.SetFloat("Speed", _speed * animationSpeedScalar);
+    }
 
-        Debug.Log("Speed: " + _speed);
-        Debug.Log("Animator speed: " + m_animator.speed);
+    public override void ToggleState()
+    {
+        isActive = !isActive;
+    }
+
+    public override void ToggleState(bool state)
+    {
+        isActive = state;
     }
 }

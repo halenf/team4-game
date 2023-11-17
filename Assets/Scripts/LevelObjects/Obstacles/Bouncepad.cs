@@ -1,15 +1,17 @@
 // Bouncepad - Cameron
 // Applies an upwards force to any rigidbody that enters its trigger.
-// Last edit: 1/11/23
+// Last edit: 17/11/23
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bouncepad : MonoBehaviour
+public class Bouncepad : Obstacle
 {
     [Tooltip("Bounce strength.")]
     [Min(0)] public float force;
+
+    public bool isActive;
 
     private Animator m_animator;
 
@@ -20,10 +22,23 @@ public class Bouncepad : MonoBehaviour
 
     public void OnTriggerEnter(Collider collision)
     {
+        if (!isActive) return;
+        
         if(collision.gameObject.GetComponent<Rigidbody>())
         {
             collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * force, ForceMode.VelocityChange);
             m_animator.Play("Bounce");
         }
+    }
+
+    // inherited methods - Halen
+    public override void ToggleState()
+    {
+        isActive = !isActive;
+    }
+
+    public override void ToggleState(bool state)
+    {
+        isActive = state;
     }
 }
