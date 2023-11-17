@@ -465,6 +465,12 @@ public class GameManager : MonoBehaviour
             StartCoroutine(StartAfterScore());
         }
 
+        PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
+        for(int i = 0; i < allPowerUps.Length; i++)
+        {
+            Destroy(allPowerUps[i].gameObject);
+        }
+
         m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
 
         Time.timeScale = 1f;
