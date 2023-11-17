@@ -12,7 +12,7 @@ public class GunBox : PowerUp
     private Gun currentGun;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         currentGun = Guns[Random.Range(0, Guns.Length)];        
         

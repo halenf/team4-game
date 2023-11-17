@@ -10,6 +10,7 @@ public class SetColour : MonoBehaviour
 {
     [Tooltip("Array of the objects that will have their colour changed. The children of the objects will also be searched for renderers.")]
     public GameObject[] objects;
+    public float emissiveMultiplyer;
 
     /// <summary>
     /// Sets the colours of all the MeshRenderers in 'renderers' to a specified colour.
@@ -33,7 +34,7 @@ public class SetColour : MonoBehaviour
         // change the colour of all the renderers' materials
         foreach (MeshRenderer renderer in renderers)
         {
-            if (renderer.material.IsKeywordEnabled("_EMISSION")) renderer.material.SetColor("_EmissionColor", colour * 3f);
+            if (renderer.material.IsKeywordEnabled("_EMISSION")) renderer.material.SetColor("_EmissionColor", colour * emissiveMultiplyer);
             renderer.material.SetColor("_Color", colour);
         }
     }

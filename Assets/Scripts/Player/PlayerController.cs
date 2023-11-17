@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            m_currentHealth -= 7;
+            TakeDamage(7f, "spike ball death announcement");
         }
     }
 
@@ -295,7 +295,7 @@ public class PlayerController : MonoBehaviour
     /// Deal damage to the player and check if they are dead.
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, string deathLine)
     {
         // if the player is already dead, don't make them take damage
         if (isDead) return;
@@ -331,6 +331,8 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.CheckIsRoundOver();
 
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+
+            GameManager.Instance.DeathAnnouncment(deathLine);
 
             // deactivate player object
             gameObject.SetActive(false);

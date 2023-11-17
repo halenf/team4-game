@@ -5045,7 +5045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e686b9f23cdea4e98ab392d9c193a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseRecoil: 20
+  baseRecoil: 15
   groundedRecoilScalar: 1
   baseFireRate: 12
   ammoCapacity: 75

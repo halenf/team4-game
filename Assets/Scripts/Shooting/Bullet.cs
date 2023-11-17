@@ -135,7 +135,7 @@ public class Bullet : MonoBehaviour
             if (m_currentEffect != BulletEffect.Explode)
             {
                 PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-                player.TakeDamage(m_damage);
+                player.TakeDamage(m_damage, "bullseye");
             }
 
             // set the particle effect to blood
