@@ -55,7 +55,7 @@ MonoBehaviour:
     value: 1
   roundness:
     overrideState: 1
-    value: 1
+    value: 0.923
   rounded:
     overrideState: 0
     value: 0
@@ -87,6 +87,7 @@ MonoBehaviour:
   - {fileID: 8272036035298285477}
   - {fileID: 6265761742267319823}
   - {fileID: 9128587273940301783}
+  - {fileID: 6444745078482618622}
 --- !u!114 &1959291196610402962
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -133,10 +134,10 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 0.3
+    value: 8.93
   threshold:
     overrideState: 1
-    value: 1
+    value: 5.82
   softKnee:
     overrideState: 0
     value: 0.518
@@ -174,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb84e30e02715445aeb9959894e3b4d, type: 3}
   m_Name: ColorGrading
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
@@ -266,13 +267,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.73538834, y: 1, z: 0.5502472, w: -0.64794815}
+    value: {x: 0.9764586, y: 1, z: 0.99556315, w: -0.17278619}
   gamma:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 1, y: 1, z: 1, w: 0.32397404}
   gain:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 1, y: 1, z: 1, w: -0.021598294}
   masterCurve:
     overrideState: 0
     value:
@@ -1473,6 +1474,40 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
+--- !u!114 &6444745078482618622
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
+  m_Name: LensDistortion
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: -35
+  intensityX:
+    overrideState: 1
+    value: 1
+  intensityY:
+    overrideState: 1
+    value: 1
+  centerX:
+    overrideState: 1
+    value: 0
+  centerY:
+    overrideState: 1
+    value: 0
+  scale:
+    overrideState: 1
+    value: 1
 --- !u!114 &7797144215403247213
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1513,19 +1548,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   mode:
-    overrideState: 0
+    overrideState: 1
     value: 1
   intensity:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 2.33
   color:
-    overrideState: 0
-    value: {r: 0, g: 0, b: 0, a: 1}
+    overrideState: 1
+    value: {r: 1, g: 0, b: 0, a: 1}
   ambientOnly:
     overrideState: 0
     value: 1
@@ -1539,8 +1574,8 @@ MonoBehaviour:
     overrideState: 0
     value: -12
   thicknessModifier:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 4.99
   directLightingStrength:
     overrideState: 0
     value: 0
@@ -1562,16 +1597,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   spectralLut:
-    overrideState: 0
+    overrideState: 1
     value: {fileID: 0}
     defaultState: 1
   intensity:
-    overrideState: 0
+    overrideState: 1
     value: 0
   fastMode:
     overrideState: 0
