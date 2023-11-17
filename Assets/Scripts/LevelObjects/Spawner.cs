@@ -22,6 +22,7 @@ public class Spawner : MonoBehaviour
 
     private Vector3 m_realVelocity;
     private float m_currentTime;
+    GameObject m_reference;
 
     public void Start()
     {
@@ -39,18 +40,18 @@ public class Spawner : MonoBehaviour
     {
         yield return new WaitForSeconds(m_currentTime);
 
-        GameObject reference;
+        
 
         if(randomRotation)
         {
             Quaternion rotation = Quaternion.Euler(UnityEngine.Random.Range(0.0f, 360.0f), UnityEngine.Random.Range(0.0f, 360.0f), UnityEngine.Random.Range(0.0f, 360.0f));
-            reference = Instantiate(spawnobject, spawnLocation.position, rotation);
+            m_reference = Instantiate(spawnobject, spawnLocation.position, rotation);
         } else
         {
-            reference = Instantiate(spawnobject);
+            m_reference = Instantiate(spawnobject, spawnLocation.position, Quaternion.identity);
         }
 
-        Rigidbody rb = reference.GetComponent<Rigidbody>();
+        Rigidbody rb = m_reference.GetComponent<Rigidbody>();
 
         if(rb != null)
         {
