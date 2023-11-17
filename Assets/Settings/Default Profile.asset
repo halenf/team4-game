@@ -43,19 +43,19 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0, g: 0, b: 0, a: 1}
+    value: {r: 0, g: 1, b: 0.7271333, a: 1}
   center:
-    overrideState: 1
+    overrideState: 0
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.359
+    value: 0.281
   smoothness:
-    overrideState: 1
+    overrideState: 0
     value: 1
   roundness:
-    overrideState: 1
-    value: 0.923
+    overrideState: 0
+    value: 1
   rounded:
     overrideState: 0
     value: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 8.93
+    value: 3.09
   threshold:
     overrideState: 1
     value: 5.82
@@ -269,11 +269,11 @@ MonoBehaviour:
     overrideState: 1
     value: {x: 0.9764586, y: 1, z: 0.99556315, w: -0.17278619}
   gamma:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0.32397404}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: -0.36717063}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: -0.021598294}
+    overrideState: 1
+    value: {x: 1, y: 1, z: 1, w: -0.043196574}
   masterCurve:
     overrideState: 0
     value:
@@ -1486,7 +1486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b77c5407dc277943b591ade9e6b18c5, type: 3}
   m_Name: LensDistortion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -1494,19 +1494,19 @@ MonoBehaviour:
     overrideState: 1
     value: -35
   intensityX:
-    overrideState: 1
+    overrideState: 0
     value: 1
   intensityY:
-    overrideState: 1
+    overrideState: 0
     value: 1
   centerX:
-    overrideState: 1
+    overrideState: 0
     value: 0
   centerY:
-    overrideState: 1
+    overrideState: 0
     value: 0
   scale:
-    overrideState: 1
+    overrideState: 0
     value: 1
 --- !u!114 &7797144215403247213
 MonoBehaviour:
@@ -1529,10 +1529,10 @@ MonoBehaviour:
     value: 13.94
   aperture:
     overrideState: 1
-    value: 15.7
+    value: 20.4
   focalLength:
     overrideState: 1
-    value: 300
+    value: 214
   kernelSize:
     overrideState: 0
     value: 1
