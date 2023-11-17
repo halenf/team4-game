@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera m_staticCamera;
     [SerializeField] private CinemachineVirtualCamera m_gameplayCamera;
     [SerializeField] private CinemachineTargetGroup m_targetGroup;
+    public float cinemachineRadius;
 
     [Header("Player")]
     public GameObject playerPrefab;
@@ -536,7 +537,7 @@ public class GameManager : MonoBehaviour
                 CinemachineTargetGroup.Target target;
                 target.target = m_activePlayerControllers[i].transform;
                 target.weight = m_activePlayerControllers[i].GetComponent<Rigidbody>().mass;
-                target.radius = 5f;
+                target.radius = cinemachineRadius;
                 targets.Add(target);
             }
         }
