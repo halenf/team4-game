@@ -3,7 +3,12 @@ guid: 2f6d2f1bfef6e6a4ab016dddd38fd615
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stage_Flat_Destroyed_MAT
+    second: {fileID: 2100000, guid: 7c74ab296deaf5543beee1ac7a9717c9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
