@@ -23,9 +23,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 127946971493252839}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 61.876804, y: 2.8479357, z: 1.7418172}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.009999999, y: 0.009999999, z: 0.010000002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9189033218722273724}
@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 9189033218722273724}
   - component: {fileID: 790018001003251578}
   - component: {fileID: 3154954793750643464}
-  - component: {fileID: 6841265002131983049}
   m_Layer: 0
   m_Name: Stage_Diagonal_GEO_01
   m_TagString: Untagged
@@ -116,17 +115,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6841265002131983049
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6254743209989840541}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6981994077104592744, guid: 2604714a35bd889439828fd2f8bd3b3f, type: 3}
