@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 3000
+  isActive: 1
 --- !u!95 &1897877658106709007
 Animator:
   serializedVersion: 4
