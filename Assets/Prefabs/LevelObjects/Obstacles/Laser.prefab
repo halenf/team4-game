@@ -92,9 +92,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3788925204285201061}
-  - component: {fileID: 1557037127114942776}
-  - component: {fileID: 5227712940450349801}
   - component: {fileID: 3134811422387393504}
+  - component: {fileID: 5227712940450349801}
+  - component: {fileID: 1557037127114942776}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -118,19 +118,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1557037127114942776
-BoxCollider:
+--- !u!114 &3134811422387393504
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4602441095069155359}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.63, y: 4.61, z: 1}
-  m_Center: {x: 0, y: 0.28, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25bf8fed1a086294795082f99a81e025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 1
 --- !u!120 &5227712940450349801
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -230,15 +230,16 @@ LineRenderer:
     generateLightingData: 1
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &3134811422387393504
-MonoBehaviour:
+--- !u!65 &1557037127114942776
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4602441095069155359}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25bf8fed1a086294795082f99a81e025, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  serializedVersion: 2
+  m_Size: {x: 3.63, y: 4.61, z: 1}
+  m_Center: {x: 0, y: 0.28, z: 0}
