@@ -47,9 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b21980cd84de204bb71f6fe2ecdeea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  m_movesPositive: 0
+  speed: 50
+  m_movesPositive: 1
   m_isActive: 1
+  animationSpeedScalar: 0.42
 --- !u!65 &7221409411121893292
 BoxCollider:
   m_ObjectHideFlags: 0

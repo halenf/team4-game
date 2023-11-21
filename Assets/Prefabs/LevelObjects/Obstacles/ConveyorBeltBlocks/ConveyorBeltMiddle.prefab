@@ -1271,9 +1271,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b21980cd84de204bb71f6fe2ecdeea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  m_movesPositive: 0
+  speed: 50
+  m_movesPositive: 1
   m_isActive: 1
+  animationSpeedScalar: 0.42
 --- !u!65 &4149283560930511042
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1327,7 +1328,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3547001659677680926}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7fc8a53bccbf9b7429d8594bab945cef, type: 3}
