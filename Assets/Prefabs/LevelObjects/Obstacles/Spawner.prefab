@@ -44,10 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 889c56931e3e4574c8795656ecd9e80c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repeating: 1
-  randomRotation: 1
+  m_isActive: 1
+  isRepeating: 1
+  hasRandomRotation: 0
   spawnLocation: {fileID: 5586098692458279120}
-  spawnobject: {fileID: 5328841878907081587, guid: b62de1747513a1249aaf0bbd6ba35758, type: 3}
+  spawnObjectPrefab: {fileID: 0}
   minSpawnTime: 10
   maxSpawnTime: 10
-  velocity: {x: 10, y: 0}
+  initialVelocity: {x: 0, y: 0}
