@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class PowerUp : MonoBehaviour
 {
-
+    public Stage stage;
     public void Start()
     {
         if (lifeTime != 0)
