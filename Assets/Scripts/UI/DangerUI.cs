@@ -15,4 +15,20 @@ public class DangerUI : MonoBehaviour
     {
         
     }
+
+    public void StartTurnOffDanger()
+    {
+        StartCoroutine(TurnOffDanger());
+    }
+
+    private IEnumerator TurnOffDanger()
+    {
+        yield return new WaitForSeconds(3);
+        gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 }

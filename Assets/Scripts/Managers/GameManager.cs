@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Init()
+    public void Init()
     {
         // Set timescale in case game was paused when reset
         Time.timeScale = 1.0f;
@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
         m_focusedPlayerController = null;
         m_activePlayerControllers = new List<PlayerController>();
 
-        m_currentStageObject = null;
+        if (m_currentStageObject) Destroy(m_currentStageObject);
         m_roundNumber = 0;
 
         m_leaderboard = new List<int>();
@@ -198,7 +198,6 @@ public class GameManager : MonoBehaviour
             {
                 //store controller and add player to leaderboard
                 m_controllers.Add(Gamepad.all[i]);
-                m_leaderboard.Add(0);
 
                 // Since the list of connected controllers was updated, we need to update the StartUI to reflect that
                 m_startCanvas.SetDisplayDetails(m_controllers);
@@ -223,6 +222,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadFirst()
     {
+        if (m_currentStageObject != null)
+        {
+            Destroy(m_currentStageObject);
+        }
+        foreach (PlayerController player in m_activePlayerControllers)
+        {
+            if (player != null)
+            {
+                Destroy(player.gameObject);
+            }
+        }
         for (int i = 0; i < m_controllers.Count; i++)
         {
             bool found = false;
@@ -237,7 +247,10 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+
         m_activePlayerControllers = new List<PlayerController>();
+        m_leaderboard = new List<int>();
+
         //for every player
         for (int j = 0; m_controllers.Count > j; j++)
         {
@@ -255,12 +268,20 @@ public class GameManager : MonoBehaviour
 
             // add player to list of players
             m_activePlayerControllers.Add(playerController);
+
+            // add slot to leaderboard
+            m_leaderboard.Add(0);
         }
+
+        // reset variables in case players chose to play again - halen
+        if (m_currentStageObject) Destroy(m_currentStageObject);
+        m_roundNumber = 0;
 
         // deactivate start menu/leaderboardUI, activate gameplayUI - Halen
         m_startCanvas.gameObject.SetActive(false);
         m_leaderboardCanvas.gameObject.SetActive(false);
         m_gameplayCanvas.gameObject.SetActive(true);
+        m_gameplayCanvas.roundWinnerDisplay.text = "";
 
         // Set correct game state
         m_gameState = GameState.Playing;
@@ -284,10 +305,18 @@ public class GameManager : MonoBehaviour
     public void LoadStage()
     {
         if (m_endController) Destroy(m_endController);
+
         // Destroy any bullets that might remain in the level from the last level
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
-        
+
+        // destroy any remaining powerups in the scene
+        PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
+        for (int i = 0; i < allPowerUps.Length; i++)
+        {
+            Destroy(allPowerUps[i].gameObject);
+        }
+
         //destroy the current stage and load a new one
         if (m_currentStageObject) Destroy(m_currentStageObject);
         int random = Random.Range(0, stageList.Length);
@@ -350,7 +379,7 @@ public class GameManager : MonoBehaviour
     /// Returns if enough players have died to end the round
     /// </summary>
     /// <returns></returns>
-    public bool IsRoundOver()
+    private bool IsRoundOver()
     {
         // track the number of dead players
         int deadPlayers = 0;
@@ -369,7 +398,7 @@ public class GameManager : MonoBehaviour
     /// returns true if the end condition has been met
     /// </summary>
     /// <returns></returns>
-    public bool IsGameOver()
+    private bool IsGameOver()
     {
         bool isGameOver = false;
 
@@ -391,11 +420,15 @@ public class GameManager : MonoBehaviour
     private void EndRound(int winningPlayerID)
     {
         m_dangerCanvas.gameObject.SetActive(false);
-        m_subtitleCanvas.gameObject.SetActive(false);
-        DisablePlayers();
         Announce(endAnnouncements);
+        DisablePlayers();
+        m_pauseCanvas.gameObject.SetActive(false);
+        m_dangerCanvas.gameObject.SetActive(false);
+        m_subtitleCanvas.gameObject.SetActive(false);
+        m_gameplayCanvas.SetDisplayDetails(winningPlayerID + 1, m_leaderboard);
+        m_gameplayCanvas.scoreListDisplay.gameObject.SetActive(true);
+
         m_gameplayCanvas.StartRoundEnd(winningPlayerID);
-        
     }
 
     /// <summary>
@@ -403,30 +436,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
-        // Halen
-        // Disable canvases
-        m_pauseCanvas.gameObject.SetActive(false);
-        m_gameplayCanvas.gameObject.SetActive(false);
-        m_disconnectCanvas.gameObject.SetActive(false);
-        m_dangerCanvas.gameObject.SetActive(false);
-        m_subtitleCanvas.gameObject.SetActive(false);
-
         // Set which button the player defaults to in the leaderboard menu
         EventSystemManager.Instance.SetCurrentSelectedGameObject(m_leaderboardCanvas.defaultSelectedObject);
 
         // Set correct gamestate
         m_gameState = GameState.Ended;
         // End Halen
-
-        //destroy the stage and players
-        Destroy(m_currentStageObject);
-        foreach (PlayerController player in m_activePlayerControllers)
-        {
-            if (player != null)
-            {
-                Destroy(player.gameObject);
-            }
-        }
 
         //find the winner and that score
         int winnerIndex = 0;
@@ -440,43 +455,16 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Change to the static camera from the gameplay camera - Halen
-        m_gameplayCamera.gameObject.SetActive(false);
-        m_targetGroup.gameObject.SetActive(false);
-        m_staticCamera.gameObject.SetActive(true);
-
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
+        m_leaderboardCanvas.buttons.SetActive(true);
         m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
 
-        if(IsGameOver())
-        {
-            Debug.Log("game over");
-            m_leaderboardCanvas.buttons.SetActive(true);
-        } else
-        {
-            Debug.Log("game NOT over");
-            m_leaderboardCanvas.buttons.SetActive(false);
-            StartCoroutine(StartAfterScore());
-        }
-
-        PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
-        for(int i = 0; i < allPowerUps.Length; i++)
-        {
-            Destroy(allPowerUps[i].gameObject);
-        }
-
-        m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
+        // disable players and set UI controls
+        DisablePlayers();
 
         Time.timeScale = 1f;
-
-        EventSystemManager.Instance.SetPlayerToControl(controlCube.GetComponent<PlayerController>());
-    }
-
-    private IEnumerator StartAfterScore()
-    {
-        yield return new WaitForSeconds(scoreViewingTime);
-        LoadFirst();
+        EventSystemManager.Instance.SetPlayerToControl(m_activePlayerControllers[winnerIndex]);
     }
 
     /// <summary>
@@ -598,14 +586,11 @@ public class GameManager : MonoBehaviour
 
     public void ShowDanger()
     {
-        m_dangerCanvas.gameObject.SetActive(true);
-        StartCoroutine(TurnOffDanger());
-    }
-
-    private IEnumerator TurnOffDanger()
-    {
-        yield return new WaitForSeconds(3);
-        m_dangerCanvas.gameObject.SetActive(false);
+        if (m_dangerCanvas.gameObject.activeSelf)
+        {
+            m_dangerCanvas.gameObject.SetActive(true);
+            m_dangerCanvas.StartTurnOffDanger();
+        }
     }
 
     /// <summary>
@@ -647,6 +632,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGame()
     {
+        m_controllers = new List<Gamepad>();
         Init();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
