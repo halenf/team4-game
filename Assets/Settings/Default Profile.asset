@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d65e486e4de6e5448a8fbb43dc8756a0, type: 3}
   m_Name: Grain
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
@@ -109,12 +109,12 @@ MonoBehaviour:
     value: 0
   intensity:
     overrideState: 1
-    value: 0.553
+    value: 0.1
   size:
     overrideState: 1
-    value: 1.41
+    value: 0.7
   lumContrib:
-    overrideState: 1
+    overrideState: 0
     value: 1
 --- !u!114 &5441676459193844031
 MonoBehaviour:
@@ -1526,7 +1526,7 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 5.6
+    value: 0.1
   aperture:
     overrideState: 1
     value: 2.6
