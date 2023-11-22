@@ -8,7 +8,13 @@ using UnityEngine;
 
 public class ItemBox : PowerUp
 {
-    
+    [SerializeField] private PlayerController.Powerup m_currentPowerup;
+
+    public override void OnStart()
+    {
+        //pick power up, random int chosen from length of enum Powerup cast back to the enum
+        m_currentPowerup = (PlayerController.Powerup) UnityEngine.Random.Range(0, Enum.GetValues(typeof(PlayerController.Powerup)).Length - 1);
+    }
 
     public override void OnTriggerEnter(Collider other)
     {
@@ -18,14 +24,10 @@ public class ItemBox : PowerUp
             //find player
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
-            //pick power up
-            int choice = UnityEngine.Random.Range(1, Enum.GetNames(typeof(PlayerController.Powerup)).Length);
-
-            player.ActivatePowerUp((PlayerController.Powerup)choice);
+            player.ActivatePowerUp(m_currentPowerup);
 
             //destroy self
             Destroy(gameObject);
         }
     }
-
 }

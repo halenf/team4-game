@@ -42,6 +42,8 @@ public class Bullet : MonoBehaviour
     [Tooltip("How intense the glow of the bullet and bullet trail are.")]
     [Range(-5, 5)] public float emissionIntensity;
 
+    public string[] killStrings;
+
     // tracks which particle to instantiate when the bullet is destroyed
     private ParticleSystem m_particle;
 
@@ -135,7 +137,7 @@ public class Bullet : MonoBehaviour
             if (m_currentEffect != BulletEffect.Explode)
             {
                 PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-                player.TakeDamage(m_damage, "bullseye");
+                player.TakeDamage(m_damage, killStrings);
             }
 
             // set the particle effect to blood

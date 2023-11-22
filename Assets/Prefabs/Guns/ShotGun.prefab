@@ -4933,6 +4933,9 @@ MonoBehaviour:
   rumbleTime: 0.3
   shootClip: {fileID: 8300000, guid: 4cffb29ace09e25478dcb6825e026b22, type: 3}
   equipClip: {fileID: 8300000, guid: 6fbcf3f99122e1443ba4305aed557ddf, type: 3}
+  pitchMagnitude: 0.2
+  volume: 0.4
+  indicator: {fileID: 21300000, guid: adecaa41cbe401e48bd57741aa6481fb, type: 3}
   minBulletAmount: 8
   maxBulletAmount: 8
 --- !u!1 &7972454674124651198

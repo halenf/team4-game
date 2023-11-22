@@ -16,16 +16,16 @@ public class CameraDistanceHandler : MonoBehaviour
 
     private void Start()
     {
-        CameraManager.Instance.postProcessVolume.profile.TryGetSettings(out m_depthOfField);
+        m_depthOfField = CameraManager.Instance.postProcessVolume.profile.GetSetting<DepthOfField>();
         m_defaultFocusDistance = m_depthOfField.focusDistance;
-        Debug.Log("Focus distance: " + m_defaultFocusDistance);
+        //Debug.Log("Focus distance: " + m_defaultFocusDistance);
     }
 
     // Whenever the gameplay camera is enabled, get the position data
     private void OnEnable()
     {   
         m_startCameraDistance = transform.position.z;
-        Debug.Log("Start Camera distance: " + m_startCameraDistance);
+        //Debug.Log("Start Camera distance: " + m_startCameraDistance);
     }
 
     // Update is called once per frame
@@ -33,6 +33,6 @@ public class CameraDistanceHandler : MonoBehaviour
     {
         // Keep the depth of field focus at the same point in world space
         m_depthOfField.focusDistance.value = m_defaultFocusDistance - transform.position.z + m_startCameraDistance;
-        Debug.Log("Current Camera distance: " + transform.position.z);
+        //Debug.Log("Current Camera distance: " + transform.position.z);
     }
 }

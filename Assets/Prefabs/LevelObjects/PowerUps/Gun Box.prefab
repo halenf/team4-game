@@ -59,13 +59,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7eb54ed846b47b4781659f6a25280ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 0}
   lifeTime: 10
-  Guns:
+  guns:
+  - {fileID: 2639462504726439464, guid: dadaa2246f6567141bbdc5f8ab065f32, type: 3}
   - {fileID: 7557321546389718272, guid: 33b9e3908e9af964fa614bc03795cb03, type: 3}
   - {fileID: -176858537243104423, guid: 69d3963b1479bea4da2f952440c44943, type: 3}
   - {fileID: 7991177023550822976, guid: 38f6b085243398046806341762f41ff5, type: 3}
-  - {fileID: 2639462504726439464, guid: dadaa2246f6567141bbdc5f8ab065f32, type: 3}
+  m_currentGun: {fileID: 0}
 --- !u!1001 &6550977091605396670
 PrefabInstance:
   m_ObjectHideFlags: 0

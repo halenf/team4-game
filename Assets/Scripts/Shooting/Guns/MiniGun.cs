@@ -11,6 +11,7 @@ public class MiniGun : Gun
     [Min(0)]public float randomRecoilAngle;
     [Tooltip("the max amount that the recoil can change by in percent")]
     [Min(0)] public float randomRecoilStrength;
+    
     public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
         PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
@@ -39,6 +40,7 @@ public class MiniGun : Gun
         transform.parent.GetComponent<Rigidbody>().AddForce(randomRecoilForce * ForceDirection, ForceMode.Impulse);
 
         //play sound
-        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip);
+        float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);
+        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch, volume);
     }
 }

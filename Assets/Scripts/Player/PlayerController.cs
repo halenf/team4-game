@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,9 +64,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_indicatorPosition = new Vector3(1f, 0f, 0);
     
     [Header("power up display")]
-    public GameObject[] powerUpIndicators;
+    public Sprite[] powerUpIndicators;
     public Transform overhead;
     public float overheadLifetime;
+    public GameObject overHeadCanvas;
+
+    public string[] spikeBallDeathAnnouncements;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -94,6 +98,24 @@ public class PlayerController : MonoBehaviour
 
             // only set timer if the powerup is not shield
             if (value != Powerup.Shield) m_powerupTimer = powerupTime;
+
+            // Deactivation checks
+            if (value == Powerup.None)
+            {
+                switch (m_currentPowerup)
+                {
+                    case (Powerup.LowGravity):
+                        {
+                            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYDEACTIVATE");
+                            break;
+                        }
+                    case (Powerup.FireRateUp):
+                        {
+                            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREDEACTIVATE");
+                            break;
+                        }
+                }
+            }
 
             // set powerup
             Powerup oldPowerUp = m_currentPowerup;
@@ -139,19 +161,7 @@ public class PlayerController : MonoBehaviour
                 case Powerup.None:
                 {
                     m_powerupTimer = 0f;
-                    switch(oldPowerUp)
-                    {
-                        case(Powerup.LowGravity):
-                            {
-                                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYDEACTIVATE");
-                                break;
-                            }
-                        case (Powerup.FireRateUp):
-                            {
-                                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREDEACTIVATE");
-                                break;
-                            }
-                    }
+                    
                     
                     break;
                 }
@@ -243,7 +253,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            TakeDamage(7f, "spike ball death announcement");
+            TakeDamage(7f, spikeBallDeathAnnouncements);
         }
     }
 
@@ -295,7 +305,7 @@ public class PlayerController : MonoBehaviour
     /// Deal damage to the player and check if they are dead.
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage, string deathLine)
+    public void TakeDamage(float damage, string[] deathLines)
     {
         // if the player is already dead, don't make them take damage
         if (isDead) return;
@@ -332,7 +342,7 @@ public class PlayerController : MonoBehaviour
 
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
 
-            GameManager.Instance.DeathAnnouncment(deathLine);
+            GameManager.Instance.Announcment(deathLines);
 
             // deactivate player object
             gameObject.SetActive(false);
@@ -351,8 +361,14 @@ public class PlayerController : MonoBehaviour
         if (m_currentGun) Destroy(m_currentGun.gameObject);
         m_currentGun = Instantiate(gun, gameObject.transform);
 
-        // Only sets an ammo capacity if the gun is a pickup gun and not the default
-        if (gun != defaultGun) m_currentAmmo = gun.ammoCapacity;
+        if (gun != defaultGun)
+        {
+            // Only sets an ammo capacity if the gun is a pickup gun and not the default
+            m_currentAmmo = gun.ammoCapacity;
+
+            // Display the gun the player picked up. dont display when changing back to the pistol
+            CreateOverhead(gun.indicator);
+        }
         else m_currentAmmo = -1;
 
         // set fire rate details
@@ -372,7 +388,7 @@ public class PlayerController : MonoBehaviour
     /// set a power up
     /// </summary>
     /// <param name="powerUp"></param>
-   public void ActivatePowerUp(Powerup powerUp)
+    public void ActivatePowerUp(Powerup powerUp)
     {
         currentPowerup = powerUp;
     }
@@ -381,9 +397,10 @@ public class PlayerController : MonoBehaviour
     /// creates an object at the the overhead transform and destroys it after overhead lifetime
     /// </summary>
     /// <param name="overheadObject"></param>
-    public void CreateOverhead(GameObject overheadObject)
+    public void CreateOverhead(Sprite image)
     {
-        GameObject objectReference = Instantiate(overheadObject, overhead);
+        GameObject objectReference = Instantiate(overHeadCanvas, overhead.position, Quaternion.identity);
+        objectReference.GetComponentInChildren<Image>().sprite = image;
         Destroy(objectReference, overheadLifetime);
     }
 

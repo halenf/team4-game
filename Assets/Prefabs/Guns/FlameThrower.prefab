@@ -95,7 +95,15 @@ MonoBehaviour:
   rumbleTime: 0.25
   shootClip: {fileID: 8300000, guid: 9f6b2c43aa26e0f4bbe88138b9c23229, type: 3}
   equipClip: {fileID: 8300000, guid: c26abfbec8f3cab4e9e4779a7ee98637, type: 3}
+  pitchMagnitude: 0.2
+  volume: 1
+  indicator: {fileID: 21300000, guid: adecaa41cbe401e48bd57741aa6481fb, type: 3}
   timeToColliderOff: 1
+  killStrings:
+  - Toasty!
+  - Smells like fresh bacon!
+  - "And just when you thought things couldn\u2019t get any hotter!"
+  - "Looks like they couldn\u2019t handle the heat!"
 --- !u!65 &7110224535071332244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -107,8 +115,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.42, y: 0.64, z: 2.7066398}
-  m_Center: {x: 8.951988e-15, y: 0.07999998, z: 2.4533253}
+  m_Size: {x: 0.42, y: 0.64, z: 4.3500137}
+  m_Center: {x: 3.0852694e-14, y: 0.07999998, z: 3.2750185}
 --- !u!1001 &381636291111467197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -222,10 +230,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: e4d55eb8c7e0b274b83cf331bec41d83, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 39777eeb3d5f80a4591f258c7fa90c2f, type: 2}
     - target: {fileID: 919132149155446097, guid: e4d55eb8c7e0b274b83cf331bec41d83, type: 3}
       propertyPath: m_Name
       value: Flamethrower_GEO_Export_01

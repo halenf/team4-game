@@ -633,6 +633,18 @@ PrefabInstance:
       propertyPath: m_gameplayCamera
       value: 
       objectReference: {fileID: 2364201596277266086}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[0]
+      value: 
+      objectReference: {fileID: 3771888446113775381, guid: 864033d4133d59c4aa4700aeba43f9d6, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[1]
+      value: 
+      objectReference: {fileID: 3771888446113775381, guid: 864033d4133d59c4aa4700aeba43f9d6, type: 3}
     - target: {fileID: 6369607398092397879, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_RootOrder
       value: 1

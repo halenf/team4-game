@@ -3,12 +3,22 @@
 // last edit 1/11/2023
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
-    //array of spawn transforms
+    [Tooltip("time till the end lasers show up")]
+    public float roundTime;
+    private float m_currentRoundTime;
+
+    // tracks if the end lasers have been created
+    private bool m_madeLasers = false;
+
+    [Space(10)]
+
+    [Header("Spawn Transforms")]
     [Tooltip("put spawn transforms here")]
     public Transform[] playerSpawns;
     [Tooltip("power up transforms")]
@@ -17,77 +27,62 @@ public class Stage : MonoBehaviour
     public Transform[] gunBoxSpawns;
     [Tooltip("end game laser transforms")]
     public Transform[] endLaserSpawns;
-    [Tooltip("spikeBall laser transforms")]
-    public Transform[] spikeBallSpawns;
-
+    [Tooltip("Position the camera starts in for your stage.")]
     public Transform cameraDefaultTransform;
 
-    //box prefabs
+    [Header("Prefabs")]
     public GameObject gunBoxPrefab;
-    public GameObject itemBoxPrefab;
+    public GameObject powerupBoxPrefab;
     public GameObject endLaserPrefab;
     public GameObject spikeBallPrefab;
 
-    private GameObject m_currentItemBox;
-    private GameObject m_currentGunBox;
-
-    //used to make random timers
+    [Header("Pickup Properties")]
+    [Tooltip("How long a gun box will be active for.")]
+    [Min(0)] public float gunBoxLifetime;
     [Tooltip("minimum time a gun box will appear in")]
-    public float minGunTimer;
+    [Min(0)] public float minGunTimer;
     [Tooltip("maximum time a gun box will appear in")]
-    public float maxGunTimer;
+    [Min(0)] public float maxGunTimer;
 
-    [Space(10)]
-
+    [Space(5)]
+    [Tooltip("How long an item box will be active for.")]
+    [Min(0)] public float powerupBoxLifetime;
     [Tooltip("minimum time a power up will appear in")]
-    public float minPowerUpTimer;
+    [Min(0)] public float minPowerupTimer;
     [Tooltip("maximum time a power up will appear in")]
-    public float maxPowerUpTimer;
+    [Min(0)] public float maxPowerupTimer;
 
-    [Space(10)]
-
-    [Tooltip("minimum time a spikeball will appear in")]
-    public float minSpikeBallTimer;
-    [Tooltip("maximum time a power up will appear in")]
-    public float maxSpikeBallTimer;
-
-    //regular timers
-    [Tooltip("time till the end lasers show up")]
-    public float roundTime;
-
-    //
-    private bool madeLasers = false;
+    private List<GameObject> m_currentPowerupBoxes;
+    private List<GameObject> m_currentGunBoxes;
 
     /// <summary>
     /// call functions to start coroutines
     /// </summary>
     private void Start()
     {
+        m_currentRoundTime = 0;
+
+        m_currentGunBoxes = new List<GameObject>(gunBoxSpawns.Length);
+        m_currentPowerupBoxes = new List<GameObject>(playerSpawns.Length);
+
         StartGunRoutine();
         StartPowerUpRoutine();
-        StartSpikeBallRoutine();
     }
 
     private void Update()
     {
-        if (!madeLasers)
-        {
-            if (roundTime > 0)
-            {
-                roundTime -= Time.deltaTime;
-            }
-            else
-            {
-                MakeLasers();
-                madeLasers = true;
-            }
+        m_currentRoundTime += Time.deltaTime;
+        if (m_currentRoundTime > roundTime && !m_madeLasers)
+        { 
+            MakeLasers();
+            m_madeLasers = true;
         }
-        
     }
+
     /// <summary>
     /// makes the random time to spawn a gun for and then starts the gunbox spawn coroutine with that time
     /// </summary>
-    public void StartGunRoutine()
+    private void StartGunRoutine()
     {
         float time = Random.Range(minGunTimer, maxGunTimer);
         StartCoroutine(SpawnGunBox(time));
@@ -101,91 +96,22 @@ public class Stage : MonoBehaviour
     private IEnumerator SpawnGunBox(float time)
     {
         yield return new WaitForSeconds(time);
-        int chosenBox = Random.Range(0, gunBoxSpawns.Length - 1);
+        int spawnIndex = Random.Range(0, gunBoxSpawns.Length - 1);
 
-        for (int i = 0; i < gunBoxSpawns.Length; i++)
+        // if there isn't already a box in that slot, spawn a new one
+        if (m_currentGunBoxes.ElementAtOrDefault(spawnIndex) != null)
         {
-            if (i == chosenBox)
-            {
-                m_currentGunBox = Instantiate(gunBoxPrefab, gunBoxSpawns[i].transform);
-                m_currentGunBox.GetComponent<PowerUp>().stage = this;
-            }
+            m_currentGunBoxes.Insert(spawnIndex, Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform));
+            m_currentGunBoxes[spawnIndex].GetComponent<PowerUp>().lifeTime = gunBoxLifetime;
         }
-
-        StartKillGunBox();
-    }
-
-    private void StartKillGunBox()
-    {
-        StartCoroutine(KillGunBoxRoutine());
-    }
-
-    private IEnumerator KillGunBoxRoutine()
-    {
-        if (m_currentGunBox != null)
-        {
-            yield return new WaitForSeconds(m_currentGunBox.GetComponent<PowerUp>().lifeTime);
-            Destroy(m_currentGunBox);
-        }
-        else
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        StartGunRoutine();
-    }
-
-    public void StartSpikeBallRoutine()
-    {
-        float time = Random.Range(minSpikeBallTimer, maxSpikeBallTimer);
-        StartCoroutine(SpawnSpikeBall(time));
-    }
-
-    /// <summary>
-    /// waits for its time to be over then finds a gunbox transform and spawns a gunbox there then restarts
-    /// </summary>
-    /// <param name="time"></param>
-    /// <returns></returns>
-    private IEnumerator SpawnSpikeBall(float time)
-    {
-        yield return new WaitForSeconds(time);
-        int chosenBall = Random.Range(0, spikeBallSpawns.Length - 1);
-
-        for (int i = 0; i < spikeBallSpawns.Length; i++)
-        {
-            if (i == chosenBall)
-            {
-                Instantiate(spikeBallPrefab, spikeBallSpawns[i].transform);
-            }
-        }
-
-        StartKillItemBox();
-    }
-
-    private void StartKillItemBox()
-    {
-        StartCoroutine(KillItemBox());
-    }
-
-    private IEnumerator KillItemBox()
-    {
-        if (m_currentItemBox != null)
-        {
-            yield return new WaitForSeconds(m_currentItemBox.GetComponent<PowerUp>().lifeTime);
-            Destroy(m_currentItemBox);
-        }
-        else
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        StartPowerUpRoutine();
     }
 
     /// <summary>
     /// makes the random time to spawn a item box for and then starts the itembox spawn coroutine with that time
     /// </summary>
-    public void StartPowerUpRoutine()
+    private void StartPowerUpRoutine()
     {
-        float time = Random.Range(minPowerUpTimer, maxPowerUpTimer);
+        float time = Random.Range(minPowerupTimer, maxPowerupTimer);
         StartCoroutine(SpawnPowerUp(time));
     }
 
@@ -197,23 +123,37 @@ public class Stage : MonoBehaviour
     private IEnumerator SpawnPowerUp(float time)
     {
         yield return new WaitForSeconds(time);
-        int chosenBox = Random.Range(0, powerUpSpawns.Length - 1);
+        int spawnIndex = Random.Range(0, powerUpSpawns.Length - 1);
 
-        for (int i = 0; i < powerUpSpawns.Length; i++)
+        // if there isn't already a box in that slot, spawn a new one
+        if (m_currentPowerupBoxes.ElementAtOrDefault(spawnIndex) != null)
         {
-            if (i == chosenBox)
-            {
-                m_currentItemBox = Instantiate(itemBoxPrefab, powerUpSpawns[i].transform);
-                m_currentItemBox.GetComponent<PowerUp>().stage = this;
-            }
+            m_currentPowerupBoxes.Insert(spawnIndex, Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform));
+            m_currentPowerupBoxes[spawnIndex].GetComponent<PowerUp>().lifeTime = powerupBoxLifetime;
         }
     }
 
+    /// <summary>
+    /// Called when the Stage is unloaded or destroyed.
+    /// </summary>
+    private void OnDestroy()
+    {
+        // destroy all the powerups when the stage is unloaded
+        foreach (GameObject obj in m_currentGunBoxes) Destroy(obj);
+        foreach (GameObject obj in m_currentPowerupBoxes) Destroy(obj);
+
+        // stop the spawning coroutines
+        StopAllCoroutines();
+    }
+
+    /// <summary>
+    /// Spawn the round end lasers.
+    /// </summary>
     private void MakeLasers()
     {
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
-            Instantiate(endLaserPrefab, endLaserSpawns[i].transform.position, endLaserSpawns[i].transform.rotation).transform.parent = endLaserSpawns[i];
+            Instantiate(endLaserPrefab, endLaserSpawns[i].transform, endLaserSpawns[i]);
         }
         GameManager.Instance.ShowDanger();
     }
