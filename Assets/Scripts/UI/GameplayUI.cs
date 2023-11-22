@@ -1,17 +1,21 @@
-// GameplayUI - Halen
+// GameplayUI - Halen, Cameron
 // Interface for updating the Gameplay UI canvas
-// Last edit: 26/10/23
+// Last edit: 22/11/23
 
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameplayUI : MonoBehaviour
 {
     [Header("UI Elements")]
     public TMP_Text countdownDisplay;
     public TMP_Text roundWinnerDisplay;
+
+    //start stuff taken from leaderboard
+    public TMP_Text scoreListDisplay;
 
     public GameObject fadeOut;
     
@@ -25,9 +29,16 @@ public class GameplayUI : MonoBehaviour
     /// <summary>
     /// Update all the display details of the canvas.
     /// </summary>
-    public void SetDisplayDetails(int winningPlayer)
+    public void SetDisplayDetails(int winningPlayer, List<int> leaderboard)
     {
         roundWinnerDisplay.text = "Player " + winningPlayer + " wins!";
+        scoreListDisplay.gameObject.SetActive(true);
+        string leaderboardText = "";
+        for (int i = 0; i < leaderboard.Count; i++)
+        {
+            leaderboardText += "Player " + (i + 1).ToString() + ": " + leaderboard[i] + " \n";
+        }
+        scoreListDisplay.text = leaderboardText;
     }
 
     /// <summary>
@@ -67,12 +78,16 @@ public class GameplayUI : MonoBehaviour
 
     private IEnumerator RoundEnd(int winningPlayerID)
     {
+        
         yield return new WaitForEndOfFrame();
+        GameManager.Instance.EndGame();
         // Show the player who won the round
         roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
-        yield return new WaitForSeconds(3);
-        roundWinnerDisplay.text = "";
+        yield return new WaitForSeconds(5);
+        //roundWinnerDisplay.text = "";
         //GameManager.Instance.LoadStage();
+        roundWinnerDisplay.text = "";
+        scoreListDisplay.gameObject.SetActive(false);
         Instantiate(fadeOut);
     }
 }

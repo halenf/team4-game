@@ -223,6 +223,17 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadFirst()
     {
+        if (m_currentStageObject != null)
+        {
+            Destroy(m_currentStageObject);
+        }
+        foreach (PlayerController player in m_activePlayerControllers)
+        {
+            if (player != null)
+            {
+                Destroy(player.gameObject);
+            }
+        }
         for (int i = 0; i < m_controllers.Count; i++)
         {
             bool found = false;
@@ -257,10 +268,17 @@ public class GameManager : MonoBehaviour
             m_activePlayerControllers.Add(playerController);
         }
 
+        PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
+        for (int i = 0; i < allPowerUps.Length; i++)
+        {
+            Destroy(allPowerUps[i].gameObject);
+        }
+
         // deactivate start menu/leaderboardUI, activate gameplayUI - Halen
         m_startCanvas.gameObject.SetActive(false);
         m_leaderboardCanvas.gameObject.SetActive(false);
         m_gameplayCanvas.gameObject.SetActive(true);
+        m_gameplayCanvas.roundWinnerDisplay.text = "";
 
         // Set correct game state
         m_gameState = GameState.Playing;
@@ -390,9 +408,7 @@ public class GameManager : MonoBehaviour
 
     private void EndRound(int winningPlayerID)
     {
-        m_dangerCanvas.gameObject.SetActive(false);
-        m_subtitleCanvas.gameObject.SetActive(false);
-        DisablePlayers();
+        
         Announce(endAnnouncements);
         m_gameplayCanvas.StartRoundEnd(winningPlayerID);
         
@@ -403,10 +419,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
+        m_dangerCanvas.gameObject.SetActive(false);
+        DisablePlayers();
         // Halen
         // Disable canvases
         m_pauseCanvas.gameObject.SetActive(false);
-        m_gameplayCanvas.gameObject.SetActive(false);
+        //m_gameplayCanvas.gameObject.SetActive(false);
         m_disconnectCanvas.gameObject.SetActive(false);
         m_dangerCanvas.gameObject.SetActive(false);
         m_subtitleCanvas.gameObject.SetActive(false);
@@ -417,16 +435,6 @@ public class GameManager : MonoBehaviour
         // Set correct gamestate
         m_gameState = GameState.Ended;
         // End Halen
-
-        //destroy the stage and players
-        Destroy(m_currentStageObject);
-        foreach (PlayerController player in m_activePlayerControllers)
-        {
-            if (player != null)
-            {
-                Destroy(player.gameObject);
-            }
-        }
 
         //find the winner and that score
         int winnerIndex = 0;
@@ -447,30 +455,30 @@ public class GameManager : MonoBehaviour
 
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
-        m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+        m_gameplayCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
 
-        if(IsGameOver())
+        if (IsGameOver())
         {
-            Debug.Log("game over");
+            m_gameplayCanvas.scoreListDisplay.gameObject.SetActive(false);
+            m_gameplayCanvas.gameObject.SetActive(false);
+            m_leaderboardCanvas.gameObject.SetActive(true);
             m_leaderboardCanvas.buttons.SetActive(true);
-        } else
+            m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+            m_subtitleCanvas.gameObject.SetActive(false);
+        }
+        else
         {
             Debug.Log("game NOT over");
             m_leaderboardCanvas.buttons.SetActive(false);
-            StartCoroutine(StartAfterScore());
+            m_gameplayCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+            //StartCoroutine(StartAfterScore());
         }
 
-        PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
-        for(int i = 0; i < allPowerUps.Length; i++)
-        {
-            Destroy(allPowerUps[i].gameObject);
-        }
-
-        m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
+        //m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
 
         Time.timeScale = 1f;
 
-        EventSystemManager.Instance.SetPlayerToControl(controlCube.GetComponent<PlayerController>());
+        EventSystemManager.Instance.SetPlayerToControl(m_activePlayerControllers[winnerIndex]);
     }
 
     private IEnumerator StartAfterScore()

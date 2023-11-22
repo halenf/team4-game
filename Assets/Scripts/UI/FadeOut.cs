@@ -20,7 +20,7 @@ public class FadeOut : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Debug.Log("state exited");
-        GameManager.Instance.EndGame();
+        GameManager.Instance.LoadFirst();
         Time.timeScale = 1f;
         Destroy(animator.gameObject.GetComponentInParent<Canvas>().gameObject);
 
