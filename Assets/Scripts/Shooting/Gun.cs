@@ -17,6 +17,8 @@ public abstract class Gun : MonoBehaviour
     [Min(0)] public int ammoCapacity;
     public Transform bulletSpawnTransform;
     public ParticleSystem muzzleFlash;
+    [Space(5)]
+    public Sprite indicator;
 
     [Header("Bullet Properties")]
     [InspectorName("Prefab")] public Bullet bulletPrefab;
@@ -38,7 +40,6 @@ public abstract class Gun : MonoBehaviour
     public float volume;
 
     private Material m_material;
-    public Sprite indicator;
 
     public virtual void Awake()
     {

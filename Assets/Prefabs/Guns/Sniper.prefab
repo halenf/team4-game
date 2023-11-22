@@ -5051,6 +5051,7 @@ MonoBehaviour:
   ammoCapacity: 2
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 1407886214849153807}
+  indicator: {fileID: 21300000, guid: cfad47e9aaec7ab42b5289dc376549b4, type: 3}
   bulletPrefab: {fileID: 2271769695517889325, guid: 4fbb5bbebbab77e4f8a3bd4aa1afc423, type: 3}
   spread: 2
   bulletSpeed: 40
@@ -5063,7 +5064,6 @@ MonoBehaviour:
   equipClip: {fileID: 8300000, guid: 98ab9fa1c53ea884fa72032187a8436a, type: 3}
   pitchMagnitude: 0.2
   volume: 0.8
-  indicator: {fileID: 21300000, guid: adecaa41cbe401e48bd57741aa6481fb, type: 3}
 --- !u!1001 &3463409947533569460
 PrefabInstance:
   m_ObjectHideFlags: 0
