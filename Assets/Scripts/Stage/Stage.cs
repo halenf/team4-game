@@ -155,6 +155,5 @@ public class Stage : MonoBehaviour
         {
             Instantiate(endLaserPrefab, endLaserSpawns[i].transform, endLaserSpawns[i]);
         }
-        GameManager.Instance.ShowDanger();
     }
 }

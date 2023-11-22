@@ -108,7 +108,6 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
 
         // Initialise game manager
-        m_controllers = new List<Gamepad>();
         Init();
     }
 
@@ -150,7 +149,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1.0f;
 
         // set all private variables to default values
-        //m_controllers = new List<Gamepad>();
+        m_controllers = new List<Gamepad>();
         m_focusedPlayerController = null;
         m_activePlayerControllers = new List<PlayerController>();
 
@@ -199,7 +198,6 @@ public class GameManager : MonoBehaviour
             {
                 //store controller and add player to leaderboard
                 m_controllers.Add(Gamepad.all[i]);
-                m_leaderboard.Add(0);
 
                 // Since the list of connected controllers was updated, we need to update the StartUI to reflect that
                 m_startCanvas.SetDisplayDetails(m_controllers);
@@ -249,7 +247,9 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+
         m_activePlayerControllers = new List<PlayerController>();
+        m_leaderboard = new List<int>();
 
         //for every player
         for (int j = 0; m_controllers.Count > j; j++)
@@ -268,13 +268,14 @@ public class GameManager : MonoBehaviour
 
             // add player to list of players
             m_activePlayerControllers.Add(playerController);
+
+            // add slot to leaderboard
+            m_leaderboard.Add(0);
         }
 
-        PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
-        for (int i = 0; i < allPowerUps.Length; i++)
-        {
-            Destroy(allPowerUps[i].gameObject);
-        }
+        // reset variables in case players chose to play again - halen
+        if (m_currentStageObject) Destroy(m_currentStageObject);
+        m_roundNumber = 0;
 
         // deactivate start menu/leaderboardUI, activate gameplayUI - Halen
         m_startCanvas.gameObject.SetActive(false);
@@ -304,10 +305,18 @@ public class GameManager : MonoBehaviour
     public void LoadStage()
     {
         if (m_endController) Destroy(m_endController);
+
         // Destroy any bullets that might remain in the level from the last level
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
-        
+
+        // destroy any remaining powerups in the scene
+        PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
+        for (int i = 0; i < allPowerUps.Length; i++)
+        {
+            Destroy(allPowerUps[i].gameObject);
+        }
+
         //destroy the current stage and load a new one
         if (m_currentStageObject) Destroy(m_currentStageObject);
         int random = Random.Range(0, stageList.Length);
@@ -427,7 +436,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
-
         // Set which button the player defaults to in the leaderboard menu
         EventSystemManager.Instance.SetCurrentSelectedGameObject(m_leaderboardCanvas.defaultSelectedObject);
 
@@ -447,27 +455,16 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
-
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
+        m_leaderboardCanvas.buttons.SetActive(true);
+        m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
 
-        
-        m_leaderboardCanvas.buttons.SetActive(false);
-        m_gameplayCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
-
-
-        //m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
+        // disable players and set UI controls
+        DisablePlayers();
 
         Time.timeScale = 1f;
-
         EventSystemManager.Instance.SetPlayerToControl(m_activePlayerControllers[winnerIndex]);
-    }
-
-    private IEnumerator StartAfterScore()
-    {
-        yield return new WaitForSeconds(scoreViewingTime);
-        LoadFirst();
     }
 
     /// <summary>
@@ -589,14 +586,11 @@ public class GameManager : MonoBehaviour
 
     public void ShowDanger()
     {
-        m_dangerCanvas.gameObject.SetActive(true);
-        StartCoroutine(TurnOffDanger());
-    }
-
-    private IEnumerator TurnOffDanger()
-    {
-        yield return new WaitForSeconds(3);
-        m_dangerCanvas.gameObject.SetActive(false);
+        if (m_dangerCanvas.gameObject.activeSelf)
+        {
+            m_dangerCanvas.gameObject.SetActive(true);
+            m_dangerCanvas.StartTurnOffDanger();
+        }
     }
 
     /// <summary>
