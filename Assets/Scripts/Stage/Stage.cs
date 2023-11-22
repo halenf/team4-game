@@ -3,6 +3,7 @@
 // last edit 1/11/2023
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -98,9 +99,9 @@ public class Stage : MonoBehaviour
         int spawnIndex = Random.Range(0, gunBoxSpawns.Length - 1);
 
         // if there isn't already a box in that slot, spawn a new one
-        if (!m_currentGunBoxes[spawnIndex])
+        if (m_currentGunBoxes.ElementAtOrDefault(spawnIndex) != null)
         {
-            m_currentGunBoxes[spawnIndex] = Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform);
+            m_currentGunBoxes.Insert(spawnIndex, Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform));
             m_currentGunBoxes[spawnIndex].GetComponent<PowerUp>().lifeTime = gunBoxLifetime;
         }
     }
@@ -125,9 +126,9 @@ public class Stage : MonoBehaviour
         int spawnIndex = Random.Range(0, powerUpSpawns.Length - 1);
 
         // if there isn't already a box in that slot, spawn a new one
-        if (!m_currentPowerupBoxes[spawnIndex])
+        if (m_currentPowerupBoxes.ElementAtOrDefault(spawnIndex) != null)
         {
-            m_currentPowerupBoxes[spawnIndex] = Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform);
+            m_currentPowerupBoxes.Insert(spawnIndex, Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform));
             m_currentPowerupBoxes[spawnIndex].GetComponent<PowerUp>().lifeTime = powerupBoxLifetime;
         }
     }
