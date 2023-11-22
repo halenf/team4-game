@@ -82,7 +82,7 @@ MonoBehaviour:
   baseRecoil: 5
   groundedRecoilScalar: 0.624
   baseFireRate: 35
-  ammoCapacity: 90
+  ammoCapacity: 80
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 0}
   bulletPrefab: {fileID: 2271769695517889325, guid: 1fd930c455b1d034dbddf541530112c3, type: 3}
