@@ -142,3 +142,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e8dfe3d01b0784fa75031d80d2befa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killStrings:
+  - Toasty!
+  - Smells like fresh bacon!
+  - "And just when you thought things couldn\u2019t get any hotter!"
+  - "Looks like they couldn\u2019t handle the heat!"

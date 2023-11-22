@@ -131,6 +131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
+  killStrings:
+  - Toasty!
+  - Smells like fresh bacon!
+  - "And just when you thought things couldn\u2019t get any hotter!"
+  - "Looks like they couldn\u2019t handle the heat!"
 --- !u!120 &5227712940450349801
 LineRenderer:
   m_ObjectHideFlags: 0
