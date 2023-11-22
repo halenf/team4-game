@@ -99,6 +99,24 @@ public class PlayerController : MonoBehaviour
             // only set timer if the powerup is not shield
             if (value != Powerup.Shield) m_powerupTimer = powerupTime;
 
+            // Deactivation checks
+            if (value == Powerup.None)
+            {
+                switch (m_currentPowerup)
+                {
+                    case (Powerup.LowGravity):
+                        {
+                            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYDEACTIVATE");
+                            break;
+                        }
+                    case (Powerup.FireRateUp):
+                        {
+                            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREDEACTIVATE");
+                            break;
+                        }
+                }
+            }
+
             // set powerup
             Powerup oldPowerUp = m_currentPowerup;
             m_currentPowerup = value;
@@ -143,19 +161,7 @@ public class PlayerController : MonoBehaviour
                 case Powerup.None:
                 {
                     m_powerupTimer = 0f;
-                    switch(oldPowerUp)
-                    {
-                        case(Powerup.LowGravity):
-                            {
-                                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYDEACTIVATE");
-                                break;
-                            }
-                        case (Powerup.FireRateUp):
-                            {
-                                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREDEACTIVATE");
-                                break;
-                            }
-                    }
+                    
                     
                     break;
                 }
@@ -355,8 +361,14 @@ public class PlayerController : MonoBehaviour
         if (m_currentGun) Destroy(m_currentGun.gameObject);
         m_currentGun = Instantiate(gun, gameObject.transform);
 
-        // Only sets an ammo capacity if the gun is a pickup gun and not the default
-        if (gun != defaultGun) m_currentAmmo = gun.ammoCapacity;
+        if (gun != defaultGun)
+        {
+            // Only sets an ammo capacity if the gun is a pickup gun and not the default
+            m_currentAmmo = gun.ammoCapacity;
+
+            // Display the gun the player picked up. dont display when changing back to the pistol
+            CreateOverhead(gun.indicator);
+        }
         else m_currentAmmo = -1;
 
         // set fire rate details
@@ -376,7 +388,7 @@ public class PlayerController : MonoBehaviour
     /// set a power up
     /// </summary>
     /// <param name="powerUp"></param>
-   public void ActivatePowerUp(Powerup powerUp)
+    public void ActivatePowerUp(Powerup powerUp)
     {
         currentPowerup = powerUp;
     }
