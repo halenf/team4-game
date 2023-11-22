@@ -205,7 +205,7 @@ MonoBehaviour:
   m_CenterOnActivate: 1
   m_GroupFramingSize: 1
   m_FramingMode: 2
-  m_FrameDamping: 2
+  m_FrameDamping: 20
   m_AdjustmentMode: 2
   m_MaxDollyIn: 5000
   m_MaxDollyOut: 500
