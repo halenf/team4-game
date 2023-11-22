@@ -157,6 +157,50 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void PlayAudioAtPoint(Vector3 position, AudioClip clip, float pitch, float volume)
+    {
+        AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
+        reference.PlayOneShot(clip);
+        reference.pitch = pitch;
+        reference.volume = volume;
+        Destroy(reference.gameObject, clip.length);
+    }
+
+    public void PlayAudioAtPoint(Transform position, AudioClip clip, float pitch, float volume)
+    {
+        AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
+        reference.PlayOneShot(clip);
+        reference.pitch = pitch;
+        reference.volume = volume;
+        Destroy(reference.gameObject, clip.length);
+    }
+
+    public void PlayAudioAtPoint(Vector3 position, string filename, float pitch, float volume)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        if (clip != null)
+        {
+            AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
+            reference.PlayOneShot(clip);
+            reference.pitch = pitch;
+            reference.volume = volume;
+            Destroy(reference.gameObject, clip.length);
+        }
+    }
+
+    public void PlayAudioAtPoint(Transform position, string filename, float pitch, float volume)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        if (clip != null)
+        {
+            AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
+            reference.PlayOneShot(clip);
+            reference.pitch = pitch;
+            reference.volume = volume;
+            Destroy(reference.gameObject, clip.length);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
