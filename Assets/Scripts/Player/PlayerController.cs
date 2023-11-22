@@ -54,20 +54,21 @@ public class PlayerController : MonoBehaviour
     [Range(0, 1)] public float lowGravityScalar;
 
     [Space(10)]
-    public GameObject m_shieldPrefab;
+
+    public GameObject shieldPrefab;
     private GameObject m_shieldGameObject;
-    
 
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
 
-    private Vector3 m_indicatorPosition = new Vector3(1f, 0f, 0);
+    private Vector3 m_indicatorPosition = new(1f, 0f, 0);
     
-    [Header("power up display")]
-    public Sprite[] powerUpIndicators;
-    public Transform overhead;
-    public float overheadLifetime;
-    public GameObject overHeadCanvas;
+    [Header("Pickup Display")]
+    public GameObject indicatorCanvasPrefab;
+    [Min(0)] public float indicatorHeight;
+    [Min(0)] public float indicatorLifetime;
+    [Space(5)]
+    public Sprite[] powerupIndicators;
 
     public string[] spikeBallDeathAnnouncements;
 
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
             m_fireRate = m_currentGun.baseFireRate;
             m_shieldCurrentHealth = 0;
             m_rb.mass = defaultMass;
-            if (m_shieldGameObject != null) Destroy(m_shieldGameObject);
+            if (m_shieldGameObject) Destroy(m_shieldGameObject);
 
             // only set timer if the powerup is not shield
             if (value != Powerup.Shield) m_powerupTimer = powerupTime;
@@ -120,10 +121,13 @@ public class PlayerController : MonoBehaviour
             // set powerup
             Powerup oldPowerUp = m_currentPowerup;
             m_currentPowerup = value;
+
+            // create indicator
             if (m_currentPowerup != Powerup.None)
             {
-                CreateOverhead(powerUpIndicators[(int)m_currentPowerup]);
+                CreateOverhead(powerupIndicators[(int)m_currentPowerup - 1]);
             }
+
             switch (m_currentPowerup)
             {
                 case Powerup.Ricochet:
@@ -140,7 +144,7 @@ public class PlayerController : MonoBehaviour
                 {
                     SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-SHIELDACTIVATE");
                     m_shieldCurrentHealth = maxShieldHealth;
-                    m_shieldGameObject = Instantiate(m_shieldPrefab, transform);
+                    m_shieldGameObject = Instantiate(shieldPrefab, transform);
                     break;
                 }
                 case Powerup.BigBullets:
@@ -394,14 +398,14 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// creates an object at the the overhead transform and destroys it after overhead lifetime
+    /// creates a image above the player and destroys it after amount of seconds
     /// </summary>
-    /// <param name="overheadObject"></param>
+    /// <param name="image"></param>
     public void CreateOverhead(Sprite image)
     {
-        GameObject objectReference = Instantiate(overHeadCanvas, overhead.position, Quaternion.identity);
-        objectReference.GetComponentInChildren<Image>().sprite = image;
-        Destroy(objectReference, overheadLifetime);
+        GameObject indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorHeight, 0), Quaternion.identity);
+        indicatorCanvas.GetComponentInChildren<Image>().sprite = image;
+        Destroy(indicatorCanvas, indicatorLifetime);
     }
 
     /// <summary>
