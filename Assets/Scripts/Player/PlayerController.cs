@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,9 +64,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_indicatorPosition = new Vector3(1f, 0f, 0);
     
     [Header("power up display")]
-    public GameObject[] powerUpIndicators;
+    public Sprite[] powerUpIndicators;
     public Transform overhead;
     public float overheadLifetime;
+    public GameObject overHeadCanvas;
 
     public string[] spikeBallDeathAnnouncements;
 
@@ -383,9 +385,10 @@ public class PlayerController : MonoBehaviour
     /// creates an object at the the overhead transform and destroys it after overhead lifetime
     /// </summary>
     /// <param name="overheadObject"></param>
-    public void CreateOverhead(GameObject overheadObject)
+    public void CreateOverhead(Sprite image)
     {
-        GameObject objectReference = Instantiate(overheadObject, overhead);
+        GameObject objectReference = Instantiate(overHeadCanvas, overhead.position, Quaternion.identity);
+        objectReference.GetComponentInChildren<Image>().sprite = image;
         Destroy(objectReference, overheadLifetime);
     }
 

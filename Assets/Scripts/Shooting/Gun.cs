@@ -37,6 +37,7 @@ public abstract class Gun : MonoBehaviour
     public float pitchMagnitude;
 
     private Material m_material;
+    public Sprite indicator;
 
     public virtual void Awake()
     {

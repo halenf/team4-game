@@ -5062,6 +5062,7 @@ MonoBehaviour:
   shootClip: {fileID: 8300000, guid: 2fdb237f32a62e94fbcdaf3fbb78c290, type: 3}
   equipClip: {fileID: 8300000, guid: 4aada1462c56fb14ba231f031688b03e, type: 3}
   pitchMagnitude: 0.2
+  indicator: {fileID: 21300000, guid: adecaa41cbe401e48bd57741aa6481fb, type: 3}
   randomRecoilAngle: 30
   randomRecoilStrength: 15
 --- !u!1001 &554512363508149523
