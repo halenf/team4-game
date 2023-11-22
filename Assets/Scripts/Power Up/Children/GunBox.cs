@@ -7,15 +7,16 @@ using UnityEngine;
 
 public class GunBox : PowerUp
 {
-    public Gun[] Guns;
+    public Gun[] guns;
 
-    private Gun currentGun;
+    [Space(10)]
+
+    [SerializeField] private Gun m_currentGun;
 
     // Start is called before the first frame update
-    void Awake()
+    public override void OnStart()
     {
-        currentGun = Guns[Random.Range(0, Guns.Length)];        
-        
+        m_currentGun = guns[Random.Range(0, guns.Length)];        
     }
 
     public override void OnTriggerEnter(Collider other)
@@ -25,9 +26,7 @@ public class GunBox : PowerUp
             //find player
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
-            player.SetGun(currentGun);
-
-            player.CreateOverhead(currentGun.indicator);
+            player.SetGun(m_currentGun);
 
             //destroy self
             Destroy(gameObject);

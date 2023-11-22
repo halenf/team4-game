@@ -16,7 +16,7 @@ public class CameraDistanceHandler : MonoBehaviour
 
     private void Start()
     {
-        CameraManager.Instance.postProcessVolume.profile.TryGetSettings(out m_depthOfField);
+        m_depthOfField = CameraManager.Instance.postProcessVolume.profile.GetSetting<DepthOfField>();
         m_defaultFocusDistance = m_depthOfField.focusDistance;
         //Debug.Log("Focus distance: " + m_defaultFocusDistance);
     }
