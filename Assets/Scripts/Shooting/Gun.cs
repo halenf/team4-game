@@ -35,6 +35,7 @@ public abstract class Gun : MonoBehaviour
     public AudioClip shootClip;
     public AudioClip equipClip;
     public float pitchMagnitude;
+    public float volume;
 
     private Material m_material;
     public Sprite indicator;
@@ -79,7 +80,7 @@ public abstract class Gun : MonoBehaviour
 
         //play shoot sound
         float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);
-        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch);
+        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch, volume);
     }
 
     public void ChangeMat(int playerID)

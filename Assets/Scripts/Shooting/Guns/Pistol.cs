@@ -45,7 +45,7 @@ public class Pistol : Gun
 
             //play shoot sound
             float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);
-            SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch);
+            SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch, volume);
 
             // wait for next burst shot
             if (i != burstNumber - 1) yield return new WaitForSeconds(1f / shootingSpeed);
