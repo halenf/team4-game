@@ -1,13 +1,16 @@
+// CameraManager - Halen
+// Manages the main camera and its attached post processing volume
+// last edit 22/11/2023
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.PostProcessing;
 
 public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance;
-
-    
 
     // Singleton instantiation
     private void Awake()
@@ -24,6 +27,9 @@ public class CameraManager : MonoBehaviour
 
     // camera reference
     public Camera mainCamera;
+
+    // reference to the post processing volume attached to the camera
+    public PostProcessVolume postProcessVolume;
 
     // timer for screen-shake
     private float m_timer;
