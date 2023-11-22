@@ -85,14 +85,14 @@ public class SoundManager : MonoBehaviour
         //AudioSource.PlayClipAtPoint(clip, position);
         AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
         reference.PlayOneShot(clip);
-        Destroy(reference, clip.length);
+        Destroy(reference.gameObject, clip.length);
     }
 
     public void PlayAudioAtPoint(Transform position, AudioClip clip)
     {
         AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
         reference.PlayOneShot(clip);
-        Destroy(reference, clip.length);
+        Destroy(reference.gameObject, clip.length);
     }
 
     public void PlayAudioAtPoint(Vector3 position, string filename)
@@ -102,7 +102,7 @@ public class SoundManager : MonoBehaviour
         {
             AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
             reference.PlayOneShot(clip);
-            Destroy(reference, clip.length);
+            Destroy(reference.gameObject, clip.length);
         }
     }
 
@@ -113,7 +113,7 @@ public class SoundManager : MonoBehaviour
         {
             AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
             reference.PlayOneShot(clip);
-            Destroy(reference, clip.length);
+            Destroy(reference.gameObject, clip.length);
         }
     }
 
@@ -122,7 +122,7 @@ public class SoundManager : MonoBehaviour
         AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
         reference.PlayOneShot(clip);
         reference.pitch = pitch;
-        Destroy(reference, clip.length);
+        Destroy(reference.gameObject, clip.length);
     }
 
     public void PlayAudioAtPoint(Transform position, AudioClip clip, float pitch)
@@ -130,7 +130,7 @@ public class SoundManager : MonoBehaviour
         AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
         reference.PlayOneShot(clip);
         reference.pitch = pitch;
-        Destroy(reference, clip.length);
+        Destroy(reference.gameObject, clip.length);
     }
 
     public void PlayAudioAtPoint(Vector3 position, string filename, float pitch)
@@ -141,7 +141,7 @@ public class SoundManager : MonoBehaviour
             AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
             reference.PlayOneShot(clip);
             reference.pitch = pitch;
-            Destroy(reference, clip.length);
+            Destroy(reference.gameObject, clip.length);
         }
     }
 
@@ -153,7 +153,7 @@ public class SoundManager : MonoBehaviour
             AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
             reference.PlayOneShot(clip);
             reference.pitch = pitch;
-            Destroy(reference, clip.length);
+            Destroy(reference.gameObject, clip.length);
         }
     }
 

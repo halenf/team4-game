@@ -44,7 +44,8 @@ public class Pistol : Gun
             transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
 
             //play shoot sound
-            SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip);
+            float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);
+            SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch);
 
             // wait for next burst shot
             if (i != burstNumber - 1) yield return new WaitForSeconds(1f / shootingSpeed);
