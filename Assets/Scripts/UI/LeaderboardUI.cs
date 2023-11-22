@@ -53,6 +53,7 @@ public class LeaderboardUI : MonoBehaviour
 
     public void OnPlayAgain()
     {
+        GameManager.Instance.Init();
         GameManager.Instance.LoadFirst();
     }
 

@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         Cursor.visible = false;
 
         // Initialise game manager
+        m_controllers = new List<Gamepad>();
         Init();
     }
 
@@ -143,17 +144,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Init()
+    public void Init()
     {
         // Set timescale in case game was paused when reset
         Time.timeScale = 1.0f;
 
         // set all private variables to default values
-        m_controllers = new List<Gamepad>();
+        //m_controllers = new List<Gamepad>();
         m_focusedPlayerController = null;
         m_activePlayerControllers = new List<PlayerController>();
 
-        m_currentStageObject = null;
+        if (m_currentStageObject) Destroy(m_currentStageObject);
         m_roundNumber = 0;
 
         m_leaderboard = new List<int>();
@@ -249,6 +250,7 @@ public class GameManager : MonoBehaviour
             }
         }
         m_activePlayerControllers = new List<PlayerController>();
+
         //for every player
         for (int j = 0; m_controllers.Count > j; j++)
         {
@@ -368,7 +370,7 @@ public class GameManager : MonoBehaviour
     /// Returns if enough players have died to end the round
     /// </summary>
     /// <returns></returns>
-    public bool IsRoundOver()
+    private bool IsRoundOver()
     {
         // track the number of dead players
         int deadPlayers = 0;
@@ -387,7 +389,7 @@ public class GameManager : MonoBehaviour
     /// returns true if the end condition has been met
     /// </summary>
     /// <returns></returns>
-    public bool IsGameOver()
+    private bool IsGameOver()
     {
         bool isGameOver = false;
 
@@ -408,10 +410,16 @@ public class GameManager : MonoBehaviour
 
     private void EndRound(int winningPlayerID)
     {
-        
+        m_dangerCanvas.gameObject.SetActive(false);
         Announce(endAnnouncements);
+        DisablePlayers();
+        m_pauseCanvas.gameObject.SetActive(false);
+        m_dangerCanvas.gameObject.SetActive(false);
+        m_subtitleCanvas.gameObject.SetActive(false);
+        m_gameplayCanvas.SetDisplayDetails(winningPlayerID + 1, m_leaderboard);
+        m_gameplayCanvas.scoreListDisplay.gameObject.SetActive(true);
+
         m_gameplayCanvas.StartRoundEnd(winningPlayerID);
-        
     }
 
     /// <summary>
@@ -419,15 +427,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
-        m_dangerCanvas.gameObject.SetActive(false);
-        DisablePlayers();
-        // Halen
-        // Disable canvases
-        m_pauseCanvas.gameObject.SetActive(false);
-        //m_gameplayCanvas.gameObject.SetActive(false);
-        m_disconnectCanvas.gameObject.SetActive(false);
-        m_dangerCanvas.gameObject.SetActive(false);
-        m_subtitleCanvas.gameObject.SetActive(false);
 
         // Set which button the player defaults to in the leaderboard menu
         EventSystemManager.Instance.SetCurrentSelectedGameObject(m_leaderboardCanvas.defaultSelectedObject);
@@ -448,31 +447,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Change to the static camera from the gameplay camera - Halen
-        m_gameplayCamera.gameObject.SetActive(false);
-        m_targetGroup.gameObject.SetActive(false);
-        m_staticCamera.gameObject.SetActive(true);
+
 
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
+
+        
+        m_leaderboardCanvas.buttons.SetActive(false);
         m_gameplayCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
 
-        if (IsGameOver())
-        {
-            m_gameplayCanvas.scoreListDisplay.gameObject.SetActive(false);
-            m_gameplayCanvas.gameObject.SetActive(false);
-            m_leaderboardCanvas.gameObject.SetActive(true);
-            m_leaderboardCanvas.buttons.SetActive(true);
-            m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
-            m_subtitleCanvas.gameObject.SetActive(false);
-        }
-        else
-        {
-            Debug.Log("game NOT over");
-            m_leaderboardCanvas.buttons.SetActive(false);
-            m_gameplayCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
-            //StartCoroutine(StartAfterScore());
-        }
 
         //m_endController = PlayerInput.Instantiate(controlCube, controlScheme: "Gamepad", pairWithDevice: m_controllers[0]).gameObject;
 
@@ -655,6 +638,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGame()
     {
+        m_controllers = new List<Gamepad>();
         Init();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

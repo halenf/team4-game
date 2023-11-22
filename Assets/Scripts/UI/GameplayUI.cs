@@ -78,9 +78,7 @@ public class GameplayUI : MonoBehaviour
 
     private IEnumerator RoundEnd(int winningPlayerID)
     {
-        
         yield return new WaitForEndOfFrame();
-        GameManager.Instance.EndGame();
         // Show the player who won the round
         roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
         yield return new WaitForSeconds(5);

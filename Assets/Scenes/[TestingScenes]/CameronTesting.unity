@@ -641,6 +641,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2065170983}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: numberOfRounds
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_gameplayCamera
       value: 
       objectReference: {fileID: 2364201596277266086}
