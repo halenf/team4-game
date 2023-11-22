@@ -72,6 +72,10 @@ MonoBehaviour:
   - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
   overhead: {fileID: 5321779024680455449}
   overheadLifetime: 5
+  spikeBallDeathAnnouncements:
+  - Squashed like a bug!
+  - Sliced into confetti!
+  - Crushed by 40,000 pounds of pure pain!
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
 --- !u!114 &4366108853716276557
 MonoBehaviour:

@@ -67,6 +67,8 @@ public class PlayerController : MonoBehaviour
     public Transform overhead;
     public float overheadLifetime;
 
+    public string[] spikeBallDeathAnnouncements;
+
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
 
@@ -243,7 +245,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            TakeDamage(7f, "spike ball death announcement");
+            TakeDamage(7f, spikeBallDeathAnnouncements);
         }
     }
 
@@ -295,7 +297,7 @@ public class PlayerController : MonoBehaviour
     /// Deal damage to the player and check if they are dead.
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage, string deathLine)
+    public void TakeDamage(float damage, string[] deathLines)
     {
         // if the player is already dead, don't make them take damage
         if (isDead) return;
@@ -332,7 +334,7 @@ public class PlayerController : MonoBehaviour
 
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
 
-            GameManager.Instance.DeathAnnouncment(deathLine);
+            GameManager.Instance.Announcment(deathLines);
 
             // deactivate player object
             gameObject.SetActive(false);

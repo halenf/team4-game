@@ -5059,8 +5059,9 @@ MonoBehaviour:
   highRumbleFrequency: 0.5
   lowRumbleFrequency: 0.5
   rumbleTime: 0.5
-  shootClip: {fileID: 8300000, guid: 030d213a34c2a684991e66a90d350040, type: 3}
+  shootClip: {fileID: 8300000, guid: 2fdb237f32a62e94fbcdaf3fbb78c290, type: 3}
   equipClip: {fileID: 8300000, guid: 4aada1462c56fb14ba231f031688b03e, type: 3}
+  pitchMagnitude: 0.2
   randomRecoilAngle: 30
   randomRecoilStrength: 15
 --- !u!1001 &554512363508149523

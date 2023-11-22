@@ -9,6 +9,7 @@ using UnityEngine;
 public class Laser : Obstacle
 {
     public bool isActive;
+    public string[] killStrings;
     
     private LineRenderer lineRenderer;
     /// <summary>
@@ -42,7 +43,7 @@ public class Laser : Obstacle
                     //get player
                     PlayerController hitPlayer = hit.collider.gameObject.GetComponent<PlayerController>();
                     //do max damage
-                    hitPlayer.TakeDamage(hitPlayer.maxHealth, "this death was sponserd by laser corp get the new 3000 wat model today");
+                    hitPlayer.TakeDamage(hitPlayer.maxHealth, killStrings);
                 }
             }
             else //just draw line from here to 1000 up
