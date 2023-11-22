@@ -5062,6 +5062,7 @@ MonoBehaviour:
   shootClip: {fileID: 8300000, guid: b8ffa54252a673b46b82537064fd40ce, type: 3}
   equipClip: {fileID: 8300000, guid: 98ab9fa1c53ea884fa72032187a8436a, type: 3}
   pitchMagnitude: 0.2
+  volume: 0.8
   indicator: {fileID: 21300000, guid: adecaa41cbe401e48bd57741aa6481fb, type: 3}
 --- !u!1001 &3463409947533569460
 PrefabInstance:

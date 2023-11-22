@@ -41,6 +41,6 @@ public class MiniGun : Gun
 
         //play sound
         float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);
-        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch);
+        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch, volume);
     }
 }
