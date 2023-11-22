@@ -67,4 +67,20 @@ MonoBehaviour:
   numberOfRounds: 5
   scoreViewingTime: 10
   subtitleTime: 10
+  beginAnnouncements:
+  - And HERE WE GO!
+  - "We\u2019ve got over 10,000 camera\u2019s filming this match, LET\u2019S DO THIS
+    THING!"
+  - Let the games begin!
+  - "And we\u2019re back in 3\u20262\u20261!"
+  - Can you hear that? The crowd is ready for some BLOODSHED!
+  - "Don\u2019t go anywhere ladies and gentleman because the carnage is about to
+    begin!"
+  endAnnouncements:
+  - Can I get a copy of that round on tape? What do you mean I have to pay for it?!
+  - "I\u2019m legally required to remind audiences to never try this at home."
+  - "Wait, it\u2019s over already? Boooring."
+  - Does being blown apart come naturally to these people or do they work at it?
+  - "Man, I really thought that other guy was gonna make it\u2026"
+  - Bring in the cleanup crews, that was nasty!
   m_leaderboard: 

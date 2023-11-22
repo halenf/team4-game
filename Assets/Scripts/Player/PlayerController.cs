@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -63,9 +64,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_indicatorPosition = new Vector3(1f, 0f, 0);
     
     [Header("power up display")]
-    public GameObject[] powerUpIndicators;
+    public Sprite[] powerUpIndicators;
     public Transform overhead;
     public float overheadLifetime;
+    public GameObject overHeadCanvas;
+
+    public string[] spikeBallDeathAnnouncements;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -243,7 +247,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            TakeDamage(7f, "spike ball death announcement");
+            TakeDamage(7f, spikeBallDeathAnnouncements);
         }
     }
 
@@ -295,7 +299,7 @@ public class PlayerController : MonoBehaviour
     /// Deal damage to the player and check if they are dead.
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage, string deathLine)
+    public void TakeDamage(float damage, string[] deathLines)
     {
         // if the player is already dead, don't make them take damage
         if (isDead) return;
@@ -332,7 +336,7 @@ public class PlayerController : MonoBehaviour
 
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
 
-            GameManager.Instance.DeathAnnouncment(deathLine);
+            GameManager.Instance.Announcment(deathLines);
 
             // deactivate player object
             gameObject.SetActive(false);
@@ -381,9 +385,10 @@ public class PlayerController : MonoBehaviour
     /// creates an object at the the overhead transform and destroys it after overhead lifetime
     /// </summary>
     /// <param name="overheadObject"></param>
-    public void CreateOverhead(GameObject overheadObject)
+    public void CreateOverhead(Sprite image)
     {
-        GameObject objectReference = Instantiate(overheadObject, overhead);
+        GameObject objectReference = Instantiate(overHeadCanvas, overhead.position, Quaternion.identity);
+        objectReference.GetComponentInChildren<Image>().sprite = image;
         Destroy(objectReference, overheadLifetime);
     }
 

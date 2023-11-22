@@ -304,4 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 22126226403852928}
   soundSource: {fileID: 22126227314713751}
+  soundDirectory: Sound/SoundEffects
+  musicDirectory: Sound/Music
   defaultClip: {fileID: 0}
+  audioSourcePrefab: {fileID: 2113702945265453481, guid: d5abe51af5e7cad499c4bcc4f9b23b82, type: 3}

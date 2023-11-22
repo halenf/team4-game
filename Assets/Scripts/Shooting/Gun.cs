@@ -34,8 +34,10 @@ public abstract class Gun : MonoBehaviour
     [Header("Audio")]
     public AudioClip shootClip;
     public AudioClip equipClip;
+    public float pitchMagnitude;
 
     private Material m_material;
+    public Sprite indicator;
 
     public virtual void Awake()
     {
@@ -76,7 +78,8 @@ public abstract class Gun : MonoBehaviour
         transform.parent.gameObject.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
 
         //play shoot sound
-        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip);
+        float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);
+        SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch);
     }
 
     public void ChangeMat(int playerID)

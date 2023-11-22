@@ -95,7 +95,14 @@ MonoBehaviour:
   rumbleTime: 0.25
   shootClip: {fileID: 8300000, guid: 9f6b2c43aa26e0f4bbe88138b9c23229, type: 3}
   equipClip: {fileID: 8300000, guid: c26abfbec8f3cab4e9e4779a7ee98637, type: 3}
+  pitchMagnitude: 0.2
+  indicator: {fileID: 21300000, guid: adecaa41cbe401e48bd57741aa6481fb, type: 3}
   timeToColliderOff: 1
+  killStrings:
+  - Toasty!
+  - Smells like fresh bacon!
+  - "And just when you thought things couldn\u2019t get any hotter!"
+  - "Looks like they couldn\u2019t handle the heat!"
 --- !u!65 &7110224535071332244
 BoxCollider:
   m_ObjectHideFlags: 0

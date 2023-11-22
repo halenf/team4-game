@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 1245654901351030161}
   - component: {fileID: 975112684403844931}
   - component: {fileID: 5959832708133609870}
-  - component: {fileID: 6457267319164671743}
   - component: {fileID: 576618691883989526}
   m_Layer: 0
   m_Name: Platform
-  m_TagString: Breakable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5261406578183737188}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &975112684403844931
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -85,30 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6457267319164671743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5261406578183737188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f6356d674f18e34ba833ae67eee2ea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debris:
-  - {fileID: 764237163864986437, guid: 06f45b5082758f5449c36a53ba77267e, type: 3}
-  - {fileID: 3090195600302211673, guid: f13cda93396b9a540b2e3fcc87fe0a7a, type: 3}
-  - {fileID: 9103141122626716058, guid: c6f78e012cc06a44f886992b997b6c1b, type: 3}
-  - {fileID: 7782376077944495284, guid: 881c08c06613fa040a6edcda73ac6b72, type: 3}
-  - {fileID: 8208676566311459339, guid: 8a69a41fe6675234fa50c545b4cd31c7, type: 3}
-  - {fileID: 3590670008837436656, guid: 9b415d9524721094cbb710ef8fd99100, type: 3}
-  - {fileID: 8480115765907047407, guid: 91e2a0f2a56c506408f8212e5a321c30, type: 3}
-  - {fileID: 491264291755305189, guid: 10819dabbbb7c4143a9067577f3e4bc8, type: 3}
-  debrisDestroyTimer: 0
-  health: 20
-  destroyEffect: {fileID: 0}
 --- !u!65 &576618691883989526
 BoxCollider:
   m_ObjectHideFlags: 0

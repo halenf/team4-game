@@ -71,6 +71,9 @@ public class GameManager : MonoBehaviour
     public float scoreViewingTime;
     public float subtitleTime;
 
+    public string[] beginAnnouncements;
+    public string[] endAnnouncements;
+
     // stage tracking
     private GameObject m_currentStageObject;
     private int m_roundNumber = 0;
@@ -315,6 +318,7 @@ public class GameManager : MonoBehaviour
         m_gameplayCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.StartCountdown();
         m_isPaused = false;
+        Announcment(beginAnnouncements);
     }
     /// <summary>
     /// A public method to be called by a player before it dies
@@ -389,6 +393,7 @@ public class GameManager : MonoBehaviour
         m_dangerCanvas.gameObject.SetActive(false);
         m_subtitleCanvas.gameObject.SetActive(false);
         DisablePlayers();
+        Announce(endAnnouncements);
         m_gameplayCanvas.StartRoundEnd(winningPlayerID);
         
     }
@@ -509,16 +514,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DeathAnnouncment(string deathSubtitle)
+    public void Announcment(string deathSubtitle)
     {
-        StartCoroutine(AnnounceDeath(deathSubtitle));
+        StartCoroutine(Announce(deathSubtitle));
     }
 
-    private IEnumerator AnnounceDeath(string deathSubtitle)
+    private IEnumerator Announce(string deathSubtitle)
     {
         m_subtitleCanvas.gameObject.SetActive(true);
         m_subtitleCanvas.subtitle.text = deathSubtitle;
-        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTER" + Random.Range(1, 3));
+        //SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTER" + Random.Range(1, 3));    implement good way to do announcer speak here
+        yield return new WaitForSeconds(subtitleTime);
+        m_subtitleCanvas.gameObject.SetActive(false);
+    }
+
+    public void Announcment(string[] deathSubtitles)
+    {
+        StartCoroutine(Announce(deathSubtitles));
+    }
+
+    private IEnumerator Announce(string[] deathSubtitles)
+    {
+        string chosenText = deathSubtitles[Random.Range(0, deathSubtitles.Length)];
+        m_subtitleCanvas.gameObject.SetActive(true);
+        m_subtitleCanvas.subtitle.text = chosenText;
+        //SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTER" + Random.Range(1, 3));    implement good way to do announcer speak here
         yield return new WaitForSeconds(subtitleTime);
         m_subtitleCanvas.gameObject.SetActive(false);
     }
@@ -638,7 +658,7 @@ public class GameManager : MonoBehaviour
     { 
         if (Keyboard.current.digit1Key.isPressed)
         {
-            m_activePlayerControllers[0].TakeDamage(1f, "fella just got debugged outta here");
+            //m_activePlayerControllers[0].TakeDamage(1f, new string["hgf", "tgufhg"]);
         }
         if (Keyboard.current.digit2Key.isPressed)
         {
