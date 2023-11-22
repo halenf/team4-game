@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 1245654901351030161}
   - component: {fileID: 975112684403844931}
   - component: {fileID: 5959832708133609870}
+  - component: {fileID: 6457267319164671743}
   - component: {fileID: 576618691883989526}
   m_Layer: 0
-  m_Name: Platform
-  m_TagString: Untagged
+  m_Name: Breakable_Platform
+  m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -84,6 +85,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6457267319164671743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5261406578183737188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6356d674f18e34ba833ae67eee2ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debrisObjectPrefab: {fileID: 8454291570775428246, guid: 40a10546757ec1c44b5e5bcb80a4c7d9, type: 3}
+  destroyEffect: {fileID: 0}
+  maxHealth: 2
+  debrisDestroyTimer: 1
 --- !u!65 &576618691883989526
 BoxCollider:
   m_ObjectHideFlags: 0

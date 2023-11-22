@@ -142,10 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f6356d674f18e34ba833ae67eee2ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debris: []
-  debrisDestroyTimer: 2
-  health: 0.1
+  debrisObjectPrefab: {fileID: 0}
   destroyEffect: {fileID: 3623149681444135517, guid: a382766b8b320394197bb30a677620b7, type: 3}
+  maxHealth: 0.1
+  debrisDestroyTimer: 0
 --- !u!54 &-4904066228879846957
 Rigidbody:
   m_ObjectHideFlags: 0
