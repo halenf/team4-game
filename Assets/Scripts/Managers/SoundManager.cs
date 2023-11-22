@@ -24,6 +24,8 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip defaultClip;
 
+    public AudioSource audioSourcePrefab;
+
     // Singleton instantiation
     private void Awake()
     {
@@ -80,12 +82,17 @@ public class SoundManager : MonoBehaviour
 
     public void PlayAudioAtPoint(Vector3 position, AudioClip clip)
     {
-        AudioSource.PlayClipAtPoint(clip, position);
+        //AudioSource.PlayClipAtPoint(clip, position);
+        AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
+        reference.PlayOneShot(clip);
+        Destroy(reference.gameObject, clip.length);
     }
 
     public void PlayAudioAtPoint(Transform position, AudioClip clip)
     {
-        AudioSource.PlayClipAtPoint(clip, position.position);
+        AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
+        reference.PlayOneShot(clip);
+        Destroy(reference.gameObject, clip.length);
     }
 
     public void PlayAudioAtPoint(Vector3 position, string filename)
@@ -93,7 +100,9 @@ public class SoundManager : MonoBehaviour
         AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
         if (clip != null)
         {
-            AudioSource.PlayClipAtPoint(clip, position);
+            AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
+            reference.PlayOneShot(clip);
+            Destroy(reference.gameObject, clip.length);
         }
     }
 
@@ -102,7 +111,49 @@ public class SoundManager : MonoBehaviour
         AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
         if (clip != null)
         {
-            AudioSource.PlayClipAtPoint(clip, position.position);
+            AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
+            reference.PlayOneShot(clip);
+            Destroy(reference.gameObject, clip.length);
+        }
+    }
+
+    public void PlayAudioAtPoint(Vector3 position, AudioClip clip, float pitch)
+    {
+        AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
+        reference.PlayOneShot(clip);
+        reference.pitch = pitch;
+        Destroy(reference.gameObject, clip.length);
+    }
+
+    public void PlayAudioAtPoint(Transform position, AudioClip clip, float pitch)
+    {
+        AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
+        reference.PlayOneShot(clip);
+        reference.pitch = pitch;
+        Destroy(reference.gameObject, clip.length);
+    }
+
+    public void PlayAudioAtPoint(Vector3 position, string filename, float pitch)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        if (clip != null)
+        {
+            AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
+            reference.PlayOneShot(clip);
+            reference.pitch = pitch;
+            Destroy(reference.gameObject, clip.length);
+        }
+    }
+
+    public void PlayAudioAtPoint(Transform position, string filename, float pitch)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        if (clip != null)
+        {
+            AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
+            reference.PlayOneShot(clip);
+            reference.pitch = pitch;
+            Destroy(reference.gameObject, clip.length);
         }
     }
 

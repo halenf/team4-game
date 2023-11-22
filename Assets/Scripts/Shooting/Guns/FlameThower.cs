@@ -14,6 +14,7 @@ public class FlameThower : Gun
 
     private ParticleSystem m_fireParticleEffect;
     private bool m_isShooting;
+    public string[] killStrings;
 
     public override void Awake()
     {
@@ -75,7 +76,7 @@ public class FlameThower : Gun
         {
             
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            player.TakeDamage(bulletDamage, "too toasty for you huh?");
+            player.TakeDamage(bulletDamage, killStrings);
             
 
             //BulletDestroy();

@@ -48,6 +48,9 @@ public class Spawner : Obstacle
     [Tooltip("Initial velocity of the spawned object. X = Horizontal velocity. Y = Vertical velocity.")]
     public Vector2 initialVelocity;
 
+    [Tooltip("how long before the spawned object is destroyed")]
+    [Min(0)]public float lifeTime;
+
     public void Start()
     {
         m_velocityVector3 = (Vector3)initialVelocity;
@@ -68,6 +71,10 @@ public class Spawner : Obstacle
         GameObject spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocation.position, objectHasRandomRotation ? Random.rotation : Quaternion.identity);
         spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
 
+        if(lifeTime != 0)
+        {
+            Destroy(spawnedObject, lifeTime);
+        }
         // Continue to spawn objects
         if(isRepeating) StartSpawnRoutine();
     }
