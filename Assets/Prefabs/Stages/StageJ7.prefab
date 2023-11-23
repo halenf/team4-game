@@ -1162,10 +1162,10 @@ MonoBehaviour:
   endLaserPrefab: {fileID: 4602441095069155359, guid: 370ca96aa76d5d542b0c6512517f3365, type: 3}
   spikeBallPrefab: {fileID: 0}
   gunBoxLifetime: 10
-  minGunTimer: 2
+  minGunTimer: 3
   maxGunTimer: 5
   powerupBoxLifetime: 10
-  minPowerupTimer: 2
+  minPowerupTimer: 3
   maxPowerupTimer: 5
 --- !u!1 &5591830627323396188
 GameObject:
@@ -24276,8 +24276,20 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.678776
+      objectReference: {fileID: 0}
+    - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.678776
+      objectReference: {fileID: 0}
+    - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.678776
+      objectReference: {fileID: 0}
+    - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.0212774
+      value: 3.021277
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -24285,7 +24297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.0294676
+      value: 6.029468
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -24318,6 +24330,14 @@ PrefabInstance:
     - target: {fileID: 4602441095069155359, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_Name
       value: Laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227712940450349801, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0.07043205
+      objectReference: {fileID: 0}
+    - target: {fileID: 5227712940450349801, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.21021175
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
