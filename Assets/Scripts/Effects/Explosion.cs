@@ -40,8 +40,8 @@ public class Explosion : MonoBehaviour
         var blastModule = blast.main;
         blastModule.startSize = radius;
 
-        // i'm tired, figure it out
-        /// :(
+        // start explosion and make particles and set destruction and play explosion sound
+        SoundManager.Instance.PlaySound("SFX/SFX-EXPLOSION");
         StartCoroutine(Explode(lifetime));
         Instantiate(fragments, transform.position, Quaternion.identity);
         Instantiate(blast, transform.position, Quaternion.identity);

@@ -342,6 +342,8 @@ public class PlayerController : MonoBehaviour
 
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
 
+            SoundManager.Instance.PlayAfterTime("Crowd/AMB-CROWDCHEERUPONDEATH", 1.5f);
+
             GameManager.Instance.Announcment(deathLines);
 
             // deactivate player object
@@ -351,6 +353,7 @@ public class PlayerController : MonoBehaviour
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDAMAGE");
         }
     }
+
 
     /// <summary>
     /// Set's the player's current gun to a specified gun.

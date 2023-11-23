@@ -201,6 +201,21 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void PlayAfterTime(string filename, float time)
+    {
+        StartCoroutine(PlayAfterTimeRoutine(filename, time));
+    }
+
+    private IEnumerator PlayAfterTimeRoutine(string filename, float time)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        if (clip != null)
+        {
+            yield return new WaitForSeconds(time);
+            PlaySound(clip);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
