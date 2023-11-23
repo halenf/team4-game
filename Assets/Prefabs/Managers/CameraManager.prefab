@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8353502850371732678}
-  - {fileID: 2237197101449060940}
+  - {fileID: 271975970450658150}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48,7 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 8353502850371732677}
-  postProcessVolume: {fileID: 3738436036423616531}
 --- !u!114 &8353502849753122018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +227,7 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!1001 &893010399886685560
+--- !u!1001 &1202111900066333778
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -257,15 +256,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1398511527813584692, guid: 731b1f65975661a45a40347cf9f4d013, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1398511527813584692, guid: 731b1f65975661a45a40347cf9f4d013, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1398511527813584692, guid: 731b1f65975661a45a40347cf9f4d013, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1398511527813584692, guid: 731b1f65975661a45a40347cf9f4d013, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -285,19 +284,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 731b1f65975661a45a40347cf9f4d013, type: 3}
---- !u!4 &2237197101449060940 stripped
+--- !u!4 &271975970450658150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1398511527813584692, guid: 731b1f65975661a45a40347cf9f4d013, type: 3}
-  m_PrefabInstance: {fileID: 893010399886685560}
+  m_PrefabInstance: {fileID: 1202111900066333778}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3738436036423616531 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4577077784785272171, guid: 731b1f65975661a45a40347cf9f4d013, type: 3}
-  m_PrefabInstance: {fileID: 893010399886685560}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

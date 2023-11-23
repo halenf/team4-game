@@ -11,11 +11,6 @@ using UnityEngine.InputSystem;
 
 public class StartUI : MonoBehaviour
 {
-    [Header("Game icon goes here")]
-    public Sprite titleIcon;
-
-    [Header("UI Elements")]
-    public Image titleImage;
     [Tooltip("Array for each of the text objects for the connected player displays.")]
     public TMP_Text[] playerConnectedDisplay;
     public GameObject[] inputImages;
@@ -39,8 +34,6 @@ public class StartUI : MonoBehaviour
 
         // Empty the start prompt display
         startPromptDisplay.text = "";
-
-        titleImage.sprite = titleIcon;
     }
 
     /// <summary>

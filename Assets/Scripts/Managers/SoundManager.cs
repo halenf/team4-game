@@ -69,6 +69,13 @@ public class SoundManager : MonoBehaviour
         soundSource.PlayOneShot(clip);
     }
 
+    public void PlaySound(string filename, float volume)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        soundSource.volume = volume;
+        soundSource.PlayOneShot(clip);
+    }
+
     public void PlayFromSource(AudioSource source, AudioClip clip)
     {
         source.PlayOneShot(clip);
@@ -161,7 +168,10 @@ public class SoundManager : MonoBehaviour
     {
         AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
         reference.PlayOneShot(clip);
-        reference.pitch = pitch;
+        if (pitch != 0)
+        {
+            reference.pitch = pitch;
+        }
         reference.volume = volume;
         Destroy(reference.gameObject, clip.length);
     }
@@ -170,7 +180,10 @@ public class SoundManager : MonoBehaviour
     {
         AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
         reference.PlayOneShot(clip);
-        reference.pitch = pitch;
+        if (pitch != 0)
+        {
+            reference.pitch = pitch;
+        }
         reference.volume = volume;
         Destroy(reference.gameObject, clip.length);
     }
@@ -182,7 +195,10 @@ public class SoundManager : MonoBehaviour
         {
             AudioSource reference = Instantiate(audioSourcePrefab, position, Quaternion.identity);
             reference.PlayOneShot(clip);
-            reference.pitch = pitch;
+            if (pitch != 0)
+            {
+                reference.pitch = pitch;
+            }
             reference.volume = volume;
             Destroy(reference.gameObject, clip.length);
         }
@@ -195,9 +211,27 @@ public class SoundManager : MonoBehaviour
         {
             AudioSource reference = Instantiate(audioSourcePrefab, position.position, Quaternion.identity);
             reference.PlayOneShot(clip);
-            reference.pitch = pitch;
+            if (pitch != 0)
+            {
+                reference.pitch = pitch;
+            }
             reference.volume = volume;
             Destroy(reference.gameObject, clip.length);
+        }
+    }
+
+    public void PlayAfterTime(string filename, float time)
+    {
+        StartCoroutine(PlayAfterTimeRoutine(filename, time));
+    }
+
+    private IEnumerator PlayAfterTimeRoutine(string filename, float time)
+    {
+        AudioClip clip = (AudioClip)Resources.Load(soundDirectory + "/" + filename);
+        if (clip != null)
+        {
+            yield return new WaitForSeconds(time);
+            PlaySound(clip);
         }
     }
 
