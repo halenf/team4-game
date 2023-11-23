@@ -15,16 +15,19 @@ public class FlameThower : Gun
     private ParticleSystem m_fireParticleEffect;
     private bool m_isShooting;
     public string[] killStrings;
+    private AudioSource m_audioSource;
 
     public override void Awake()
     {
         m_collider = GetComponent<Collider>();
+        m_audioSource = GetComponent<AudioSource>();
         m_fireParticleEffect = GetComponentInChildren<ParticleSystem>();
         SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
     }
 
     public override void Shoot(int playerID, Bullet.BulletEffect effect)
     {
+        m_audioSource.enabled = true;
         //get player ID so it is impossible to damage shooter
         m_playerID = playerID;
         //enable damage
@@ -53,6 +56,7 @@ public class FlameThower : Gun
         }
         else
         {
+            m_audioSource.enabled = false;
             m_collider.enabled = false;
             m_isShooting = false;
         }

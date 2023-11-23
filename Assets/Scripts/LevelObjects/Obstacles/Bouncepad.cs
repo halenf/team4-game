@@ -28,6 +28,7 @@ public class Bouncepad : Obstacle
         {
             collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * force, ForceMode.VelocityChange);
             m_animator.Play("Bounce");
+            SoundManager.Instance.PlaySound("Obstacles/SFX-BOUNCEPAD");
         }
     }
 
