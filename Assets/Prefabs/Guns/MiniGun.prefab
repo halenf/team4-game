@@ -5048,7 +5048,7 @@ MonoBehaviour:
   baseRecoil: 15
   groundedRecoilScalar: 1
   baseFireRate: 12
-  ammoCapacity: 75
+  ammoCapacity: 70
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 4472028151643701755}
   indicator: {fileID: 21300000, guid: 344af240c1a6db944bb7a64ede276440, type: 3}
