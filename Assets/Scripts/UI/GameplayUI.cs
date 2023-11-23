@@ -13,6 +13,7 @@ public class GameplayUI : MonoBehaviour
     [Header("UI Elements")]
     public TMP_Text countdownDisplay;
     public TMP_Text roundWinnerDisplay;
+    public TMP_Text subtitles;
 
     //start stuff taken from leaderboard
     public GameObject fadeOut;
@@ -77,5 +78,17 @@ public class GameplayUI : MonoBehaviour
         
         roundWinnerDisplay.text = "";
         Instantiate(fadeOut);
+    }
+
+    public void SetSubtitles(string subtitle)
+    {
+        subtitles.text = subtitle;
+
+    }
+
+    public void TurnOffSubtitles()
+    {
+        subtitles.text = "";
+
     }
 }
