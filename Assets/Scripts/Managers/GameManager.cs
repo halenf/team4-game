@@ -284,7 +284,6 @@ public class GameManager : MonoBehaviour
         m_startCanvas.gameObject.SetActive(false);
         m_leaderboardCanvas.gameObject.SetActive(false);
         m_gameplayCanvas.gameObject.SetActive(true);
-        m_gameplayCanvas.roundWinnerDisplay.text = "";
 
         // Set correct game state
         m_gameState = GameState.Playing;
