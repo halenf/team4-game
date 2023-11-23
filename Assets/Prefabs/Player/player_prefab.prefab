@@ -34,7 +34,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3738869635984017655}
-  - {fileID: 5321779024680455449}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61,18 +60,17 @@ MonoBehaviour:
   maxShieldHealth: 3
   fireRateScalar: 1.4
   lowGravityScalar: 0.7
-  m_shieldPrefab: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
-  powerUpIndicators:
-  - {fileID: 2281714658480379015, guid: 71c9954d535044c409671a941128d251, type: 3}
-  - {fileID: 21300000, guid: 4da6e42739792404ebc52c5ddb0fdbf0, type: 3}
-  - {fileID: 21300000, guid: 4da6e42739792404ebc52c5ddb0fdbf0, type: 3}
-  - {fileID: 21300000, guid: 4da6e42739792404ebc52c5ddb0fdbf0, type: 3}
-  - {fileID: 21300000, guid: 4da6e42739792404ebc52c5ddb0fdbf0, type: 3}
-  - {fileID: 21300000, guid: 4da6e42739792404ebc52c5ddb0fdbf0, type: 3}
-  - {fileID: 21300000, guid: 4da6e42739792404ebc52c5ddb0fdbf0, type: 3}
-  overhead: {fileID: 5321779024680455449}
-  overheadLifetime: 5
-  overHeadCanvas: {fileID: 4716376566463879925, guid: 79742f48f1940e549ae9f57194c8d44f, type: 3}
+  shieldPrefab: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
+  indicatorCanvasPrefab: {fileID: 4716376566463879925, guid: 79742f48f1940e549ae9f57194c8d44f, type: 3}
+  indicatorHeight: 3
+  indicatorLifetime: 3
+  powerupIndicators:
+  - {fileID: 21300000, guid: 7003ec1b2db61a240a9fe10018b50b97, type: 3}
+  - {fileID: 21300000, guid: e1db80f146d150b47bca1692b9cca5e7, type: 3}
+  - {fileID: 21300000, guid: fefde6a8eec4ae64a85adf607842f919, type: 3}
+  - {fileID: 21300000, guid: 6c3d9f3ac2462474e90b98663ef70574, type: 3}
+  - {fileID: 21300000, guid: f979e489baaf4ac41a7616c93a29ab8a, type: 3}
+  - {fileID: 21300000, guid: c326990bae5effd4889c01ea65585df9, type: 3}
   spikeBallDeathAnnouncements:
   - Squashed like a bug!
   - Sliced into confetti!
@@ -262,37 +260,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &7281389468376242248
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5321779024680455449}
-  m_Layer: 0
-  m_Name: Overhead
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5321779024680455449
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7281389468376242248}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 5814125836590746919}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3776720610368892700
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -157,7 +157,8 @@ public class Stage : MonoBehaviour
     {
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
-            Instantiate(endLaserPrefab, endLaserSpawns[i].transform, endLaserSpawns[i]);
+            GameObject laserReference = Instantiate(endLaserPrefab, endLaserSpawns[i].transform, endLaserSpawns[i]);
+            laserReference.transform.parent = endLaserSpawns[i];
         }
     }
 }

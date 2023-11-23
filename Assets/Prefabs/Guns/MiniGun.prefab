@@ -5051,6 +5051,7 @@ MonoBehaviour:
   ammoCapacity: 70
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 4472028151643701755}
+  indicator: {fileID: 21300000, guid: 344af240c1a6db944bb7a64ede276440, type: 3}
   bulletPrefab: {fileID: 2271769695517889325, guid: a815a8b8aac8cdb429e358dbf8186aa8, type: 3}
   spread: 8
   bulletSpeed: 20
@@ -5063,7 +5064,6 @@ MonoBehaviour:
   equipClip: {fileID: 8300000, guid: 4aada1462c56fb14ba231f031688b03e, type: 3}
   pitchMagnitude: 0.2
   volume: 0.3
-  indicator: {fileID: 21300000, guid: adecaa41cbe401e48bd57741aa6481fb, type: 3}
   randomRecoilAngle: 30
   randomRecoilStrength: 15
 --- !u!1001 &554512363508149523

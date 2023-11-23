@@ -3,7 +3,12 @@ guid: 7b6d1213f4686774b86f0f9a97e6199c
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bounce_Pad_MAT
+    second: {fileID: 2100000, guid: 42815e6ec7b98474da17a5c746bec5ff, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

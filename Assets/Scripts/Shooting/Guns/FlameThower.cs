@@ -22,7 +22,6 @@ public class FlameThower : Gun
         m_collider = GetComponent<Collider>();
         m_audioSource = GetComponent<AudioSource>();
         m_fireParticleEffect = GetComponentInChildren<ParticleSystem>();
-        GetMaterial();
         SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
     }
 
