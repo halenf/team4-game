@@ -261,6 +261,9 @@ public class GameManager : MonoBehaviour
             //create a player object and assign their specific controller
             GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
 
+            // set auto swap controls to false
+            newPlayer.GetComponent<PlayerInput>().neverAutoSwitchControlSchemes = true;
+
             // get the PlayerController component from the newly instantiated player
             PlayerController playerController = newPlayer.GetComponent<PlayerController>();
 
@@ -629,6 +632,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < m_activePlayerControllers.Count; i ++)
         {
             m_activePlayerControllers[i].gameObject.SetActive(true);
+            m_activePlayerControllers[i].GetComponent<PlayerInput>().SwitchCurrentControlScheme(m_controllers[i]);
             m_activePlayerControllers[i].ResetPlayer();
         }
     }
