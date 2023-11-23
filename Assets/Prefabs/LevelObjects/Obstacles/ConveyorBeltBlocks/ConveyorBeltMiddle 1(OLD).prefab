@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 961344862513248673}
   - component: {fileID: -1486231668503115006}
   m_Layer: 0
-  m_Name: ConveyorBeltMiddle
+  m_Name: ConveyorBeltMiddle 1(OLD)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

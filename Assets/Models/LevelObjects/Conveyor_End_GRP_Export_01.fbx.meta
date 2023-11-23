@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b00c50e353b4d0047bcbed4e5c0cc326
+guid: 75d1f24b324b551438ba9072281ff9b3
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Conveyor_MAT
-    second: {fileID: 2100000, guid: 6e9dd6017035a4545bb5b03b262d96e4, type: 2}
+      name: Conveyor_End_MAT
+    second: {fileID: 2100000, guid: 85e42a444f940534db19f32b492bb698, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -38,7 +38,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Conveyor_Moving
+      name: Conveyor_End_Moving
       takeName: Take 001
       internalID: 1827226128182048838
       firstFrame: 1
