@@ -19,6 +19,7 @@ public class Explosion : MonoBehaviour
     [Header("Particle Systems")]
     public ParticleSystem fragments;
     public ParticleSystem blast;
+    public float volume;
     public string[] killStrings;
     void Update()
     {
@@ -40,8 +41,8 @@ public class Explosion : MonoBehaviour
         var blastModule = blast.main;
         blastModule.startSize = radius;
 
-        // i'm tired, figure it out
-        /// :(
+        // start explosion and make particles and set destruction and play explosion sound
+        SoundManager.Instance.PlaySound("SFX/SFX-EXPLOSION", volume);
         StartCoroutine(Explode(lifetime));
         Instantiate(fragments, transform.position, Quaternion.identity);
         Instantiate(blast, transform.position, Quaternion.identity);

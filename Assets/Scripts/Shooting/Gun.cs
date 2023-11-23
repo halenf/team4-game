@@ -17,6 +17,8 @@ public abstract class Gun : MonoBehaviour
     [Min(0)] public int ammoCapacity;
     public Transform bulletSpawnTransform;
     public ParticleSystem muzzleFlash;
+    [Space(5)]
+    public Sprite indicator;
 
     [Header("Bullet Properties")]
     [InspectorName("Prefab")] public Bullet bulletPrefab;
@@ -38,11 +40,9 @@ public abstract class Gun : MonoBehaviour
     public float volume;
 
     private Material m_material;
-    public Sprite indicator;
 
     public virtual void Awake()
     {
-        GetMaterial();
         SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
     }
 
@@ -83,9 +83,10 @@ public abstract class Gun : MonoBehaviour
         SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch, volume);
     }
 
-    public void ChangeMat(int playerID)
+    public void ChangeMaterial(int playerID)
     {
         Material playerMaterial = (Material)Resources.Load("Materials/Player/Player" + (playerID + 1).ToString());
+        GetMaterial();
         m_material.SetColor("_EmissionColor", playerMaterial.color * 2);
         m_material.color = playerMaterial.color;
     }
