@@ -1,6 +1,6 @@
 // LeaderboardUI - Halen
 // Interface for updating the Leaderboard UI canvas
-// Last edit: 27/10/23
+// Last edit: 23/11/23
 
 using System.Collections;
 using System.Collections.Generic;
