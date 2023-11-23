@@ -68,19 +68,23 @@ public class GameManager : MonoBehaviour
     [Header("Game Info")]
     public GameObject[] stageList;
     public int numberOfRounds;
-    public float scoreViewingTime;
-    public float subtitleTime;
-
-    public string[] beginAnnouncements;
-    public string[] endAnnouncements;
+    [Space(5)]
+    [SerializeField] private List<int> m_leaderboard;
 
     // stage tracking
     private GameObject m_currentStageObject;
     private int m_roundNumber = 0;
 
-    [Space(10)]
+    /// to be moved
 
-    [SerializeField] private List<int> m_leaderboard;
+    public float scoreViewingTime; // needs to be in leaderboard UI
+    public float subtitleTime; // needs to be in subtitle UI
+
+    // both need to be in subtitle UI. make a death type enum or something to pass the kind of death to subtitle UI
+    public string[] beginAnnouncements;
+    public string[] endAnnouncements;
+
+    /// end to be moved
 
     // Game mode tracking
     private enum GameMode
@@ -344,6 +348,7 @@ public class GameManager : MonoBehaviour
         UpdateCameraTargetGroup();
 
         // Start round countdown, then enable all player input - Halen
+        m_leaderboardCanvas.gameObject.SetActive(false);
         m_gameplayCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.StartCountdown();
         m_isPaused = false;
@@ -419,14 +424,14 @@ public class GameManager : MonoBehaviour
 
     private void EndRound(int winningPlayerID)
     {
-        m_dangerCanvas.gameObject.SetActive(false);
-        Announce(endAnnouncements);
+        Announce(endAnnouncements); // this needs to be in subtitleUI
+
+        // Disable players and toggle relevant canvases
         DisablePlayers();
-        m_pauseCanvas.gameObject.SetActive(false);
         m_dangerCanvas.gameObject.SetActive(false);
-        m_subtitleCanvas.gameObject.SetActive(false);
-        m_gameplayCanvas.SetDisplayDetails(winningPlayerID + 1, m_leaderboard);
-        m_gameplayCanvas.scoreListDisplay.gameObject.SetActive(true);
+        m_leaderboardCanvas.gameObject.SetActive(true);
+        m_leaderboardCanvas.SetDisplayDetails(winningPlayerID, m_leaderboard, false);
+        m_gameplayCanvas.SetDisplayDetails(winningPlayerID + 1);
 
         m_gameplayCanvas.StartRoundEnd(winningPlayerID);
     }
@@ -457,8 +462,7 @@ public class GameManager : MonoBehaviour
 
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
-        m_leaderboardCanvas.buttons.SetActive(true);
-        m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+        m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard, true);
 
         // disable players and set UI controls
         DisablePlayers();
@@ -502,6 +506,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// needs to go into subtitle UI
+
     public void Announcment(string deathSubtitle)
     {
         StartCoroutine(Announce(deathSubtitle));
@@ -530,6 +536,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(subtitleTime);
         m_subtitleCanvas.gameObject.SetActive(false);
     }
+
+    /// end needs to go in subtitle UI
 
     /// <summary>
     /// Updates the array of targets that the CinemachineTargetGroup object tracks for the Gameplay Camera to follow.
