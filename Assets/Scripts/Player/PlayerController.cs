@@ -380,7 +380,7 @@ public class PlayerController : MonoBehaviour
         m_nextFireTime = Time.time + (1f / m_fireRate);
 
         //change gun material
-        m_currentGun.ChangeMaterial(id);
+        m_currentGun.ChangeMat(id);
 
         // Sets the gun's aim
         Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
@@ -470,6 +470,7 @@ public class PlayerController : MonoBehaviour
     {
         m_currentHealth = maxHealth;
         SetGun(defaultGun);
+        m_currentAmmo = m_currentGun.ammoCapacity;
         m_fireRate = m_currentGun.baseFireRate;
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
     }
