@@ -24,13 +24,17 @@ public class GameplayUI : MonoBehaviour
 
     [Space(10)]
     public float leaderboardDisplayTime;
-    
+
+    private void Awake()
+    {
+        m_subtitlesText = m_subtitlesObject.GetComponentInChildren<TMP_Text>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         m_countdownDisplay.gameObject.SetActive(false);
         m_roundWinnerDisplay.text = "";
-        m_subtitlesText = m_subtitlesObject.GetComponentInChildren<TMP_Text>();
         m_subtitlesObject.SetActive(false);
     }
 
