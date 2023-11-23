@@ -38,14 +38,12 @@ public class ConveyorBelt : Obstacle
     [Space(10)]
     [Tooltip("For scaling the speed of the animation.")]
     [Range(0, 1)] public float animationSpeedScalar;
-    private Animator m_animator;
+    [SerializeField] private Animator m_animator;
 
     private void Start()
     {
-        m_animator = GetComponent<Animator>();
-
         // set initial belt speed and start belt
-        if (m_animator) m_animator.Play("ConveyorBelt");
+        //m_animator.Play("ConveyorBelt");
         ToggleBeltAnimation();
     }
 
@@ -63,10 +61,8 @@ public class ConveyorBelt : Obstacle
 
     private void ToggleBeltAnimation()
     {
-        if (!m_animator) return;
-
         // if the belt is active, animate in the appropriate direction, otherwise disable/set speed to zero
-        float _speed = m_isActive ? (m_movesPositive ? -speed : speed) : 0;
+        float _speed = m_isActive ? (m_movesPositive ? speed : -speed) : 0;
         m_animator.SetFloat("Speed", _speed * animationSpeedScalar);
     }
 
