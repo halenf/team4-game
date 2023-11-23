@@ -63,7 +63,7 @@ public class Stage : MonoBehaviour
         m_currentRoundTime = 0;
 
         m_currentGunBoxes = new List<GameObject>(gunBoxSpawns.Length);
-        m_currentPowerupBoxes = new List<GameObject>(playerSpawns.Length);
+        m_currentPowerupBoxes = new List<GameObject>(powerUpSpawns.Length);
 
         StartGunRoutine();
         StartPowerUpRoutine();
@@ -96,14 +96,15 @@ public class Stage : MonoBehaviour
     private IEnumerator SpawnGunBox(float time)
     {
         yield return new WaitForSeconds(time);
-        int spawnIndex = Random.Range(0, gunBoxSpawns.Length - 1);
+        int spawnIndex = Random.Range(0, gunBoxSpawns.Length);
         //start making the next one
         StartGunRoutine();
         // if there isn't already a box in that slot, spawn a new one
         if (m_currentGunBoxes.ElementAtOrDefault(spawnIndex) == null)
         {
-            m_currentGunBoxes.Insert(spawnIndex, Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform));
-            m_currentGunBoxes[spawnIndex].GetComponent<PowerUp>().lifeTime = gunBoxLifetime;
+            GameObject gunBox = Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform);
+            m_currentGunBoxes.Add(gunBox);
+            gunBox.GetComponent<PowerUp>().lifeTime = gunBoxLifetime;
         }
         
     }
@@ -125,14 +126,15 @@ public class Stage : MonoBehaviour
     private IEnumerator SpawnPowerUp(float time)
     {
         yield return new WaitForSeconds(time);
-        int spawnIndex = Random.Range(0, powerUpSpawns.Length - 1);
+        int spawnIndex = Random.Range(0, powerUpSpawns.Length);
         //start making the next one
         StartPowerUpRoutine();
         // if there isn't already a box in that slot, spawn a new one
         if (m_currentPowerupBoxes.ElementAtOrDefault(spawnIndex) == null)
         {
-            m_currentPowerupBoxes.Insert(spawnIndex, Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform));
-            m_currentPowerupBoxes[spawnIndex].GetComponent<PowerUp>().lifeTime = powerupBoxLifetime;
+            GameObject powerUp = Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform);
+            m_currentPowerupBoxes.Add(powerUp);
+            powerUp.GetComponent<PowerUp>().lifeTime = powerupBoxLifetime;
         }
         
     }
@@ -159,6 +161,8 @@ public class Stage : MonoBehaviour
         {
             GameObject laserReference = Instantiate(endLaserPrefab, endLaserSpawns[i].transform, endLaserSpawns[i]);
             laserReference.transform.parent = endLaserSpawns[i];
+            laserReference.transform.position = laserReference.transform.parent.transform.position;
+            laserReference.transform.rotation = laserReference.transform.parent.transform.rotation;
         }
     }
 }
