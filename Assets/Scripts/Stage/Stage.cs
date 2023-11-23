@@ -63,7 +63,15 @@ public class Stage : MonoBehaviour
         m_currentRoundTime = 0;
 
         m_currentGunBoxes = new List<GameObject>(gunBoxSpawns.Length);
+        for (int i = 0; i < gunBoxSpawns.Length; i++)
+        {
+            m_currentGunBoxes.Add(gunBoxPrefab);
+        }
         m_currentPowerupBoxes = new List<GameObject>(powerUpSpawns.Length);
+        for (int i = 0; i < powerUpSpawns.Length; i++)
+        {
+            m_currentPowerupBoxes.Add(powerupBoxPrefab);
+        }
 
         StartGunRoutine();
         StartPowerUpRoutine();
@@ -98,14 +106,19 @@ public class Stage : MonoBehaviour
         yield return new WaitForSeconds(time);
         int spawnIndex = Random.Range(0, gunBoxSpawns.Length);
         //start making the next one
-        StartGunRoutine();
+        
         // if there isn't already a box in that slot, spawn a new one
-        if (m_currentGunBoxes.ElementAtOrDefault(spawnIndex) == null)
+        if (m_currentGunBoxes.ElementAtOrDefault(spawnIndex) == gunBoxPrefab)
         {
             GameObject gunBox = Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform);
-            m_currentGunBoxes.Add(gunBox);
+            m_currentGunBoxes.Insert(spawnIndex, gunBox);
             gunBox.GetComponent<PowerUp>().lifeTime = gunBoxLifetime;
         }
+        else
+        {
+            
+        }
+        StartGunRoutine();
         
     }
 
@@ -130,10 +143,10 @@ public class Stage : MonoBehaviour
         //start making the next one
         StartPowerUpRoutine();
         // if there isn't already a box in that slot, spawn a new one
-        if (m_currentPowerupBoxes.ElementAtOrDefault(spawnIndex) == null)
+        if (m_currentPowerupBoxes.ElementAtOrDefault(spawnIndex) == powerupBoxPrefab)
         {
             GameObject powerUp = Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform);
-            m_currentPowerupBoxes.Add(powerUp);
+            m_currentGunBoxes.Insert(spawnIndex, powerUp);
             powerUp.GetComponent<PowerUp>().lifeTime = powerupBoxLifetime;
         }
         
@@ -145,8 +158,20 @@ public class Stage : MonoBehaviour
     private void OnDestroy()
     {
         // destroy all the powerups when the stage is unloaded
-        foreach (GameObject obj in m_currentGunBoxes) Destroy(obj);
-        foreach (GameObject obj in m_currentPowerupBoxes) Destroy(obj);
+        foreach (GameObject obj in m_currentGunBoxes)
+        {
+            if (obj != gunBoxPrefab)
+            {
+                Destroy(obj);
+            }
+        }
+        foreach (GameObject obj in m_currentPowerupBoxes)
+        {
+            if (obj != powerupBoxPrefab)
+            {
+                Destroy(obj);
+            }
+        }
 
         // stop the spawning coroutines
         StopAllCoroutines();
