@@ -6,23 +6,32 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class GameplayUI : MonoBehaviour
 {
+    public Sprite[] countdownSprites;
+    public Sprite startSprite;
+    
     [Header("UI Elements")]
-    public TMP_Text countdownDisplay;
-    public TMP_Text roundWinnerDisplay;
-    public TMP_Text subtitles;
+    [SerializeField] private Image m_countdownDisplay;
+    [SerializeField] private TMP_Text m_roundWinnerDisplay;
+    [SerializeField] private GameObject m_subtitlesObject;
+    private TMP_Text m_subtitlesText;
 
     //start stuff taken from leaderboard
     public GameObject fadeOut;
+
+    [Space(10)]
+    public float leaderboardDisplayTime;
     
     // Start is called before the first frame update
     void Start()
     {
-        countdownDisplay.text = "";
-        roundWinnerDisplay.text = "";
+        m_countdownDisplay.gameObject.SetActive(false);
+        m_roundWinnerDisplay.text = "";
+        m_subtitlesText = m_subtitlesObject.GetComponentInChildren<TMP_Text>();
+        m_subtitlesObject.SetActive(false);
     }
 
     /// <summary>
@@ -30,7 +39,7 @@ public class GameplayUI : MonoBehaviour
     /// </summary>
     public void SetDisplayDetails(int winningPlayer)
     {
-        roundWinnerDisplay.text = "Player " + winningPlayer + " wins!";
+        m_roundWinnerDisplay.text = "Player " + winningPlayer + " wins!";
     }
 
     /// <summary>
@@ -53,19 +62,26 @@ public class GameplayUI : MonoBehaviour
     private IEnumerator Countdown()
     {
         yield return new WaitForEndOfFrame();
+
+        Time.timeScale = 1f;
+        m_countdownDisplay.gameObject.SetActive(true);
+
         // Count down from 3
-        for (int i = 3; i > 0; i--)
+        foreach (Sprite sprite in countdownSprites)
         {
-            countdownDisplay.text = i.ToString();
-            Time.timeScale = 1f;
+            m_countdownDisplay.sprite = sprite;
+            m_countdownDisplay.SetNativeSize();
             yield return new WaitForSeconds(1);
         }
 
         // Enable player inputs and start round
         GameManager.Instance.EnablePlayers();
-        countdownDisplay.text = "Go!";
-        yield return new WaitForSeconds(1.5f); // Keep "Go!" up for 1.5 seconds
-        countdownDisplay.text = "";
+        m_countdownDisplay.sprite = startSprite;
+        m_countdownDisplay.SetNativeSize();
+
+        // Keep "Go!" up for 1.5 seconds
+        yield return new WaitForSeconds(1.5f);
+        m_countdownDisplay.gameObject.SetActive(false);
     }
 
     private IEnumerator RoundEnd(int winningPlayerID)
@@ -73,22 +89,21 @@ public class GameplayUI : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         // Show the player who won the round
-        roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
-        yield return new WaitForSeconds(5);
+        m_roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
+        yield return new WaitForSeconds(leaderboardDisplayTime);
         
-        roundWinnerDisplay.text = "";
+        m_roundWinnerDisplay.text = "";
         Instantiate(fadeOut);
     }
 
     public void SetSubtitles(string subtitle)
     {
-        subtitles.text = subtitle;
-
+        m_subtitlesObject.SetActive(true);
+        m_subtitlesText.text = subtitle;
     }
 
     public void TurnOffSubtitles()
     {
-        subtitles.text = "";
-
+        m_subtitlesObject.SetActive(false);
     }
 }

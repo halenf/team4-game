@@ -1,3 +1,7 @@
+// Player Score Display - Halen
+// Sets the values on the player score display prefabs for the leaderboard canvas.
+// Last edit: 23/11/23
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
