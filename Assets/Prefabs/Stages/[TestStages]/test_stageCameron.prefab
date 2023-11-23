@@ -155,9 +155,7 @@ MonoBehaviour:
   - {fileID: 7897214092114425368}
   powerUpSpawns:
   - {fileID: 6308789014987406394}
-  - {fileID: 6308789014987406394}
   gunBoxSpawns:
-  - {fileID: 640607906567511287}
   - {fileID: 640607906567511287}
   endLaserSpawns: []
   cameraDefaultTransform: {fileID: 8919700940776469527}
