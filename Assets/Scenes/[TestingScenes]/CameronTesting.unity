@@ -279,17 +279,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &856537646 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1362561178979673924, guid: 0c0094981b45d8e41ac3024107df3edd, type: 3}
-  m_PrefabInstance: {fileID: 8353502850724710752}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &914060162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -370,6 +359,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 22126226403852928, guid: b5b26912ebefbdb4883753b557a1dd3b, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22126226403852928, guid: b5b26912ebefbdb4883753b557a1dd3b, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22126226403852928, guid: b5b26912ebefbdb4883753b557a1dd3b, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 281bcb0708d4a3b4a8db651e293d0598, type: 3}
     - target: {fileID: 22126227461465249, guid: b5b26912ebefbdb4883753b557a1dd3b, type: 3}
       propertyPath: m_Name
       value: SoundManager
@@ -655,7 +656,7 @@ PrefabInstance:
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[0]
       value: 
-      objectReference: {fileID: 3771888446113775381, guid: 864033d4133d59c4aa4700aeba43f9d6, type: 3}
+      objectReference: {fileID: 3771888446113775381, guid: ca8869b86fab90746a761fd42e221a31, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[1]
       value: 
@@ -720,7 +721,7 @@ PrefabInstance:
     - target: {fileID: 8353502849753122016, guid: 0c0094981b45d8e41ac3024107df3edd, type: 3}
       propertyPath: postProcessVolume
       value: 
-      objectReference: {fileID: 856537646}
+      objectReference: {fileID: 0}
     - target: {fileID: 8353502849753122017, guid: 0c0094981b45d8e41ac3024107df3edd, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -735,7 +736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8353502849753122017, guid: 0c0094981b45d8e41ac3024107df3edd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.8199997
+      value: -25.86043
       objectReference: {fileID: 0}
     - target: {fileID: 8353502849753122017, guid: 0c0094981b45d8e41ac3024107df3edd, type: 3}
       propertyPath: m_LocalRotation.w

@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
     private LeaderboardUI m_leaderboardCanvas;
     private DisconnectUI m_disconnectCanvas;
     private DangerUI m_dangerCanvas;
-    private SubtitleUI m_subtitleCanvas;
 
     [Header("Cinemachine Prefabs")]
     [SerializeField] private CinemachineVirtualCamera m_staticCamera;
@@ -63,24 +62,27 @@ public class GameManager : MonoBehaviour
     public Color[] playerColours;
 
     public GameObject controlCube;
-    private GameObject m_endController;
 
     [Header("Game Info")]
     public GameObject[] stageList;
     public int numberOfRounds;
-    public float scoreViewingTime;
-    public float subtitleTime;
-
-    public string[] beginAnnouncements;
-    public string[] endAnnouncements;
+    [Space(5)]
+    [SerializeField] private List<int> m_leaderboard;
 
     // stage tracking
     private GameObject m_currentStageObject;
     private int m_roundNumber = 0;
 
-    [Space(10)]
+    /// to be moved
 
-    [SerializeField] private List<int> m_leaderboard;
+    public float scoreViewingTime; // needs to be in leaderboard UI
+    public float subtitleTime; // needs to be in subtitle UI
+
+    // both need to be in subtitle UI. make a death type enum or something to pass the kind of death to subtitle UI
+    public string[] beginAnnouncements;
+    public string[] endAnnouncements;
+
+    /// end to be moved
 
     // Game mode tracking
     private enum GameMode
@@ -174,7 +176,6 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas = Instantiate(leaderboardCanvasPrefab);
         m_disconnectCanvas = Instantiate(disconnectCanvasPrefab);
         m_dangerCanvas = Instantiate(dangerCanvasPrefab);
-        m_subtitleCanvas = Instantiate(subtitleCanvasPrefab);
 
         m_startCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.gameObject.SetActive(false);
@@ -182,7 +183,6 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas.gameObject.SetActive(false);
         m_disconnectCanvas.gameObject.SetActive(false);
         m_dangerCanvas.gameObject.SetActive(false);
-        m_subtitleCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -257,6 +257,9 @@ public class GameManager : MonoBehaviour
             //create a player object and assign their specific controller
             GameObject newPlayer = PlayerInput.Instantiate(playerPrefab, controlScheme: "Gamepad", pairWithDevice: m_controllers[j]).gameObject;
 
+            // set auto swap controls to false
+            newPlayer.GetComponent<PlayerInput>().neverAutoSwitchControlSchemes = true;
+
             // get the PlayerController component from the newly instantiated player
             PlayerController playerController = newPlayer.GetComponent<PlayerController>();
 
@@ -304,7 +307,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadStage()
     {
-        if (m_endController) Destroy(m_endController);
 
         // Destroy any bullets that might remain in the level from the last level
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
@@ -312,10 +314,7 @@ public class GameManager : MonoBehaviour
 
         // destroy any remaining powerups in the scene
         PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
-        for (int i = 0; i < allPowerUps.Length; i++)
-        {
-            Destroy(allPowerUps[i].gameObject);
-        }
+        foreach (Object powerup in allPowerUps) Destroy(powerup);
 
         //destroy the current stage and load a new one
         if (m_currentStageObject) Destroy(m_currentStageObject);
@@ -344,6 +343,7 @@ public class GameManager : MonoBehaviour
         UpdateCameraTargetGroup();
 
         // Start round countdown, then enable all player input - Halen
+        m_leaderboardCanvas.gameObject.SetActive(false);
         m_gameplayCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.StartCountdown();
         m_isPaused = false;
@@ -419,14 +419,14 @@ public class GameManager : MonoBehaviour
 
     private void EndRound(int winningPlayerID)
     {
-        m_dangerCanvas.gameObject.SetActive(false);
-        Announce(endAnnouncements);
+        Announce(endAnnouncements); // this needs to be in subtitleUI
+
+        // Disable players and toggle relevant canvases
         DisablePlayers();
-        m_pauseCanvas.gameObject.SetActive(false);
         m_dangerCanvas.gameObject.SetActive(false);
-        m_subtitleCanvas.gameObject.SetActive(false);
-        m_gameplayCanvas.SetDisplayDetails(winningPlayerID + 1, m_leaderboard);
-        m_gameplayCanvas.scoreListDisplay.gameObject.SetActive(true);
+        m_leaderboardCanvas.gameObject.SetActive(true);
+        m_leaderboardCanvas.SetDisplayDetails(winningPlayerID, m_leaderboard, false);
+        m_gameplayCanvas.SetDisplayDetails(winningPlayerID + 1);
 
         m_gameplayCanvas.StartRoundEnd(winningPlayerID);
     }
@@ -457,8 +457,7 @@ public class GameManager : MonoBehaviour
 
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
-        m_leaderboardCanvas.buttons.SetActive(true);
-        m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard);
+        m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard, true);
 
         // disable players and set UI controls
         DisablePlayers();
@@ -502,6 +501,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// needs to go into subtitle UI
+
     public void Announcment(string deathSubtitle)
     {
         StartCoroutine(Announce(deathSubtitle));
@@ -509,11 +510,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Announce(string deathSubtitle)
     {
-        m_subtitleCanvas.gameObject.SetActive(true);
-        m_subtitleCanvas.subtitle.text = deathSubtitle;
-        //SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTER" + Random.Range(1, 3));    implement good way to do announcer speak here
+        m_gameplayCanvas.SetSubtitles(deathSubtitle);
+        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
         yield return new WaitForSeconds(subtitleTime);
-        m_subtitleCanvas.gameObject.SetActive(false);
+        m_gameplayCanvas.TurnOffSubtitles();
     }
 
     public void Announcment(string[] deathSubtitles)
@@ -524,12 +524,13 @@ public class GameManager : MonoBehaviour
     private IEnumerator Announce(string[] deathSubtitles)
     {
         string chosenText = deathSubtitles[Random.Range(0, deathSubtitles.Length)];
-        m_subtitleCanvas.gameObject.SetActive(true);
-        m_subtitleCanvas.subtitle.text = chosenText;
-        //SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTER" + Random.Range(1, 3));    implement good way to do announcer speak here
+        m_gameplayCanvas.SetSubtitles(chosenText);
+        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
         yield return new WaitForSeconds(subtitleTime);
-        m_subtitleCanvas.gameObject.SetActive(false);
+        m_gameplayCanvas.TurnOffSubtitles();
     }
+
+    /// end needs to go in subtitle UI
 
     /// <summary>
     /// Updates the array of targets that the CinemachineTargetGroup object tracks for the Gameplay Camera to follow.
@@ -581,7 +582,7 @@ public class GameManager : MonoBehaviour
     {
         m_disconnectCanvas.gameObject.SetActive(false);
         // only reset timescale if game isn't paused
-        if (!m_pauseCanvas.gameObject.activeSelf) Time.timeScale = 1f;
+        if (!m_isPaused) Time.timeScale = 1f;
     }
 
     public void ShowDanger()
@@ -600,6 +601,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (PlayerController player in m_activePlayerControllers)
         {
+            player.gameObject.SetActive(true);
             player.EnableInput();
         }
     }    
@@ -620,10 +622,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetPlayers()
     {
-        foreach (PlayerController player in m_activePlayerControllers)
+        for (int i = 0; i < m_activePlayerControllers.Count; i ++)
         {
-            player.gameObject.SetActive(true);
-            player.ResetPlayer();
+            m_activePlayerControllers[i].gameObject.SetActive(true);
+            m_activePlayerControllers[i].GetComponent<PlayerInput>().SwitchCurrentControlScheme(m_controllers[i]);
+            m_activePlayerControllers[i].ResetPlayer();
         }
     }
 
@@ -632,7 +635,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGame()
     {
-        m_controllers = new List<Gamepad>();
         Init();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

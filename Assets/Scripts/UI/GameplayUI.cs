@@ -13,10 +13,9 @@ public class GameplayUI : MonoBehaviour
     [Header("UI Elements")]
     public TMP_Text countdownDisplay;
     public TMP_Text roundWinnerDisplay;
+    public TMP_Text subtitles;
 
     //start stuff taken from leaderboard
-    public TMP_Text scoreListDisplay;
-
     public GameObject fadeOut;
     
     // Start is called before the first frame update
@@ -29,16 +28,9 @@ public class GameplayUI : MonoBehaviour
     /// <summary>
     /// Update all the display details of the canvas.
     /// </summary>
-    public void SetDisplayDetails(int winningPlayer, List<int> leaderboard)
+    public void SetDisplayDetails(int winningPlayer)
     {
         roundWinnerDisplay.text = "Player " + winningPlayer + " wins!";
-        scoreListDisplay.gameObject.SetActive(true);
-        string leaderboardText = "";
-        for (int i = 0; i < leaderboard.Count; i++)
-        {
-            leaderboardText += "Player " + (i + 1).ToString() + ": " + leaderboard[i] + " \n";
-        }
-        scoreListDisplay.text = leaderboardText;
     }
 
     /// <summary>
@@ -79,13 +71,24 @@ public class GameplayUI : MonoBehaviour
     private IEnumerator RoundEnd(int winningPlayerID)
     {
         yield return new WaitForEndOfFrame();
+
         // Show the player who won the round
         roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
         yield return new WaitForSeconds(5);
-        //roundWinnerDisplay.text = "";
-        //GameManager.Instance.LoadStage();
+        
         roundWinnerDisplay.text = "";
-        scoreListDisplay.gameObject.SetActive(false);
         Instantiate(fadeOut);
+    }
+
+    public void SetSubtitles(string subtitle)
+    {
+        subtitles.text = subtitle;
+
+    }
+
+    public void TurnOffSubtitles()
+    {
+        subtitles.text = "";
+
     }
 }
