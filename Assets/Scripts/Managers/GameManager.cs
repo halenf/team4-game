@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
     private LeaderboardUI m_leaderboardCanvas;
     private DisconnectUI m_disconnectCanvas;
     private DangerUI m_dangerCanvas;
-    private SubtitleUI m_subtitleCanvas;
 
     [Header("Cinemachine Prefabs")]
     [SerializeField] private CinemachineVirtualCamera m_staticCamera;
@@ -63,7 +62,6 @@ public class GameManager : MonoBehaviour
     public Color[] playerColours;
 
     public GameObject controlCube;
-    private GameObject m_endController;
 
     [Header("Game Info")]
     public GameObject[] stageList;
@@ -178,7 +176,6 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas = Instantiate(leaderboardCanvasPrefab);
         m_disconnectCanvas = Instantiate(disconnectCanvasPrefab);
         m_dangerCanvas = Instantiate(dangerCanvasPrefab);
-        m_subtitleCanvas = Instantiate(subtitleCanvasPrefab);
 
         m_startCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.gameObject.SetActive(false);
@@ -186,7 +183,6 @@ public class GameManager : MonoBehaviour
         m_leaderboardCanvas.gameObject.SetActive(false);
         m_disconnectCanvas.gameObject.SetActive(false);
         m_dangerCanvas.gameObject.SetActive(false);
-        m_subtitleCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -311,7 +307,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadStage()
     {
-        if (m_endController) Destroy(m_endController);
 
         // Destroy any bullets that might remain in the level from the last level
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
@@ -515,11 +510,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Announce(string deathSubtitle)
     {
-        m_subtitleCanvas.gameObject.SetActive(true);
-        m_subtitleCanvas.subtitle.text = deathSubtitle;
-        //SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTER" + Random.Range(1, 3));    implement good way to do announcer speak here
+        m_gameplayCanvas.SetSubtitles(deathSubtitle);
+        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
         yield return new WaitForSeconds(subtitleTime);
-        m_subtitleCanvas.gameObject.SetActive(false);
+        m_gameplayCanvas.TurnOffSubtitles();
     }
 
     public void Announcment(string[] deathSubtitles)
@@ -530,11 +524,10 @@ public class GameManager : MonoBehaviour
     private IEnumerator Announce(string[] deathSubtitles)
     {
         string chosenText = deathSubtitles[Random.Range(0, deathSubtitles.Length)];
-        m_subtitleCanvas.gameObject.SetActive(true);
-        m_subtitleCanvas.subtitle.text = chosenText;
-        //SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTER" + Random.Range(1, 3));    implement good way to do announcer speak here
+        m_gameplayCanvas.SetSubtitles(chosenText);
+        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
         yield return new WaitForSeconds(subtitleTime);
-        m_subtitleCanvas.gameObject.SetActive(false);
+        m_gameplayCanvas.TurnOffSubtitles();
     }
 
     /// end needs to go in subtitle UI

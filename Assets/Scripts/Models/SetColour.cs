@@ -10,13 +10,15 @@ public class SetColour : MonoBehaviour
 {
     [Tooltip("Array of the objects that will have their colour changed. The children of the objects will also be searched for renderers.")]
     public GameObject[] objects;
-    public float emissiveMultiplyer;
+    [Range(-5.0f, 5.0f)] public float emissiveMultiplier;
+
+    private Color m_setColour;
 
     /// <summary>
     /// Sets the colours of all the MeshRenderers in 'renderers' to a specified colour.
     /// </summary>
     /// <param name="colour"></param>
-    public void Set(Color colour)
+    public void Set(Color colour, float emissionIntensity = 1.0f)
     {
         // make a new empty list of renderers
         List<MeshRenderer> renderers = new List<MeshRenderer>();
@@ -34,9 +36,20 @@ public class SetColour : MonoBehaviour
         // change the colour of all the renderers' materials
         foreach (MeshRenderer renderer in renderers)
         {
-            if (renderer.material.IsKeywordEnabled("_EMISSION")) renderer.material.SetColor("_EmissionColor", colour * emissiveMultiplyer);
+            if (renderer.material.IsKeywordEnabled("_EMISSION")) renderer.material.SetColor("_EmissionColor", colour * emissiveMultiplier * emissionIntensity);
             renderer.material.SetColor("_Color", colour);
         }
+
+        m_setColour = colour;
+    }
+
+    /// <summary>
+    /// Changes the emission intensity of the objects and all their children to a specified value.
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetEmissionIntensity(float value)
+    {
+        Set(m_setColour, Mathf.Clamp(value, -5.0f, 5.0f));
     }
 }
 
