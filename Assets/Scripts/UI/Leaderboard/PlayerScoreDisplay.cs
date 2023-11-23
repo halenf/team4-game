@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerScoreDisplay : MonoBehaviour
 {
+    public Image pointPrefab;
+    [Space(10)]
     public Sprite[] backgroundImages;
     public Sprite[] playerIcons;
     public Sprite[] emptyPointIcons;
@@ -17,7 +19,7 @@ public class PlayerScoreDisplay : MonoBehaviour
 
     [Space(10)]
 
-    public Image pointPrefab;
+    [SerializeField] private Transform m_pointDisplayLayoutGroup;
 
     public void SetDisplayDetails(int playerID, int playerScore, bool hasCrown = false)
     {
@@ -29,17 +31,15 @@ public class PlayerScoreDisplay : MonoBehaviour
         m_playerIcon.sprite = playerIcons[playerID];
 
         // Instantiate the point icons based on the player's current score and total number of rounds
-        Transform pointDisplayLayoutGroup = GetComponentInChildren<HorizontalLayoutGroup>().transform;
-
         for (int i = 0; i < playerScore; i++)
         {
-            Image point = Instantiate(pointPrefab, pointDisplayLayoutGroup);
+            Image point = Instantiate(pointPrefab, m_pointDisplayLayoutGroup);
             point.sprite = filledPointIcons[playerID];
         }
 
         for (int i = 0; i < GameManager.Instance.numberOfRounds - playerScore; i ++)
         {
-            Image point = Instantiate(pointPrefab, pointDisplayLayoutGroup);
+            Image point = Instantiate(pointPrefab, m_pointDisplayLayoutGroup);
             point.sprite = emptyPointIcons[playerID];
         }
     }
@@ -47,6 +47,6 @@ public class PlayerScoreDisplay : MonoBehaviour
     // kills itself when the leaderboard is turned off
     private void OnDisable()
     {
-        Destroy(this);
+        Destroy(gameObject);
     }
 }

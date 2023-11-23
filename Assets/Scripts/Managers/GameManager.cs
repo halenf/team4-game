@@ -316,10 +316,7 @@ public class GameManager : MonoBehaviour
 
         // destroy any remaining powerups in the scene
         PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
-        for (int i = 0; i < allPowerUps.Length; i++)
-        {
-            Destroy(allPowerUps[i].gameObject);
-        }
+        foreach (Object powerup in allPowerUps) Destroy(powerup);
 
         //destroy the current stage and load a new one
         if (m_currentStageObject) Destroy(m_currentStageObject);
@@ -589,7 +586,7 @@ public class GameManager : MonoBehaviour
     {
         m_disconnectCanvas.gameObject.SetActive(false);
         // only reset timescale if game isn't paused
-        if (!m_pauseCanvas.gameObject.activeSelf) Time.timeScale = 1f;
+        if (!m_isPaused) Time.timeScale = 1f;
     }
 
     public void ShowDanger()
@@ -608,6 +605,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (PlayerController player in m_activePlayerControllers)
         {
+            player.gameObject.SetActive(true);
             player.EnableInput();
         }
     }    
@@ -628,10 +626,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetPlayers()
     {
-        foreach (PlayerController player in m_activePlayerControllers)
+        for (int i = 0; i < m_activePlayerControllers.Count; i ++)
         {
-            player.gameObject.SetActive(true);
-            player.ResetPlayer();
+            m_activePlayerControllers[i].gameObject.SetActive(true);
+            m_activePlayerControllers[i].ResetPlayer();
         }
     }
 
@@ -640,7 +638,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetGame()
     {
-        m_controllers = new List<Gamepad>();
         Init();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

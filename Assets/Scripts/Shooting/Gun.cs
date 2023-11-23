@@ -43,7 +43,6 @@ public abstract class Gun : MonoBehaviour
 
     public virtual void Awake()
     {
-        GetMaterial();
         SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
     }
 
@@ -84,9 +83,10 @@ public abstract class Gun : MonoBehaviour
         SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch, volume);
     }
 
-    public void ChangeMat(int playerID)
+    public void ChangeMaterial(int playerID)
     {
         Material playerMaterial = (Material)Resources.Load("Materials/Player/Player" + (playerID + 1).ToString());
+        GetMaterial();
         m_material.SetColor("_EmissionColor", playerMaterial.color * 2);
         m_material.color = playerMaterial.color;
     }

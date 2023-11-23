@@ -162,9 +162,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1757519705485944803}
-  - component: {fileID: 4892785215406135566}
+  - component: {fileID: 4924331847106079895}
   m_Layer: 5
-  m_Name: PlayerScoreArea
+  m_Name: PlayerPointDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ RectTransform:
   m_AnchoredPosition: {x: 25, y: 0}
   m_SizeDelta: {x: -50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4892785215406135566
+--- !u!114 &4924331847106079895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 5
+    m_Left: 0
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
@@ -213,8 +213,8 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
-  m_ChildScaleWidth: 1
-  m_ChildScaleHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
 --- !u!1 &5679014016606573928
 GameObject:
@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3360e33571a47624babbf85f2adee692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointPrefab: {fileID: 5517850333157887595, guid: 900f415dcca38174684e7e93ff8736ad, type: 3}
   backgroundImages:
   - {fileID: 21300000, guid: bc274e9b0a65aeb488804e5b876d4a37, type: 3}
   - {fileID: 21300000, guid: c3355b5ab2b4cf34b9a41cc8a02105e0, type: 3}
@@ -292,7 +293,7 @@ MonoBehaviour:
   m_background: {fileID: 6893518119864349052}
   m_playerIcon: {fileID: 5630832154848556940}
   m_crownIcon: {fileID: 4260920505455018887}
-  pointPrefab: {fileID: 5517850333157887595, guid: 900f415dcca38174684e7e93ff8736ad, type: 3}
+  m_pointDisplayLayoutGroup: {fileID: 1757519705485944803}
 --- !u!222 &7698109883610357251
 CanvasRenderer:
   m_ObjectHideFlags: 0
