@@ -136,6 +136,7 @@ MonoBehaviour:
   - Smells like fresh bacon!
   - "And just when you thought things couldn\u2019t get any hotter!"
   - "Looks like they couldn\u2019t handle the heat!"
+  hitParticle: {fileID: 8163005987728998194, guid: bb118610af5d2f6439a07ca1c37fd4d4, type: 3}
 --- !u!120 &5227712940450349801
 LineRenderer:
   m_ObjectHideFlags: 0
