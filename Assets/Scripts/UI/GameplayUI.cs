@@ -83,10 +83,11 @@ public class GameplayUI : MonoBehaviour
         m_countdownDisplay.sprite = startSprite;
         m_countdownDisplay.SetNativeSize();
 
+        GameManager.Instance.EnablePlayers();
+
         // Keep "Go!" up for 1.5 seconds
         yield return new WaitForSeconds(1.5f);
         m_countdownDisplay.gameObject.SetActive(false);
-        GameManager.Instance.EnablePlayers();
     }
 
     private IEnumerator RoundEnd(int winningPlayerID)
