@@ -1162,7 +1162,7 @@ MonoBehaviour:
   endLaserPrefab: {fileID: 4602441095069155359, guid: 370ca96aa76d5d542b0c6512517f3365, type: 3}
   spikeBallPrefab: {fileID: 0}
   gunBoxLifetime: 10
-  minGunTimer: 3
+  minGunTimer: 2
   maxGunTimer: 5
   powerupBoxLifetime: 10
   minPowerupTimer: 3
