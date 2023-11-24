@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -274275399784049948}
   m_Layer: 0
   m_Name: Breakable_Diagonal_Platform
-  m_TagString: Untagged
+  m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,3 +115,5 @@ MonoBehaviour:
   destroyEffect: {fileID: 0}
   maxHealth: 2
   debrisDestroyTimer: 1
+  willRespawn: 0
+  timeToRespawn: 0

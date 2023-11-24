@@ -1275,6 +1275,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 961344862513248673}
 --- !u!65 &4149283560930511042
 BoxCollider:
   m_ObjectHideFlags: 0

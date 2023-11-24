@@ -14,7 +14,6 @@ public class FlameThower : Gun
 
     private ParticleSystem m_fireParticleEffect;
     private bool m_isShooting;
-    public string[] killStrings;
     private AudioSource m_audioSource;
 
     public override void Awake()
@@ -79,7 +78,7 @@ public class FlameThower : Gun
         {
             
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            player.TakeDamage(bulletDamage, killStrings);
+            player.TakeDamage(bulletDamage, AnnouncerSubtitleDisplay.AnnouncementType.DeathFire);
             
 
             //BulletDestroy();

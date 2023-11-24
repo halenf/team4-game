@@ -1,9 +1,10 @@
 // platform - Cameron, Halen
 // take damages and dies or explodes
-// Last edit: 22/11/23
+// Last edit: 24/11/23
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
@@ -15,12 +16,20 @@ public class BreakableObject : MonoBehaviour
 
     public float maxHealth;
     public float debrisDestroyTimer;
+
+    public bool willRespawn;
+    public float timeToRespawn;
     
     private float m_currentHealth;
+
+    private MeshRenderer m_renderer;
+    private Collider m_collider;
 
     private void Start()
     {
         m_currentHealth = maxHealth;
+        m_renderer = GetComponent<MeshRenderer>();
+        m_collider = GetComponent<Collider>();
     }
 
     public void TakeDamage(float damage)
@@ -41,8 +50,23 @@ public class BreakableObject : MonoBehaviour
                 GameObject gameObject = Instantiate(destroyEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject, debrisDestroyTimer);
             }
-
-            Destroy(gameObject);
+            if (willRespawn)
+            {
+                m_renderer.enabled = false;
+                m_collider.enabled = false;
+                StartCoroutine(Respawn());
+            }
+            else
+            {
+                Destroy(gameObject);
+            }   
         }
+    }
+
+    private IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(timeToRespawn);
+        m_collider.enabled = true;
+        m_renderer.enabled = true;
     }
 }

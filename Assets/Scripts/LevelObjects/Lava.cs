@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class Lava : MonoBehaviour
 {
-    public string[] killStrings;
     private void Start()
     {
         TileTexture();
@@ -29,7 +28,7 @@ public class Lava : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             PlayerController victim = other.gameObject.GetComponent<PlayerController>();
-            victim.TakeDamage(victim.maxHealth, killStrings);
+            victim.TakeDamage(victim.maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathFire);
         }
     }
 

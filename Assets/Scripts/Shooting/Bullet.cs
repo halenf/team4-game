@@ -1,6 +1,6 @@
 // Bullet - Halen, Cameron
 // Determines bullet behaviour
-// Last edit: 16/11/23
+// Last edit: 24/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
         Big, 
         Explode
     }
+
     [Header("Bullet Effects")]
     [SerializeField] [InspectorName("Bullet Effect")] private BulletEffect m_currentEffect;
     public Explosion explosionPrefab;
@@ -41,8 +42,6 @@ public class Bullet : MonoBehaviour
 
     [Tooltip("How intense the glow of the bullet and bullet trail are.")]
     [Range(-5, 5)] public float emissionIntensity;
-
-    public string[] killStrings;
 
     // tracks which particle to instantiate when the bullet is destroyed
     private ParticleSystem m_particle;
@@ -69,26 +68,25 @@ public class Bullet : MonoBehaviour
         {
             case BulletEffect.Ricochet:
             { 
-                BulletDestroy(lifeTime);
                 break;
             }
             case BulletEffect.Big:
             {
                 transform.localScale = transform.localScale * 2;
-                BulletDestroy(lifeTime);
                 break;
             }
             case BulletEffect.Explode:
             {
-                StartCoroutine(Explode(lifeTime));
                 break;
             }
             case BulletEffect.None:
             {
-                BulletDestroy(lifeTime);
                 break;
             }
         }
+
+        // set the bullet to destroy itself after an amount of time
+        StartCoroutine(BulletDestroy(lifeTime));
 
         // Set the bullet material colour and emission intensity
         MeshRenderer bullet = GetComponentInChildren<MeshRenderer>();
@@ -106,15 +104,6 @@ public class Bullet : MonoBehaviour
             trail.material.SetColor("_EmissionColor", trail.material.color * emissionIntensity);
         }
     }
-
-    private IEnumerator Explode(float lifeTime)
-    {
-        yield return new WaitForSeconds(lifeTime);
-        Explosion explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        explosion.Init(explosionDamage, explosionRadius, explosionLifetime);
-        BulletDestroy();
-    }
-
     void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
@@ -137,13 +126,13 @@ public class Bullet : MonoBehaviour
             if (m_currentEffect != BulletEffect.Explode)
             {
                 PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-                player.TakeDamage(m_damage, killStrings);
+                player.TakeDamage(m_damage, AnnouncerSubtitleDisplay.AnnouncementType.DeathBullet);
             }
 
             // set the particle effect to blood
             m_particle = bloodPrefab;
 
-            BulletDestroy();
+            StartCoroutine(BulletDestroy(0));
             return;
         }
 
@@ -161,12 +150,15 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            BulletDestroy();
+            StartCoroutine(BulletDestroy(0));
         }
     }
 
-    private void OnDestroy()
+    private IEnumerator BulletDestroy(float time)
     {
+        // wait for specified amount of time
+        yield return new WaitForSeconds(time);
+
         // instantiate explosion if player has exploding bullets
         // otherwise instantiate sparks
         if (m_currentEffect == BulletEffect.Explode)
@@ -175,15 +167,7 @@ public class Bullet : MonoBehaviour
             explosion.Init(explosionDamage, explosionRadius, explosionLifetime);
         }
         else Instantiate(m_particle, transform.position, transform.rotation);
-    }
 
-    public virtual void BulletDestroy()
-    {
         Destroy(gameObject);
-    }
-
-    public virtual void BulletDestroy(float lifeTime)
-    {
-        Destroy(gameObject, lifeTime);
     }
 }

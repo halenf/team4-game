@@ -10,9 +10,9 @@ using UnityEngine;
 public class DisconnectUI : MonoBehaviour
 {
     [Tooltip("The text saying who disconnected")]
-    public TMP_Text disconnectText;
+    [SerializeField] private TMP_Text disconnectText;
 
-    public void SetText(int playerID)
+    public void SetDisplayDetails(int playerID)
     {
         disconnectText.text = "Player " + (playerID + 1).ToString() + "'s controller has disconnected. Reconnect it to resume or pause to quit.";
     }

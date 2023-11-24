@@ -1,6 +1,6 @@
 // Laser - Cameron
 // Laser behaviour
-// Last edit: 17/11/23
+// Last edit: 24/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,8 +9,10 @@ using UnityEngine;
 public class Laser : Obstacle
 {
     public bool isActive;
-    public string[] killStrings;
-    
+    public ParticleSystem hitParticle;
+    private ParticleSystem m_particleInScene;
+
+
     private LineRenderer lineRenderer;
     /// <summary>
     /// get line renderer
@@ -18,6 +20,8 @@ public class Laser : Obstacle
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        //create the particles in the scene
+        m_particleInScene = Instantiate(hitParticle);
     }
 
     /// <summary>
@@ -37,19 +41,25 @@ public class Laser : Obstacle
                 lineRenderer.SetPosition(0, transform.position);
                 lineRenderer.SetPosition(1, hit.point);
 
+                //move particles
+                m_particleInScene.gameObject.SetActive(true);
+                m_particleInScene.transform.position = hit.point;
+                m_particleInScene.transform.LookAt(transform.position);
+
                 //if hit a player
                 if (hit.collider.gameObject.tag == "Player")
                 {
                     //get player
                     PlayerController hitPlayer = hit.collider.gameObject.GetComponent<PlayerController>();
                     //do max damage
-                    hitPlayer.TakeDamage(hitPlayer.maxHealth, killStrings);
+                    hitPlayer.TakeDamage(hitPlayer.maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathFire);
                 }
             }
             else //just draw line from here to 1000 up
             {
                 lineRenderer.SetPosition(0, transform.position);
                 lineRenderer.SetPosition(1, transform.up * 1000);
+                m_particleInScene.gameObject.SetActive(false);
             }
         }
     }
@@ -63,5 +73,10 @@ public class Laser : Obstacle
     public override void ToggleState(bool state)
     {
         isActive = state;
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(m_particleInScene.gameObject);
     }
 }

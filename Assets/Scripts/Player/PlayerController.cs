@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_rb;
     private PlayerInput m_playerInput;
     private Gamepad m_controller;
+    private Color m_color;
 
     // player ID
     public int id;
@@ -69,8 +70,6 @@ public class PlayerController : MonoBehaviour
     [Min(0)] public float indicatorLifetime;
     [Space(5)]
     public Sprite[] powerupIndicators;
-
-    public string[] spikeBallDeathAnnouncements;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -177,7 +176,8 @@ public class PlayerController : MonoBehaviour
     {
         m_controller = _controller;
         id = _id;
-        GetComponentInChildren<SetColour>().Set(colour); // Set player colour
+        m_color = colour;
+        GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
     }
 
     private void Awake()
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            TakeDamage(7f, spikeBallDeathAnnouncements);
+            TakeDamage(7f, AnnouncerSubtitleDisplay.AnnouncementType.DeathSpikeball);
         }
     }
 
@@ -309,7 +309,7 @@ public class PlayerController : MonoBehaviour
     /// Deal damage to the player and check if they are dead.
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage, string[] deathLines)
+    public void TakeDamage(float damage, AnnouncerSubtitleDisplay.AnnouncementType announcementType)
     {
         // if the player is already dead, don't make them take damage
         if (isDead) return;
@@ -330,27 +330,35 @@ public class PlayerController : MonoBehaviour
         // deal damage
         m_currentHealth -= damage;
 
+        //set emmisoin
+        GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth/maxHealth);
+
         // rumble controller
         Rumble(.2f, .5f, 1.5f);
 
         // if player is dead
         if (m_currentHealth <= 0)
         {
-            GameManager.Instance.UpdateCameraTargetGroup();
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
 
+            // Play death sound
+            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+
+            // remove this player from the target group
+            GameManager.Instance.UpdateCameraTargetGroup();
+
+            // Have announcer say something stupid
+            GameManager.Instance.StartAnnouncement(announcementType);
+
             // let game manager know somebody died
             GameManager.Instance.CheckIsRoundOver();
 
-            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
-
-            GameManager.Instance.Announcment(deathLines);
-
             // deactivate player object
             gameObject.SetActive(false);
-        } else
+        }
+        else
         {
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDAMAGE");
         }
@@ -472,5 +480,10 @@ public class PlayerController : MonoBehaviour
         SetGun(defaultGun);
         m_fireRate = m_currentGun.baseFireRate;
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
+    }
+
+    private void OnEnable()
+    {
+        GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
     }
 }

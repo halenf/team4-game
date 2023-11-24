@@ -40,8 +40,6 @@ public class GameManager : MonoBehaviour
     public PauseUI pauseCanvasPrefab;
     public LeaderboardUI leaderboardCanvasPrefab;
     public DisconnectUI disconnectCanvasPrefab;
-    public DangerUI dangerCanvasPrefab;
-    public SubtitleUI subtitleCanvasPrefab;
 
     // canvas references
     private StartUI m_startCanvas;
@@ -49,7 +47,6 @@ public class GameManager : MonoBehaviour
     private PauseUI m_pauseCanvas;
     private LeaderboardUI m_leaderboardCanvas;
     private DisconnectUI m_disconnectCanvas;
-    private DangerUI m_dangerCanvas;
 
     [Header("Cinemachine Prefabs")]
     [SerializeField] private CinemachineVirtualCamera m_staticCamera;
@@ -72,17 +69,6 @@ public class GameManager : MonoBehaviour
     // stage tracking
     private GameObject m_currentStageObject;
     private int m_roundNumber = 0;
-
-    /// to be moved
-
-    public float scoreViewingTime; // needs to be in leaderboard UI
-    public float subtitleTime; // needs to be in subtitle UI
-
-    // both need to be in subtitle UI. make a death type enum or something to pass the kind of death to subtitle UI
-    public string[] beginAnnouncements;
-    public string[] endAnnouncements;
-
-    /// end to be moved
 
     // Game mode tracking
     private enum GameMode
@@ -175,14 +161,12 @@ public class GameManager : MonoBehaviour
         m_pauseCanvas = Instantiate(pauseCanvasPrefab);
         m_leaderboardCanvas = Instantiate(leaderboardCanvasPrefab);
         m_disconnectCanvas = Instantiate(disconnectCanvasPrefab);
-        m_dangerCanvas = Instantiate(dangerCanvasPrefab);
 
         m_startCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.gameObject.SetActive(false);
         m_pauseCanvas.gameObject.SetActive(false);
         m_leaderboardCanvas.gameObject.SetActive(false);
         m_disconnectCanvas.gameObject.SetActive(false);
-        m_dangerCanvas.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -190,17 +174,20 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void CheckControllers()
     {
-        //for all of the controllers connected to the computer
-        for (int i = 0; i < Gamepad.all.Count; i++)
+        //for all of the controllers connected to the computer, while there aren't already 4 players connected
+        if (m_controllers.Count < 4)
         {
-            //check if the current gamepad has a button pressed and is not stored
-            if (Gamepad.all[i].allControls.Any(x => x is ButtonControl button && x.IsPressed() && !x.synthetic) && !m_controllers.Contains(Gamepad.all[i]))
+            for (int i = 0; i < Gamepad.all.Count; i++)
             {
-                //store controller and add player to leaderboard
-                m_controllers.Add(Gamepad.all[i]);
+                //check if the current gamepad has a button pressed and is not stored
+                if (Gamepad.all[i].allControls.Any(x => x is ButtonControl button && x.IsPressed() && !x.synthetic) && !m_controllers.Contains(Gamepad.all[i]))
+                {
+                    //store controller and add player to leaderboard
+                    m_controllers.Add(Gamepad.all[i]);
 
-                // Since the list of connected controllers was updated, we need to update the StartUI to reflect that
-                m_startCanvas.SetDisplayDetails(m_controllers);
+                    // Since the list of connected controllers was updated, we need to update the StartUI to reflect that
+                    m_startCanvas.SetDisplayDetails(m_controllers, m_controllers.Count - 1);
+                }
             }
         }
 
@@ -288,7 +275,6 @@ public class GameManager : MonoBehaviour
         // Set correct game state
         m_gameState = GameState.Playing;
 
-        // Cinemachine camera setup
         // Set current active camera
         m_staticCamera.gameObject.SetActive(false);
         m_gameplayCamera.gameObject.SetActive(true);
@@ -306,7 +292,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void LoadStage()
     {
-
         // Destroy any bullets that might remain in the level from the last level
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
@@ -346,10 +331,12 @@ public class GameManager : MonoBehaviour
         m_gameplayCanvas.gameObject.SetActive(true);
         m_gameplayCanvas.StartCountdown();
         m_isPaused = false;
-        Announcment(beginAnnouncements);
+        StartAnnouncement(AnnouncerSubtitleDisplay.AnnouncementType.BeforeRound);
     }
+
     /// <summary>
-    /// A public method to be called by a player before it dies
+    /// Called by a player when it dies to check if the round has ended.
+    /// Will either progress to the next round or end the game.
     /// </summary>
     public void CheckIsRoundOver()
     {
@@ -397,7 +384,7 @@ public class GameManager : MonoBehaviour
     /// returns true if the end condition has been met
     /// </summary>
     /// <returns></returns>
-    private bool IsGameOver()
+    public bool IsGameOver()
     {
         bool isGameOver = false;
 
@@ -418,11 +405,10 @@ public class GameManager : MonoBehaviour
 
     private void EndRound(int winningPlayerID)
     {
-        Announce(endAnnouncements); // this needs to be in subtitleUI
+        StartAnnouncement(AnnouncerSubtitleDisplay.AnnouncementType.EndRound); // this needs to be in subtitleUI
 
         // Disable players and toggle relevant canvases
         DisablePlayers();
-        m_dangerCanvas.gameObject.SetActive(false);
         m_leaderboardCanvas.gameObject.SetActive(true);
         m_leaderboardCanvas.SetDisplayDetails(winningPlayerID, m_leaderboard, false);
         m_gameplayCanvas.SetDisplayDetails(winningPlayerID + 1);
@@ -482,7 +468,7 @@ public class GameManager : MonoBehaviour
             DisablePlayers(); // Disable all player inputs
             m_focusedPlayerController.EnableInput(); // Re-enable input for the pauser
             m_focusedPlayerController.SetControllerMap("UI"); // Let the pauser control the UI
-            m_pauseCanvas.SetDisplayDetails(m_focusedPlayerController.id + 1); // Update the PauseUI details
+            m_pauseCanvas.SetDisplayDetails(m_focusedPlayerController.id); // Update the PauseUI details
             EventSystemManager.Instance.SetCurrentSelectedGameObject(m_pauseCanvas.defaultSelectedObject);
             EventSystemManager.Instance.SetPlayerToControl(m_focusedPlayerController);
             // end Halen
@@ -500,36 +486,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// needs to go into subtitle UI
-
-    public void Announcment(string deathSubtitle)
+    /// <summary>
+    /// Enables the laser warning image on the GameplayUI.
+    /// </summary>
+    public void ShowEndLaserWarning()
     {
-        StartCoroutine(Announce(deathSubtitle));
+        m_gameplayCanvas.ShowLaserWarning();
     }
 
-    private IEnumerator Announce(string deathSubtitle)
+    public void StartAnnouncement(AnnouncerSubtitleDisplay.AnnouncementType announcementType)
     {
-        m_gameplayCanvas.SetSubtitles(deathSubtitle);
-        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
-        yield return new WaitForSeconds(subtitleTime);
-        m_gameplayCanvas.TurnOffSubtitles();
+        m_gameplayCanvas.StartAnnouncement(announcementType);
     }
-
-    public void Announcment(string[] deathSubtitles)
-    {
-        StartCoroutine(Announce(deathSubtitles));
-    }
-
-    private IEnumerator Announce(string[] deathSubtitles)
-    {
-        string chosenText = deathSubtitles[Random.Range(0, deathSubtitles.Length)];
-        m_gameplayCanvas.SetSubtitles(chosenText);
-        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
-        yield return new WaitForSeconds(subtitleTime);
-        m_gameplayCanvas.TurnOffSubtitles();
-    }
-
-    /// end needs to go in subtitle UI
 
     /// <summary>
     /// Updates the array of targets that the CinemachineTargetGroup object tracks for the Gameplay Camera to follow.
@@ -569,28 +537,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Disconnected(int disconnectedPlayerID)
+    /// <summary>
+    /// When a controller disconnects.
+    /// </summary>
+    /// <param name="playerID"></param>
+    public void Disconnected(int playerID)
     {
-        int playerID = disconnectedPlayerID + 1;
         m_disconnectCanvas.gameObject.SetActive(true);
-        m_disconnectCanvas.SetText(playerID);
+        m_disconnectCanvas.SetDisplayDetails(playerID);
         Time.timeScale = 0f;
     }
 
+    /// <summary>
+    /// When a disconnected controller reconnects.
+    /// </summary>
     public void Reconnected()
     {
         m_disconnectCanvas.gameObject.SetActive(false);
         // only reset timescale if game isn't paused
         if (!m_isPaused) Time.timeScale = 1f;
-    }
-
-    public void ShowDanger()
-    {
-        if (m_dangerCanvas.gameObject.activeSelf)
-        {
-            m_dangerCanvas.gameObject.SetActive(true);
-            m_dangerCanvas.StartTurnOffDanger();
-        }
     }
 
     /// <summary>

@@ -6,33 +6,28 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseUI : MonoBehaviour
 {
     [Header("UI Elements")]
     [Tooltip("Label that displays which player has control of the menu.")]
-    public TMP_Text labelDisplay;
+    [SerializeField] private Image m_labelDisplay;
+    [SerializeField] private Sprite[] m_playerLabelSprites;
 
-    [Header("Default Selected Object")]
+    [Header("Event System Settings")]
     public GameObject defaultSelectedObject;
 
+    [Header("Transition Prefabs")]
     public GameObject fadeOut;
     public GameObject fadeOutReset;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        labelDisplay.text = "Player 1";
-    }
 
     /// <summary>
     /// Update all the display details of the canvas.
     /// </summary>
-    public void SetDisplayDetails(int playerNumber)
+    public void SetDisplayDetails(int playerID)
     {
-        string text = labelDisplay.text;
-        text = text.Remove(text.Length - 1).Insert(text.Length - 1, playerNumber.ToString());
-        labelDisplay.text = text;
+        m_labelDisplay.sprite = m_playerLabelSprites[playerID];
     }
 
     public void OnResume()
