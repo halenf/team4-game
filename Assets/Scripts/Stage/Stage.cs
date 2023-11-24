@@ -80,9 +80,12 @@ public class Stage : MonoBehaviour
     private void Update()
     {
         m_currentRoundTime += Time.deltaTime;
-        if (m_currentRoundTime > roundTime && !m_madeLasers)
+
+        // spawn the end lasers if the round has ended
+        if (!m_madeLasers && m_currentRoundTime >= roundTime)
         { 
             MakeLasers();
+            GameManager.Instance.ShowEndLaserWarning();
             m_madeLasers = true;
         }
     }
@@ -184,10 +187,7 @@ public class Stage : MonoBehaviour
     {
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
-            GameObject laserReference = Instantiate(endLaserPrefab, endLaserSpawns[i].transform, endLaserSpawns[i]);
-            laserReference.transform.parent = endLaserSpawns[i];
-            laserReference.transform.position = laserReference.transform.parent.transform.position;
-            laserReference.transform.rotation = laserReference.transform.parent.transform.rotation;
+            Instantiate(endLaserPrefab, endLaserSpawns[i].transform);
         }
     }
 }

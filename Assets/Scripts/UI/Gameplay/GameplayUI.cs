@@ -7,17 +7,18 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static AnnouncerSubtitleDisplay;
 
 public class GameplayUI : MonoBehaviour
 {
     public Sprite[] countdownSprites;
-    public Sprite startSprite;
+    public Sprite startRoundSprite;
     
     [Header("UI Elements")]
     [SerializeField] private Image m_countdownDisplay;
     [SerializeField] private TMP_Text m_roundWinnerDisplay;
-    [SerializeField] private GameObject m_subtitlesObject;
-    private TMP_Text m_subtitlesText;
+    [SerializeField] private AnnouncerSubtitleDisplay m_announcerSubtitleDisplay;
+    [SerializeField] private EndLaserWarning m_endLaserDisplay;
 
     //start stuff taken from leaderboard
     public GameObject fadeOut;
@@ -25,17 +26,13 @@ public class GameplayUI : MonoBehaviour
     [Space(10)]
     public float leaderboardDisplayTime;
 
-    private void Awake()
-    {
-        m_subtitlesText = m_subtitlesObject.GetComponentInChildren<TMP_Text>();
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         m_countdownDisplay.gameObject.SetActive(false);
         m_roundWinnerDisplay.text = "";
-        m_subtitlesObject.SetActive(false);
+        m_announcerSubtitleDisplay.gameObject.SetActive(true);
+        m_endLaserDisplay.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -52,6 +49,7 @@ public class GameplayUI : MonoBehaviour
     public void StartCountdown()
     {
         StartCoroutine(Countdown());
+        m_endLaserDisplay.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -61,6 +59,20 @@ public class GameplayUI : MonoBehaviour
     public void StartRoundEnd(int winningPlayerID)
     {
         StartCoroutine(RoundEnd(winningPlayerID));
+    }
+
+    /// <summary>
+    /// Enables the image with the laser warning.
+    /// </summary>
+    public void ShowLaserWarning()
+    {
+        m_endLaserDisplay.gameObject.SetActive(true);
+    }
+
+    public void StartAnnouncement(AnnouncementType announcementType)
+    {
+        m_announcerSubtitleDisplay.gameObject.SetActive(true);
+        m_announcerSubtitleDisplay.StartAnnouncement(announcementType);
     }
 
     private IEnumerator Countdown()
@@ -74,19 +86,19 @@ public class GameplayUI : MonoBehaviour
         foreach (Sprite sprite in countdownSprites)
         {
             m_countdownDisplay.sprite = sprite;
-            m_countdownDisplay.SetNativeSize();
-            yield return new WaitForSeconds(1);
+            //m_countdownDisplay.SetNativeSize();
+            yield return new WaitForSeconds(0.75f);
         }
 
         // Enable player inputs and start round
         
-        m_countdownDisplay.sprite = startSprite;
-        m_countdownDisplay.SetNativeSize();
+        m_countdownDisplay.sprite = startRoundSprite;
+        //m_countdownDisplay.SetNativeSize();
 
         GameManager.Instance.EnablePlayers();
 
-        // Keep "Go!" up for 1.5 seconds
-        yield return new WaitForSeconds(1.5f);
+        // Keep Fight! up
+        yield return new WaitForSeconds(0.75f);
         m_countdownDisplay.gameObject.SetActive(false);
     }
 
@@ -102,14 +114,5 @@ public class GameplayUI : MonoBehaviour
         Instantiate(fadeOut);
     }
 
-    public void SetSubtitles(string subtitle)
-    {
-        m_subtitlesObject.SetActive(true);
-        m_subtitlesText.text = subtitle;
-    }
-
-    public void TurnOffSubtitles()
-    {
-        m_subtitlesObject.SetActive(false);
-    }
+    
 }
