@@ -101,6 +101,8 @@ MonoBehaviour:
   destroyEffect: {fileID: 0}
   maxHealth: 2
   debrisDestroyTimer: 1
+  willRespawn: 0
+  timeToRespawn: 0
 --- !u!65 &576618691883989526
 BoxCollider:
   m_ObjectHideFlags: 0

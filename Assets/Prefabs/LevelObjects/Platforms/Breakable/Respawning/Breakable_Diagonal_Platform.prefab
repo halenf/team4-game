@@ -115,5 +115,5 @@ MonoBehaviour:
   destroyEffect: {fileID: 0}
   maxHealth: 2
   debrisDestroyTimer: 1
-  willRespawn: 0
-  timeToRespawn: 0
+  willRespawn: 1
+  timeToRespawn: 15
