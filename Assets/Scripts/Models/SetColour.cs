@@ -10,8 +10,11 @@ public class SetColour : MonoBehaviour
 {
     [Tooltip("Array of the objects that will have their colour changed. The children of the objects will also be searched for renderers.")]
     public GameObject[] objects;
-    public float maxEmissionMultiplyer;
-    public float minEmissionMultiplyer;
+    [Header("Brightness settings")]
+    [Tooltip("the brightness of the player at max health")]
+    [Min(0)]public float maxEmissionMultiplier;
+    [Tooltip("the brightness of the player at max health")]
+    [Min(0)]public float minEmissionMultiplier;
 
     private Color m_setColour;
 
@@ -41,7 +44,7 @@ public class SetColour : MonoBehaviour
             
             if (renderer.material.IsKeywordEnabled("_EMISSION"))
             {
-                renderer.material.SetColor("_EmissionColor", (maxEmissionMultiplyer * colour));
+                renderer.material.SetColor("_EmissionColor", (maxEmissionMultiplier * colour));
             }
             renderer.material.SetColor("_Color", colour);
         }
@@ -71,7 +74,7 @@ public class SetColour : MonoBehaviour
 
             if (renderer.material.IsKeywordEnabled("_EMISSION"))
             {
-                renderer.material.SetColor("_EmissionColor", colour * (((maxEmissionMultiplyer - minEmissionMultiplyer) * emmisionPercentage) + minEmissionMultiplyer));
+                renderer.material.SetColor("_EmissionColor", colour * (((maxEmissionMultiplier - minEmissionMultiplier) * emmisionPercentage) + minEmissionMultiplier));
             }
             renderer.material.SetColor("_Color", colour);
         }
