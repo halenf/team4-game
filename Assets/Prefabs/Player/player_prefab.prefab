@@ -91,7 +91,8 @@ MonoBehaviour:
   objects:
   - {fileID: 3094616031571524836}
   - {fileID: 1978437280767417564}
-  emissiveMultiplier: 5
+  maxEmissionMultiplyer: 5
+  minEmissionMultiplyer: 2
 --- !u!114 &5814125836590746924
 MonoBehaviour:
   m_ObjectHideFlags: 0

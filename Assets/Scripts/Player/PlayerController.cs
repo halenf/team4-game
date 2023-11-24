@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_rb;
     private PlayerInput m_playerInput;
     private Gamepad m_controller;
+    private Color m_color;
 
     // player ID
     public int id;
@@ -177,7 +178,8 @@ public class PlayerController : MonoBehaviour
     {
         m_controller = _controller;
         id = _id;
-        GetComponentInChildren<SetColour>().Set(colour); // Set player colour
+        m_color = colour;
+        GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
     }
 
     private void Awake()
@@ -329,6 +331,9 @@ public class PlayerController : MonoBehaviour
 
         // deal damage
         m_currentHealth -= damage;
+
+        //set emmisoin
+        GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth/maxHealth);
 
         // rumble controller
         Rumble(.2f, .5f, 1.5f);
