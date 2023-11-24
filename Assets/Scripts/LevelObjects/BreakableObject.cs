@@ -55,6 +55,10 @@ public class BreakableObject : MonoBehaviour
                 m_renderer.enabled = false;
                 m_collider.enabled = false;
                 StartCoroutine(Respawn());
+            }
+            else
+            {
+                Destroy(gameObject);
             }   
         }
     }
