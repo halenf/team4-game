@@ -1,6 +1,6 @@
 // Laser - Cameron
 // Laser behaviour
-// Last edit: 17/11/23
+// Last edit: 24/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +10,10 @@ public class Laser : Obstacle
 {
     public bool isActive;
     public string[] killStrings;
-    
+    public ParticleSystem hitParticle;
+    private ParticleSystem m_particleInScene;
+
+
     private LineRenderer lineRenderer;
     /// <summary>
     /// get line renderer
@@ -18,6 +21,8 @@ public class Laser : Obstacle
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        //create the particles in the scene
+        m_particleInScene = Instantiate(hitParticle);
     }
 
     /// <summary>
@@ -36,6 +41,9 @@ public class Laser : Obstacle
                 //draw line between here and end point of ray
                 lineRenderer.SetPosition(0, transform.position);
                 lineRenderer.SetPosition(1, hit.point);
+                //move particles
+                m_particleInScene.transform.position = hit.point;
+                m_particleInScene.transform.LookAt(transform.position);
 
                 //if hit a player
                 if (hit.collider.gameObject.tag == "Player")
@@ -50,6 +58,7 @@ public class Laser : Obstacle
             {
                 lineRenderer.SetPosition(0, transform.position);
                 lineRenderer.SetPosition(1, transform.up * 1000);
+                m_particleInScene.transform.position = new Vector3(99999999f, 99999999f, 0);
             }
         }
     }
