@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6360428496617983723}
   m_Layer: 0
   m_Name: Breakable_DoubleSided_Platform
-  m_TagString: Untagged
+  m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,3 +114,5 @@ MonoBehaviour:
   destroyEffect: {fileID: 0}
   maxHealth: 2
   debrisDestroyTimer: 1
+  willRespawn: 0
+  timeToRespawn: 0
