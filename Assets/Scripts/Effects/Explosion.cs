@@ -19,8 +19,10 @@ public class Explosion : MonoBehaviour
     [Header("Particle Systems")]
     public ParticleSystem fragments;
     public ParticleSystem blast;
+
+    [Header("Audio Properties")]
     public float volume;
-    public string[] killStrings;
+
     void Update()
     {
         if (m_shouldDisableCollider) GetComponent<SphereCollider>().enabled = false;
@@ -87,7 +89,7 @@ public class Explosion : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
-            player.TakeDamage(damage, killStrings);
+            player.TakeDamage(damage, AnnouncerSubtitleDisplay.AnnouncementType.DeathExplosion);
             m_shouldDisableCollider = true;
         }
 

@@ -11,46 +11,45 @@ using UnityEngine.InputSystem;
 
 public class StartUI : MonoBehaviour
 {
+    [Header("UI Elements")]
     [Tooltip("Array for each of the text objects for the connected player displays.")]
-    public TMP_Text[] playerConnectedDisplay;
-    public GameObject[] inputImages;
-    public TMP_Text startPromptDisplay;
+    [SerializeField] private Image[] m_playerConnectedDisplays;
+    [SerializeField] private Image[] m_inputDisplays;
+    [SerializeField] private GameObject m_startPromptDisplay;
 
-    [Header("Default Strings")]
-    [Tooltip("The text that is displayed in a controller slot when there isn't a player bound to it.")]
-    public string emptyControllerSlotText;
-    [Tooltip("The text that is displayed in a controller slot once a player binds to it.")]
-    public string fullControllerSlotText;
-    [Tooltip("Prompt that is displayed when at least two players are connected and the game can start.")]
-    public string readyToStartText;
+    [Header("Sprites")]
+    [SerializeField] private Sprite m_connectPromptSprite;
+    [SerializeField] private Sprite[] m_connectedDisplaySprites;
 
     private void Start()
     {
-        // Set each player text box display to the default text
-        foreach(TMP_Text textObject in playerConnectedDisplay)
+        // Set each player display to the join prompt
+        foreach(Image image in m_playerConnectedDisplays)
         {
-            textObject.text = emptyControllerSlotText;
+            image.sprite = m_connectPromptSprite;
         }
 
-        // Empty the start prompt display
-        startPromptDisplay.text = "";
+        // Disable start prompt display
+        m_startPromptDisplay.SetActive(false);
     }
 
     /// <summary>
     /// Update all the display details of the canvas.
     /// </summary>
-    public void SetDisplayDetails(List<Gamepad> controllers)
+    public void SetDisplayDetails(List<Gamepad> controllers, int playerID)
     {
         for (int i = 0; i < controllers.Count; i++)
         {
-            playerConnectedDisplay[i].text = fullControllerSlotText;
+            m_playerConnectedDisplays[playerID].sprite = m_connectedDisplaySprites[playerID];
         }
 
-        if (controllers.Count > 1) startPromptDisplay.text = readyToStartText;
+        // activate the start prompt
+        if (controllers.Count > 1) m_startPromptDisplay.SetActive(true);
     }
 
+    // turn on the knobs when a player has input
     public void ShowPlayerInput(bool show, int id)
     {
-        inputImages[id].SetActive(show);
+        m_inputDisplays[id].gameObject.SetActive(show);
     }
 }
