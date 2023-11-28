@@ -35,7 +35,7 @@ public class Laser : Obstacle
             RaycastHit hit;
 
             //if the ray doesnt hit any thing in 1000 units
-            if (Physics.Raycast(transform.position, transform.up, out hit, 1000))
+            if (Physics.Raycast(transform.position, transform.up, out hit, 1000, 1, QueryTriggerInteraction.Ignore))
             {
                 //draw line between here and end point of ray
                 lineRenderer.SetPosition(0, transform.position);
