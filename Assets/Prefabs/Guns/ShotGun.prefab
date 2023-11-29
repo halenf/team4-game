@@ -4924,6 +4924,7 @@ MonoBehaviour:
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 5502464817876774055}
   indicator: {fileID: 21300000, guid: 9870cdbefaa49774abb6dc0e38505401, type: 3}
+  colour: {r: 1, g: 0.7236256, b: 0.08784264, a: 1}
   bulletPrefab: {fileID: 2271769695517889325, guid: 15ef51ede76b142468b93acdca306149, type: 3}
   spread: 20
   bulletSpeed: 12
