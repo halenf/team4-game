@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     private PauseUI m_pauseCanvas;
     private LeaderboardUI m_leaderboardCanvas;
     private DisconnectUI m_disconnectCanvas;
+    public AnnouncerSubtitleDisplay announcerSubtitleDisplay;
 
     [Header("Cinemachine Prefabs")]
     [SerializeField] private CinemachineVirtualCamera m_staticCamera;
@@ -496,7 +497,12 @@ public class GameManager : MonoBehaviour
 
     public void StartAnnouncement(AnnouncerSubtitleDisplay.AnnouncementType announcementType)
     {
-        m_gameplayCanvas.StartAnnouncement(announcementType);
+        announcerSubtitleDisplay.StartAnnouncement(announcementType);
+    }
+
+    public void StopAnnouncer()
+    {
+        announcerSubtitleDisplay.StopText();
     }
 
     /// <summary>

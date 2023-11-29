@@ -75,7 +75,7 @@ public class Laser : Obstacle
         isActive = state;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         Destroy(m_particleInScene.gameObject);
     }

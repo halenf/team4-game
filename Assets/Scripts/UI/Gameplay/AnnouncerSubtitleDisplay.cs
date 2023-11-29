@@ -10,6 +10,7 @@ using UnityEngine;
 public class AnnouncerSubtitleDisplay : MonoBehaviour
 {
     public TMP_Text subtitleDisplay;
+    public GameObject display;
     public float displayTime;
 
     [Header("Round Quotes")]
@@ -34,11 +35,9 @@ public class AnnouncerSubtitleDisplay : MonoBehaviour
 
     public void StartAnnouncement(AnnouncementType announcementType)
     {
-        StartCoroutine(Announce(announcementType));
-    }
-
-    private IEnumerator Announce(AnnouncementType announcementType)
-    {
+        display.SetActive(false);
+        subtitleDisplay.gameObject.SetActive(false);
+        subtitleDisplay.gameObject.SetActive(true);
         string chosenText = "";
 
         // randomly select a string from the specifided announcement type list
@@ -67,15 +66,11 @@ public class AnnouncerSubtitleDisplay : MonoBehaviour
         // display the chosen string and play the talking sound effect
         subtitleDisplay.text = chosenText;
         SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
-
-        // wait to let players read, then disable the display
-        yield return new WaitForSeconds(displayTime);
-        gameObject.SetActive(false);
     }
 
-    // turn off any coroutines if the canvas is disabled
-    private void OnDisable()
+    public void StopText()
     {
-        StopAllCoroutines();
+        subtitleDisplay.gameObject.SetActive(false);
+        display.SetActive(true);
     }
 }
