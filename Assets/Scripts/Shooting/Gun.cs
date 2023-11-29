@@ -19,6 +19,7 @@ public abstract class Gun : MonoBehaviour
     public ParticleSystem muzzleFlash;
     [Space(5)]
     public Sprite indicator;
+    public Color colour;
 
     [Header("Bullet Properties")]
     [InspectorName("Prefab")] public Bullet bulletPrefab;
