@@ -15,12 +15,12 @@ public class Pistol : Gun
     [Min(0)] public float shootingSpeed;
     
    
-    public override void Shoot(int playerID, Bullet.BulletEffect effect)
+    public override void Shoot(int playerID, Bullet.BulletEffect effect, int bounces)
     {
-        StartCoroutine(BurstShot(playerID, effect));
+        StartCoroutine(BurstShot(playerID, effect, bounces));
     }
 
-    private IEnumerator BurstShot(int playerID, Bullet.BulletEffect effect)
+    private IEnumerator BurstShot(int playerID, Bullet.BulletEffect effect, int bounces)
     {
         for (int i = 0; i < burstNumber; i++)
         {
@@ -33,7 +33,7 @@ public class Pistol : Gun
 
             // instantiate the bullet
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
-            bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
+            bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, bounces, effect);
 
             // Activate the muzzle flash
             muzzleFlash.Play();

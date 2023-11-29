@@ -87,6 +87,7 @@ MonoBehaviour:
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 0}
   indicator: {fileID: 21300000, guid: 8b4645e13db37784ca3fb1e9265723e0, type: 3}
+  colour: {r: 1, g: 0.21905372, b: 0, a: 1}
   bulletPrefab: {fileID: 2271769695517889325, guid: 1fd930c455b1d034dbddf541530112c3, type: 3}
   spread: 20
   bulletSpeed: 3
@@ -100,11 +101,6 @@ MonoBehaviour:
   pitchMagnitude: 0.2
   volume: 1
   timeToColliderOff: 1
-  killStrings:
-  - Toasty!
-  - Smells like fresh bacon!
-  - "And just when you thought things couldn\u2019t get any hotter!"
-  - "Looks like they couldn\u2019t handle the heat!"
 --- !u!65 &7110224535071332244
 BoxCollider:
   m_ObjectHideFlags: 0

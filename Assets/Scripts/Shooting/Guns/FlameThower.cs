@@ -24,7 +24,7 @@ public class FlameThower : Gun
         SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
     }
 
-    public override void Shoot(int playerID, Bullet.BulletEffect effect)
+    public override void Shoot(int playerID, Bullet.BulletEffect effect, int bounces)
     {
         m_audioSource.enabled = true;
         //get player ID so it is impossible to damage shooter

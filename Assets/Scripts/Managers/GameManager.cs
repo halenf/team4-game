@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] stageList;
     public int numberOfRounds;
     public AnnouncerCamera announcerCamera;
+    private AnnouncerCamera m_announcerCamera;
     public float timeToNextPlayer;
     [Space(5)]
     [SerializeField] private List<int> m_leaderboard;
@@ -95,6 +96,7 @@ public class GameManager : MonoBehaviour
         // Hide and lock the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        m_announcerCamera = Instantiate(announcerCamera);
 
         // Initialise game manager
         Init();
@@ -540,7 +542,7 @@ public class GameManager : MonoBehaviour
         //    }
         //}
 
-        announcerCamera.SetNewParent(m_targetGroup.m_Targets[Random.Range(0, m_targetGroup.m_Targets.Length)].target.transform);
+        m_announcerCamera.SetNewParent(m_targetGroup.m_Targets[Random.Range(0, m_targetGroup.m_Targets.Length)].target.transform);
         StartCoroutine(ChangeDisplayLater());
     }
 
