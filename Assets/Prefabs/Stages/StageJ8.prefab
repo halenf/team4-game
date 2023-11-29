@@ -951,7 +951,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4379422299281236799}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25, y: -12.749999, z: 0}
+  m_LocalPosition: {x: 0.25, y: -15.999999, z: 0}
   m_LocalScale: {x: 342, y: 3, z: 6.43}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1034,11 +1034,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e8dfe3d01b0784fa75031d80d2befa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killStrings:
-  - Toasty!
-  - Smells like fresh bacon!
-  - "And just when you thought things couldn\u2019t get any hotter!"
-  - "Looks like they couldn\u2019t handle the heat!"
 --- !u!1 &4465622865246249102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,6 +1530,8 @@ MonoBehaviour:
   destroyEffect: {fileID: 3623149681444135517, guid: a382766b8b320394197bb30a677620b7, type: 3}
   maxHealth: 0.1
   debrisDestroyTimer: 0
+  willRespawn: 0
+  timeToRespawn: 0
 --- !u!54 &4346147391956617628
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2858,6 +2855,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (4)
@@ -3230,6 +3235,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (10)
@@ -3540,6 +3549,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (6)
@@ -3664,6 +3681,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (2)
@@ -3850,6 +3875,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (13)
@@ -4036,6 +4065,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid
@@ -4098,6 +4135,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (9)
@@ -4222,6 +4263,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: 3238632336454634380, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238632336454634380, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8154756448040958373, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -4408,6 +4457,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (1)
@@ -4470,6 +4527,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: 3238632336454634380, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3238632336454634380, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8154756448040958373, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -4594,6 +4659,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (8)
@@ -5648,6 +5721,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (3)
@@ -6020,6 +6101,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (12)
@@ -6144,6 +6229,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: 3238632336454634380, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8154756448040958373, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -6578,6 +6667,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (15)
@@ -6826,6 +6919,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (11)
@@ -6888,6 +6985,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (17)
@@ -6950,6 +7051,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (7)
@@ -7136,6 +7245,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: 3238632336454634380, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8154756448040958373, guid: 63ce4b34b6274324fb823f9c5ffcaf71, type: 3}
       propertyPath: m_RootOrder
       value: 21
@@ -7260,6 +7373,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: m_movesPositive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (5)
@@ -7570,6 +7691,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (14)
@@ -7880,6 +8005,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4806594442504811402}
     m_Modifications:
+    - target: {fileID: -2852454377322797574, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
+      propertyPath: speed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 5538961427421164993, guid: a587a514220f0ad4d93f066f363c8193, type: 3}
       propertyPath: m_Name
       value: ConveyorMid (16)
