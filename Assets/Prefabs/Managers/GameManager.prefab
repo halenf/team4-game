@@ -53,7 +53,7 @@ MonoBehaviour:
   m_gameplayCamera: {fileID: 0}
   m_targetGroup: {fileID: 0}
   cinemachineRadius: 1
-  playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
+  playerPrefab: {fileID: 5814125836590746925, guid: 92d7f2a37ec398a4da518f9b05e43deb, type: 3}
   playerColours:
   - {r: 0.12941173, g: 0.3607843, b: 1, a: 1}
   - {r: 1, g: 0.07058824, b: 0, a: 1}

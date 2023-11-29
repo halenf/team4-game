@@ -690,10 +690,6 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: playerPrefab
-      value: 
-      objectReference: {fileID: 5814125836590746925, guid: 92d7f2a37ec398a4da518f9b05e43deb, type: 3}
-    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_targetGroup
       value: 
       objectReference: {fileID: 914060164}
