@@ -541,6 +541,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 302942161, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_XDamping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 302942161, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_MaxDollyIn
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 302942161, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_MaxDollyOut
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 302942162, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_MaximumDistance
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 302942162, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
+      propertyPath: m_MinimumDistance
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 4323402439503292132, guid: 8a4c586f96ccc2c41aca7c8da9b489ff, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -692,7 +712,7 @@ PrefabInstance:
       objectReference: {fileID: 2364201596277266086}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[0]
@@ -701,7 +721,7 @@ PrefabInstance:
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[1]
       value: 
-      objectReference: {fileID: 3170264843013748611, guid: d6364d577a154ed44901f70dcfed2c99, type: 3}
+      objectReference: {fileID: 6020532710181630620, guid: 56d0b9382e6fb414191fb672c887aa2d, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[2]
       value: 
