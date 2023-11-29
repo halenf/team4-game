@@ -65,7 +65,7 @@ public class AnnouncerSubtitleDisplay : MonoBehaviour
 
         // display the chosen string and play the talking sound effect
         subtitleDisplay.text = chosenText;
-        SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
+        //SoundManager.Instance.PlaySound("Announcer/VA-ROBOTCHATTERLONGER");
     }
 
     public void StopText()
