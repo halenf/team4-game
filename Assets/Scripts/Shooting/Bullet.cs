@@ -37,6 +37,7 @@ public class Bullet : MonoBehaviour
     public ParticleSystem sparksPrefab;
     public ParticleSystem ricochetPrefab;
     public ParticleSystem bloodPrefab;
+    private bool m_secondRiccochet = false;
 
     [Space(10)]
 
@@ -146,7 +147,14 @@ public class Bullet : MonoBehaviour
         if (m_currentEffect == BulletEffect.Ricochet)
         {
             Instantiate(ricochetPrefab, transform.position, transform.rotation);
-            m_currentEffect = BulletEffect.None;
+            if (m_secondRiccochet == true)
+            {
+                m_currentEffect = BulletEffect.None;
+            } else
+            {
+                m_secondRiccochet = true;
+            }
+            
         }
         else
         {
