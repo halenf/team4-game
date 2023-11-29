@@ -49,38 +49,20 @@ MonoBehaviour:
   pauseCanvasPrefab: {fileID: 8768610932739141917, guid: b61f58d3a8c70bb45a14d26606a7637b, type: 3}
   leaderboardCanvasPrefab: {fileID: 6931777853157890115, guid: d80e4a176261e514c81fba0e75de5403, type: 3}
   disconnectCanvasPrefab: {fileID: 2559865700041908714, guid: ac8428efec677244b89fb469854fee69, type: 3}
-  dangerCanvasPrefab: {fileID: -4508779246074093925, guid: ea6e811e9e3b1584590b5d1d26b252c3, type: 3}
-  subtitleCanvasPrefab: {fileID: 1750427500097721667, guid: d4b8559dc193f084ba2044ee277ea33e, type: 3}
   m_staticCamera: {fileID: 0}
   m_gameplayCamera: {fileID: 0}
   m_targetGroup: {fileID: 0}
   cinemachineRadius: 1
-  playerPrefab: {fileID: 5814125836590746925, guid: 237ee76a65f8b30498a5c05bd8d1cf35, type: 3}
+  playerPrefab: {fileID: 5814125836590746925, guid: 92d7f2a37ec398a4da518f9b05e43deb, type: 3}
   playerColours:
   - {r: 0.12941173, g: 0.3607843, b: 1, a: 1}
   - {r: 1, g: 0.07058824, b: 0, a: 1}
   - {r: 1, g: 0.45882353, b: 0.05490196, a: 1}
   - {r: 0.34117648, g: 1, b: 0.011764706, a: 1}
-  controlCube: {fileID: 5814125836590746925, guid: 3eb93a620c640a24ab6aa0d51dd88c17, type: 3}
   stageList:
   - {fileID: 3771888446113775381, guid: ca8869b86fab90746a761fd42e221a31, type: 3}
   numberOfRounds: 5
-  scoreViewingTime: 10
-  subtitleTime: 10
-  beginAnnouncements:
-  - And HERE WE GO!
-  - "We\u2019ve got over 10,000 camera\u2019s filming this match, LET\u2019S DO THIS
-    THING!"
-  - Let the games begin!
-  - "And we\u2019re back in 3\u20262\u20261!"
-  - Can you hear that? The crowd is ready for some BLOODSHED!
-  - "Don\u2019t go anywhere ladies and gentleman because the carnage is about to
-    begin!"
-  endAnnouncements:
-  - Can I get a copy of that round on tape? What do you mean I have to pay for it?!
-  - "I\u2019m legally required to remind audiences to never try this at home."
-  - "Wait, it\u2019s over already? Boooring."
-  - Does being blown apart come naturally to these people or do they work at it?
-  - "Man, I really thought that other guy was gonna make it\u2026"
-  - Bring in the cleanup crews, that was nasty!
+  m_announcerSubtitleDisplay: {fileID: 0}
+  announcerCameraPrefab: {fileID: 3085158865854223, guid: 84ca89297ab0f454f9059a37a4e0bb0a, type: 3}
+  timeToNextPlayer: 8
   m_leaderboard: 
