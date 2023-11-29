@@ -45,14 +45,18 @@ public class PlayerController : MonoBehaviour
     private Gun m_currentGun; // gun the player currently has
     [Min(0)] public float gunHoldDistance;
     private bool m_isShooting;
+    private Vector3 m_indicatorPosition = new(1f, 0f, 0);
 
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
     [Min(0)] public float powerupTime;
+    
     [Space(10)]
+
     [Min(0)] public int maxShieldHealth;
     [Min(1)] public float fireRateScalar;
     [Range(0, 1)] public float lowGravityScalar;
+    [Min(1)] public int riccochetBounces;
 
     [Space(10)]
 
@@ -61,17 +65,13 @@ public class PlayerController : MonoBehaviour
 
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
-
-    private Vector3 m_indicatorPosition = new(1f, 0f, 0);
     
     [Header("Pickup Display")]
-    public GameObject indicatorCanvasPrefab;
-    [Min(0)] public float indicatorHeight;
+    public PickupIndicator indicatorCanvasPrefab;
+    [Min(0)] public float indicatorSpawnHeight;
     [Min(0)] public float indicatorLifetime;
-    [Space(5)]
     public Sprite[] powerupIndicators;
-
-    public string[] spikeBallDeathAnnouncements;
+    public Color[] powerupColours;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
             // create indicator
             if (m_currentPowerup != Powerup.None)
             {
-                CreateOverhead(powerupIndicators[(int)m_currentPowerup - 1]);
+                CreateOverhead(powerupIndicators[(int)m_currentPowerup - 1], powerupColours[(int)m_currentPowerup - 1]);
             }
 
             switch (m_currentPowerup)
@@ -235,7 +235,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // shoot gun
-                m_currentGun.Shoot(id, bulletEffect);
+                m_currentGun.Shoot(id, bulletEffect, riccochetBounces);
 
                 // ammo is only reduced if the player is not holding their default gun
                 if (m_currentAmmo != -1) m_currentAmmo--;
@@ -259,7 +259,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            TakeDamage(7f, spikeBallDeathAnnouncements);
+            TakeDamage(7f, AnnouncerSubtitleDisplay.AnnouncementType.DeathSpikeball);
         }
     }
 
@@ -311,7 +311,7 @@ public class PlayerController : MonoBehaviour
     /// Deal damage to the player and check if they are dead.
     /// </summary>
     /// <param name="damage"></param>
-    public void TakeDamage(float damage, string[] deathLines)
+    public void TakeDamage(float damage, AnnouncerSubtitleDisplay.AnnouncementType announcementType)
     {
         // if the player is already dead, don't make them take damage
         if (isDead) return;
@@ -341,21 +341,26 @@ public class PlayerController : MonoBehaviour
         // if player is dead
         if (m_currentHealth <= 0)
         {
-            GameManager.Instance.UpdateCameraTargetGroup();
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
 
+            // Play death sound
+            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+
+            // remove this player from the target group
+            GameManager.Instance.UpdateCameraTargetGroup();
+
+            // Have announcer say something stupid
+            GameManager.Instance.StartAnnouncement(announcementType);
+
             // let game manager know somebody died
             GameManager.Instance.CheckIsRoundOver();
 
-            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
-
-            GameManager.Instance.Announcment(deathLines);
-
             // deactivate player object
             gameObject.SetActive(false);
-        } else
+        }
+        else
         {
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDAMAGE");
         }
@@ -376,7 +381,7 @@ public class PlayerController : MonoBehaviour
             m_currentAmmo = gun.ammoCapacity;
 
             // Display the gun the player picked up. dont display when changing back to the pistol
-            CreateOverhead(gun.indicator);
+            CreateOverhead(gun.indicator, gun.colour);
         }
         else m_currentAmmo = -1;
 
@@ -394,22 +399,13 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// set a power up
-    /// </summary>
-    /// <param name="powerUp"></param>
-    public void ActivatePowerUp(Powerup powerUp)
-    {
-        currentPowerup = powerUp;
-    }
-
-    /// <summary>
     /// creates a image above the player and destroys it after amount of seconds
     /// </summary>
     /// <param name="image"></param>
-    public void CreateOverhead(Sprite image)
+    public void CreateOverhead(Sprite image, Color colour)
     {
-        GameObject indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorHeight, 0), Quaternion.identity);
-        indicatorCanvas.GetComponentInChildren<Image>().sprite = image;
+        PickupIndicator indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorSpawnHeight, 0), Quaternion.identity);
+        indicatorCanvas.SetDisplayDetails(indicatorLifetime, image, colour);
         Destroy(indicatorCanvas, indicatorLifetime);
     }
 
@@ -477,5 +473,10 @@ public class PlayerController : MonoBehaviour
         SetGun(defaultGun);
         m_fireRate = m_currentGun.baseFireRate;
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
+    }
+
+    private void OnEnable()
+    {
+        GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
     }
 }

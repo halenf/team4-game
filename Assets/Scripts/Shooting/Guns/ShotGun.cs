@@ -9,7 +9,7 @@ public class ShotGun : Gun
 {
     public int minBulletAmount;
     public int maxBulletAmount;
-    public override void Shoot(int playerID, Bullet.BulletEffect effect)
+    public override void Shoot(int playerID, Bullet.BulletEffect effect, int bounces)
     {
         int bulletAmount = Random.Range(minBulletAmount, maxBulletAmount);
 
@@ -20,7 +20,7 @@ public class ShotGun : Gun
 
             // instantiate the bullet
             Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
-            bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
+            bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, bounces, effect);
         }
         // Activate the muzzle flash
         muzzleFlash.Play();

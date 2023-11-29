@@ -60,9 +60,10 @@ MonoBehaviour:
   maxShieldHealth: 3
   fireRateScalar: 1.4
   lowGravityScalar: 0.7
+  riccochetBounces: 2
   shieldPrefab: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
-  indicatorCanvasPrefab: {fileID: 4716376566463879925, guid: 79742f48f1940e549ae9f57194c8d44f, type: 3}
-  indicatorHeight: 3
+  indicatorCanvasPrefab: {fileID: 4756242066509748503, guid: b1db2a83eadc2714ea3d26b59e5626f9, type: 3}
+  indicatorSpawnHeight: 0
   indicatorLifetime: 3
   powerupIndicators:
   - {fileID: 21300000, guid: 7003ec1b2db61a240a9fe10018b50b97, type: 3}
@@ -71,10 +72,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6c3d9f3ac2462474e90b98663ef70574, type: 3}
   - {fileID: 21300000, guid: f979e489baaf4ac41a7616c93a29ab8a, type: 3}
   - {fileID: 21300000, guid: c326990bae5effd4889c01ea65585df9, type: 3}
-  spikeBallDeathAnnouncements:
-  - Squashed like a bug!
-  - Sliced into confetti!
-  - Crushed by 40,000 pounds of pure pain!
+  powerupColours:
+  - {r: 0, g: 1, b: 0.8367977, a: 1}
+  - {r: 0.13394445, g: 0.8113208, b: 0.26022917, a: 1}
+  - {r: 0, g: 0.42205977, b: 1, a: 1}
+  - {r: 0.98039216, g: 0.5997846, b: 0, a: 1}
+  - {r: 0.9150943, g: 0.14749533, b: 0.11654504, a: 1}
+  - {r: 0.6510284, g: 0.0040494935, b: 0.8584906, a: 1}
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
 --- !u!114 &4366108853716276557
 MonoBehaviour:
