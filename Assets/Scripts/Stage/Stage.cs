@@ -27,6 +27,8 @@ public class Stage : MonoBehaviour
     public Transform[] gunBoxSpawns;
     [Tooltip("end game laser transforms")]
     public Transform[] endLaserSpawns;
+    [Tooltip("places to make fire works when a round is over")]
+    public Transform[] fireworkSpawns;
     [Tooltip("Position the camera starts in for your stage.")]
     public Transform cameraDefaultTransform;
 
@@ -35,6 +37,7 @@ public class Stage : MonoBehaviour
     public GameObject powerupBoxPrefab;
     public GameObject endLaserPrefab;
     public GameObject spikeBallPrefab;
+    public ParticleSystem fireworks;
 
     [Header("Pickup Properties")]
     [Tooltip("How long a gun box will be active for.")]
@@ -188,6 +191,14 @@ public class Stage : MonoBehaviour
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
             Instantiate(endLaserPrefab, endLaserSpawns[i].transform);
+        }
+    }
+
+    public void MakeFireWorks()
+    {
+        foreach(Transform t in fireworkSpawns)
+        {
+            Instantiate(fireworks, t);
         }
     }
 }
