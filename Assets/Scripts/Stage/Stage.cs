@@ -1,6 +1,6 @@
 //stage - Cameron
 //just stores spawn locations
-// last edit 1/11/2023
+// last edit 30/11/2023
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +46,12 @@ public class Stage : MonoBehaviour
     [Min(0)] public float minGunTimer;
     [Tooltip("maximum time a gun box will appear in")]
     [Min(0)] public float maxGunTimer;
+    [Tooltip("Time until end lasers stop")]
+
+    [Header("end laser properties")]
+    [Min(0)] public float endLaserTimer;
+    [Tooltip("speed of end lasers")]
+    [Min(0)] public float endLaserSpeed;
 
     [Space(5)]
     [Tooltip("How long an item box will be active for.")]
@@ -190,7 +196,9 @@ public class Stage : MonoBehaviour
     {
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
-            Instantiate(endLaserPrefab, endLaserSpawns[i].transform);
+            TimedEndLaser thisLaser = Instantiate(endLaserPrefab, endLaserSpawns[i].transform).GetComponent<TimedEndLaser>();
+            thisLaser.speed = endLaserSpeed;
+            thisLaser.timer = endLaserTimer;
         }
     }
 
