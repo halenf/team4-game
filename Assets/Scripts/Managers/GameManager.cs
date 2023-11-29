@@ -64,6 +64,8 @@ public class GameManager : MonoBehaviour
     [Header("Game Info")]
     public GameObject[] stageList;
     public int numberOfRounds;
+    public AnnouncerCamera announcerCamera;
+    public float timeToNextPlayer;
     [Space(5)]
     [SerializeField] private List<int> m_leaderboard;
 
@@ -333,6 +335,8 @@ public class GameManager : MonoBehaviour
         m_gameplayCanvas.StartCountdown();
         m_isPaused = false;
         StartAnnouncement(AnnouncerSubtitleDisplay.AnnouncementType.BeforeRound);
+        StopCoroutine(ChangeDisplayLater());
+        ChangeAnnouncerDisplay();
     }
 
     /// <summary>
@@ -443,7 +447,7 @@ public class GameManager : MonoBehaviour
 
         // Enable and update leaderboard canvas - Halen
         m_leaderboardCanvas.gameObject.SetActive(true);
-        m_leaderboardCanvas.SetDisplayDetails(winnerIndex + 1, m_leaderboard, true);
+        m_leaderboardCanvas.SetDisplayDetails(winnerIndex, m_leaderboard, true);
 
         // disable players and set UI controls
         DisablePlayers();
@@ -525,6 +529,28 @@ public class GameManager : MonoBehaviour
         }
         m_targetGroup.m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
         // End Cinemachine camera setup
+    }
+
+    public void ChangeAnnouncerDisplay()
+    {
+        //List<PlayerController> livingPlayers = new List<PlayerController>();
+        //foreach(PlayerController playerController in m_activePlayerControllers)
+        //{
+        //    if(playerController.isDead == false)
+        //    {
+        //        livingPlayers.Add(playerController);
+        //    }
+        //}
+
+        announcerCamera.SetNewParent(m_targetGroup.m_Targets[Random.Range(0, m_targetGroup.m_Targets.Length)].target.transform);
+        StartCoroutine(ChangeDisplayLater());
+    }
+
+    private IEnumerator ChangeDisplayLater()
+    {
+        yield return new WaitForSeconds(timeToNextPlayer);
+        ChangeAnnouncerDisplay();
+
     }
 
     /// <summary>
