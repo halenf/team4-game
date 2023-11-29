@@ -77,10 +77,23 @@ public class PlayerController : MonoBehaviour
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
 
-    /*
     [Header("Animation")]
     public float horizontalVelocityThreshold;
-     */
+    public float horizontalAimingThreshold;
+    [SerializeField] private bool m_facingRight;
+    public bool facingRight // for model rotation
+    {
+        get { return m_facingRight; }
+        set
+        {
+            if (m_facingRight != value)
+            {
+                if (value) m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                else m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, -90, 0);
+            }
+            m_facingRight = value;
+        }
+    }
 
     public enum Powerup
     {
@@ -133,6 +146,7 @@ public class PlayerController : MonoBehaviour
             if (m_currentPowerup != Powerup.None)
             {
                 CreateOverhead(powerupIndicators[(int)m_currentPowerup - 1], powerupColours[(int)m_currentPowerup - 1]);
+                Debug.Log("Spawned indicator for " + m_currentPowerup.ToString());
             }
 
             switch (m_currentPowerup)
@@ -257,7 +271,8 @@ public class PlayerController : MonoBehaviour
 
         // Update the animator parameters
         m_animator.SetBool("IsGrounded", IsGrounded());
-        m_animator.SetBool("IsMoving", !Mathf.Approximately(Mathf.Abs(m_rb.velocity.x), 0f));
+        // update animator parameter
+        m_animator.SetBool("IsMoving", Mathf.Abs(m_rb.velocity.x) >= horizontalVelocityThreshold);
     }
 
     // FixedUpdate is called once per physic frame
@@ -278,6 +293,10 @@ public class PlayerController : MonoBehaviour
     {
         float inputValue = value.ReadValue<Vector2>().x; // Get the direction the player is trying to move
         m_moveForce = moveSpeed * new Vector3(inputValue, 0, 0); // calculate the magnitude of the force
+
+        // update model rotation when the t
+        if (inputValue >= horizontalAimingThreshold) facingRight = true;
+        if (inputValue <= -horizontalAimingThreshold) facingRight = false;
     }
 
     public void OnShoot(InputAction.CallbackContext value)

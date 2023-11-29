@@ -80,6 +80,9 @@ MonoBehaviour:
   - {r: 0.9150943, g: 0.14749533, b: 0.11654504, a: 1}
   - {r: 0.6510284, g: 0.0040494935, b: 0.8584906, a: 1}
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
+  horizontalVelocityThreshold: 1
+  horizontalAimingThreshold: 0.1
+  m_facingRight: 0
 --- !u!114 &4366108853716276557
 MonoBehaviour:
   m_ObjectHideFlags: 0
