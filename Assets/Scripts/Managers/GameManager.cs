@@ -59,8 +59,6 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     public Color[] playerColours;
 
-    public GameObject controlCube;
-
     [Header("Game Info")]
     public GameObject[] stageList;
     public int numberOfRounds;
