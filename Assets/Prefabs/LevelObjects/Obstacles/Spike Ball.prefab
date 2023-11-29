@@ -26,15 +26,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4872935802854433896}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
+  m_LocalPosition: {x: 0.000004894471, y: 0, z: -1.4916475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3855447044675238188}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &-3240330610181331103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dab228b18691dd14b881e7cbf401ccf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
-  sparksPrefab: {fileID: 0}
+  isActive: 1
+  sparksPrefab: {fileID: 6647730250613079163, guid: 8cb2db274e759c64a983744e95e0501f, type: 3}
   sparkFrequency: 100
 --- !u!54 &5196722604911171998
 Rigidbody:
@@ -58,9 +58,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4872935802854433896}
   serializedVersion: 2
-  m_Mass: 5
-  m_Drag: 5
-  m_AngularDrag: 5
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 0.5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0

@@ -412,6 +412,7 @@ public class GameManager : MonoBehaviour
 
     private void EndRound(int winningPlayerID)
     {
+        Time.timeScale = 0.1f;
         StartAnnouncement(AnnouncerSubtitleDisplay.AnnouncementType.EndRound); // this needs to be in subtitleUI
 
         // Disable players and toggle relevant canvases
