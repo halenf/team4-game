@@ -197,8 +197,10 @@ public class Stage : MonoBehaviour
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
             TimedEndLaser thisLaser = Instantiate(endLaserPrefab, endLaserSpawns[i].transform).GetComponent<TimedEndLaser>();
-            thisLaser.speed = endLaserSpeed;
-            thisLaser.timer = endLaserTimer;
+            if (thisLaser != null)
+            {
+                thisLaser.Init(endLaserSpeed, endLaserTimer);
+            }
         }
     }
 
