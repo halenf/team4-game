@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput m_playerInput;
     private Gamepad m_controller;
     private Color m_color;
+    private Animator m_animator;
 
     // player ID
     public int id;
@@ -75,6 +76,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
+
+    /*
+    [Header("Animation")]
+    public float horizontalVelocityThreshold;
+     */
 
     public enum Powerup
     {
@@ -188,13 +194,14 @@ public class PlayerController : MonoBehaviour
         m_rb = GetComponent<Rigidbody>();
         m_rb.mass = defaultMass;
         m_playerInput = GetComponent<PlayerInput>();
+        m_animator = GetComponentInChildren<Animator>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         m_aimDirection = transform.right;
-        SetGun(defaultGun);      
+        SetGun(defaultGun);
     }
 
     // Update is called once per frame
@@ -247,6 +254,10 @@ public class PlayerController : MonoBehaviour
                 if (m_currentAmmo == 0) SetGun(defaultGun);
             }
         }
+
+        // Update the animator parameters
+        m_animator.SetBool("IsGrounded", IsGrounded());
+        m_animator.SetBool("IsMoving", !Mathf.Approximately(Mathf.Abs(m_rb.velocity.x), 0f));
     }
 
     // FixedUpdate is called once per physic frame
@@ -356,6 +367,9 @@ public class PlayerController : MonoBehaviour
 
             // let game manager know somebody died
             GameManager.Instance.CheckIsRoundOver();
+
+            // play sound effect
+            SoundManager.Instance.PlayAfterTime("Crowd/AMB-CROWDCHEERUPONDEATH", 2f);
 
             // deactivate player object
             gameObject.SetActive(false);
