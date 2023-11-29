@@ -47,7 +47,6 @@ public class GameManager : MonoBehaviour
     private PauseUI m_pauseCanvas;
     private LeaderboardUI m_leaderboardCanvas;
     private DisconnectUI m_disconnectCanvas;
-    public AnnouncerSubtitleDisplay announcerSubtitleDisplay;
 
     [Header("Cinemachine Prefabs")]
     [SerializeField] private CinemachineVirtualCamera m_staticCamera;
@@ -62,7 +61,11 @@ public class GameManager : MonoBehaviour
     [Header("Game Info")]
     public GameObject[] stageList;
     public int numberOfRounds;
-    public AnnouncerCamera announcerCamera;
+
+    [Header("Announcer Display Screen")]
+    [SerializeField] private AnnouncerSubtitleDisplay m_announcerSubtitleDisplay;
+    public AnnouncerCamera announcerCameraPrefab;
+    private AnnouncerCamera m_announcerCamera;
     public float timeToNextPlayer;
     [Space(5)]
     [SerializeField] private List<int> m_leaderboard;
@@ -95,6 +98,7 @@ public class GameManager : MonoBehaviour
         // Hide and lock the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        m_announcerCamera = Instantiate(announcerCameraPrefab);
 
         // Initialise game manager
         Init();
@@ -408,6 +412,7 @@ public class GameManager : MonoBehaviour
 
     private void EndRound(int winningPlayerID)
     {
+        Time.timeScale = 0.1f;
         StartAnnouncement(AnnouncerSubtitleDisplay.AnnouncementType.EndRound); // this needs to be in subtitleUI
 
         // Disable players and toggle relevant canvases
@@ -499,12 +504,12 @@ public class GameManager : MonoBehaviour
 
     public void StartAnnouncement(AnnouncerSubtitleDisplay.AnnouncementType announcementType)
     {
-        announcerSubtitleDisplay.StartAnnouncement(announcementType);
+        m_announcerSubtitleDisplay.StartAnnouncement(announcementType);
     }
 
     public void StopAnnouncer()
     {
-        announcerSubtitleDisplay.StopText();
+        m_announcerSubtitleDisplay.StopText();
     }
 
     /// <summary>
@@ -531,16 +536,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeAnnouncerDisplay()
     {
-        //List<PlayerController> livingPlayers = new List<PlayerController>();
-        //foreach(PlayerController playerController in m_activePlayerControllers)
-        //{
-        //    if(playerController.isDead == false)
-        //    {
-        //        livingPlayers.Add(playerController);
-        //    }
-        //}
-
-        announcerCamera.SetNewParent(m_targetGroup.m_Targets[Random.Range(0, m_targetGroup.m_Targets.Length)].target.transform);
+        m_announcerCamera.SetNewParent(m_targetGroup.m_Targets[Random.Range(0, m_targetGroup.m_Targets.Length)].target.transform);
         StartCoroutine(ChangeDisplayLater());
     }
 

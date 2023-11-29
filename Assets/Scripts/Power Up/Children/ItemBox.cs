@@ -24,7 +24,7 @@ public class ItemBox : PowerUp
             //find player
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
 
-            player.ActivatePowerUp(m_currentPowerup);
+            player.currentPowerup = m_currentPowerup;
 
             //destroy self
             Destroy(gameObject);

@@ -19,6 +19,7 @@ public abstract class Gun : MonoBehaviour
     public ParticleSystem muzzleFlash;
     [Space(5)]
     public Sprite indicator;
+    public Color colour;
 
     [Header("Bullet Properties")]
     [InspectorName("Prefab")] public Bullet bulletPrefab;
@@ -57,14 +58,14 @@ public abstract class Gun : MonoBehaviour
     /// </summary>
     /// <param name="playerID"></param>
     /// <param name="shouldBounce"></param>
-    public virtual void Shoot(int playerID, Bullet.BulletEffect effect)
+    public virtual void Shoot(int playerID, Bullet.BulletEffect effect, int bounces)
     {
         // calc spread rotation change
         Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
 
         // instantiate the bullet
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
-        bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
+        bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, bounces, effect);
 
         // Activate the muzzle flash
         if (muzzleFlash) muzzleFlash.Play();

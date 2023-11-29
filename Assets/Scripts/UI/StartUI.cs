@@ -38,10 +38,9 @@ public class StartUI : MonoBehaviour
     /// </summary>
     public void SetDisplayDetails(List<Gamepad> controllers, int playerID)
     {
-        for (int i = 0; i < controllers.Count; i++)
-        {
-            m_playerConnectedDisplays[playerID].sprite = m_connectedDisplaySprites[playerID];
-        }
+        m_playerConnectedDisplays[playerID].sprite = m_connectedDisplaySprites[playerID];
+        m_playerConnectedDisplays[playerID].SetNativeSize();
+        m_playerConnectedDisplays[playerID].rectTransform.position += new Vector3(0, -40, 0);
 
         // activate the start prompt
         if (controllers.Count > 1) m_startPromptDisplay.SetActive(true);

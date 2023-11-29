@@ -12,7 +12,7 @@ public class MiniGun : Gun
     [Tooltip("the max amount that the recoil can change by in percent")]
     [Min(0)] public float randomRecoilStrength;
     
-    public override void Shoot(int playerID, Bullet.BulletEffect effect)
+    public override void Shoot(int playerID, Bullet.BulletEffect effect, int bounces)
     {
         PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
@@ -21,7 +21,7 @@ public class MiniGun : Gun
 
         // instantiate the bullet
         Bullet bullet = Instantiate(bulletPrefab, bulletSpawnTransform.position, transform.rotation * shootDirection);
-        bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, effect);
+        bullet.Init(playerID, bulletDamage, bullet.transform.forward * bulletSpeed, bulletLifeTime, bounces, effect);
 
         // Activate the muzzle flash
         muzzleFlash.Play();

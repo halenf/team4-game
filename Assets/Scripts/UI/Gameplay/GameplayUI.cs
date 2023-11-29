@@ -17,7 +17,6 @@ public class GameplayUI : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private Image m_countdownDisplay;
     [SerializeField] private TMP_Text m_roundWinnerDisplay;
-    [SerializeField] private AnnouncerSubtitleDisplay m_announcerSubtitleDisplay;
     [SerializeField] private EndLaserWarning m_endLaserDisplay;
 
     //start stuff taken from leaderboard
@@ -31,7 +30,6 @@ public class GameplayUI : MonoBehaviour
     {
         m_countdownDisplay.gameObject.SetActive(false);
         m_roundWinnerDisplay.text = "";
-        m_announcerSubtitleDisplay.gameObject.SetActive(true);
         m_endLaserDisplay.gameObject.SetActive(false);
     }
 
@@ -69,12 +67,6 @@ public class GameplayUI : MonoBehaviour
         m_endLaserDisplay.gameObject.SetActive(true);
     }
 
-    public void StartAnnouncement(AnnouncementType announcementType)
-    {
-        m_announcerSubtitleDisplay.gameObject.SetActive(true);
-        m_announcerSubtitleDisplay.StartAnnouncement(announcementType);
-    }
-
     private IEnumerator Countdown()
     {
         yield return new WaitForEndOfFrame();
@@ -108,7 +100,7 @@ public class GameplayUI : MonoBehaviour
 
         // Show the player who won the round
         m_roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
-        yield return new WaitForSeconds(leaderboardDisplayTime);
+        yield return new WaitForSeconds(leaderboardDisplayTime * Time.timeScale);
         
         m_roundWinnerDisplay.text = "";
         Instantiate(fadeOut);
