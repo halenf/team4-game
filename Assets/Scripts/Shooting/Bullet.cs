@@ -37,7 +37,8 @@ public class Bullet : MonoBehaviour
     public ParticleSystem sparksPrefab;
     public ParticleSystem ricochetPrefab;
     public ParticleSystem bloodPrefab;
-    private bool m_secondRiccochet = false;
+
+    private int m_bounces;
 
     [Space(10)]
 
@@ -55,12 +56,13 @@ public class Bullet : MonoBehaviour
     /// <param name="velocity"></param>
     /// <param name="lifeTime"></param>
     /// <param name="effect"></param>
-    public void Init(int playerID, float damage, Vector3 velocity, float lifeTime, BulletEffect effect)
+    public void Init(int playerID, float damage, Vector3 velocity, float lifeTime, int bounces, BulletEffect effect)
     {
         m_playerID = playerID;
         m_damage = damage;
         m_rb.velocity = velocity;
         m_currentEffect = effect;
+        m_bounces = bounces;
 
         // Set the particle system to default - Halen
         m_particle = sparksPrefab;
@@ -144,17 +146,11 @@ public class Bullet : MonoBehaviour
         }
 
         // destroy or bounce bullet
-        if (m_currentEffect == BulletEffect.Ricochet)
+        if (m_currentEffect == BulletEffect.Ricochet && m_bounces > 0)
         {
             Instantiate(ricochetPrefab, transform.position, transform.rotation);
-            if (m_secondRiccochet == true)
-            {
-                m_currentEffect = BulletEffect.None;
-            } else
-            {
-                m_secondRiccochet = true;
-            }
-            
+
+            m_bounces--;
         }
         else
         {

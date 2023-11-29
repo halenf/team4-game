@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
         // Hide and lock the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        Instantiate(announcerCamera);
 
         // Initialise game manager
         Init();

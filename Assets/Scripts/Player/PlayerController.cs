@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     [Min(0)] public int maxShieldHealth;
     [Min(1)] public float fireRateScalar;
     [Range(0, 1)] public float lowGravityScalar;
+    [Min(1)] public int riccochetBounces;
 
     [Space(10)]
 
@@ -234,7 +235,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // shoot gun
-                m_currentGun.Shoot(id, bulletEffect);
+                m_currentGun.Shoot(id, bulletEffect, riccochetBounces);
 
                 // ammo is only reduced if the player is not holding their default gun
                 if (m_currentAmmo != -1) m_currentAmmo--;
