@@ -786,6 +786,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &666037690874864198
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2687,6 +2688,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &653624316320353983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3536,6 +3538,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &1117681518869437736
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5919,6 +5922,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &6470082661105972249
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6035,6 +6039,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &440854188316946154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14511,6 +14516,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &4125299178079681847
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15005,6 +15011,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &4743649882297653498
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18143,6 +18150,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &1466771581958613084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19717,6 +19725,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &4017061654744604645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21184,6 +21193,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &9113152628545426372
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21684,6 +21694,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &2862008370489106833
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23618,6 +23629,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &2003262936760881648
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25035,7 +25047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614ba74c08e935144bfbe2dab8e802e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 10
+  roundTime: 45
   playerSpawns:
   - {fileID: 8164705887240927095}
   - {fileID: 182471600820412425}
@@ -25958,11 +25970,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e8dfe3d01b0784fa75031d80d2befa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killStrings:
-  - Toasty!
-  - Smells like fresh bacon!
-  - "And just when you thought things couldn\u2019t get any hotter!"
-  - "Looks like they couldn\u2019t handle the heat!"
 --- !u!1 &4465622865246249102
 GameObject:
   m_ObjectHideFlags: 0
@@ -27367,6 +27374,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &5235198400502070934
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28468,6 +28476,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &5206812295287429757
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30491,6 +30500,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &5653407571177553668
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30985,6 +30995,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &6578607931912076557
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31769,6 +31780,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &2250540976586154510
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32302,6 +32314,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &4913143962633011886
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33566,6 +33579,8 @@ MonoBehaviour:
   destroyEffect: {fileID: 3623149681444135517, guid: a382766b8b320394197bb30a677620b7, type: 3}
   maxHealth: 0.1
   debrisDestroyTimer: 0
+  willRespawn: 0
+  timeToRespawn: 0
 --- !u!54 &4346147391956617628
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -39784,6 +39799,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &1020351140050164680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42535,6 +42551,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &6333292938980125154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46216,6 +46233,7 @@ MonoBehaviour:
   m_movesPositive: 1
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &7024066560005287379
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -54385,6 +54403,7 @@ MonoBehaviour:
   m_movesPositive: 0
   m_isActive: 1
   animationSpeedScalar: 0.42
+  m_animator: {fileID: 0}
 --- !u!65 &1580912063151122337
 BoxCollider:
   m_ObjectHideFlags: 0

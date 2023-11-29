@@ -226,6 +226,8 @@ Transform:
   - {fileID: 4580584564729162852}
   - {fileID: 3261291027299526541}
   - {fileID: 3262012896563872052}
+  - {fileID: 3568936219739040208}
+  - {fileID: 5065133780717178381}
   m_Father: {fileID: 9138342618362161205}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -259,6 +261,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 115109243473770855}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &994690035168848510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3568936219739040208}
+  m_Layer: 0
+  m_Name: Power-UpSpawn4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3568936219739040208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994690035168848510}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: -1.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 115109243473770855}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1479592424754788479
 GameObject:
@@ -672,7 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614ba74c08e935144bfbe2dab8e802e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 60
+  roundTime: 45
   playerSpawns:
   - {fileID: 8202584040101464333}
   - {fileID: 8202584040101464332}
@@ -682,11 +715,15 @@ MonoBehaviour:
   - {fileID: 4580584564729162852}
   - {fileID: 3261291027299526541}
   - {fileID: 3262012896563872052}
+  - {fileID: 3568936219739040208}
+  - {fileID: 5065133780717178381}
   gunBoxSpawns:
   - {fileID: 9038337827004373203}
   - {fileID: 6703738201814604901}
   - {fileID: 5873472307132864847}
   - {fileID: 6654562202565285495}
+  - {fileID: 5747786898056751730}
+  - {fileID: 1069337004502954376}
   endLaserSpawns:
   - {fileID: 2846608928013920949}
   - {fileID: 2496117881781373137}
@@ -697,7 +734,7 @@ MonoBehaviour:
   spikeBallPrefab: {fileID: 0}
   gunBoxLifetime: 5
   minGunTimer: 3
-  maxGunTimer: 8
+  maxGunTimer: 7
   powerupBoxLifetime: 5
   minPowerupTimer: 4
   maxPowerupTimer: 9
@@ -771,6 +808,37 @@ Transform:
   m_Father: {fileID: 3823030353885170449}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3948327732682029951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1069337004502954376}
+  m_Layer: 0
+  m_Name: WeaponSpawn6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1069337004502954376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3948327732682029951}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.5, y: 27.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3017032103441678277}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4152070064088937806
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,6 +869,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3356381249137499349}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4153846347507425704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5747786898056751730}
+  m_Layer: 0
+  m_Name: WeaponSpawn5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5747786898056751730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4153846347507425704}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.5, y: 27.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3017032103441678277}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4413316518126749252
 GameObject:
@@ -1269,6 +1368,8 @@ Transform:
   - {fileID: 6703738201814604901}
   - {fileID: 5873472307132864847}
   - {fileID: 6654562202565285495}
+  - {fileID: 5747786898056751730}
+  - {fileID: 1069337004502954376}
   m_Father: {fileID: 9138342618362161205}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1302,6 +1403,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 818565503460767005}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8813801939362906634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5065133780717178381}
+  m_Layer: 0
+  m_Name: Power-UpSpawn5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5065133780717178381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813801939362906634}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.25, y: -1.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 115109243473770855}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9025618283242263627
 GameObject:
