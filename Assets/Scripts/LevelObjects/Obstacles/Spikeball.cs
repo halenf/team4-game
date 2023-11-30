@@ -34,5 +34,18 @@ public class Spikeball : Obstacle
             Instantiate(sparksPrefab, collision.contacts[0].point, Quaternion.identity);
             m_sparkSpawnFactor = sparkFrequency;
         }
+
+        // Check if the explosion hits a player that isn't the player who created it
+        if (collision.gameObject.tag == "Player")
+        {
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.TakeDamage(player.maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathExplosion);
+        }
+
+        // check if the explosion hits a breakable object
+        if (collision.gameObject.tag == "Breakable")
+        {
+            collision.gameObject.GetComponent<BreakableObject>().TakeDamage(collision.gameObject.GetComponent<BreakableObject>().maxHealth);
+        }
     }
 }

@@ -13,7 +13,8 @@ public class StartUI : MonoBehaviour
 {
     [Header("UI Elements")]
     [Tooltip("Array for each of the text objects for the connected player displays.")]
-    [SerializeField] private Image[] m_playerConnectedDisplays;
+    [SerializeField] private GameObject[] m_playerPleaseConnectObjects;
+    [SerializeField] private GameObject[] m_playerConnectedObjects;
     [SerializeField] private Image[] m_inputDisplays;
     [SerializeField] private GameObject m_startPromptDisplay;
 
@@ -23,11 +24,6 @@ public class StartUI : MonoBehaviour
 
     private void Start()
     {
-        // Set each player display to the join prompt
-        foreach(Image image in m_playerConnectedDisplays)
-        {
-            image.sprite = m_connectPromptSprite;
-        }
 
         // Disable start prompt display
         m_startPromptDisplay.SetActive(false);
@@ -36,11 +32,23 @@ public class StartUI : MonoBehaviour
     /// <summary>
     /// Update all the display details of the canvas.
     /// </summary>
-    public void SetDisplayDetails(List<Gamepad> controllers, int playerID)
+    public void SetDisplayDetails(List<Gamepad> controllers)
     {
-        m_playerConnectedDisplays[playerID].sprite = m_connectedDisplaySprites[playerID];
-        m_playerConnectedDisplays[playerID].SetNativeSize();
-        m_playerConnectedDisplays[playerID].rectTransform.position += new Vector3(0, -40, 0);
+        int i;
+        for (i = 0; i < controllers.Count; i++)
+        {
+            m_playerPleaseConnectObjects[i].SetActive(false);
+            m_playerConnectedObjects[i].SetActive(true);
+            ShowPlayerInput(false, i);
+        }
+        for (;i < 4; i++)
+        {
+            m_playerPleaseConnectObjects[i].SetActive(true);
+            m_playerConnectedObjects[i].SetActive(false);
+            ShowPlayerInput(false, i);
+            //m_playerConnectedDisplays[i].SetNativeSize();
+            //m_playerConnectedDisplays[i].rectTransform.localPosition = new Vector3(0, -40, 0);
+        }
 
         // activate the start prompt
         if (controllers.Count > 1) m_startPromptDisplay.SetActive(true);

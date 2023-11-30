@@ -64,7 +64,6 @@ MonoBehaviour:
   shieldPrefab: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
   indicatorCanvasPrefab: {fileID: 4756242066509748503, guid: b1db2a83eadc2714ea3d26b59e5626f9, type: 3}
   indicatorSpawnHeight: 0
-  indicatorLifetime: 3
   powerupIndicators:
   - {fileID: 21300000, guid: db1f535b9bbd3304995e7d72967c8bab, type: 3}
   - {fileID: 21300000, guid: 0eeda8f7fc7aae24784c7e56188a69c9, type: 3}
@@ -83,6 +82,7 @@ MonoBehaviour:
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
   horizontalVelocityThreshold: 1
   horizontalAimingThreshold: 0.1
+  timeToStopMoving: 0.2
   m_facingRight: 0
 --- !u!114 &4366108853716276557
 MonoBehaviour:
@@ -350,7 +350,7 @@ Animator:
   m_GameObject: {fileID: 4242973400732249293}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 89a7fb7f99d52ec4287aad37bc5bde61, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6e19a334481c6fc4db8027086ee76d7a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
