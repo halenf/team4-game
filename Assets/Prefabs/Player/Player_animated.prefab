@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5814125836590746923}
   - component: {fileID: 5814125836590746922}
   m_Layer: 0
-  m_Name: Player_With_Animatior
+  m_Name: Player_animated
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,12 +66,12 @@ MonoBehaviour:
   indicatorSpawnHeight: 0
   indicatorLifetime: 3
   powerupIndicators:
-  - {fileID: 21300000, guid: 7003ec1b2db61a240a9fe10018b50b97, type: 3}
-  - {fileID: 21300000, guid: e1db80f146d150b47bca1692b9cca5e7, type: 3}
-  - {fileID: 21300000, guid: fefde6a8eec4ae64a85adf607842f919, type: 3}
-  - {fileID: 21300000, guid: 6c3d9f3ac2462474e90b98663ef70574, type: 3}
-  - {fileID: 21300000, guid: f979e489baaf4ac41a7616c93a29ab8a, type: 3}
-  - {fileID: 21300000, guid: c326990bae5effd4889c01ea65585df9, type: 3}
+  - {fileID: 21300000, guid: db1f535b9bbd3304995e7d72967c8bab, type: 3}
+  - {fileID: 21300000, guid: 0eeda8f7fc7aae24784c7e56188a69c9, type: 3}
+  - {fileID: 21300000, guid: b6a3f1c1714438d4ea69490c3bfea8de, type: 3}
+  - {fileID: 21300000, guid: ddb072845156b6b4a9c43e56a0bee738, type: 3}
+  - {fileID: 21300000, guid: 9f040555cef4617409d234bce3cf1ab0, type: 3}
+  - {fileID: 21300000, guid: 5364edda1ce7e0c49a002d889d84ee83, type: 3}
   powerupColours:
   - {r: 0, g: 1, b: 0.8367977, a: 1}
   - {r: 0.13394445, g: 0.8113208, b: 0.26022917, a: 1}
