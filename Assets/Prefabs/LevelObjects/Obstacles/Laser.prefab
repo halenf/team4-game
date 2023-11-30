@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25bf8fed1a086294795082f99a81e025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isActive: 0
+  m_isActive: 1
   toggleTimer: 0
   hitParticle: {fileID: 8163005987728998194, guid: bb118610af5d2f6439a07ca1c37fd4d4, type: 3}
 --- !u!120 &5227712940450349801
@@ -160,8 +160,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.63, y: 4.61, z: 1}
-  m_Center: {x: 0, y: 0.28, z: 0}
+  m_Size: {x: 3.6299999, y: 4.7835326, z: 1}
+  m_Center: {x: 0, y: -0.4372733, z: 0}
 --- !u!1001 &573981916377653252
 PrefabInstance:
   m_ObjectHideFlags: 0
