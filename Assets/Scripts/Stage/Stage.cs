@@ -35,7 +35,7 @@ public class Stage : MonoBehaviour
     [Header("Prefabs")]
     public GameObject gunBoxPrefab;
     public GameObject powerupBoxPrefab;
-    public GameObject endLaserPrefab;
+    public TimedEndLaser endLaserPrefab;
     public GameObject spikeBallPrefab;
     public ParticleSystem fireworks;
 
@@ -46,12 +46,9 @@ public class Stage : MonoBehaviour
     [Min(0)] public float minGunTimer;
     [Tooltip("maximum time a gun box will appear in")]
     [Min(0)] public float maxGunTimer;
-    [Tooltip("Time until end lasers stop")]
+    
 
-    [Header("end laser properties")]
-    [Min(0)] public float endLaserTimer;
-    [Tooltip("speed of end lasers")]
-    [Min(0)] public float endLaserSpeed;
+    
 
     [Space(5)]
     [Tooltip("How long an item box will be active for.")]
@@ -60,6 +57,12 @@ public class Stage : MonoBehaviour
     [Min(0)] public float minPowerupTimer;
     [Tooltip("maximum time a power up will appear in")]
     [Min(0)] public float maxPowerupTimer;
+    
+    [Header("end laser properties")]
+    [Tooltip("Time until end lasers stop")]
+    [Min(0)] public float endLaserTimer;
+    [Tooltip("speed of end lasers")]
+    [Min(0)] public float endLaserSpeed;
 
     private List<GameObject> m_currentPowerupBoxes;
     private List<GameObject> m_currentGunBoxes;
@@ -196,9 +199,11 @@ public class Stage : MonoBehaviour
     {
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
-            TimedEndLaser thisLaser = Instantiate(endLaserPrefab, endLaserSpawns[i].transform).GetComponent<TimedEndLaser>();
-            thisLaser.speed = endLaserSpeed;
-            thisLaser.timer = endLaserTimer;
+            TimedEndLaser thisLaser = Instantiate(endLaserPrefab, endLaserSpawns[i].transform);
+            if (thisLaser != null)
+            {
+                thisLaser.Init(endLaserSpeed, endLaserTimer);
+            }
         }
     }
 
