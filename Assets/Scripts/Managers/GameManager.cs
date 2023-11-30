@@ -6,6 +6,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     private List<Gamepad> m_controllers; // list of connected controllers
     private List<PlayerController> m_activePlayerControllers; // currently instantiated players
     private PlayerController m_focusedPlayerController; // for pause controls
+    private int gamepadCount;
 
     [Header("Canvas Prefabs")]
     public StartUI startCanvasPrefab;
@@ -145,6 +147,7 @@ public class GameManager : MonoBehaviour
         m_controllers = new List<Gamepad>();
         m_focusedPlayerController = null;
         m_activePlayerControllers = new List<PlayerController>();
+        gamepadCount = Gamepad.all.Count;
 
         if (m_currentStageObject) Destroy(m_currentStageObject);
         m_roundNumber = 0;
@@ -191,16 +194,48 @@ public class GameManager : MonoBehaviour
                     m_controllers.Add(Gamepad.all[i]);
 
                     // Since the list of connected controllers was updated, we need to update the StartUI to reflect that
-                    m_startCanvas.SetDisplayDetails(m_controllers, m_controllers.Count - 1);
+                    m_startCanvas.SetDisplayDetails(m_controllers);
                 }
             }
         }
 
+        // if the number of gamepads has changed
+        if (gamepadCount != Gamepad.all.Count)
+        {
+            List<Gamepad> dissconnected = new List<Gamepad>();
+            
+            foreach (Gamepad controller in m_controllers)
+            {
+                bool notFound = true;
+            
+                foreach (Gamepad gamepad in Gamepad.all)
+                {
+                    if (gamepad == controller)
+                    {
+                        notFound = false;
+                        break;
+                    }
+                
+                }
+                if (notFound)
+                {
+                    dissconnected.Add(controller);
+                    
+                }
+            }
+            foreach(Gamepad controller in dissconnected)
+            {
+                m_controllers.Remove(controller);
+                m_startCanvas.SetDisplayDetails(m_controllers);
+            }
+        }
+
+        // update gamepad count
+        gamepadCount = Gamepad.all.Count;
+
         for (int i = 0; i < m_controllers.Count; i++)
         {
-            // something to check if controller is still connected
-            // remove it if it isn't and reorder the list
-            
+
             if (m_controllers[i].allControls.Any(x => x is ButtonControl button && x.IsPressed() && !x.synthetic))
             {
                 m_startCanvas.ShowPlayerInput(true, i);

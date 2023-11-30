@@ -36,11 +36,21 @@ public class StartUI : MonoBehaviour
     /// <summary>
     /// Update all the display details of the canvas.
     /// </summary>
-    public void SetDisplayDetails(List<Gamepad> controllers, int playerID)
+    public void SetDisplayDetails(List<Gamepad> controllers)
     {
-        m_playerConnectedDisplays[playerID].sprite = m_connectedDisplaySprites[playerID];
-        m_playerConnectedDisplays[playerID].SetNativeSize();
-        m_playerConnectedDisplays[playerID].rectTransform.position += new Vector3(0, -40, 0);
+        int i;
+        for (i = 0; i < controllers.Count; i++)
+        {
+            m_playerConnectedDisplays[i].sprite = m_connectedDisplaySprites[i];
+            //m_playerConnectedDisplays[i].SetNativeSize();
+            //m_playerConnectedDisplays[i].rectTransform.localPosition = new Vector3(0, -40, 0);
+        }
+        for (;i < 4; i++)
+        {
+            m_playerConnectedDisplays[i].sprite = m_connectPromptSprite;
+            //m_playerConnectedDisplays[i].SetNativeSize();
+            //m_playerConnectedDisplays[i].rectTransform.localPosition = new Vector3(0, -40, 0);
+        }
 
         // activate the start prompt
         if (controllers.Count > 1) m_startPromptDisplay.SetActive(true);
