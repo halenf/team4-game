@@ -16,11 +16,14 @@ public class Spawner : Obstacle
         get { return m_isActive; }
         set
         {
-            m_isActive = value;
+            if (value != m_isActive)
+            {
+                // reactivates or deactivates spawner coroutines - halen
+                if (m_isActive) StartSpawnRoutine();
+                else StopAllCoroutines();
+            }
 
-            // reactivates or deactivates spawner coroutines - halen
-            if (m_isActive) StartSpawnRoutine();
-            else StopAllCoroutines();
+            m_isActive = value;           
         }
     }
 
@@ -33,7 +36,7 @@ public class Spawner : Obstacle
     public GameObject spawnObjectPrefab;
 
     [Tooltip("Where the object spawns.")]
-    public Transform objectSpawnLocation;
+    public Transform[] objectSpawnLocations;
 
     [Tooltip("Whether to spawn with random rotation.")]
     public bool objectHasRandomRotation;
@@ -44,8 +47,11 @@ public class Spawner : Obstacle
     [Tooltip("Maximum time for the object to spawn.")]
     [Min(0)] public float maxSpawnTime;
 
-    [Tooltip("Initial velocity of the spawned object. X = Horizontal velocity. Y = Vertical velocity.")]
-    public Vector2 initialVelocity;
+    [Tooltip("minimum initial velocity of the spawned object. X = Horizontal velocity. Y = Vertical velocity.")]
+    public Vector2 minInitialVelocity;
+
+    [Tooltip("maximum initial velocity of the spawned object. X = Horizontal velocity. Y = Vertical velocity.")]
+    public Vector2 maxInitialVelocity;
 
     [Tooltip("how long before the spawned object is destroyed")]
     [Min(0)]public float lifeTime;
@@ -53,29 +59,44 @@ public class Spawner : Obstacle
     public override void Start()
     {
         base.Start();
-        m_velocityVector3 = (Vector3)initialVelocity;
         if (isActive) StartSpawnRoutine();
     }
 
     private void StartSpawnRoutine()
     {
-        m_spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         StartCoroutine(SpawnRoutine());
     }
 
     private IEnumerator SpawnRoutine()
     {
+        m_velocityVector3 = new Vector3(Random.Range(minInitialVelocity.x, maxInitialVelocity.x), Random.Range(minInitialVelocity.y, maxInitialVelocity.y), 0);
+        m_spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         yield return new WaitForSeconds(m_spawnTime);
-        
+
         // Spawn object with preset properties
-        GameObject spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocation.position, objectHasRandomRotation ? Random.rotation : Quaternion.identity);
+        GameObject spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, objectHasRandomRotation ? Random.rotation : Quaternion.identity);
         spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
 
         if(lifeTime != 0)
         {
             Destroy(spawnedObject, lifeTime);
         }
-        // Continue to spawn objects
-        if(isRepeating) StartSpawnRoutine();
+
+        // repeat
+        while (isRepeating)
+        {
+            m_velocityVector3 = new Vector3(Random.Range(minInitialVelocity.x, maxInitialVelocity.x), Random.Range(minInitialVelocity.y, maxInitialVelocity.y), 0);
+            m_spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
+            yield return new WaitForSeconds(m_spawnTime);
+
+            // Spawn object with preset properties
+            spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, objectHasRandomRotation ? Random.rotation : Quaternion.identity);
+            spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
+
+            if (lifeTime != 0)
+            {
+                Destroy(spawnedObject, lifeTime);
+            }
+        }
     }
 }

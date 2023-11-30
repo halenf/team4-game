@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/LevelObjects/LaserObject.prefab.meta
+guid: 7ab5bb2625ba34649826fd842467d308
+========
+guid: c68394706cf963e4ea504af023f85bf5
+>>>>>>>> 77b6a15d0afb1c1f40402fcd0c0d5f2f177f916a:Assets/Prefabs/Stages/test_stage.prefab.meta
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
