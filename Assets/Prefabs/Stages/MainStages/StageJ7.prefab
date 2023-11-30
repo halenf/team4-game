@@ -249,11 +249,12 @@ MonoBehaviour:
   toggleTimer: 0
   isRepeating: 0
   spawnObjectPrefab: {fileID: 0}
-  objectSpawnLocation: {fileID: 0}
+  objectSpawnLocations: []
   objectHasRandomRotation: 0
   minSpawnTime: 0
   maxSpawnTime: 0
-  initialVelocity: {x: 0, y: 0}
+  minInitialVelocity: {x: 0, y: 0}
+  maxInitialVelocity: {x: 0, y: 0}
   lifeTime: 0
 --- !u!1 &2753684399745064225
 GameObject:
@@ -1270,11 +1271,12 @@ MonoBehaviour:
   toggleTimer: 0
   isRepeating: 0
   spawnObjectPrefab: {fileID: 0}
-  objectSpawnLocation: {fileID: 0}
+  objectSpawnLocations: []
   objectHasRandomRotation: 0
   minSpawnTime: 0
   maxSpawnTime: 0
-  initialVelocity: {x: 0, y: 0}
+  minInitialVelocity: {x: 0, y: 0}
+  maxInitialVelocity: {x: 0, y: 0}
   lifeTime: 0
 --- !u!1 &5591830627739178760
 GameObject:
@@ -1490,11 +1492,12 @@ MonoBehaviour:
   toggleTimer: 0
   isRepeating: 0
   spawnObjectPrefab: {fileID: 0}
-  objectSpawnLocation: {fileID: 0}
+  objectSpawnLocations: []
   objectHasRandomRotation: 0
   minSpawnTime: 0
   maxSpawnTime: 0
-  initialVelocity: {x: 0, y: 0}
+  minInitialVelocity: {x: 0, y: 0}
+  maxInitialVelocity: {x: 0, y: 0}
   lifeTime: 0
 --- !u!1 &5591830628615591416
 GameObject:
@@ -2013,11 +2016,12 @@ MonoBehaviour:
   toggleTimer: 0
   isRepeating: 0
   spawnObjectPrefab: {fileID: 0}
-  objectSpawnLocation: {fileID: 0}
+  objectSpawnLocations: []
   objectHasRandomRotation: 0
   minSpawnTime: 0
   maxSpawnTime: 0
-  initialVelocity: {x: 0, y: 0}
+  minInitialVelocity: {x: 0, y: 0}
+  maxInitialVelocity: {x: 0, y: 0}
   lifeTime: 0
 --- !u!1 &7647660789900019398
 GameObject:
@@ -2067,7 +2071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25bf8fed1a086294795082f99a81e025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isActive: 0
+  m_isActive: 1
   toggleTimer: 0
   hitParticle: {fileID: 8163005987728998194, guid: bb118610af5d2f6439a07ca1c37fd4d4, type: 3}
 --- !u!120 &2121833185807221808
