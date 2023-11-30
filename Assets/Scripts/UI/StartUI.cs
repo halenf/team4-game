@@ -13,7 +13,8 @@ public class StartUI : MonoBehaviour
 {
     [Header("UI Elements")]
     [Tooltip("Array for each of the text objects for the connected player displays.")]
-    [SerializeField] private Image[] m_playerConnectedDisplays;
+    [SerializeField] private GameObject[] m_playerPleaseConnectObjects;
+    [SerializeField] private GameObject[] m_playerConnectedObjects;
     [SerializeField] private Image[] m_inputDisplays;
     [SerializeField] private GameObject m_startPromptDisplay;
 
@@ -23,11 +24,6 @@ public class StartUI : MonoBehaviour
 
     private void Start()
     {
-        // Set each player display to the join prompt
-        foreach(Image image in m_playerConnectedDisplays)
-        {
-            image.sprite = m_connectPromptSprite;
-        }
 
         // Disable start prompt display
         m_startPromptDisplay.SetActive(false);
@@ -41,13 +37,15 @@ public class StartUI : MonoBehaviour
         int i;
         for (i = 0; i < controllers.Count; i++)
         {
-            m_playerConnectedDisplays[i].sprite = m_connectedDisplaySprites[i];
-            //m_playerConnectedDisplays[i].SetNativeSize();
-            //m_playerConnectedDisplays[i].rectTransform.localPosition = new Vector3(0, -40, 0);
+            m_playerPleaseConnectObjects[i].SetActive(false);
+            m_playerConnectedObjects[i].SetActive(true);
+            ShowPlayerInput(false, i);
         }
         for (;i < 4; i++)
         {
-            m_playerConnectedDisplays[i].sprite = m_connectPromptSprite;
+            m_playerPleaseConnectObjects[i].SetActive(true);
+            m_playerConnectedObjects[i].SetActive(false);
+            ShowPlayerInput(false, i);
             //m_playerConnectedDisplays[i].SetNativeSize();
             //m_playerConnectedDisplays[i].rectTransform.localPosition = new Vector3(0, -40, 0);
         }
