@@ -10,19 +10,14 @@ using UnityEngine.UI;
 public class PickupIndicator : MonoBehaviour
 {
     [Header("Properties")]
+    [Min(0)] public float lifetime;
+    [Tooltip("Speed at which the indicator floats upwards.")]
     [Min(0)] public float riseSpeed;
     [Min(0)] public float spinSpeed;
-    [Min(0)] public float dimSpeed;
     
     [Header("UI Object References")]
     [SerializeField] private Image m_icon;
     [SerializeField] private Light m_light;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -32,15 +27,17 @@ public class PickupIndicator : MonoBehaviour
 
         // make indicator spin
         transform.Rotate(0, spinSpeed, 0, Space.Self);
-
-        // lower the light brightness
-        m_light.intensity -= dimSpeed;
     }
 
-    public void SetDisplayDetails(float lifetime, Sprite sprite, Color lightColour)
+    public void SetDisplayDetails(Sprite sprite, Color lightColour)
     {
         Destroy(gameObject, lifetime);
         m_icon.sprite = sprite;
         m_light.color = lightColour;
+
+        // setup animator
+        Animator animator = GetComponent<Animator>();
+        animator.speed = 1f / lifetime;
+        animator.Play("Fade");
     }
 }
