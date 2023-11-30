@@ -690,14 +690,18 @@ MonoBehaviour:
   endLaserSpawns:
   - {fileID: 2846608928013920949}
   - {fileID: 2496117881781373137}
+  fireworkSpawns: []
   cameraDefaultTransform: {fileID: 9137587867373645003}
   gunBoxPrefab: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   powerupBoxPrefab: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
   endLaserPrefab: {fileID: 4602441095069155359, guid: 7f70c04c1abb89f438fd56b4c5f93c07, type: 3}
   spikeBallPrefab: {fileID: 0}
+  fireworks: {fileID: 0}
   gunBoxLifetime: 10
   minGunTimer: 3
   maxGunTimer: 8
+  endLaserTimer: 15
+  endLaserSpeed: 25
   powerupBoxLifetime: 10
   minPowerupTimer: 4
   maxPowerupTimer: 9
