@@ -8,10 +8,20 @@ using UnityEngine;
 
 public class ConveyorBelt : Obstacle
 {
+    public override bool isActive
+    {
+        get { return m_isActive; }
+        set
+        {
+            if (m_isActive != value) UpdateBeltAnimation();
+            m_isActive = value;
+        }
+    }
+
     [Tooltip("The strength of the force the belt applies to objects standing on it.")]
     [Min(0)] public float speed;
 
-    [Tooltip("If the direction of the conveyor belt is in the positive or negative X-axis.")]
+    [Tooltip("If the direction of the conveyor belt is in the positive or negative X-axis (red arrow).")]
     [SerializeField] private bool m_movesPositive;
     public bool movesPositive
     {
@@ -19,32 +29,18 @@ public class ConveyorBelt : Obstacle
         set
         {
             m_movesPositive = value;
-            ToggleBeltAnimation();
-        }
-    }
-
-    [Tooltip("Whether or not the conveyor belt is activated")]
-    [SerializeField] private bool m_isActive = true;
-    public bool isActive
-    {
-        get { return m_isActive; }
-        set
-        {
-            if (m_isActive != value) ToggleBeltAnimation();
-            m_isActive = value;
+            UpdateBeltAnimation();
         }
     }
 
     [Space(10)]
     [Tooltip("For scaling the speed of the animation.")]
     [Range(0, 1)] public float animationSpeedScalar;
-    [SerializeField] private Animator m_animator;
 
-    private void Start()
+    public override void Start()
     {
-        // set initial belt speed and start belt
-        //m_animator.Play("ConveyorBelt");
-        ToggleBeltAnimation();
+        base.Start();
+        UpdateBeltAnimation();
     }
 
     private void OnTriggerStay(Collider other)
@@ -59,20 +55,10 @@ public class ConveyorBelt : Obstacle
         }
     }
 
-    private void ToggleBeltAnimation()
+    private void UpdateBeltAnimation()
     {
         // if the belt is active, animate in the appropriate direction, otherwise disable/set speed to zero
         float _speed = m_isActive ? (m_movesPositive ? speed : -speed) : 0;
         m_animator.SetFloat("Speed", _speed * animationSpeedScalar);
-    }
-
-    public override void ToggleState()
-    {
-        isActive = !isActive;
-    }
-
-    public override void ToggleState(bool state)
-    {
-        isActive = state;
     }
 }
