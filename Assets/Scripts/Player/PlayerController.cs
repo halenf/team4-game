@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
     [Header("Animation")]
     public float horizontalVelocityThreshold;
     public float horizontalAimingThreshold;
+    private float m_stoppedMovingTimer;
     [SerializeField] private bool m_facingRight;
     public bool facingRight // for model rotation
     {
@@ -111,12 +112,6 @@ public class PlayerController : MonoBehaviour
         get { return m_currentPowerup; }
         set
         {
-            // reset values
-            m_fireRate = m_currentGun.baseFireRate;
-            m_shieldCurrentHealth = 0;
-            m_rb.mass = defaultMass;
-            if (m_shieldGameObject) Destroy(m_shieldGameObject);
-
             // only set timer if the powerup is not shield
             if (value != Powerup.Shield) m_powerupTimer = powerupTime;
 
@@ -125,14 +120,22 @@ public class PlayerController : MonoBehaviour
             {
                 switch (m_currentPowerup)
                 {
-                    case (Powerup.LowGravity):
+                    case Powerup.LowGravity:
                         {
                             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYDEACTIVATE");
+                            m_rb.mass = defaultMass;
                             break;
                         }
-                    case (Powerup.FireRateUp):
+                    case Powerup.FireRateUp:
                         {
                             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREDEACTIVATE");
+                            m_fireRate = m_currentGun.baseFireRate;
+                            break;
+                        }
+                    case Powerup.Shield:
+                        {
+                            m_shieldCurrentHealth = 0;
+                            if (m_shieldGameObject) Destroy(m_shieldGameObject);
                             break;
                         }
                 }
@@ -186,8 +189,6 @@ public class PlayerController : MonoBehaviour
                 case Powerup.None:
                 {
                     m_powerupTimer = 0f;
-                    
-                    
                     break;
                 }
             }
@@ -216,6 +217,10 @@ public class PlayerController : MonoBehaviour
     {
         m_aimDirection = transform.right;
         SetGun(defaultGun);
+
+        // set initial direction to face based on ID
+        if ((id + 1) % 2 == 0) facingRight = false;
+        else facingRight = true;
     }
 
     // Update is called once per frame
@@ -226,7 +231,8 @@ public class PlayerController : MonoBehaviour
 
         // update powerup timer
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
-        // if the current powerup isn't the sheld, powerup timer is less than or equal to 0, disable the powerup
+
+        // if the current powerup isn't the sheld, powerup timer is less than or equal to 0, and isn't already "none", disable the powerup
         if (currentPowerup != Powerup.Shield && m_powerupTimer <= 0 && currentPowerup != Powerup.None) currentPowerup = Powerup.None;
 
         // if player is shooting
@@ -269,10 +275,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Update the animator parameters
+        // to avoid entering the idle state while swapping movement direction
+        bool isMoving = Mathf.Abs(m_rb.velocity.x) >= horizontalVelocityThreshold;
+
+        if (!isMoving) m_stoppedMovingTimer += Time.deltaTime;
+        else m_stoppedMovingTimer = 0;
+        Debug.Log(m_stoppedMovingTimer);
+
+        m_animator.SetBool("IsMoving", isMoving);
+        m_animator.SetFloat("StoppedMovingTimer", m_stoppedMovingTimer);
+        
+        // if player is grounded
         m_animator.SetBool("IsGrounded", IsGrounded());
-        // update animator parameter
-        m_animator.SetBool("IsMoving", Mathf.Abs(m_rb.velocity.x) >= horizontalVelocityThreshold);
     }
 
     // FixedUpdate is called once per physic frame
@@ -281,22 +295,17 @@ public class PlayerController : MonoBehaviour
         m_rb.AddForce(m_moveForce, ForceMode.Force); // apply the force to the player
     }
 
-    public void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.tag == "Spike Ball")
-        {
-            TakeDamage(maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathSpikeball);
-        }
-    }
-
     public void OnMove(InputAction.CallbackContext value)
     {
         float inputValue = value.ReadValue<Vector2>().x; // Get the direction the player is trying to move
         m_moveForce = moveSpeed * new Vector3(inputValue, 0, 0); // calculate the magnitude of the force
 
-        // update model rotation when the t
+        // update model rotation when the threshold is met
         if (inputValue >= horizontalAimingThreshold) facingRight = true;
         if (inputValue <= -horizontalAimingThreshold) facingRight = false;
+
+        // update animator parameter
+        m_animator.SetFloat("HorizontalInput", Mathf.Abs(inputValue));
     }
 
     public void OnShoot(InputAction.CallbackContext value)
@@ -340,7 +349,8 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Deal damage to the player and check if they are dead.
     /// </summary>
-    /// <param name="damage"></param>
+    /// <param name="damage">Amount of damage taken by the player.</param>
+    /// <param name="announcementType">If lethal damage, the damage type that killed the player.</param>
     public void TakeDamage(float damage, AnnouncerSubtitleDisplay.AnnouncementType announcementType)
     {
         // if the player is already dead, don't make them take damage
@@ -438,6 +448,7 @@ public class PlayerController : MonoBehaviour
     /// creates a image above the player and destroys it after amount of seconds
     /// </summary>
     /// <param name="image"></param>
+    /// <param name="colour"></param>
     public void CreateOverhead(Sprite image, Color colour)
     {
         PickupIndicator indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorSpawnHeight, 0), Quaternion.identity);
