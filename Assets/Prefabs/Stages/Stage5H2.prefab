@@ -700,11 +700,11 @@ MonoBehaviour:
   gunBoxLifetime: 10
   minGunTimer: 3
   maxGunTimer: 8
-  endLaserTimer: 15
-  endLaserSpeed: 25
   powerupBoxLifetime: 10
   minPowerupTimer: 4
   maxPowerupTimer: 9
+  endLaserTimer: 10
+  endLaserSpeed: 3
 --- !u!1 &3634519609398047103
 GameObject:
   m_ObjectHideFlags: 0

@@ -1134,7 +1134,7 @@ MonoBehaviour:
   cameraDefaultTransform: {fileID: 507392580774554904}
   gunBoxPrefab: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   powerupBoxPrefab: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
-  endLaserPrefab: {fileID: 4602441095069155359, guid: 7f70c04c1abb89f438fd56b4c5f93c07, type: 3}
+  endLaserPrefab: {fileID: 7339470415377661335, guid: 7f70c04c1abb89f438fd56b4c5f93c07, type: 3}
   spikeBallPrefab: {fileID: 4872935802854433896, guid: 735331b7140807f4a8021a133db25238, type: 3}
   fireworks: {fileID: 1813532964984505730, guid: 670ed16ffd92b894b8455d5cc34dbdee, type: 3}
   gunBoxLifetime: 10
@@ -1143,6 +1143,8 @@ MonoBehaviour:
   powerupBoxLifetime: 10
   minPowerupTimer: 4
   maxPowerupTimer: 8
+  endLaserTimer: 10
+  endLaserSpeed: 3
 --- !u!114 &8683508826252919962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1156,6 +1158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isActive: 1
+  toggleTimer: 5
   isRepeating: 1
   spawnObjectPrefab: {fileID: 4872935802854433896, guid: 735331b7140807f4a8021a133db25238, type: 3}
   objectSpawnLocation: {fileID: 6647638470756280124}
@@ -11204,6 +11207,10 @@ PrefabInstance:
     - target: {fileID: 5870180796672742153, guid: 5a9846a7e630e674ab1594d8bfab1474, type: 3}
       propertyPath: force
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5870180796672742153, guid: 5a9846a7e630e674ab1594d8bfab1474, type: 3}
+      propertyPath: m_isActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5870180796672742154, guid: 5a9846a7e630e674ab1594d8bfab1474, type: 3}
       propertyPath: m_Name

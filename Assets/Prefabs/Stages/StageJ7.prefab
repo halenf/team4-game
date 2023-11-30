@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isActive: 0
+  toggleTimer: 0
   isRepeating: 0
   spawnObjectPrefab: {fileID: 0}
   objectSpawnLocation: {fileID: 0}
@@ -1166,11 +1167,11 @@ MonoBehaviour:
   gunBoxLifetime: 10
   minGunTimer: 2
   maxGunTimer: 5
-  endLaserTimer: 0
-  endLaserSpeed: 0
   powerupBoxLifetime: 10
   minPowerupTimer: 3
   maxPowerupTimer: 5
+  endLaserTimer: 10
+  endLaserSpeed: 3
 --- !u!1 &5591830627323396188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,6 +1267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isActive: 0
+  toggleTimer: 0
   isRepeating: 0
   spawnObjectPrefab: {fileID: 0}
   objectSpawnLocation: {fileID: 0}
@@ -1485,6 +1487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isActive: 0
+  toggleTimer: 0
   isRepeating: 0
   spawnObjectPrefab: {fileID: 0}
   objectSpawnLocation: {fileID: 0}
@@ -2007,6 +2010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isActive: 0
+  toggleTimer: 0
   isRepeating: 0
   spawnObjectPrefab: {fileID: 0}
   objectSpawnLocation: {fileID: 0}
@@ -2063,7 +2067,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25bf8fed1a086294795082f99a81e025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
+  m_isActive: 0
+  toggleTimer: 0
   hitParticle: {fileID: 8163005987728998194, guid: bb118610af5d2f6439a07ca1c37fd4d4, type: 3}
 --- !u!120 &2121833185807221808
 LineRenderer:
