@@ -70,9 +70,9 @@ public class PlayerController : MonoBehaviour
     [Header("Pickup Display")]
     public PickupIndicator indicatorCanvasPrefab;
     [Min(0)] public float indicatorSpawnHeight;
-    [Min(0)] public float indicatorLifetime;
     public Sprite[] powerupIndicators;
     public Color[] powerupColours;
+    public Sprite deathIndicator;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -375,6 +375,9 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
 
+            //make death indicator
+            CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
+
             // Play death sound
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
 
@@ -438,8 +441,7 @@ public class PlayerController : MonoBehaviour
     public void CreateOverhead(Sprite image, Color colour)
     {
         PickupIndicator indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorSpawnHeight, 0), Quaternion.identity);
-        indicatorCanvas.SetDisplayDetails(indicatorLifetime, image, colour);
-        Destroy(indicatorCanvas, indicatorLifetime);
+        indicatorCanvas.SetDisplayDetails(image, colour);
     }
 
     /// <summary>

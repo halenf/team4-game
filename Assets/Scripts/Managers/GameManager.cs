@@ -198,6 +198,9 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < m_controllers.Count; i++)
         {
+            // something to check if controller is still connected
+            // remove it if it isn't and reorder the list
+            
             if (m_controllers[i].allControls.Any(x => x is ButtonControl button && x.IsPressed() && !x.synthetic))
             {
                 m_startCanvas.ShowPlayerInput(true, i);
@@ -300,6 +303,9 @@ public class GameManager : MonoBehaviour
         // Destroy any bullets that might remain in the level from the last level
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
+
+        PickupIndicator[] remainingIndicators = FindObjectsOfType<PickupIndicator>();
+        foreach (PickupIndicator indicator in remainingIndicators) Destroy(indicator.gameObject);
 
         // destroy any remaining powerups in the scene
         PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
