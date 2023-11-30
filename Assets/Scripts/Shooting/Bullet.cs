@@ -47,6 +47,7 @@ public class Bullet : MonoBehaviour
 
     // tracks which particle to instantiate when the bullet is destroyed
     private ParticleSystem m_particle;
+    public TrailRenderer trailRenderer;
 
     /// <summary>
     /// For setting bullet details after being instantiated
@@ -173,7 +174,7 @@ public class Bullet : MonoBehaviour
         else Instantiate(m_particle, transform.position, transform.rotation);
 
         // Separate the trail from the bullet to let it autodestruct
-        GetComponentInChildren<TrailRenderer>().transform.parent = null;
+        trailRenderer.transform.parent = null;
 
         Destroy(gameObject);
     }
