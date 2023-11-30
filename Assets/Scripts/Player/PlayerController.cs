@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
     [Min(0)] public float indicatorLifetime;
     public Sprite[] powerupIndicators;
     public Color[] powerupColours;
+    public Sprite deathIndicator;
+    private GameObject m_deathIndicator;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -375,6 +377,9 @@ public class PlayerController : MonoBehaviour
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
 
+            //make death indicator
+            m_deathIndicator = CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
+
             // Play death sound
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
 
@@ -435,11 +440,12 @@ public class PlayerController : MonoBehaviour
     /// creates a image above the player and destroys it after amount of seconds
     /// </summary>
     /// <param name="image"></param>
-    public void CreateOverhead(Sprite image, Color colour)
+    public GameObject CreateOverhead(Sprite image, Color colour)
     {
         PickupIndicator indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorSpawnHeight, 0), Quaternion.identity);
         indicatorCanvas.SetDisplayDetails(indicatorLifetime, image, colour);
         Destroy(indicatorCanvas, indicatorLifetime);
+        return indicatorCanvas.gameObject;
     }
 
     /// <summary>
@@ -506,6 +512,7 @@ public class PlayerController : MonoBehaviour
         SetGun(defaultGun);
         m_fireRate = m_currentGun.baseFireRate;
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
+        if(m_deathIndicator) Destroy(m_deathIndicator);
     }
 
     private void OnEnable()
