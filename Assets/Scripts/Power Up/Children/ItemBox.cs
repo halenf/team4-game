@@ -13,7 +13,7 @@ public class ItemBox : PowerUp
     public override void OnStart()
     {
         //pick power up, random int chosen from length of enum Powerup cast back to the enum
-        m_currentPowerup = (PlayerController.Powerup) UnityEngine.Random.Range(0, Enum.GetValues(typeof(PlayerController.Powerup)).Length - 1);
+        m_currentPowerup = (PlayerController.Powerup) UnityEngine.Random.Range(1, Enum.GetValues(typeof(PlayerController.Powerup)).Length - 1);
     }
 
     public override void OnTriggerEnter(Collider other)

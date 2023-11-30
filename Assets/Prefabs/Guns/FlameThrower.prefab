@@ -86,7 +86,7 @@ MonoBehaviour:
   ammoCapacity: 80
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 0}
-  indicator: {fileID: 21300000, guid: 8b4645e13db37784ca3fb1e9265723e0, type: 3}
+  indicator: {fileID: 21300000, guid: c476db86d23d98845a41a5865b8588ba, type: 3}
   colour: {r: 1, g: 0.21905372, b: 0, a: 1}
   bulletPrefab: {fileID: 2271769695517889325, guid: 1fd930c455b1d034dbddf541530112c3, type: 3}
   spread: 20
