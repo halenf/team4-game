@@ -302,7 +302,7 @@ public class GameManager : MonoBehaviour
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
 
         PickupIndicator[] remainingIndicators = FindObjectsOfType<PickupIndicator>();
-        foreach (Object indicator in remainingIndicators) Destroy(indicator);
+        foreach (PickupIndicator indicator in remainingIndicators) Destroy(indicator.gameObject);
 
         // destroy any remaining powerups in the scene
         PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();

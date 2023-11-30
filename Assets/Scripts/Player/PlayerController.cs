@@ -439,12 +439,11 @@ public class PlayerController : MonoBehaviour
     /// creates a image above the player and destroys it after amount of seconds
     /// </summary>
     /// <param name="image"></param>
-    public GameObject CreateOverhead(Sprite image, Color colour)
+    public void CreateOverhead(Sprite image, Color colour)
     {
         PickupIndicator indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorSpawnHeight, 0), Quaternion.identity);
         indicatorCanvas.SetDisplayDetails(indicatorLifetime, image, colour);
         Destroy(indicatorCanvas, indicatorLifetime);
-        return indicatorCanvas.gameObject;
     }
 
     /// <summary>
