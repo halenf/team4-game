@@ -696,8 +696,8 @@ MonoBehaviour:
   m_playerLabelSprites:
   - {fileID: 21300000, guid: 03e5567f5b0c2a244a96c1d2baed4343, type: 3}
   - {fileID: 21300000, guid: 72410cd77f8a6c74ba985872151c8a79, type: 3}
-  - {fileID: 21300000, guid: 0cf0b57f45908cf4da4dd9d1edd4f096, type: 3}
-  - {fileID: 21300000, guid: 45454861939cfe14496c6bd213e2793b, type: 3}
+  - {fileID: 21300000, guid: 7f944c85282fc4d4e9ff7dd4c54eb9ba, type: 3}
+  - {fileID: 21300000, guid: 98468be768bd37c4880e10448c5f4ac8, type: 3}
   defaultSelectedObject: {fileID: 8768610931302392276}
   fadeOut: {fileID: 2178254363965789420, guid: 1dda453d7f7444848b13c283eb78b9d4, type: 3}
   fadeOutReset: {fileID: 2178254363965789420, guid: dfca51aa96ab0f549a5552b6e7edfebf, type: 3}

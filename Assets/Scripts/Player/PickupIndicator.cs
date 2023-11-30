@@ -1,6 +1,6 @@
 // Pickup Indicator - Halen
 // World canvas that displays what powerup or gun the player gets from pickups.
-// Last edit: 26 /10/23
+// Last edit: 29/11/23
 
 using System.Collections;
 using System.Collections.Generic;

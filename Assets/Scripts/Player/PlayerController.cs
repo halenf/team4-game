@@ -1,6 +1,6 @@
 // Player Controller - Halen, Cameron
 // Handles general player info, inputs, and actions
-// Last edit: 15/11/23
+// Last edit: 29/11/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -285,7 +285,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Spike Ball")
         {
-            TakeDamage(7f, AnnouncerSubtitleDisplay.AnnouncementType.DeathSpikeball);
+            TakeDamage(maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathSpikeball);
         }
     }
 
