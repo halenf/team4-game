@@ -74,7 +74,6 @@ public class PlayerController : MonoBehaviour
     public Sprite[] powerupIndicators;
     public Color[] powerupColours;
     public Sprite deathIndicator;
-    private GameObject m_deathIndicator;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -378,7 +377,7 @@ public class PlayerController : MonoBehaviour
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
 
             //make death indicator
-            m_deathIndicator = CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
+            CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
 
             // Play death sound
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
@@ -512,7 +511,6 @@ public class PlayerController : MonoBehaviour
         SetGun(defaultGun);
         m_fireRate = m_currentGun.baseFireRate;
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
-        if(m_deathIndicator) Destroy(m_deathIndicator);
     }
 
     private void OnEnable()

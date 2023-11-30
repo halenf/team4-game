@@ -6,6 +6,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -300,6 +301,9 @@ public class GameManager : MonoBehaviour
         // Destroy any bullets that might remain in the level from the last level
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
+
+        PickupIndicator[] remainingIndicators = FindObjectsOfType<PickupIndicator>();
+        foreach (Object indicators in remainingIndicators) Destroy(indicators.GameObject());
 
         // destroy any remaining powerups in the scene
         PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
