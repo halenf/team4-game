@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3177424421374407707}
   - component: {fileID: -3240330610181331103}
-  - component: {fileID: 5196722604911171998}
   - component: {fileID: 8492388607002095543}
   m_Layer: 0
-  m_Name: Spike Ball
+  m_Name: Spike Ball (J9)
   m_TagString: Spike Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4872935802854433896}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.000004894471, y: 0, z: -1.4916475}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -34,7 +33,7 @@ Transform:
   - {fileID: 3855447044675238188}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3240330610181331103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,22 +49,6 @@ MonoBehaviour:
   isActive: 1
   sparksPrefab: {fileID: 6647730250613079163, guid: 8cb2db274e759c64a983744e95e0501f, type: 3}
   sparkFrequency: 100
---- !u!54 &5196722604911171998
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4872935802854433896}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 0.5
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 56
-  m_CollisionDetection: 0
 --- !u!135 &8492388607002095543
 SphereCollider:
   m_ObjectHideFlags: 0
