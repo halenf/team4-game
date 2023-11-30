@@ -82,6 +82,11 @@ public class SetColour : MonoBehaviour
         m_setColour = colour;
     }
 
+    public Color GetColour()
+    {
+        return m_setColour;
+    }
+
     /// <summary>
     /// Changes the emission intensity of the objects and all their children to a specified value.
     /// </summary>
