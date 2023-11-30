@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
     [Min(0)] public float indicatorLifetime;
     public Sprite[] powerupIndicators;
     public Color[] powerupColours;
+    public Sprite deathIndicator;
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
@@ -374,6 +375,9 @@ public class PlayerController : MonoBehaviour
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
                 Instantiate(bloodPrefab, transform.position, Random.rotation);
+
+            //make death indicator
+            CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
 
             // Play death sound
             SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");

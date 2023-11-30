@@ -301,6 +301,9 @@ public class GameManager : MonoBehaviour
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
 
+        PickupIndicator[] remainingIndicators = FindObjectsOfType<PickupIndicator>();
+        foreach (PickupIndicator indicator in remainingIndicators) Destroy(indicator.gameObject);
+
         // destroy any remaining powerups in the scene
         PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
         foreach (Object powerup in allPowerUps) Destroy(powerup);
