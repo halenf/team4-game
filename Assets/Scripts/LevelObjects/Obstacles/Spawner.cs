@@ -11,9 +11,7 @@ public class Spawner : Obstacle
     private Vector3 m_velocityVector3;
     private float m_spawnTime;
 
-    [Header("Spawner Properties")]
-    [SerializeField] private bool m_isActive;
-    public bool isActive
+    public override bool isActive
     {
         get { return m_isActive; }
         set
@@ -25,7 +23,8 @@ public class Spawner : Obstacle
             else StopAllCoroutines();
         }
     }
-    
+
+    [Header("Spawner Properties")]
     [Tooltip("Whether the spawner will only spawn the object once or many times.")]
     public bool isRepeating;
 
@@ -51,8 +50,9 @@ public class Spawner : Obstacle
     [Tooltip("how long before the spawned object is destroyed")]
     [Min(0)]public float lifeTime;
 
-    public void Start()
+    public override void Start()
     {
+        base.Start();
         m_velocityVector3 = (Vector3)initialVelocity;
         if (isActive) StartSpawnRoutine();
     }
@@ -77,16 +77,5 @@ public class Spawner : Obstacle
         }
         // Continue to spawn objects
         if(isRepeating) StartSpawnRoutine();
-    }
-
-    // inherited methods - halen
-    public override void ToggleState()
-    {
-        isActive = !isActive;
-    }
-
-    public override void ToggleState(bool state)
-    {
-        isActive = state;
     }
 }
