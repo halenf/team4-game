@@ -123,15 +123,11 @@ public class Stage : MonoBehaviour
         //start making the next one
         
         // if there isn't already a box in that slot, spawn a new one
-        if (m_currentGunBoxes.ElementAtOrDefault(spawnIndex) == gunBoxPrefab)
+        if (gunBoxSpawns[spawnIndex].childCount == 0)
         {
             GameObject gunBox = Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform);
             m_currentGunBoxes.Insert(spawnIndex, gunBox);
             gunBox.GetComponent<PowerUp>().lifeTime = gunBoxLifetime;
-        }
-        else
-        {
-            
         }
         StartGunRoutine();
         
@@ -158,7 +154,7 @@ public class Stage : MonoBehaviour
         //start making the next one
         StartPowerUpRoutine();
         // if there isn't already a box in that slot, spawn a new one
-        if (m_currentPowerupBoxes.ElementAtOrDefault(spawnIndex) == powerupBoxPrefab)
+        if (gunBoxSpawns[spawnIndex].childCount == 0)
         {
             GameObject powerUp = Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform);
             m_currentGunBoxes.Insert(spawnIndex, powerUp);
