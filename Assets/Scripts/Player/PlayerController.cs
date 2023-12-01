@@ -482,7 +482,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator PlayDamageParticles()
     {
         //get an amount of time before the next spark based on health
-        float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer;
+        float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
         yield return new WaitForSeconds(time);
         //at on of the positions the player has play the particle effect
 
