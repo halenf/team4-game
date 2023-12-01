@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class FlameThower : Gun
 {
+    [Header("Flamethrower Details")]
     public Collider smallCollider;
     public Collider bigCollider;
     public float timeToColliderOff;

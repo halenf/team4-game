@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ShotGun : Gun
 {
+    [Header("Shotgun details")]
     public int minBulletAmount;
     public int maxBulletAmount;
     public override void Shoot(int playerID, Bullet.BulletEffect effect, int bounces)
