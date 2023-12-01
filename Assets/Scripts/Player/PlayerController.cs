@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -82,6 +83,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
+    [Tooltip("particle that plays randomly when the player is low health")]
+    public ParticleSystem damagedParticlePrefab;
+    [Tooltip("places where the sparks will play")]
+    public Transform[] sparkLocations;
+    [Tooltip(" minimum time between when damage sparks play on the player")]
+    public float minSparkTimer;
+    [Tooltip("maximum time between when damage sparks play on the player")]
+    public float maxSparkTimer;
 
     [Header("Animation")]
     public float horizontalVelocityThreshold;
@@ -207,6 +216,9 @@ public class PlayerController : MonoBehaviour
         id = _id;
         m_color = colour;
         GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
+
+
+        
     }
 
     private void Awake()
@@ -379,6 +391,12 @@ public class PlayerController : MonoBehaviour
         // deal damage
         m_currentHealth -= damage;
 
+        //if the player has been damaged enough start playing sparks
+        if(m_currentHealth <= 4)
+        {
+            StartCoroutine(PlayDamageParticles());
+        }
+
         //set emmisoin
         GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
 
@@ -460,6 +478,34 @@ public class PlayerController : MonoBehaviour
     {
         PickupIndicator indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorSpawnHeight, 0), Quaternion.identity);
         indicatorCanvas.SetDisplayDetails(image, colour);
+    }
+
+    private IEnumerator PlayDamageParticles()
+    {
+        //get an amount of time before the next spark based on health
+        float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
+        yield return new WaitForSeconds(time);
+        //at on of the positions the player has play the particle effect
+
+        ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+
+        var sparkMain = sparks.main;
+        sparkMain.startColor = m_color;
+
+        var sparkTrails = sparks.trails;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
+                         new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) } );
+        sparkTrails.colorOverLifetime = gradient;
+        
+        /*
+        Material particleMat = sparks.GetComponent<Material>();
+        particleMat.EnableKeyword("_EMISSION");
+        particleMat.SetColor("_EmissionColor", m_color);
+        particleMat.SetColor("_Color", m_color);*/
+
+        //restart
+        StartCoroutine(PlayDamageParticles());
     }
 
     /// <summary>
