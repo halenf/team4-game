@@ -82,6 +82,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
+    [Tooltip("particle that plays randomly when the player is low health")]
+    public ParticleSystem damagedParticle;
+    [Tooltip("places where the sparks will play")]
+    public Transform[] sparkLocations;
+    [Tooltip(" minimum time between when damage sparks play on the player")]
+    public float minSparkTimer;
+    [Tooltip("maximum time between when damage sparks play on the player")]
+    public float maxSparkTimer;
 
     [Header("Animation")]
     public float horizontalVelocityThreshold;
@@ -379,6 +387,11 @@ public class PlayerController : MonoBehaviour
         // deal damage
         m_currentHealth -= damage;
 
+        if(m_currentHealth <= 4)
+        {
+            StartCoroutine(PlayDamageParticles());
+        }
+
         //set emmisoin
         GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
 
@@ -460,6 +473,14 @@ public class PlayerController : MonoBehaviour
     {
         PickupIndicator indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorSpawnHeight, 0), Quaternion.identity);
         indicatorCanvas.SetDisplayDetails(image, colour);
+    }
+
+    private IEnumerator PlayDamageParticles()
+    {
+        float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer;
+        yield return new WaitForSeconds(time);
+        Instantiate(damagedParticle, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+        StartCoroutine(PlayDamageParticles());
     }
 
     /// <summary>
