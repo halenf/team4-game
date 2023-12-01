@@ -35,10 +35,12 @@ public class FlameThower : Gun
         if (effect != Bullet.BulletEffect.None)
         {
             bigCollider.enabled = true;
+            smallCollider.enabled = false;
             m_fireParticleEffect.startSpeed = 52f;
         }
         else
         {
+            bigCollider.enabled = false;
             smallCollider.enabled = true;
             m_fireParticleEffect.startSpeed = 16.29f;
         }
