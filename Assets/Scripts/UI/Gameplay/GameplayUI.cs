@@ -100,7 +100,7 @@ public class GameplayUI : MonoBehaviour
 
         // Show the player who won the round
         m_roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
-        yield return new WaitForSeconds(leaderboardDisplayTime);
+        yield return new WaitForSeconds(leaderboardDisplayTime * Time.timeScale);
         
         m_roundWinnerDisplay.text = "";
         Instantiate(fadeOut);

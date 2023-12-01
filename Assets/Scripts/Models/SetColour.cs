@@ -19,26 +19,26 @@ public class SetColour : MonoBehaviour
     private Color m_setColour;
 
     /// <summary>
-    /// Sets the colours of all the MeshRenderers in 'renderers' to a specified colour.
+    /// Sets the colours of all the Renderers in 'renderers' to a specified colour.
     /// </summary>
     /// <param name="colour"></param>
     public void Set(Color colour)
     {
         // make a new empty list of renderers
-        List<MeshRenderer> renderers = new List<MeshRenderer>();
+        List<Renderer> renderers = new List<Renderer>();
 
         foreach (GameObject obj in objects)
         {
             // if the initial object has a renderer, add it to the list
-            MeshRenderer objRenderer = obj.GetComponent<MeshRenderer>();
+            Renderer objRenderer = obj.GetComponent<Renderer>();
             if (objRenderer) renderers.Add(objRenderer);
 
             // add any renderers attached to the object to the list
-            renderers.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
+            renderers.AddRange(obj.GetComponentsInChildren<Renderer>());
         }
 
         // change the colour of all the renderers' materials
-        foreach (MeshRenderer renderer in renderers)
+        foreach (Renderer renderer in renderers)
         {
             renderer.material.EnableKeyword("_EMISSION");
             
@@ -55,20 +55,20 @@ public class SetColour : MonoBehaviour
     public void Set(Color colour, float emmisionPercentage)
     {
         // make a new empty list of renderers
-        List<MeshRenderer> renderers = new List<MeshRenderer>();
+        List<Renderer> renderers = new List<Renderer>();
 
         foreach (GameObject obj in objects)
         {
             // if the initial object has a renderer, add it to the list
-            MeshRenderer objRenderer = obj.GetComponent<MeshRenderer>();
+            Renderer objRenderer = obj.GetComponent<Renderer>();
             if (objRenderer) renderers.Add(objRenderer);
 
             // add any renderers attached to the object to the list
-            renderers.AddRange(obj.GetComponentsInChildren<MeshRenderer>());
+            renderers.AddRange(obj.GetComponentsInChildren<Renderer>());
         }
 
         // change the colour of all the renderers' materials
-        foreach (MeshRenderer renderer in renderers)
+        foreach (Renderer renderer in renderers)
         {
             renderer.material.EnableKeyword("_EMISSION");
 
@@ -80,6 +80,11 @@ public class SetColour : MonoBehaviour
         }
 
         m_setColour = colour;
+    }
+
+    public Color GetColour()
+    {
+        return m_setColour;
     }
 
     /// <summary>

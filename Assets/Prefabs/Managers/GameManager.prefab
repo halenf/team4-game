@@ -60,7 +60,12 @@ MonoBehaviour:
   - {r: 1, g: 0.45882353, b: 0.05490196, a: 1}
   - {r: 0.34117648, g: 1, b: 0.011764706, a: 1}
   stageList:
-  - {fileID: 3771888446113775381, guid: ca8869b86fab90746a761fd42e221a31, type: 3}
+  - {fileID: 3170264843013748611, guid: d6364d577a154ed44901f70dcfed2c99, type: 3}
+  - {fileID: 6020532710181630620, guid: 56d0b9382e6fb414191fb672c887aa2d, type: 3}
+  - {fileID: 7608319705386287573, guid: fe28bc3acdee1ed4498e29c24ddcec04, type: 3}
+  - {fileID: 5591830627243611222, guid: bb0d3be748ceba94d99a6af14c21fa40, type: 3}
+  - {fileID: 4012481546695760712, guid: 3ffd51ef4dc4f9e4da73be846b03913c, type: 3}
+  - {fileID: 5362399507169375447, guid: 823bf9bd77418ea4c9efb3cbf4f032cc, type: 3}
   numberOfRounds: 5
   m_announcerSubtitleDisplay: {fileID: 0}
   announcerCameraPrefab: {fileID: 3085158865854223, guid: 84ca89297ab0f454f9059a37a4e0bb0a, type: 3}

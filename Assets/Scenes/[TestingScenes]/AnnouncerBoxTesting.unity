@@ -420,6 +420,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1342752679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 807415391619058530, guid: 6bd8b0a85862bd949b94ee0610d6691e, type: 3}
+  m_PrefabInstance: {fileID: 1837455041}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c52cf2a9671842489fcc438f9174beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1837455041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -698,17 +709,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2065170983}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: announcerCamera
-      value: 
-      objectReference: {fileID: 3085158865854223, guid: 84ca89297ab0f454f9059a37a4e0bb0a, type: 3}
-    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_gameplayCamera
       value: 
       objectReference: {fileID: 2364201596277266086}
-    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: timeToNextPlayer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.size
       value: 1
@@ -716,7 +719,7 @@ PrefabInstance:
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[0]
       value: 
-      objectReference: {fileID: 3771888446113775381, guid: 864033d4133d59c4aa4700aeba43f9d6, type: 3}
+      objectReference: {fileID: 3771888446113775381, guid: 7ab5bb2625ba34649826fd842467d308, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[1]
       value: 
@@ -737,6 +740,10 @@ PrefabInstance:
       propertyPath: announcerSubtitleDisplay
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: m_announcerSubtitleDisplay
+      value: 
+      objectReference: {fileID: 1342752679}
     - target: {fileID: 6369607398092397879, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_RootOrder
       value: 1

@@ -1,27 +1,27 @@
 // Laser - Cameron
 // Laser behaviour
-// Last edit: 24/11/23
+// Last edit: 30/11/23
 
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Laser : Obstacle
 {
-    public bool isActive;
     public ParticleSystem hitParticle;
     private ParticleSystem m_particleInScene;
-
-
-    private LineRenderer lineRenderer;
-    /// <summary>
-    /// get line renderer
-    /// </summary>
-    void Start()
+    private LineRenderer m_lineRenderer;
+    
+    public override void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        //create the particles in the scene
-        m_particleInScene = Instantiate(hitParticle);
+        base.Start();
+        
+        // get the line renderer component
+        m_lineRenderer = GetComponent<LineRenderer>();
+
+        // create the hit particle in the scene
+        m_particleInScene = Instantiate(hitParticle, transform);
     }
 
     /// <summary>
@@ -38,8 +38,11 @@ public class Laser : Obstacle
             if (Physics.Raycast(transform.position, transform.up, out hit, 1000, 1, QueryTriggerInteraction.Ignore))
             {
                 //draw line between here and end point of ray
-                lineRenderer.SetPosition(0, transform.position);
-                lineRenderer.SetPosition(1, hit.point);
+                m_lineRenderer.SetPosition(0, transform.position);
+                m_lineRenderer.SetPosition(1, hit.point);
+
+                // activate the particle system
+                if (!m_particleInScene.isPlaying) m_particleInScene.Play();
 
                 //move particles
                 m_particleInScene.gameObject.SetActive(true);
@@ -57,26 +60,20 @@ public class Laser : Obstacle
             }
             else //just draw line from here to 1000 up
             {
-                lineRenderer.SetPosition(0, transform.position);
-                lineRenderer.SetPosition(1, transform.up * 1000);
-                m_particleInScene.gameObject.SetActive(false);
+                m_lineRenderer.SetPosition(0, transform.position);
+                m_lineRenderer.SetPosition(1, transform.up * 1000);
+                m_particleInScene.Stop();
             }
         }
-    }
-
-    // inherited methods - Halen
-    public override void ToggleState()
-    {
-        isActive = !isActive;
-    }
-
-    public override void ToggleState(bool state)
-    {
-        isActive = state;
+        else
+        {
+            m_lineRenderer.SetPositions(new Vector3[] { transform.position, transform.position } );
+            m_particleInScene.Stop();
+        }
     }
 
     private void OnDisable()
     {
-        Destroy(m_particleInScene.gameObject);
+        Destroy(m_particleInScene);
     }
 }

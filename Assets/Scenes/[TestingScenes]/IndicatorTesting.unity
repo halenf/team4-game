@@ -275,15 +275,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22126227461465278, guid: b5b26912ebefbdb4883753b557a1dd3b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.99476
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22126227461465278, guid: b5b26912ebefbdb4883753b557a1dd3b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.023808546
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22126227461465278, guid: b5b26912ebefbdb4883753b557a1dd3b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -14.726165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22126227461465278, guid: b5b26912ebefbdb4883753b557a1dd3b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -440,7 +440,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -701,6 +701,26 @@ PrefabInstance:
       propertyPath: m_gameplayCamera
       value: 
       objectReference: {fileID: 2364201596277266086}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[0]
+      value: 
+      objectReference: {fileID: 3771888446113775381, guid: ca8869b86fab90746a761fd42e221a31, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[1]
+      value: 
+      objectReference: {fileID: 5591830627243611222, guid: bb0d3be748ceba94d99a6af14c21fa40, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[2]
+      value: 
+      objectReference: {fileID: 4012481546695760712, guid: 3ffd51ef4dc4f9e4da73be846b03913c, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[3]
+      value: 
+      objectReference: {fileID: 4012481546695760712, guid: 3ffd51ef4dc4f9e4da73be846b03913c, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_announcerSubtitleDisplay
       value: 

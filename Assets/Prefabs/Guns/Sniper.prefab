@@ -5051,7 +5051,7 @@ MonoBehaviour:
   ammoCapacity: 2
   bulletSpawnTransform: {fileID: 1676410753910675609}
   muzzleFlash: {fileID: 1407886214849153807}
-  indicator: {fileID: 21300000, guid: cfad47e9aaec7ab42b5289dc376549b4, type: 3}
+  indicator: {fileID: 21300000, guid: a9193b87875d5fb40b28beccb5da0e4b, type: 3}
   colour: {r: 0.35065258, g: 0.6981132, b: 0.21404415, a: 1}
   bulletPrefab: {fileID: 2271769695517889325, guid: 4fbb5bbebbab77e4f8a3bd4aa1afc423, type: 3}
   spread: 2
@@ -5060,7 +5060,7 @@ MonoBehaviour:
   bulletLifeTime: 30
   highRumbleFrequency: 1
   lowRumbleFrequency: 0
-  rumbleTime: 10
+  rumbleTime: 0.6
   shootClip: {fileID: 8300000, guid: b2808e0513cb97343af68b5b54c98a60, type: 3}
   equipClip: {fileID: 8300000, guid: 98ab9fa1c53ea884fa72032187a8436a, type: 3}
   pitchMagnitude: 0.2

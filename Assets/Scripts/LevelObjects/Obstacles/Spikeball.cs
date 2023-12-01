@@ -11,8 +11,6 @@ public class Spikeball : Obstacle
 {
     // component references
     private Rigidbody m_rb;
-
-    public bool isActive;
     
     public ParticleSystem sparksPrefab;
 
@@ -21,8 +19,9 @@ public class Spikeball : Obstacle
     private float m_sparkSpawnFactor;
 
     // Start is called before the first frame update
-    void Start()
+    public override void Start()
     {
+        base.Start();
         m_rb = GetComponent<Rigidbody>();
         m_sparkSpawnFactor = sparkFrequency;
     }
@@ -35,15 +34,18 @@ public class Spikeball : Obstacle
             Instantiate(sparksPrefab, collision.contacts[0].point, Quaternion.identity);
             m_sparkSpawnFactor = sparkFrequency;
         }
-    }
 
-    public override void ToggleState()
-    {
-        isActive = !isActive;
-    }
+        // Check if the explosion hits a player that isn't the player who created it
+        if (collision.gameObject.tag == "Player")
+        {
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.TakeDamage(player.maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathExplosion);
+        }
 
-    public override void ToggleState(bool state)
-    {
-        isActive = state;
+        // check if the explosion hits a breakable object
+        if (collision.gameObject.tag == "Breakable")
+        {
+            collision.gameObject.GetComponent<BreakableObject>().TakeDamage(collision.gameObject.GetComponent<BreakableObject>().maxHealth);
+        }
     }
 }

@@ -1,17 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class TimedEndLaser : MonoBehaviour
 {
     [Tooltip("after this time in seconds the laser will stop moving")]
-    public float timer;
-    public float speed;
+    private float m_timer;
+    private float m_speed;
     private bool shouldMove = true;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(StopMoving());
+        if (m_timer != 0)
+        {
+            StartCoroutine(StopMoving());
+        }
+    }
+
+    public void Init(float speed, float timer)
+    {
+        m_speed = speed;
+        m_timer = timer;
     }
 
     // Update is called once per frame
@@ -19,13 +29,13 @@ public class TimedEndLaser : MonoBehaviour
     {
         if (shouldMove)
         {
-            transform.position = transform.position + (transform.right * (speed * Time.deltaTime));
+            transform.position = transform.position + (transform.right * (m_speed * Time.deltaTime));
         }
     }
 
     public IEnumerator StopMoving()
     {
-        yield return new WaitForSeconds(timer);
+        yield return new WaitForSeconds(m_timer);
         shouldMove = false;
     }
 }

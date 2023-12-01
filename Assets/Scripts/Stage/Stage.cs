@@ -1,6 +1,6 @@
 //stage - Cameron
 //just stores spawn locations
-// last edit 1/11/2023
+// last edit 30/11/2023
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,7 @@ public class Stage : MonoBehaviour
     [Header("Prefabs")]
     public GameObject gunBoxPrefab;
     public GameObject powerupBoxPrefab;
-    public GameObject endLaserPrefab;
+    public TimedEndLaser endLaserPrefab;
     public GameObject spikeBallPrefab;
     public ParticleSystem fireworks;
 
@@ -46,6 +46,9 @@ public class Stage : MonoBehaviour
     [Min(0)] public float minGunTimer;
     [Tooltip("maximum time a gun box will appear in")]
     [Min(0)] public float maxGunTimer;
+    
+
+    
 
     [Space(5)]
     [Tooltip("How long an item box will be active for.")]
@@ -54,6 +57,12 @@ public class Stage : MonoBehaviour
     [Min(0)] public float minPowerupTimer;
     [Tooltip("maximum time a power up will appear in")]
     [Min(0)] public float maxPowerupTimer;
+    
+    [Header("end laser properties")]
+    [Tooltip("Time until end lasers stop")]
+    [Min(0)] public float endLaserTimer;
+    [Tooltip("speed of end lasers")]
+    [Min(0)] public float endLaserSpeed;
 
     private List<GameObject> m_currentPowerupBoxes;
     private List<GameObject> m_currentGunBoxes;
@@ -114,15 +123,11 @@ public class Stage : MonoBehaviour
         //start making the next one
         
         // if there isn't already a box in that slot, spawn a new one
-        if (m_currentGunBoxes.ElementAtOrDefault(spawnIndex) == gunBoxPrefab)
+        if (gunBoxSpawns[spawnIndex].childCount == 0)
         {
             GameObject gunBox = Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform);
             m_currentGunBoxes.Insert(spawnIndex, gunBox);
             gunBox.GetComponent<PowerUp>().lifeTime = gunBoxLifetime;
-        }
-        else
-        {
-            
         }
         StartGunRoutine();
         
@@ -149,7 +154,7 @@ public class Stage : MonoBehaviour
         //start making the next one
         StartPowerUpRoutine();
         // if there isn't already a box in that slot, spawn a new one
-        if (m_currentPowerupBoxes.ElementAtOrDefault(spawnIndex) == powerupBoxPrefab)
+        if (gunBoxSpawns[spawnIndex].childCount == 0)
         {
             GameObject powerUp = Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform);
             m_currentGunBoxes.Insert(spawnIndex, powerUp);
@@ -190,7 +195,11 @@ public class Stage : MonoBehaviour
     {
         for (int i = 0; i < endLaserSpawns.Length; i++)
         {
-            Instantiate(endLaserPrefab, endLaserSpawns[i].transform);
+            TimedEndLaser thisLaser = Instantiate(endLaserPrefab, endLaserSpawns[i].transform);
+            if (thisLaser != null)
+            {
+                thisLaser.Init(endLaserSpeed, endLaserTimer);
+            }
         }
     }
 

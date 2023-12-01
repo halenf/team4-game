@@ -1,13 +1,14 @@
 // Flamethrower - Cameron
 // custum behaviour for the flamethrower
-// Last edit: 9/11/23
+// Last edit: 1/12/23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FlameThower : Gun
 {
-    private Collider m_collider;
+    public Collider smallCollider;
+    public Collider bigCollider;
     public float timeToColliderOff;
     private float m_timeToColliderOff;
     private int m_playerID;
@@ -18,7 +19,6 @@ public class FlameThower : Gun
 
     public override void Awake()
     {
-        m_collider = GetComponent<Collider>();
         m_audioSource = GetComponent<AudioSource>();
         m_fireParticleEffect = GetComponentInChildren<ParticleSystem>();
         SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
@@ -29,21 +29,36 @@ public class FlameThower : Gun
         m_audioSource.enabled = true;
         //get player ID so it is impossible to damage shooter
         m_playerID = playerID;
-        //enable damage
-        m_collider.enabled = true;
+
+        // get the particle module
+        var fireParticleModule = m_fireParticleEffect.main;
+
+       
+        //enable damage and change speed of particles
+        if (effect != Bullet.BulletEffect.None)
+        {
+            bigCollider.enabled = true;
+            smallCollider.enabled = false;
+            fireParticleModule.startSpeed = 52f;
+        }
+        else
+        {
+            bigCollider.enabled = false;
+            smallCollider.enabled = true;
+            fireParticleModule.startSpeed = 16.29f;
+        }
+        
         m_timeToColliderOff = timeToColliderOff;
 
         // Activate the fire particle system
         m_isShooting = true;
 
         // Make the player's controller rumble
-        PlayerController player = transform.parent.GetComponent<PlayerController>();
+        PlayerController player = transform.parent.parent.GetComponent<PlayerController>();
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
 
         // apply recoil to player
-        float tempRecoil = baseRecoil;
-        if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
-        transform.parent.gameObject.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+        player.GetComponent<Rigidbody>().AddForce(baseRecoil * -transform.forward, ForceMode.Impulse);
     }
 
     public void Update()
@@ -56,7 +71,8 @@ public class FlameThower : Gun
         else
         {
             m_audioSource.enabled = false;
-            m_collider.enabled = false;
+            smallCollider.enabled = false;
+            bigCollider.enabled = false;
             m_isShooting = false;
         }
 
