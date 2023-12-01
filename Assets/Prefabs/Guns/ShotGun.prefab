@@ -4927,7 +4927,7 @@ MonoBehaviour:
   colour: {r: 1, g: 0.7236256, b: 0.08784264, a: 1}
   bulletPrefab: {fileID: 2271769695517889325, guid: 15ef51ede76b142468b93acdca306149, type: 3}
   spread: 20
-  bulletSpeed: 12
+  bulletSpeed: 13
   bulletDamage: 0.5
   bulletLifeTime: 10
   highRumbleFrequency: 1
