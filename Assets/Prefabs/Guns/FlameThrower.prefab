@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2639462504726439464}
   - component: {fileID: 7110224535071332244}
   - component: {fileID: 4582628591409372769}
+  - component: {fileID: 3678072297483220958}
   m_Layer: 0
   m_Name: FlameThrower
   m_TagString: Untagged
@@ -100,6 +101,8 @@ MonoBehaviour:
   equipClip: {fileID: 8300000, guid: c26abfbec8f3cab4e9e4779a7ee98637, type: 3}
   pitchMagnitude: 0.2
   volume: 1
+  smallCollider: {fileID: 7110224535071332244}
+  bigCollider: {fileID: 3678072297483220958}
   timeToColliderOff: 1
 --- !u!65 &7110224535071332244
 BoxCollider:
@@ -110,7 +113,7 @@ BoxCollider:
   m_GameObject: {fileID: 4789882382446241977}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.42, y: 0.64, z: 4.3500137}
   m_Center: {x: 3.0852694e-14, y: 0.07999998, z: 3.2750185}
@@ -210,6 +213,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &3678072297483220958
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4789882382446241977}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.42, y: 2.0126522, z: 7.6162157}
+  m_Center: {x: 1.7892243e-14, y: 0.13395321, z: 4.908129}
 --- !u!1001 &381636291111467197
 PrefabInstance:
   m_ObjectHideFlags: 0
