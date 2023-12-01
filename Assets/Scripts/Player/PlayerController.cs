@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
     [Tooltip("particle that plays randomly when the player is low health")]
-    public ParticleSystem damagedParticle;
+    public ParticleSystem damagedParticlePrefab;
     [Tooltip("places where the sparks will play")]
     public Transform[] sparkLocations;
     [Tooltip(" minimum time between when damage sparks play on the player")]
@@ -215,6 +215,9 @@ public class PlayerController : MonoBehaviour
         id = _id;
         m_color = colour;
         GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
+
+
+        
     }
 
     private void Awake()
@@ -387,6 +390,7 @@ public class PlayerController : MonoBehaviour
         // deal damage
         m_currentHealth -= damage;
 
+        //if the player has been damaged enough start playing sparks
         if(m_currentHealth <= 4)
         {
             StartCoroutine(PlayDamageParticles());
@@ -477,9 +481,24 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator PlayDamageParticles()
     {
+        //get an amount of time before the next spark based on health
         float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer;
         yield return new WaitForSeconds(time);
-        Instantiate(damagedParticle, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+        //at on of the positions the player has play the particle effect
+
+        ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+
+        var sparkMain = sparks.main;
+        sparkMain.startColor = m_color;
+
+        
+        /*
+        Material particleMat = sparks.GetComponent<Material>();
+        particleMat.EnableKeyword("_EMISSION");
+        particleMat.SetColor("_EmissionColor", m_color);
+        particleMat.SetColor("_Color", m_color);*/
+
+        //restart
         StartCoroutine(PlayDamageParticles());
     }
 
