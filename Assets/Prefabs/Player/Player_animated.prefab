@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1459851345966003951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7719187198614606976}
+  m_Layer: 0
+  m_Name: GunTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7719187198614606976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459851345966003951}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5814125836590746919}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5814125836590746925
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,6 +65,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3578604132218697335}
+  - {fileID: 7719187198614606976}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -53,14 +85,19 @@ MonoBehaviour:
   moveSpeed: 120
   maxHealth: 10
   defaultMass: 1
+  m_detectLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  isGrounded: 0
+  m_gunTransform: {fileID: 7719187198614606976}
   defaultGun: {fileID: 1788972594773971130, guid: fbac1fa5d84274140b2863d100c4fa70, type: 3}
-  gunHoldDistance: 1
+  gunHoldDistance: 1.2
   m_currentPowerup: 0
   powerupTime: 5
   maxShieldHealth: 3
   fireRateScalar: 1.4
   lowGravityScalar: 0.7
-  riccochetBounces: 2
+  ricochetBounces: 2
   shieldPrefab: {fileID: 273755449353573471, guid: 438d196eedc8a1547ad81ddbbc37728b, type: 3}
   indicatorCanvasPrefab: {fileID: 4756242066509748503, guid: b1db2a83eadc2714ea3d26b59e5626f9, type: 3}
   indicatorSpawnHeight: 0
@@ -82,7 +119,6 @@ MonoBehaviour:
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
   horizontalVelocityThreshold: 1
   horizontalAimingThreshold: 0.1
-  timeToStopMoving: 0.2
   m_facingRight: 0
 --- !u!114 &4366108853716276557
 MonoBehaviour:
@@ -98,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - {fileID: 3751750893144996085}
-  maxEmissionMultiplier: 6
+  maxEmissionMultiplier: 10
   minEmissionMultiplier: 0.8
 --- !u!114 &5814125836590746924
 MonoBehaviour:
@@ -265,9 +301,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.4
-  m_Height: 2
+  m_Height: 2.8
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.35, z: 0}
 --- !u!1001 &3901093652253807004
 PrefabInstance:
   m_ObjectHideFlags: 0

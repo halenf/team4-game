@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -2852454377322797574}
   - component: {fileID: 2474567056929865347}
   - component: {fileID: 4257482139928969132}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ConveyorMid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,11 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b21980cd84de204bb71f6fe2ecdeea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isActive: 1
+  toggleTimer: 0
   speed: 50
   m_movesPositive: 0
-  m_isActive: 1
   animationSpeedScalar: 0.484
-  m_animator: {fileID: 1512296474}
 --- !u!65 &2474567056929865347
 BoxCollider:
   m_ObjectHideFlags: 0
