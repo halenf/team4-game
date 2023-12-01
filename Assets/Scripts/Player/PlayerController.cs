@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
 {
     // component references
     private Rigidbody m_rb;
+    private CapsuleCollider m_collider;
     private PlayerInput m_playerInput;
     private Gamepad m_controller;
     private Color m_color;
@@ -41,7 +43,12 @@ public class PlayerController : MonoBehaviour
         get { return m_currentHealth <= 0; }
     }
 
+    [Header("Grounded Boxcast Properties")]
+    [SerializeField] private LayerMask m_detectLayerMask;
+    public bool isGrounded;
+
     [Header("Gun")]
+    [SerializeField] private Transform m_gunTransform;
     public Gun defaultGun;
     private Gun m_currentGun; // gun the player currently has
     [Min(0)] public float gunHoldDistance;
@@ -51,13 +58,13 @@ public class PlayerController : MonoBehaviour
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
     [Min(0)] public float powerupTime;
-    
+
     [Space(10)]
 
     [Min(0)] public int maxShieldHealth;
     [Min(1)] public float fireRateScalar;
     [Range(0, 1)] public float lowGravityScalar;
-    [Min(1)] public int riccochetBounces;
+    [Min(1)] public int ricochetBounces;
 
     [Space(10)]
 
@@ -66,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
     private float m_powerupTimer;
     private int m_shieldCurrentHealth;
-    
+
     [Header("Pickup Display")]
     public PickupIndicator indicatorCanvasPrefab;
     [Min(0)] public float indicatorSpawnHeight;
@@ -76,6 +83,14 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particle Effects")]
     public ParticleSystem bloodPrefab;
+    [Tooltip("particle that plays randomly when the player is low health")]
+    public ParticleSystem damagedParticlePrefab;
+    [Tooltip("places where the sparks will play")]
+    public Transform[] sparkLocations;
+    [Tooltip(" minimum time between when damage sparks play on the player")]
+    public float minSparkTimer;
+    [Tooltip("maximum time between when damage sparks play on the player")]
+    public float maxSparkTimer;
 
     [Header("Animation")]
     public float horizontalVelocityThreshold;
@@ -149,48 +164,48 @@ public class PlayerController : MonoBehaviour
             if (m_currentPowerup != Powerup.None)
             {
                 CreateOverhead(powerupIndicators[(int)m_currentPowerup - 1], powerupColours[(int)m_currentPowerup - 1]);
-                Debug.Log("Spawned indicator for " + m_currentPowerup.ToString());
+                //Debug.Log("Spawned indicator for " + m_currentPowerup.ToString());
             }
 
             switch (m_currentPowerup)
             {
                 case Powerup.Ricochet:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
                 case Powerup.FireRateUp:
-                {
-                    SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREACTIVATE");
-                    m_fireRate *= fireRateScalar;
-                    break;
-                }
+                    {
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-RAPIDFIREACTIVATE");
+                        m_fireRate *= fireRateScalar;
+                        break;
+                    }
                 case Powerup.Shield:
-                {
-                    SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-SHIELDACTIVATE");
-                    m_shieldCurrentHealth = maxShieldHealth;
-                    m_shieldGameObject = Instantiate(shieldPrefab, transform);
-                    break;
-                }
+                    {
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-SHIELDACTIVATE");
+                        m_shieldCurrentHealth = maxShieldHealth;
+                        m_shieldGameObject = Instantiate(shieldPrefab, transform);
+                        break;
+                    }
                 case Powerup.BigBullets:
-                {
-                    SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-BIGBULLETSACTIVATE");
-                    break;
-                }
+                    {
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-BIGBULLETSACTIVATE");
+                        break;
+                    }
                 case Powerup.ExplodeBullets:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
                 case Powerup.LowGravity:
-                {
-                    SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYACTIVATE");
-                    m_rb.mass *= lowGravityScalar;
-                    break;
-                }
+                    {
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-LOWGRAVITYACTIVATE");
+                        m_rb.mass *= lowGravityScalar;
+                        break;
+                    }
                 case Powerup.None:
-                {
-                    m_powerupTimer = 0f;
-                    break;
-                }
+                    {
+                        m_powerupTimer = 0f;
+                        break;
+                    }
             }
         }
     }
@@ -201,6 +216,9 @@ public class PlayerController : MonoBehaviour
         id = _id;
         m_color = colour;
         GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
+
+
+        
     }
 
     private void Awake()
@@ -208,6 +226,7 @@ public class PlayerController : MonoBehaviour
         // Find attached components 
         m_rb = GetComponent<Rigidbody>();
         m_rb.mass = defaultMass;
+        m_collider = GetComponent<CapsuleCollider>();
         m_playerInput = GetComponent<PlayerInput>();
         m_animator = GetComponentInChildren<Animator>();
     }
@@ -227,7 +246,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         m_currentGun.transform.localPosition = m_indicatorPosition;
-        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - transform.position);
+        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_gunTransform.position);
 
         // update powerup timer
         if (m_powerupTimer > 0) m_powerupTimer -= Time.deltaTime;
@@ -236,7 +255,7 @@ public class PlayerController : MonoBehaviour
         if (currentPowerup != Powerup.Shield && m_powerupTimer <= 0 && currentPowerup != Powerup.None) currentPowerup = Powerup.None;
 
         // if player is shooting
-        if(m_isShooting)
+        if (m_isShooting)
         {
             if (Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
             {
@@ -262,7 +281,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // shoot gun
-                m_currentGun.Shoot(id, bulletEffect, riccochetBounces);
+                m_currentGun.Shoot(id, bulletEffect, ricochetBounces);
 
                 // ammo is only reduced if the player is not holding their default gun
                 if (m_currentAmmo != -1) m_currentAmmo--;
@@ -280,19 +299,19 @@ public class PlayerController : MonoBehaviour
 
         if (!isMoving) m_stoppedMovingTimer += Time.deltaTime;
         else m_stoppedMovingTimer = 0;
-        Debug.Log(m_stoppedMovingTimer);
 
         m_animator.SetBool("IsMoving", isMoving);
         m_animator.SetFloat("StoppedMovingTimer", m_stoppedMovingTimer);
-        
+
         // if player is grounded
-        m_animator.SetBool("IsGrounded", IsGrounded());
+        m_animator.SetBool("IsGrounded", isGrounded);
     }
 
     // FixedUpdate is called once per physic frame
     void FixedUpdate()
     {
-        m_rb.AddForce(m_moveForce, ForceMode.Force); // apply the force to the player
+        m_rb.AddForce(m_moveForce, ForceMode.Force); // apply the movement force to the player
+        isGrounded = IsGrounded(); // update if player is grounded
     }
 
     public void OnMove(InputAction.CallbackContext value)
@@ -327,7 +346,7 @@ public class PlayerController : MonoBehaviour
 
         // Set the position and rotation of the aim indicator
         m_indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
-        
+
     }
 
     public void OnDisconnect()
@@ -355,7 +374,7 @@ public class PlayerController : MonoBehaviour
     {
         // if the player is already dead, don't make them take damage
         if (isDead) return;
-        
+
         // shield will block damage
         if (m_shieldCurrentHealth > 0)
         {
@@ -372,8 +391,14 @@ public class PlayerController : MonoBehaviour
         // deal damage
         m_currentHealth -= damage;
 
+        //if the player has been damaged enough start playing sparks
+        if(m_currentHealth <= 4)
+        {
+            StartCoroutine(PlayDamageParticles());
+        }
+
         //set emmisoin
-        GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth/maxHealth);
+        GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
 
         // rumble controller
         Rumble(.2f, .5f, 1.5f);
@@ -419,7 +444,7 @@ public class PlayerController : MonoBehaviour
     public void SetGun(Gun gun)
     {
         if (m_currentGun) Destroy(m_currentGun.gameObject);
-        m_currentGun = Instantiate(gun, gameObject.transform);
+        m_currentGun = Instantiate(gun, m_gunTransform);
 
         if (gun != defaultGun)
         {
@@ -441,7 +466,7 @@ public class PlayerController : MonoBehaviour
         // Sets the gun's aim
         Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
         m_currentGun.transform.localPosition = indicatorPosition;
-        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_rb.position);
+        m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_gunTransform.position);
     }
 
     /// <summary>
@@ -453,6 +478,34 @@ public class PlayerController : MonoBehaviour
     {
         PickupIndicator indicatorCanvas = Instantiate(indicatorCanvasPrefab, transform.position + new Vector3(0, indicatorSpawnHeight, 0), Quaternion.identity);
         indicatorCanvas.SetDisplayDetails(image, colour);
+    }
+
+    private IEnumerator PlayDamageParticles()
+    {
+        //get an amount of time before the next spark based on health
+        float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
+        yield return new WaitForSeconds(time);
+        //at on of the positions the player has play the particle effect
+
+        ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+
+        var sparkMain = sparks.main;
+        sparkMain.startColor = m_color;
+
+        var sparkTrails = sparks.trails;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
+                         new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) } );
+        sparkTrails.colorOverLifetime = gradient;
+        
+        /*
+        Material particleMat = sparks.GetComponent<Material>();
+        particleMat.EnableKeyword("_EMISSION");
+        particleMat.SetColor("_EmissionColor", m_color);
+        particleMat.SetColor("_Color", m_color);*/
+
+        //restart
+        StartCoroutine(PlayDamageParticles());
     }
 
     /// <summary>
@@ -507,7 +560,10 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     public bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, 1.1f);
+        return Physics.BoxCast(transform.position, Vector3.one / 2, Vector3.down, Quaternion.identity, m_collider.height / 2f, m_detectLayerMask);
+
+        // old cast
+        //return Physics.Raycast(transform.position, Vector3.down, m_collider.height);
     }
 
     /// <summary>

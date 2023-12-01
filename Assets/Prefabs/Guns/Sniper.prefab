@@ -5060,7 +5060,7 @@ MonoBehaviour:
   bulletLifeTime: 30
   highRumbleFrequency: 1
   lowRumbleFrequency: 0
-  rumbleTime: 10
+  rumbleTime: 0.6
   shootClip: {fileID: 8300000, guid: b2808e0513cb97343af68b5b54c98a60, type: 3}
   equipClip: {fileID: 8300000, guid: 98ab9fa1c53ea884fa72032187a8436a, type: 3}
   pitchMagnitude: 0.2

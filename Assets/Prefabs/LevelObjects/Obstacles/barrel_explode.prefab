@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7143732392703262418}
   - component: {fileID: 199363857816566642}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 5432461960105750767}
   - component: {fileID: -4904066228879846957}
   - component: {fileID: 1269929605819944874}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: barrel_explode
   m_TagString: Breakable
   m_Icon: {fileID: 0}
@@ -146,6 +146,8 @@ MonoBehaviour:
   destroyEffect: {fileID: 3623149681444135517, guid: a382766b8b320394197bb30a677620b7, type: 3}
   maxHealth: 0.1
   debrisDestroyTimer: 0
+  willRespawn: 0
+  timeToRespawn: 0
 --- !u!54 &-4904066228879846957
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -254,9 +256,17 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7a37012dbc72dbb46b96a58c85c455b1, type: 2}
+    - target: {fileID: -2795969244372780985, guid: 1b376e7bfe1a95a4bbd262f9aae905f4, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1b376e7bfe1a95a4bbd262f9aae905f4, type: 3}
       propertyPath: m_Name
       value: Barrel_GEO_Export_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1b376e7bfe1a95a4bbd262f9aae905f4, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b376e7bfe1a95a4bbd262f9aae905f4, type: 3}

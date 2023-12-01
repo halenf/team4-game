@@ -14,7 +14,7 @@ public class MiniGun : Gun
     
     public override void Shoot(int playerID, Bullet.BulletEffect effect, int bounces)
     {
-        PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+        PlayerController player = transform.parent.parent.gameObject.GetComponent<PlayerController>();
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
         //find spread rotation change
         Quaternion shootDirection = Quaternion.Euler(Random.Range(-spread, spread), 0, 0);
@@ -28,7 +28,7 @@ public class MiniGun : Gun
 
         // apply recoil to player
         float tempRecoil = baseRecoil;
-        if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
+        if (player.isGrounded) tempRecoil *= groundedRecoilScalar;
 
         //find a random recoil change percentage
         float randomRecoilForce = Random.Range(tempRecoil - randomRecoilStrength, tempRecoil + randomRecoilStrength);
@@ -37,7 +37,7 @@ public class MiniGun : Gun
         Vector3 ForceDirection = Quaternion.AngleAxis(Random.Range(-randomRecoilAngle, randomRecoilAngle), Vector3.forward) * -transform.forward;
 
         // apply recoil to the player
-        transform.parent.GetComponent<Rigidbody>().AddForce(randomRecoilForce * ForceDirection, ForceMode.Impulse);
+        player.GetComponent<Rigidbody>().AddForce(randomRecoilForce * ForceDirection, ForceMode.Impulse);
 
         //play sound
         float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);

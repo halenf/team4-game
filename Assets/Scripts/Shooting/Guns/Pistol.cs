@@ -25,7 +25,7 @@ public class Pistol : Gun
         for (int i = 0; i < burstNumber; i++)
         {
             //rumble controller
-            PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+            PlayerController player = transform.parent.parent.GetComponent<PlayerController>();
             player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
 
             //find spread rotation change
@@ -40,8 +40,8 @@ public class Pistol : Gun
 
             // apply recoil to player
             float tempRecoil = baseRecoil;
-            if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
-            transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+            if (player.isGrounded) tempRecoil *= groundedRecoilScalar;
+            player.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
 
             //play shoot sound
             float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);

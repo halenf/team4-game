@@ -1161,11 +1161,13 @@ MonoBehaviour:
   toggleTimer: 5
   isRepeating: 1
   spawnObjectPrefab: {fileID: 4872935802854433896, guid: 735331b7140807f4a8021a133db25238, type: 3}
-  objectSpawnLocation: {fileID: 6647638470756280124}
+  objectSpawnLocations:
+  - {fileID: 6647638470756280124}
   objectHasRandomRotation: 0
   minSpawnTime: 5
   maxSpawnTime: 5
-  initialVelocity: {x: 0, y: 0}
+  minInitialVelocity: {x: 0, y: 0}
+  maxInitialVelocity: {x: 0, y: 0}
   lifeTime: 100
 --- !u!1 &7708767397633852770
 GameObject:
