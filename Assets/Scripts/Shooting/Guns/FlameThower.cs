@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class FlameThower : Gun
 {
-    private Collider m_collider;
+    public Collider smallCollider;
+    public Collider bigCollider;
     public float timeToColliderOff;
     private float m_timeToColliderOff;
     private int m_playerID;
@@ -18,7 +19,6 @@ public class FlameThower : Gun
 
     public override void Awake()
     {
-        m_collider = GetComponent<Collider>();
         m_audioSource = GetComponent<AudioSource>();
         m_fireParticleEffect = GetComponentInChildren<ParticleSystem>();
         SoundManager.Instance.PlayAudioAtPoint(transform, equipClip);
@@ -29,8 +29,20 @@ public class FlameThower : Gun
         m_audioSource.enabled = true;
         //get player ID so it is impossible to damage shooter
         m_playerID = playerID;
+
+       
         //enable damage
-        m_collider.enabled = true;
+        if (effect != Bullet.BulletEffect.None)
+        {
+            bigCollider.enabled = true;
+            m_fireParticleEffect.startSpeed = 52f;
+        }
+        else
+        {
+            smallCollider.enabled = true;
+            m_fireParticleEffect.startSpeed = 16.29f;
+        }
+        
         m_timeToColliderOff = timeToColliderOff;
 
         // Activate the fire particle system
@@ -56,7 +68,8 @@ public class FlameThower : Gun
         else
         {
             m_audioSource.enabled = false;
-            m_collider.enabled = false;
+            smallCollider.enabled = false;
+            bigCollider.enabled = false;
             m_isShooting = false;
         }
 
