@@ -54,13 +54,11 @@ public class FlameThower : Gun
         m_isShooting = true;
 
         // Make the player's controller rumble
-        PlayerController player = transform.parent.GetComponent<PlayerController>();
+        PlayerController player = transform.parent.parent.GetComponent<PlayerController>();
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
 
         // apply recoil to player
-        float tempRecoil = baseRecoil;
-        if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
-        transform.parent.gameObject.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+        player.GetComponent<Rigidbody>().AddForce(baseRecoil * -transform.forward, ForceMode.Impulse);
     }
 
     public void Update()

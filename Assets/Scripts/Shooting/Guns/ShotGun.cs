@@ -25,15 +25,17 @@ public class ShotGun : Gun
         // Activate the muzzle flash
         muzzleFlash.Play();
 
-        PlayerController player = transform.parent.gameObject.GetComponent<PlayerController>();
+        PlayerController player = transform.parent.parent.gameObject.GetComponent<PlayerController>();
 
         // make their controller rumble
         player.Rumble(lowRumbleFrequency, highRumbleFrequency, rumbleTime);
 
         // apply recoil to player
         float tempRecoil = baseRecoil;
-        if (player.IsGrounded()) tempRecoil *= groundedRecoilScalar;
-        transform.parent.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+        if (player.isGrounded) tempRecoil *= groundedRecoilScalar;
+        player.GetComponent<Rigidbody>().AddForce(tempRecoil * -transform.forward, ForceMode.Impulse);
+
+        // play sound effect
         float pitch = Random.Range(1 - pitchMagnitude, 1 + pitchMagnitude);
         SoundManager.Instance.PlayAudioAtPoint(bulletSpawnTransform.position, shootClip, pitch, volume);
     }
