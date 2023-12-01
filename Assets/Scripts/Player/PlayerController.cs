@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -491,6 +492,11 @@ public class PlayerController : MonoBehaviour
         var sparkMain = sparks.main;
         sparkMain.startColor = m_color;
 
+        var sparkTrails = sparks.trails;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
+                         new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) } );
+        sparkTrails.colorOverLifetime = gradient;
         
         /*
         Material particleMat = sparks.GetComponent<Material>();
