@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class MiniGun : Gun
 {
+    [Header("Minigun Details")]
     [Tooltip("the max differance in angle of force applied as recoil")]
     [Min(0)]public float randomRecoilAngle;
     [Tooltip("the max amount that the recoil can change by in percent")]

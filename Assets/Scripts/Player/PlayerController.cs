@@ -574,6 +574,7 @@ public class PlayerController : MonoBehaviour
         m_currentHealth = maxHealth;
         SetGun(defaultGun);
         m_fireRate = m_currentGun.baseFireRate;
+        m_currentPowerup = Powerup.None;
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
     }
 
