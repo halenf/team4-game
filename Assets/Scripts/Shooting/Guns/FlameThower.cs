@@ -1,6 +1,6 @@
 // Flamethrower - Cameron
 // custum behaviour for the flamethrower
-// Last edit: 9/11/23
+// Last edit: 1/12/23
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,19 +30,22 @@ public class FlameThower : Gun
         //get player ID so it is impossible to damage shooter
         m_playerID = playerID;
 
+        // get the particle module
+        var fireParticleModule = m_fireParticleEffect.main;
+
        
-        //enable damage
+        //enable damage and change speed of particles
         if (effect != Bullet.BulletEffect.None)
         {
             bigCollider.enabled = true;
             smallCollider.enabled = false;
-            m_fireParticleEffect.startSpeed = 52f;
+            fireParticleModule.startSpeed = 52f;
         }
         else
         {
             bigCollider.enabled = false;
             smallCollider.enabled = true;
-            m_fireParticleEffect.startSpeed = 16.29f;
+            fireParticleModule.startSpeed = 16.29f;
         }
         
         m_timeToColliderOff = timeToColliderOff;
