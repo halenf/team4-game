@@ -233,6 +233,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1676410753910675609}
     m_Modifications:
+    - target: {fileID: -1171623701383376045, guid: 5e05301b1d61e1d44892ac2981649376, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 26.31
+      objectReference: {fileID: 0}
     - target: {fileID: 3298653599815124046, guid: 5e05301b1d61e1d44892ac2981649376, type: 3}
       propertyPath: m_RootOrder
       value: 0
