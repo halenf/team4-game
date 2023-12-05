@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class SetColour : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class SetColour : MonoBehaviour
     [Min(0)]public float maxEmissionMultiplier;
     [Tooltip("the brightness of the player at max health")]
     [Min(0)]public float minEmissionMultiplier;
+    [Tooltip("the light around the player")]
+    public Light centerLight; 
 
     private Color m_setColour;
 
@@ -50,6 +53,7 @@ public class SetColour : MonoBehaviour
         }
 
         m_setColour = colour;
+        //centerLight.color = m_setColour;
     }
 
     public void Set(Color colour, float emmisionPercentage)
