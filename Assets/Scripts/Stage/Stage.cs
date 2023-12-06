@@ -45,10 +45,7 @@ public class Stage : MonoBehaviour
     [Tooltip("minimum time a gun box will appear in")]
     [Min(0)] public float minGunTimer;
     [Tooltip("maximum time a gun box will appear in")]
-    [Min(0)] public float maxGunTimer;
-    
-
-    
+    [Min(0)] public float maxGunTimer;    
 
     [Space(5)]
     [Tooltip("How long an item box will be active for.")]
