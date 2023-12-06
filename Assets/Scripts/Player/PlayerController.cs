@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
     [Space(10)]
 
     public GameObject shieldPrefab;
+    public GameObject ashPrefab;
     private GameObject m_shieldGameObject;
 
     private float m_powerupTimer;
@@ -416,14 +417,25 @@ public class PlayerController : MonoBehaviour
             //make death indicator
             CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
 
-            // Play death sound
-            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+            
 
             // remove this player from the target group
             GameManager.Instance.UpdateCameraTargetGroup();
 
             // Have announcer say something stupid
             GameManager.Instance.StartAnnouncement(announcementType);
+
+            //if fire seath make ash pile
+            if(announcementType == AnnouncerSubtitleDisplay.AnnouncementType.DeathFire)
+            {
+                GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
+                ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
+                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHASH");
+            } else
+            {
+                // Play death sound
+                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+            }
 
             // let game manager know somebody died
             GameManager.Instance.CheckIsRoundOver();

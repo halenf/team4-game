@@ -14,6 +14,20 @@ public class DisconnectUI : MonoBehaviour
 
     public void SetDisplayDetails(int playerID)
     {
-        disconnectText.text = "Player " + (playerID + 1).ToString() + "'s controller has disconnected. Reconnect it to resume or pause to quit.";
+        switch(playerID)
+        {
+            case 0:
+            disconnectText.text = "PLAYER ONE'S CONTROLLER HAD DISCONNECTED. RECONNECT IT TO RESUME OR PAUSE TO QUIT.";
+                break;
+            case 1:
+                disconnectText.text = "PLAYER TWO'S CONTROLLER HAD DISCONNECTED. RECONNECT IT TO RESUME OR PAUSE TO QUIT.";
+                break;
+            case 2:
+                disconnectText.text = "PLAYER THREE'S CONTROLLER HAD DISCONNECTED. RECONNECT IT TO RESUME OR PAUSE TO QUIT.";
+                break;
+            case 3:
+                disconnectText.text = "PLAYER FOUR'S CONTROLLER HAD DISCONNECTED. RECONNECT IT TO RESUME OR PAUSE TO QUIT.";
+                break;
+        }
     }
 }

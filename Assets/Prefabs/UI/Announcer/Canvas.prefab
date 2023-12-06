@@ -436,46 +436,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c52cf2a9671842489fcc438f9174beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subtitleDisplay: {fileID: 7868222744947871337}
-  display: {fileID: 7868222745979942658}
+  subtitleDisplay: {fileID: 0}
+  display: {fileID: 0}
   displayTime: 3
   beforeRoundQuotes:
-  - And HERE WE GO!
-  - "We\u2019ve got over 10,000 camera\u2019s filming this match, LET\u2019S DO THIS
-    THING!"
-  - Let the games begin!
-  - "And we\u2019re back in 3\u20262\u20261!"
-  - Can you hear that? The crowd is ready for some BLOODSHED!
-  - "Don\u2019t go anywhere ladies and gentleman because the carnage is about to
-    begin!"
+  - AND HERE WE GO!
+  - "WE\u2019VE GOT OVER 10,000 CAMERA\u2019S FILMING THIS MATCH, LET\u2019S DO THIS
+    THING!h, LET\u2019S DO THIS THING!"
+  - LET THE GAMES BEGIN!
+  - "AND WE\u2019RE BACK IN THREE\u2026TWO\u2026ONE!"
+  - CAN YOU HEAR THAT? THE CROWD IS READY FOR SOME BLOODSHED!
+  - "DON\u2019T GO ANYWHERE LADIES AND GENTLEMAN BECAUSE THE CARNAGE IS ABOUT TO
+    BEGIN!"
   endRoundQuotes:
-  - Can I get a copy of that round on tape? What do you mean I have to pay for it?!
-  - "I\u2019m legally required to remind audiences to never try this at home."
-  - "Wait, it\u2019s over already? Boooring."
-  - Does being blown apart come naturally to these people or do they work at it?
-  - "Man, I really thought that other guy was gonna make it\u2026"
-  - Bring in the cleanup crews, that was nasty!
+  - CAN I GET A COPY OF THAT ROUND ON TAPE? WHAT DO YOU MEAN I HAVE TO PAY FOR IT?!
+  - "I\u2019M LEGALLY REQUIRED TO REMIND AUDIENCES TO NEVER TRY THIS AT HOME."
+  - "WAIT, IT\u2019S OVER ALREADY? BOOORING."
+  - DOES BEING BLOWN APART COME NATURALLY TO THESE PEOPLE OR DO THEY WORK AT IT?
+  - "MAN, I REALLY THOUGHT THAT OTHER GUY WAS GONNA MAKE IT\u2026"
+  - BRING IN THE CLEANUP CREWS, THAT WAS NASTY!
   bulletQuotes:
-  - I think I saw some brains fly out!
-  - "Ah, that\u2019s the stuff!"
-  - "Now that\u2019s what I call a creative strategy, hard to win if you\u2019re
-    dead."
-  - Man, I will NEVER get tired of that!
-  - How humiliating!
-  - They had that coming!
-  - "Let\u2019s get a rewind on that one!"
-  - "Ooh, I love that sulfry smell. It\u2019s the smell of death."
+  - I THINK I SAW SOME BRAINS FLY OUT!
+  - "AH, THAT\u2019S THE STUFF!"
+  - "NOW THAT\u2019S WHAT I CALL A CREATIVE STRATEGY, HARD TO WIN IF YOU\u2019RE
+    DEAD."
+  - MAN, I WILL NEVER GET TIRED OF THAT!
+  - HOW HUMILIATING!
+  - THEY HAD THAT COMING!
+  - "LET\u2019S GET A REWIND ON THAT ONE!"
+  - "OOH, I LOVE THAT SULFRY SMELL. IT\u2019S THE SMELL OF DEATH."
   spikeballQuotes:
-  - Squashed like a bug!
-  - Sliced into confetti!
-  - Crushed by 40,000 pounds of pure pain!
+  - SQUASHED LIKE A BUG!
+  - SLICED INTO CONFETTI!
+  - CRUSHED BY 40,000 POUNDS OF PURE PAIN!
   fireQuotes:
-  - Toasty!
-  - Smells like fresh bacon!
-  - "And just when you thought things couldn\u2019t get any hotter!"
-  - "Looks like they couldn\u2019t handle the heat!"
+  - TOASTY!
+  - SMELLS LIKE FRESH BACON!
+  - "AND JUST WHEN YOU THOUGHT THINGS COULDN\u2019T GET ANY HOTTER!"
+  - "LOOKS LIKE THEY COULDN\u2019T HANDLE THE HEAT!"
   explosionQuotes:
-  - "It\u2019s hard to be bored when things blow up."
-  - Sploded!
-  - Splattered all over the walls!
-  - And the front row is soaked blood red!
+  - "IT\u2019S HARD TO BE BORED WHEN THINGS BLOW UP."
+  - SPLODED!
+  - SPLATTERED ALL OVER THE WALLS!
+  - AND THE FRONT ROW IS SOAKED BLOOD RED!

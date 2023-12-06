@@ -352,6 +352,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5eb80d8e62d9d145bb50fb783c0f731, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &960890274 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4230586992267888020, guid: 6bd8b0a85862bd949b94ee0610d6691e, type: 3}
+  m_PrefabInstance: {fileID: 1101655465}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &964089433 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4230586991236365567, guid: 6bd8b0a85862bd949b94ee0610d6691e, type: 3}
+  m_PrefabInstance: {fileID: 1101655465}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1036650828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -416,6 +432,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 807415391619058530, guid: 6bd8b0a85862bd949b94ee0610d6691e, type: 3}
+      propertyPath: display
+      value: 
+      objectReference: {fileID: 960890274}
+    - target: {fileID: 807415391619058530, guid: 6bd8b0a85862bd949b94ee0610d6691e, type: 3}
+      propertyPath: subtitleDisplay
+      value: 
+      objectReference: {fileID: 964089433}
     - target: {fileID: 5794848280759840155, guid: 6bd8b0a85862bd949b94ee0610d6691e, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -790,6 +814,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8353502849753122016, guid: 0c0094981b45d8e41ac3024107df3edd, type: 3}
+      propertyPath: gameplayCamera
+      value: 
+      objectReference: {fileID: 2364201596277266086}
     - target: {fileID: 8353502849753122017, guid: 0c0094981b45d8e41ac3024107df3edd, type: 3}
       propertyPath: m_RootOrder
       value: 3
