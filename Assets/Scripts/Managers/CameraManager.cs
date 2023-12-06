@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.PostProcessing;
+using Cinemachine;
 
 public class CameraManager : MonoBehaviour
 {
@@ -25,10 +26,11 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    // camera reference
+    [Header("Camera Objects")]
     public Camera mainCamera;
+    public CinemachineVirtualCamera gameplayCamera;
 
-    // reference to the post processing volume attached to the camera
+    [Header("Post Processing")]
     public PostProcessVolume postProcessVolume;
 
     // timer for screen-shake
@@ -40,8 +42,8 @@ public class CameraManager : MonoBehaviour
     /// <param name="_transform"></param>
     public void SetCameraPosition(Transform _transform)
     {
-        transform.position = _transform.position;
-        transform.rotation = _transform.rotation;
+        gameplayCamera.transform.position = _transform.position;
+        gameplayCamera.transform.rotation = _transform.rotation;
     }
 
     /// <summary>
