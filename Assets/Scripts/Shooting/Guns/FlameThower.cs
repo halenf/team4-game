@@ -40,7 +40,7 @@ public class FlameThower : Gun
         {
             bigCollider.enabled = true;
             smallCollider.enabled = false;
-            fireParticleModule.startSpeed = 52f;
+            fireParticleModule.startSpeed = 26f;
         }
         else
         {
