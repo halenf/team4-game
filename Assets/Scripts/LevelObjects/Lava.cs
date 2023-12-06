@@ -43,8 +43,11 @@ public class Lava : MonoBehaviour
             //scaleX = 1;
         }
         else scaleY = transform.localScale.z;
-        
-        // tile the texture correctly on the lava
-        GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(scaleX, scaleY);
+
+        if (GetComponent<MeshRenderer>())
+        {
+            // tile the texture correctly on the lava
+            GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(scaleX, scaleY);
+        }
     }
 }
