@@ -690,14 +690,6 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: playerRadius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: playerWeight
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_targetGroup
       value: 
       objectReference: {fileID: 914060164}
@@ -711,10 +703,22 @@ PrefabInstance:
       objectReference: {fileID: 2364201596277266086}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.size
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
-      propertyPath: stageList.Array.data[4]
+      propertyPath: stageList.Array.data[0]
+      value: 
+      objectReference: {fileID: 6020532710181630620, guid: 56d0b9382e6fb414191fb672c887aa2d, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[1]
+      value: 
+      objectReference: {fileID: 7608319705386287573, guid: fe28bc3acdee1ed4498e29c24ddcec04, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[2]
+      value: 
+      objectReference: {fileID: 5591830627243611222, guid: bb0d3be748ceba94d99a6af14c21fa40, type: 3}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[3]
       value: 
       objectReference: {fileID: 5362399507169375447, guid: 823bf9bd77418ea4c9efb3cbf4f032cc, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
