@@ -5,18 +5,28 @@ using UnityEngine;
 public class Zapper : Obstacle
 {
     [Tooltip("particle object")]
-    public GameObject electricity;
+    public ParticleSystem electricity;
 
-
-    private void Update()
-    {
-        if(isActive)
+    public override bool isActive
+    { 
+        get => base.isActive;
+        set
         {
-            electricity.SetActive(true);
+            electricity.gameObject.SetActive(value);
+            
+            base.isActive = value;
         }
-        else
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (isActive)
         {
-            electricity.SetActive(false);
+            if (other.gameObject.tag == "Player")
+            {
+                PlayerController victim = other.gameObject.GetComponent<PlayerController>();
+                victim.TakeDamage(victim.maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathFire);
+            }
         }
     }
 }
