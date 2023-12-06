@@ -436,8 +436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c52cf2a9671842489fcc438f9174beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  subtitleDisplay: {fileID: 0}
-  display: {fileID: 0}
+  subtitleDisplay: {fileID: 7868222744947871337}
+  display: {fileID: 7868222745979942658}
   displayTime: 3
   beforeRoundQuotes:
   - AND HERE WE GO!

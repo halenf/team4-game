@@ -324,10 +324,6 @@ public class PlayerController : MonoBehaviour
         float inputValue = value.ReadValue<Vector2>().x; // Get the direction the player is trying to move
         m_moveForce = moveSpeed * new Vector3(inputValue, 0, 0); // calculate the magnitude of the force
 
-        // update model rotation when the threshold is met
-        if (inputValue >= horizontalAimingThreshold) facingRight = true;
-        if (inputValue <= -horizontalAimingThreshold) facingRight = false;
-
         // update animator parameter
         m_animator.SetFloat("HorizontalInput", Mathf.Abs(inputValue));
     }
@@ -351,6 +347,11 @@ public class PlayerController : MonoBehaviour
 
         // Set the position and rotation of the aim indicator
         m_indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
+
+        // update model rotation when the threshold is met
+        float inputValue = value.ReadValue<Vector2>().x;
+        if (inputValue >= horizontalAimingThreshold) facingRight = true;
+        if (inputValue <= -horizontalAimingThreshold) facingRight = false;
     }
 
     public void OnDisconnect()
@@ -416,8 +417,6 @@ public class PlayerController : MonoBehaviour
 
             //make death indicator
             CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
-
-            
 
             // remove this player from the target group
             GameManager.Instance.UpdateCameraTargetGroup();
