@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5471047519673066737}
   - component: {fileID: 3672016181265205376}
+  - component: {fileID: -1201312681574904549}
   m_Layer: 0
   m_Name: Ash_Pile
   m_TagString: Untagged
@@ -51,6 +52,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!65 &-1201312681574904549
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8340274693941396003}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.50889504, z: 1}
+  m_Center: {x: 0, y: 0.24555247, z: 0}
 --- !u!1001 &3398455779040620361
 PrefabInstance:
   m_ObjectHideFlags: 0

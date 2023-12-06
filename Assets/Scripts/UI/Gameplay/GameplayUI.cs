@@ -38,7 +38,23 @@ public class GameplayUI : MonoBehaviour
     /// </summary>
     public void SetDisplayDetails(int winningPlayer)
     {
-        m_roundWinnerDisplay.text = "Player " + winningPlayer + " wins!";
+        switch (winningPlayer)
+        {
+            case 1:
+            m_roundWinnerDisplay.text = "PLAYER ONE WINS";
+                break;
+            case 2:
+                m_roundWinnerDisplay.text = "PLAYER TWO WINS";
+                break;
+
+            case 3:
+                m_roundWinnerDisplay.text = "PLAYER THREE WINS";
+                break;
+
+            case 4:
+                m_roundWinnerDisplay.text = "PLAYER FOUR WINS";
+                break;
+        }
     }
 
     /// <summary>
@@ -99,7 +115,23 @@ public class GameplayUI : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         // Show the player who won the round
-        m_roundWinnerDisplay.text = "Player " + (winningPlayerID + 1).ToString() + " wins!";
+        switch (winningPlayerID)
+        {
+            case 0:
+                m_roundWinnerDisplay.text = "PLAYER ONE WINS";
+                break;
+            case 1:
+                m_roundWinnerDisplay.text = "PLAYER TWO WINS";
+                break;
+
+            case 2:
+                m_roundWinnerDisplay.text = "PLAYER THREE WINS";
+                break;
+
+            case 3:
+                m_roundWinnerDisplay.text = "PLAYER FOUR WINS";
+                break;
+        }
         yield return new WaitForSeconds(leaderboardDisplayTime * Time.timeScale);
         
         m_roundWinnerDisplay.text = "";
