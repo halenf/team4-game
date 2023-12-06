@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,11 @@ public class Zapper : Obstacle
 {
     [Tooltip("particle object")]
     public ParticleSystem electricity;
+
+    private void Start()
+    {
+        electricity.gameObject.SetActive(isActive);
+    }
 
     public override bool isActive
     { 
