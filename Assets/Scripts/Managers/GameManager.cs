@@ -589,6 +589,11 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public PlayerController GetPlayer(int id)
+    {
+        return m_activePlayerControllers[id];
+    }
+
     /// <summary>
     /// randomizes the spawns in the array to spawn players at random locations
     /// </summary>

@@ -45,6 +45,7 @@ public class Explosion : MonoBehaviour
 
         // start explosion and make particles and set destruction and play explosion sound
         SoundManager.Instance.PlaySound("SFX/SFX-EXPLOSION", volume);
+        CameraManager.Instance.ScreenShake(.05f, 30f, .5f);
         StartCoroutine(Explode(lifetime));
         Instantiate(fragments, transform.position, Quaternion.identity);
         Instantiate(blast, transform.position, Quaternion.identity);
@@ -71,6 +72,7 @@ public class Explosion : MonoBehaviour
 
         // i'm tired, figure it out
         /// :(
+        
         StartCoroutine(Explode(lifetime));
         Instantiate(fragments, transform.position, Quaternion.identity);
         Instantiate(blast, transform.position, Quaternion.identity);

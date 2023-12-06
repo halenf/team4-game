@@ -45,10 +45,7 @@ public class Stage : MonoBehaviour
     [Tooltip("minimum time a gun box will appear in")]
     [Min(0)] public float minGunTimer;
     [Tooltip("maximum time a gun box will appear in")]
-    [Min(0)] public float maxGunTimer;
-    
-
-    
+    [Min(0)] public float maxGunTimer;    
 
     [Space(5)]
     [Tooltip("How long an item box will be active for.")]
@@ -154,10 +151,10 @@ public class Stage : MonoBehaviour
         //start making the next one
         StartPowerUpRoutine();
         // if there isn't already a box in that slot, spawn a new one
-        if (gunBoxSpawns[spawnIndex].childCount == 0)
+        if (powerUpSpawns[spawnIndex].childCount == 0)
         {
             GameObject powerUp = Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform);
-            m_currentGunBoxes.Insert(spawnIndex, powerUp);
+            m_currentPowerupBoxes.Insert(spawnIndex, powerUp);
             powerUp.GetComponent<PowerUp>().lifeTime = powerupBoxLifetime;
         }
         
