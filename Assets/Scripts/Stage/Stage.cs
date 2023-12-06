@@ -151,10 +151,10 @@ public class Stage : MonoBehaviour
         //start making the next one
         StartPowerUpRoutine();
         // if there isn't already a box in that slot, spawn a new one
-        if (gunBoxSpawns[spawnIndex].childCount == 0)
+        if (powerUpSpawns[spawnIndex].childCount == 0)
         {
             GameObject powerUp = Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform);
-            m_currentGunBoxes.Insert(spawnIndex, powerUp);
+            m_currentPowerupBoxes.Insert(spawnIndex, powerUp);
             powerUp.GetComponent<PowerUp>().lifeTime = powerupBoxLifetime;
         }
         
