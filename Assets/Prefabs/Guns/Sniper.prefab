@@ -5161,8 +5161,8 @@ MonoBehaviour:
   equipClip: {fileID: 8300000, guid: 98ab9fa1c53ea884fa72032187a8436a, type: 3}
   pitchMagnitude: 0.2
   volume: 0.8
-  leftHandPosition: {fileID: 0}
-  rightHandPosition: {fileID: 0}
+  leftHandPosition: {fileID: 4960543105460463501}
+  rightHandPosition: {fileID: 6620674295316356943}
 --- !u!1001 &3463409947533569460
 PrefabInstance:
   m_ObjectHideFlags: 0

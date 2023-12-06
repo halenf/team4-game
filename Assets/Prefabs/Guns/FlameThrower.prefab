@@ -135,8 +135,8 @@ MonoBehaviour:
   equipClip: {fileID: 8300000, guid: c26abfbec8f3cab4e9e4779a7ee98637, type: 3}
   pitchMagnitude: 0.2
   volume: 1
-  leftHandPosition: {fileID: 0}
-  rightHandPosition: {fileID: 0}
+  leftHandPosition: {fileID: 7579566787636067635}
+  rightHandPosition: {fileID: 8628765574208483251}
   smallCollider: {fileID: 7110224535071332244}
   bigCollider: {fileID: 3678072297483220958}
   timeToColliderOff: 1

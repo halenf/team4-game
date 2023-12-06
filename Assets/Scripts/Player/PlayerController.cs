@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -99,8 +100,9 @@ public class PlayerController : MonoBehaviour
     private float m_stoppedMovingTimer; // tracks how long the player has stopped moving for
     private bool m_facingRight; // tracks the direction the player is facing
     [Space(5)]
-    [SerializeField] private Transform m_leftHand;
-    [SerializeField] private Transform m_rightHand;
+    [SerializeField] private TransformUpdater m_leftHandTarget;
+    [SerializeField] private TransformUpdater m_rightHandTarget;
+    [SerializeField] private TransformUpdater m_lookTarget;
 
     public bool facingRight // for model rotation
     {
@@ -348,7 +350,6 @@ public class PlayerController : MonoBehaviour
 
         // Set the position and rotation of the aim indicator
         m_indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
-
     }
 
     public void OnDisconnect()
@@ -471,8 +472,11 @@ public class PlayerController : MonoBehaviour
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_gunTransform.position);
 
         // attach the player's hands to the gun
-        m_leftHand.parent = m_currentGun.leftHandPosition;
-        m_rightHand.parent = m_currentGun.rightHandPosition;
+        m_leftHandTarget.target = m_currentGun.leftHandPosition;
+        m_rightHandTarget.target = m_currentGun.rightHandPosition;
+
+        // have the player look down the gun's sight/barrel
+        m_lookTarget.target = m_currentGun.transform;
     }
 
     /// <summary>
