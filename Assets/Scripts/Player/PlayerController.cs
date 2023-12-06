@@ -4,11 +4,9 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -54,6 +52,8 @@ public class PlayerController : MonoBehaviour
     [Min(0)] public float gunHoldDistance;
     private bool m_isShooting;
     private Vector3 m_indicatorPosition = new(1f, 0f, 0);
+    [Space(5)]
+    
 
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
@@ -94,10 +94,17 @@ public class PlayerController : MonoBehaviour
     public float maxSparkTimer;
 
     [Header("Animation")]
-    public float horizontalVelocityThreshold;
-    public float horizontalAimingThreshold;
-    private float m_stoppedMovingTimer;
-    [SerializeField] private bool m_facingRight;
+    [Tooltip("The horizontal speed threshold at which the player is detected as 'moving'.")]
+    [Min(0)] public float horizontalVelocityThreshold;
+    [Tooltip("The threshold at which the direction the player is facing will change.")]
+    [Range(0,1)] public float horizontalAimingThreshold;
+    private float m_stoppedMovingTimer; // tracks how long the player has stopped moving for
+    private bool m_facingRight; // tracks the direction the player is facing
+    [Space(5)]
+    [SerializeField] private TransformUpdater m_leftHandTarget;
+    [SerializeField] private TransformUpdater m_rightHandTarget;
+    [SerializeField] private TransformUpdater m_lookTarget;
+
     public bool facingRight // for model rotation
     {
         get { return m_facingRight; }
@@ -217,9 +224,6 @@ public class PlayerController : MonoBehaviour
         id = _id;
         m_color = colour;
         GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
-
-
-        
     }
 
     private void Awake()
@@ -320,10 +324,6 @@ public class PlayerController : MonoBehaviour
         float inputValue = value.ReadValue<Vector2>().x; // Get the direction the player is trying to move
         m_moveForce = moveSpeed * new Vector3(inputValue, 0, 0); // calculate the magnitude of the force
 
-        // update model rotation when the threshold is met
-        if (inputValue >= horizontalAimingThreshold) facingRight = true;
-        if (inputValue <= -horizontalAimingThreshold) facingRight = false;
-
         // update animator parameter
         m_animator.SetFloat("HorizontalInput", Mathf.Abs(inputValue));
     }
@@ -348,6 +348,10 @@ public class PlayerController : MonoBehaviour
         // Set the position and rotation of the aim indicator
         m_indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
 
+        // update model rotation when the threshold is met
+        float inputValue = value.ReadValue<Vector2>().x;
+        if (inputValue >= horizontalAimingThreshold) facingRight = true;
+        if (inputValue <= -horizontalAimingThreshold) facingRight = false;
     }
 
     public void OnDisconnect()
@@ -414,8 +418,6 @@ public class PlayerController : MonoBehaviour
             //make death indicator
             CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
 
-            
-
             // remove this player from the target group
             GameManager.Instance.UpdateCameraTargetGroup();
 
@@ -479,6 +481,13 @@ public class PlayerController : MonoBehaviour
         Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
         m_currentGun.transform.localPosition = indicatorPosition;
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_gunTransform.position);
+
+        // attach the player's hands to the gun
+        m_leftHandTarget.target = m_currentGun.leftHandPosition;
+        m_rightHandTarget.target = m_currentGun.rightHandPosition;
+
+        // have the player look down the gun's sight/barrel
+        m_lookTarget.target = m_currentGun.transform;
     }
 
     /// <summary>
