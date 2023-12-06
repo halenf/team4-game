@@ -40,6 +40,10 @@ public abstract class Gun : MonoBehaviour
     public float pitchMagnitude;
     public float volume;
 
+    [Header("Animation")]
+    public Transform leftHandPosition;
+    public Transform rightHandPosition;
+    
     private Material m_material;
 
     public virtual void Awake()
