@@ -12,6 +12,7 @@ public class Laser : Obstacle
     public ParticleSystem hitParticle;
     private ParticleSystem m_particleInScene;
     private LineRenderer m_lineRenderer;
+    public LayerMask mask;
     
     public override void Start()
     {
@@ -35,7 +36,7 @@ public class Laser : Obstacle
             RaycastHit hit;
 
             //if the ray doesnt hit any thing in 1000 units
-            if (Physics.Raycast(transform.position, transform.up, out hit, 1000, 1, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(transform.position, transform.up, out hit, 1000, mask, QueryTriggerInteraction.Ignore))
             {
                 //draw line between here and end point of ray
                 m_lineRenderer.SetPosition(0, transform.position);
@@ -56,6 +57,13 @@ public class Laser : Obstacle
                     PlayerController hitPlayer = hit.collider.gameObject.GetComponent<PlayerController>();
                     //do max damage
                     hitPlayer.TakeDamage(hitPlayer.maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathFire);
+                }
+                if (hit.collider.gameObject.tag == "Breakable")
+                {
+                    //get player
+                    BreakableObject hitObject = hit.collider.gameObject.GetComponent<BreakableObject>();
+                    //do max damage
+                    hitObject.TakeDamage(hitObject.maxHealth);
                 }
             }
             else //just draw line from here to 1000 up

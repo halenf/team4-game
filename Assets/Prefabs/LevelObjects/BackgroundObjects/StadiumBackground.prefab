@@ -473,6 +473,148 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5794848280759840155}
     m_Modifications:
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: fireQuotes.Array.data[0]
+      value: TOASTY!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: fireQuotes.Array.data[1]
+      value: SMELLS LIKE FRESH BACON!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: fireQuotes.Array.data[2]
+      value: "AND JUST WHEN YOU THOUGHT THINGS COULDN\u2019T GET ANY HOTTER!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: fireQuotes.Array.data[3]
+      value: "LOOKS LIKE THEY COULDN\u2019T HANDLE THE HEAT!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: bulletQuotes.Array.data[0]
+      value: I THINK I SAW SOME BRAINS FLY OUT!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: bulletQuotes.Array.data[1]
+      value: "AH, THAT\u2019S THE STUFF!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: bulletQuotes.Array.data[2]
+      value: "NOW THAT\u2019S WHAT I CALL A CREATIVE STRATEGY, HARD TO WIN IF YOU\u2019RE
+        DEAD."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: bulletQuotes.Array.data[3]
+      value: MAN, I WILL NEVER GET TIRED OF THAT!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: bulletQuotes.Array.data[4]
+      value: HOW HUMILIATING!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: bulletQuotes.Array.data[5]
+      value: THEY HAD THAT COMING!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: bulletQuotes.Array.data[6]
+      value: "LET\u2019S GET A REWIND ON THAT ONE!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: bulletQuotes.Array.data[7]
+      value: "OOH, I LOVE THAT SULFRY SMELL. IT\u2019S THE SMELL OF DEATH."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: endRoundQuotes.Array.data[0]
+      value: CAN I GET A COPY OF THAT ROUND ON TAPE? WHAT DO YOU MEAN I HAVE TO PAY
+        FOR IT?!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: endRoundQuotes.Array.data[1]
+      value: "I\u2019M LEGALLY REQUIRED TO REMIND AUDIENCES TO NEVER TRY THIS AT
+        HOME."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: endRoundQuotes.Array.data[2]
+      value: "WAIT, IT\u2019S OVER ALREADY? BOOORING."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: endRoundQuotes.Array.data[3]
+      value: DOES BEING BLOWN APART COME NATURALLY TO THESE PEOPLE OR DO THEY WORK
+        AT IT?
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: endRoundQuotes.Array.data[4]
+      value: "MAN, I REALLY THOUGHT THAT OTHER GUY WAS GONNA MAKE IT\u2026"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: endRoundQuotes.Array.data[5]
+      value: BRING IN THE CLEANUP CREWS, THAT WAS NASTY!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: explosionQuotes.Array.data[0]
+      value: "IT\u2019S HARD TO BE BORED WHEN THINGS BLOW UP."
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: explosionQuotes.Array.data[1]
+      value: SPLODED!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: explosionQuotes.Array.data[2]
+      value: SPLATTERED ALL OVER THE WALLS!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: explosionQuotes.Array.data[3]
+      value: AND THE FRONT ROW IS SOAKED BLOOD RED!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: spikeballQuotes.Array.data[0]
+      value: SQUASHED LIKE A BUG!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: spikeballQuotes.Array.data[1]
+      value: SLICED INTO CONFETTI!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: spikeballQuotes.Array.data[2]
+      value: CRUSHED BY 40,000 POUNDS OF PURE PAIN!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: beforeRoundQuotes.Array.data[0]
+      value: AND HERE WE GO!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: beforeRoundQuotes.Array.data[1]
+      value: "WE\u2019VE GOT OVER 10,000 CAMERA\u2019S FILMING THIS MATCH, LET\u2019S
+        DO THIS THING!h, LET\u2019S DO THIS THING!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: beforeRoundQuotes.Array.data[2]
+      value: LET THE GAMES BEGIN!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: beforeRoundQuotes.Array.data[3]
+      value: "AND WE\u2019RE BACK IN THREE\u2026TWO\u2026ONE!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: beforeRoundQuotes.Array.data[4]
+      value: CAN YOU HEAR THAT? THE CROWD IS READY FOR SOME BLOODSHED!
+      objectReference: {fileID: 0}
+    - target: {fileID: 6679716308255209972, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: beforeRoundQuotes.Array.data[5]
+      value: "DON\u2019T GO ANYWHERE LADIES AND GENTLEMAN BECAUSE THE CARNAGE IS
+        ABOUT TO BEGIN!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868222744947871337, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: m_fontSize
+      value: 9.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7868222744947871337, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 63c67f5386fe8294da14a2baaf2f9fe3, type: 2}
+    - target: {fileID: 7868222744947871337, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5088821085230660114, guid: 63c67f5386fe8294da14a2baaf2f9fe3, type: 2}
     - target: {fileID: 7868222746000805644, guid: e61efe5ece06c204ebeee6d6145fdc35, type: 3}
       propertyPath: m_Name
       value: Canvas

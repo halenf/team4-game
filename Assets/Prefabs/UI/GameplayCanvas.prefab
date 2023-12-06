@@ -62,7 +62,6 @@ MonoBehaviour:
   startRoundSprite: {fileID: 21300000, guid: 864838675b98eea4d9bc6a0d369860c7, type: 3}
   m_countdownDisplay: {fileID: 2951220774334177515}
   m_roundWinnerDisplay: {fileID: 6928750777772236827}
-  m_announcerSubtitleDisplay: {fileID: 0}
   m_endLaserDisplay: {fileID: 4128954741047484126}
   fadeOut: {fileID: 2178254363965789420, guid: 1dda453d7f7444848b13c283eb78b9d4, type: 3}
   leaderboardDisplayTime: 4
@@ -359,10 +358,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: you smell
+  m_text: YOU SMELL
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 63c67f5386fe8294da14a2baaf2f9fe3, type: 2}
+  m_sharedMaterial: {fileID: -5088821085230660114, guid: 63c67f5386fe8294da14a2baaf2f9fe3, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -65,6 +65,8 @@ public class Bullet : MonoBehaviour
         m_currentEffect = effect;
         m_bounces = bounces;
 
+        Physics.IgnoreCollision(GetComponent<Collider>(), GameManager.Instance.GetPlayer(playerID).GetComponent<Collider>());
+
         // Set the particle system to default - Halen
         m_particle = sparksPrefab;
 
@@ -123,8 +125,7 @@ public class Bullet : MonoBehaviour
         m_particle = sparksPrefab;
 
         // If the bullet collides with a player that isn't the one who shot it
-        if (collision.gameObject.tag == "Player"
-            && collision.gameObject.GetComponent<PlayerController>().id != m_playerID)
+        if (collision.gameObject.tag == "Player")
         {
             // deal damage to player if the bullet is not an exploding bullet
             if (m_currentEffect != BulletEffect.Explode)
