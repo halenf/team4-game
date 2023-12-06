@@ -4,11 +4,8 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -54,6 +51,8 @@ public class PlayerController : MonoBehaviour
     [Min(0)] public float gunHoldDistance;
     private bool m_isShooting;
     private Vector3 m_indicatorPosition = new(1f, 0f, 0);
+    [Space(5)]
+    
 
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
@@ -93,10 +92,16 @@ public class PlayerController : MonoBehaviour
     public float maxSparkTimer;
 
     [Header("Animation")]
-    public float horizontalVelocityThreshold;
-    public float horizontalAimingThreshold;
-    private float m_stoppedMovingTimer;
-    [SerializeField] private bool m_facingRight;
+    [Tooltip("The horizontal speed threshold at which the player is detected as 'moving'.")]
+    [Min(0)] public float horizontalVelocityThreshold;
+    [Tooltip("The threshold at which the direction the player is facing will change.")]
+    [Range(0,1)] public float horizontalAimingThreshold;
+    private float m_stoppedMovingTimer; // tracks how long the player has stopped moving for
+    private bool m_facingRight; // tracks the direction the player is facing
+    [Space(5)]
+    [SerializeField] private Transform m_leftHand;
+    [SerializeField] private Transform m_rightHand;
+
     public bool facingRight // for model rotation
     {
         get { return m_facingRight; }
@@ -216,9 +221,6 @@ public class PlayerController : MonoBehaviour
         id = _id;
         m_color = colour;
         GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
-
-
-        
     }
 
     private void Awake()
@@ -467,6 +469,10 @@ public class PlayerController : MonoBehaviour
         Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
         m_currentGun.transform.localPosition = indicatorPosition;
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_gunTransform.position);
+
+        // attach the player's hands to the gun
+        m_leftHand.parent = m_currentGun.leftHandPosition;
+        m_rightHand.parent = m_currentGun.rightHandPosition;
     }
 
     /// <summary>
