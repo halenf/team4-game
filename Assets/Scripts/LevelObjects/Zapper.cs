@@ -8,8 +8,9 @@ public class Zapper : Obstacle
     [Tooltip("particle object")]
     public ParticleSystem electricity;
 
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         electricity.gameObject.SetActive(isActive);
     }
 
