@@ -425,7 +425,8 @@ public class PlayerController : MonoBehaviour
             //if fire seath make ash pile
             if(announcementType == AnnouncerSubtitleDisplay.AnnouncementType.DeathFire)
             {
-                Instantiate(ashPrefab, transform.position, Quaternion.identity);
+                GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
+                ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
                 SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHASH");
             } else
             {

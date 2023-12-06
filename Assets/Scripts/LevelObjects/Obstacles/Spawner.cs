@@ -74,7 +74,7 @@ public class Spawner : Obstacle
         yield return new WaitForSeconds(m_spawnTime);
 
         // Spawn object with preset properties
-        GameObject spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, objectHasRandomRotation ? Random.rotation : Quaternion.identity);
+        GameObject spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
         spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
 
         if(lifeTime != 0)
@@ -90,7 +90,7 @@ public class Spawner : Obstacle
             yield return new WaitForSeconds(m_spawnTime);
 
             // Spawn object with preset properties
-            spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, objectHasRandomRotation ? Random.rotation : Quaternion.identity);
+            spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
             spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
 
             if (lifeTime != 0)
