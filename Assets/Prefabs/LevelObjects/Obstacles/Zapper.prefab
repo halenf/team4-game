@@ -61,8 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a6dd6acecdbcb4ba21fb90f0052861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isActive: 0
-  toggleTimer: 10
+  m_isActive: 1
+  toggleTimer: 0
   electricity: {fileID: 1940157320337506322}
 --- !u!65 &3638144310996680454
 BoxCollider:
