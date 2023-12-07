@@ -85,7 +85,7 @@ MonoBehaviour:
     m_ConstrainedAxes:
       x: 1
       y: 1
-      z: 0
+      z: 1
 --- !u!1 &905647421503966010
 GameObject:
   m_ObjectHideFlags: 0
