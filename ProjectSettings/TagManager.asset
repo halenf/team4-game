@@ -9,6 +9,7 @@ TagManager:
   - TargetGroup
   - Breakable
   - Platform
+  - Anchor
   layers:
   - Default
   - TransparentFX

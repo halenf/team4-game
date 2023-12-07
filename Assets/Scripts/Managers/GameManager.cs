@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CinemachineTargetGroup m_targetGroup;
     public float playerRadius;
     public float playerWeight;
+    public float anchorRadius;
+    public float anchorWeight;
 
     [Header("Player")]
     public GameObject playerPrefab;
@@ -572,6 +574,17 @@ public class GameManager : MonoBehaviour
                 targets.Add(target);
             }
         }
+
+        GameObject[] anchors = GameObject.FindGameObjectsWithTag("Anchor");
+        for (int i = 0; i < anchors.Length; i++)
+        {
+            CinemachineTargetGroup.Target target;
+            target.target = anchors[i].transform;
+            target.weight = anchorWeight;
+            target.radius = anchorRadius;
+            targets.Add(target);
+        }
+
         m_targetGroup.m_Targets = targets.ToArray<CinemachineTargetGroup.Target>();
         // End Cinemachine camera setup
     }
