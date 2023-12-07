@@ -728,7 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614ba74c08e935144bfbe2dab8e802e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 10
+  roundTime: 45
   playerSpawns:
   - {fileID: 8164705887240927095}
   - {fileID: 182471600820412425}
@@ -759,7 +759,7 @@ MonoBehaviour:
   minPowerupTimer: 3
   maxPowerupTimer: 6
   endLaserTimer: 10
-  endLaserSpeed: 3
+  endLaserSpeed: 4
 --- !u!1 &4126076173638119323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,6 +1367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debrisObjectPrefab: {fileID: 0}
   destroyEffect: {fileID: 3623149681444135517, guid: a382766b8b320394197bb30a677620b7, type: 3}
+  explosion: {fileID: 0}
   maxHealth: 0.1
   debrisDestroyTimer: 0
   willRespawn: 0
