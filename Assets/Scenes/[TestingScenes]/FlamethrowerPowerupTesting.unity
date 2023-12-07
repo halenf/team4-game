@@ -744,7 +744,7 @@ PrefabInstance:
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[0]
       value: 
-      objectReference: {fileID: 3771888446113775381, guid: 7ab5bb2625ba34649826fd842467d308, type: 3}
+      objectReference: {fileID: 7608319705386287573, guid: fe28bc3acdee1ed4498e29c24ddcec04, type: 3}
     - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: stageList.Array.data[4]
       value: 
