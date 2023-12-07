@@ -1241,7 +1241,7 @@ MonoBehaviour:
   - {fileID: 265064057586954450}
   - {fileID: 44745920562443801}
   - {fileID: 1483741578932751984}
-  minSparkTimer: 0
+  minSparkTimer: 0.001
   maxSparkTimer: 5
   horizontalVelocityThreshold: 1
   horizontalAimingThreshold: 0.1
