@@ -868,7 +868,7 @@ MonoBehaviour:
   powerupBoxLifetime: 10
   minPowerupTimer: 3
   maxPowerupTimer: 5
-  endLaserTimer: 10
+  endLaserTimer: 12
   endLaserSpeed: 3
 --- !u!1 &5591830627323396188
 GameObject:

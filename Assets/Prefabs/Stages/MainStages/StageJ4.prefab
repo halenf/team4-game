@@ -1158,7 +1158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isActive: 1
-  toggleTimer: 5
+  toggleTimer: 0
   isRepeating: 1
   spawnObjectPrefab: {fileID: 4872935802854433896, guid: 735331b7140807f4a8021a133db25238, type: 3}
   objectSpawnLocations:
@@ -1168,7 +1168,7 @@ MonoBehaviour:
   maxSpawnTime: 5
   minInitialVelocity: {x: 0, y: 0}
   maxInitialVelocity: {x: 0, y: 0}
-  lifeTime: 100
+  lifeTime: 30
 --- !u!1 &7708767397633852770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,7 +1228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7807693397409364886}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.311249, y: 33.175934, z: 0.5}
+  m_LocalPosition: {x: 4.311249, y: 38.425934, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

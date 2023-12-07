@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dab228b18691dd14b881e7cbf401ccf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
+  m_isActive: 0
+  toggleTimer: 0
   sparksPrefab: {fileID: 6647730250613079163, guid: 8cb2db274e759c64a983744e95e0501f, type: 3}
   sparkFrequency: 100
 --- !u!135 &8492388607002095543
@@ -99,7 +100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 79247aefe6e167245aaeeb5b4d86303d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 79247aefe6e167245aaeeb5b4d86303d, type: 3}
       propertyPath: m_LocalRotation.x
@@ -107,7 +108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 79247aefe6e167245aaeeb5b4d86303d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 79247aefe6e167245aaeeb5b4d86303d, type: 3}
       propertyPath: m_LocalRotation.z
@@ -119,7 +120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 79247aefe6e167245aaeeb5b4d86303d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 79247aefe6e167245aaeeb5b4d86303d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

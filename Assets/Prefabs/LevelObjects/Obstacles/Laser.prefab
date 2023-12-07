@@ -52,7 +52,7 @@ MonoBehaviour:
   hitParticle: {fileID: 8163005987728998194, guid: bb118610af5d2f6439a07ca1c37fd4d4, type: 3}
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 513
 --- !u!120 &5227712940450349801
 LineRenderer:
   m_ObjectHideFlags: 0

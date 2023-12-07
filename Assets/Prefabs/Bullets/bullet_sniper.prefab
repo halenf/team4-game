@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_currentEffect: 0
   explosionPrefab: {fileID: 8821883338272630741, guid: a382766b8b320394197bb30a677620b7, type: 3}
-  explosionDamage: 5
+  explosionDamage: 3
   explosionRadius: 6
   explosionLifetime: 0.2
   sparksPrefab: {fileID: -4343892208976721057, guid: b6ebd225944abff4a9fb50e24c1148e0, type: 3}
