@@ -4960,7 +4960,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2271769695517889325, guid: 15ef51ede76b142468b93acdca306149, type: 3}
   spread: 20
   bulletSpeed: 13
-  bulletDamage: 0.5
+  bulletDamage: 0.75
   bulletLifeTime: 10
   highRumbleFrequency: 1
   lowRumbleFrequency: 0
