@@ -37,7 +37,7 @@ public class Explosion : MonoBehaviour
         SphereCollider collider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
         collider.isTrigger = true;
         collider.radius = radius;
-        collider.center = transform.position;
+        //collider.center = transform.position;
 
         // set details of the particle systems
         //var fragmentsModule = fragments.main;
@@ -60,8 +60,6 @@ public class Explosion : MonoBehaviour
         this.damage = damage;
         this.radius = radius;
         this.lifetime = lifetime;
-        Awake();
-       
     }
 
     private IEnumerator Explode(float lifetime)
