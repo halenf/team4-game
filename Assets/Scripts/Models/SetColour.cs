@@ -53,7 +53,7 @@ public class SetColour : MonoBehaviour
         }
 
         m_setColour = colour;
-        //centerLight.color = m_setColour;
+        centerLight.color = m_setColour;
     }
 
     public void Set(Color colour, float emmisionPercentage)
