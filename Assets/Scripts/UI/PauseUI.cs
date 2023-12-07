@@ -44,6 +44,6 @@ public class PauseUI : MonoBehaviour
     public void OnMainMenu()
     {
         Time.timeScale = 1f;
-        Instantiate(fadeOutReset);
+        GameManager.Instance.ResetGame();
     }
 }
