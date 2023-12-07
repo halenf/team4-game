@@ -5,7 +5,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -326,6 +325,9 @@ public class PlayerController : MonoBehaviour
 
         // update animator parameter
         m_animator.SetFloat("HorizontalInput", Mathf.Abs(inputValue));
+
+        // Check if the player is facing the opposite direction they are moving in
+        m_animator.SetFloat("Direction", facingRight == (inputValue >= 0) ? 1f : -1f);
     }
 
     public void OnShoot(InputAction.CallbackContext value)
