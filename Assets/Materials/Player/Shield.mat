@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 1911d1787cc652c4896cd7051a13f650, type: 3}
+        m_Texture: {fileID: 2800000, guid: fc85a63e2f8176249bea80b2a3179791, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ee573b57fc3a4044096a33a21c9db9c9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FrontTex:
@@ -61,15 +61,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 8bcda860c7b4e4c4891f05ba285f6af2, type: 3}
+        m_Texture: {fileID: 2800000, guid: e2907aa3ed59050408e9964f90c6da31, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: 8bdc57c16f053434ca03c5bf24ec863d, type: 3}
+        m_Texture: {fileID: 2800000, guid: c62eab4ba8fda5b4098e8d10da09a742, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 7bb3cf754c330e541952388c46330ede, type: 3}
+        m_Texture: {fileID: 2800000, guid: d35d9a3932211a04db8157f1b18fdbbf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -95,7 +95,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _Exposure: 1
-    - _GlossMapScale: 0
+    - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _Metallic: 0
@@ -109,7 +109,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0.5529412}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.34117648}
     - _EmissionColor: {r: 0, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}

@@ -157,6 +157,7 @@ public class PlayerController : MonoBehaviour
                     case Powerup.Shield:
                         {
                             m_shieldCurrentHealth = 0;
+                            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Powerup-Ups/PWR-SHIELDDEACTIVATE");
                             if (m_shieldGameObject) Destroy(m_shieldGameObject);
                             break;
                         }
@@ -238,9 +239,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_aimDirection = transform.right;
-        SetGun(defaultGun);
-
         // set initial direction to face based on ID
         if ((id + 1) % 2 == 0) facingRight = false;
         else facingRight = true;
@@ -309,6 +307,9 @@ public class PlayerController : MonoBehaviour
 
         // if player is grounded
         m_animator.SetBool("IsGrounded", isGrounded);
+
+        // pass player vertical speed to animator
+        m_animator.SetFloat("VerticalSpeed", Mathf.Abs(m_rb.velocity.y));
     }
 
     // FixedUpdate is called once per physic frame
@@ -386,12 +387,16 @@ public class PlayerController : MonoBehaviour
         if (m_shieldCurrentHealth > 0)
         {
             m_shieldCurrentHealth--;
-            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/PWR-SHIELDDEFLECT");
+            
             if (m_shieldCurrentHealth == 0)
             {
-                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/PWR-SHIELDDEACTIVATE");
-                Destroy(m_shieldGameObject);
+                currentPowerup = Powerup.None;
             }
+            else
+            {
+                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/PWR-SHIELDDEFLECT");
+            }
+
             return;
         }
 
@@ -408,7 +413,7 @@ public class PlayerController : MonoBehaviour
         GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
 
         // rumble controller
-        Rumble(.2f, .5f, 1.5f);
+        Rumble(.2f, .4f, 0.6f);
 
         // if player is dead
         if (m_currentHealth <= 0)
@@ -432,7 +437,8 @@ public class PlayerController : MonoBehaviour
                 GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
                 ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
                 SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHASH");
-            } else
+            }
+            else
             {
                 // Play death sound
                 SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
@@ -467,7 +473,7 @@ public class PlayerController : MonoBehaviour
             // Only sets an ammo capacity if the gun is a pickup gun and not the default
             m_currentAmmo = gun.ammoCapacity;
 
-            // Display the gun the player picked up. dont display when changing back to the pistol
+            // Display the gun the player picked up. dont display when changing back to the default gun
             CreateOverhead(gun.indicator, gun.colour);
         }
         else m_currentAmmo = -1;
@@ -505,30 +511,32 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator PlayDamageParticles()
     {
-        //get an amount of time before the next spark based on health
-        float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
-        yield return new WaitForSeconds(time);
-        //at on of the positions the player has play the particle effect
+        while (m_currentHealth <= 3 * maxHealth / 4 && m_currentHealth > 0)
+        {
+            //get an amount of time before the next spark based on health
+            float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
+            yield return new WaitForSeconds(time);
 
-        ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+            //at one of the positions the player has play the particle effect
+            ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
 
-        var sparkMain = sparks.main;
-        sparkMain.startColor = m_color;
+            var sparkMain = sparks.main;
+            sparkMain.startColor = m_color;
 
-        var sparkTrails = sparks.trails;
-        Gradient gradient = new Gradient();
-        gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
-                         new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) } );
-        sparkTrails.colorOverLifetime = gradient;
-        
-        /*
-        Material particleMat = sparks.GetComponent<Material>();
-        particleMat.EnableKeyword("_EMISSION");
-        particleMat.SetColor("_EmissionColor", m_color);
-        particleMat.SetColor("_Color", m_color);*/
+            var sparkTrails = sparks.trails;
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
+                             new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) });
+            sparkTrails.colorOverLifetime = gradient;
 
-        //restart
-        StartCoroutine(PlayDamageParticles());
+            /*
+            // lower the player's brightness
+            Material particleMat = sparks.GetComponent<Material>();
+            particleMat.EnableKeyword("_EMISSION");
+            particleMat.SetColor("_EmissionColor", m_color);
+            particleMat.SetColor("_Color", m_color);
+            */
+        }
     }
 
     /// <summary>
@@ -595,14 +603,20 @@ public class PlayerController : MonoBehaviour
     public void ResetPlayer()
     {
         m_currentHealth = maxHealth;
+        m_aimDirection = transform.right;
         SetGun(defaultGun);
-        m_fireRate = m_currentGun.baseFireRate;
-        m_currentPowerup = Powerup.None;
-        if (m_shieldGameObject) Destroy(m_shieldGameObject);
+        currentPowerup = Powerup.None;
     }
 
     private void OnEnable()
     {
-        GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
+        // Set player colour
+        GetComponentInChildren<SetColour>().Set(m_color);
+    }
+
+    private void OnDisable()
+    {
+        // stop the damage particles coroutine
+        StopCoroutine(PlayDamageParticles());
     }
 }
