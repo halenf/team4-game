@@ -1,6 +1,6 @@
 // Spawner - Cameron
 // Spawns a set game object with various parameters.
-// Last edit: 17/11/23
+// Last edit: 7/12/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +30,9 @@ public class Spawner : Obstacle
     [Header("Spawner Properties")]
     [Tooltip("Whether the spawner will only spawn the object once or many times.")]
     public bool isRepeating;
+
+    [Tooltip("Whether the object will be a child of the transform.")]
+    public bool parent;
 
     [Header("Object Spawn Properties")]
     [Tooltip("Prefab that will be cloned.")]
@@ -73,8 +76,18 @@ public class Spawner : Obstacle
         m_spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         yield return new WaitForSeconds(m_spawnTime);
 
+        GameObject spawnedObject;
+
         // Spawn object with preset properties
-        GameObject spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
+        if (parent)
+        {
+            spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
+        }
+        else
+        {
+            spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, Quaternion.identity);
+            spawnedObject.transform.parent = FindObjectOfType<Stage>().transform;
+        }
         spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
 
         if(lifeTime != 0)
@@ -90,7 +103,15 @@ public class Spawner : Obstacle
             yield return new WaitForSeconds(m_spawnTime);
 
             // Spawn object with preset properties
-            spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
+            if (parent)
+            {
+                spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
+            }
+            else
+            {
+                spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, Quaternion.identity);
+                spawnedObject.transform.parent = FindObjectOfType<Stage>().transform;
+            }
             spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
 
             if (lifeTime != 0)
