@@ -4,11 +4,8 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -54,6 +51,8 @@ public class PlayerController : MonoBehaviour
     [Min(0)] public float gunHoldDistance;
     private bool m_isShooting;
     private Vector3 m_indicatorPosition = new(1f, 0f, 0);
+    [Space(5)]
+    
 
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
@@ -94,10 +93,17 @@ public class PlayerController : MonoBehaviour
     public float maxSparkTimer;
 
     [Header("Animation")]
-    public float horizontalVelocityThreshold;
-    public float horizontalAimingThreshold;
-    private float m_stoppedMovingTimer;
-    [SerializeField] private bool m_facingRight;
+    [Tooltip("The horizontal speed threshold at which the player is detected as 'moving'.")]
+    [Min(0)] public float horizontalVelocityThreshold;
+    [Tooltip("The threshold at which the direction the player is facing will change.")]
+    [Range(0,1)] public float horizontalAimingThreshold;
+    private float m_stoppedMovingTimer; // tracks how long the player has stopped moving for
+    private bool m_facingRight; // tracks the direction the player is facing
+    [Space(5)]
+    [SerializeField] private TransformUpdater m_leftHandTarget;
+    [SerializeField] private TransformUpdater m_rightHandTarget;
+    [SerializeField] private TransformUpdater m_lookTarget;
+
     public bool facingRight // for model rotation
     {
         get { return m_facingRight; }
@@ -151,6 +157,7 @@ public class PlayerController : MonoBehaviour
                     case Powerup.Shield:
                         {
                             m_shieldCurrentHealth = 0;
+                            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Powerup-Ups/PWR-SHIELDDEACTIVATE");
                             if (m_shieldGameObject) Destroy(m_shieldGameObject);
                             break;
                         }
@@ -217,9 +224,6 @@ public class PlayerController : MonoBehaviour
         id = _id;
         m_color = colour;
         GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
-
-
-        
     }
 
     private void Awake()
@@ -235,9 +239,6 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_aimDirection = transform.right;
-        SetGun(defaultGun);
-
         // set initial direction to face based on ID
         if ((id + 1) % 2 == 0) facingRight = false;
         else facingRight = true;
@@ -306,6 +307,9 @@ public class PlayerController : MonoBehaviour
 
         // if player is grounded
         m_animator.SetBool("IsGrounded", isGrounded);
+
+        // pass player vertical speed to animator
+        m_animator.SetFloat("VerticalSpeed", Mathf.Abs(m_rb.velocity.y));
     }
 
     // FixedUpdate is called once per physic frame
@@ -320,12 +324,11 @@ public class PlayerController : MonoBehaviour
         float inputValue = value.ReadValue<Vector2>().x; // Get the direction the player is trying to move
         m_moveForce = moveSpeed * new Vector3(inputValue, 0, 0); // calculate the magnitude of the force
 
-        // update model rotation when the threshold is met
-        if (inputValue >= horizontalAimingThreshold) facingRight = true;
-        if (inputValue <= -horizontalAimingThreshold) facingRight = false;
-
         // update animator parameter
         m_animator.SetFloat("HorizontalInput", Mathf.Abs(inputValue));
+
+        // Check if the player is facing the opposite direction they are moving in
+        m_animator.SetFloat("Direction", facingRight == (inputValue >= 0) ? 1f : -1f);
     }
 
     public void OnShoot(InputAction.CallbackContext value)
@@ -348,6 +351,10 @@ public class PlayerController : MonoBehaviour
         // Set the position and rotation of the aim indicator
         m_indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
 
+        // update model rotation when the threshold is met
+        float inputValue = value.ReadValue<Vector2>().x;
+        if (inputValue >= horizontalAimingThreshold) facingRight = true;
+        if (inputValue <= -horizontalAimingThreshold) facingRight = false;
     }
 
     public void OnDisconnect()
@@ -380,12 +387,16 @@ public class PlayerController : MonoBehaviour
         if (m_shieldCurrentHealth > 0)
         {
             m_shieldCurrentHealth--;
-            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/PWR-SHIELDDEFLECT");
+            
             if (m_shieldCurrentHealth == 0)
             {
-                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/PWR-SHIELDDEACTIVATE");
-                Destroy(m_shieldGameObject);
+                currentPowerup = Powerup.None;
             }
+            else
+            {
+                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/PWR-SHIELDDEFLECT");
+            }
+
             return;
         }
 
@@ -402,7 +413,7 @@ public class PlayerController : MonoBehaviour
         GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
 
         // rumble controller
-        Rumble(.2f, .5f, 1.5f);
+        Rumble(.2f, .4f, 0.6f);
 
         // if player is dead
         if (m_currentHealth <= 0)
@@ -413,8 +424,6 @@ public class PlayerController : MonoBehaviour
 
             //make death indicator
             CreateOverhead(deathIndicator, GetComponent<SetColour>().GetColour());
-
-            
 
             // remove this player from the target group
             GameManager.Instance.UpdateCameraTargetGroup();
@@ -428,7 +437,8 @@ public class PlayerController : MonoBehaviour
                 GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
                 ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
                 SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHASH");
-            } else
+            }
+            else
             {
                 // Play death sound
                 SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
@@ -463,7 +473,7 @@ public class PlayerController : MonoBehaviour
             // Only sets an ammo capacity if the gun is a pickup gun and not the default
             m_currentAmmo = gun.ammoCapacity;
 
-            // Display the gun the player picked up. dont display when changing back to the pistol
+            // Display the gun the player picked up. dont display when changing back to the default gun
             CreateOverhead(gun.indicator, gun.colour);
         }
         else m_currentAmmo = -1;
@@ -479,6 +489,13 @@ public class PlayerController : MonoBehaviour
         Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
         m_currentGun.transform.localPosition = indicatorPosition;
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_gunTransform.position);
+
+        // attach the player's hands to the gun
+        m_leftHandTarget.target = m_currentGun.leftHandPosition;
+        m_rightHandTarget.target = m_currentGun.rightHandPosition;
+
+        // have the player look down the gun's sight/barrel
+        m_lookTarget.target = m_currentGun.transform;
     }
 
     /// <summary>
@@ -494,30 +511,32 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator PlayDamageParticles()
     {
-        //get an amount of time before the next spark based on health
-        float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
-        yield return new WaitForSeconds(time);
-        //at on of the positions the player has play the particle effect
+        while (m_currentHealth <= 3 * maxHealth / 4 && m_currentHealth > 0)
+        {
+            //get an amount of time before the next spark based on health
+            float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
+            yield return new WaitForSeconds(time);
 
-        ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+            //at one of the positions the player has play the particle effect
+            ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
 
-        var sparkMain = sparks.main;
-        sparkMain.startColor = m_color;
+            var sparkMain = sparks.main;
+            sparkMain.startColor = m_color;
 
-        var sparkTrails = sparks.trails;
-        Gradient gradient = new Gradient();
-        gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
-                         new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) } );
-        sparkTrails.colorOverLifetime = gradient;
-        
-        /*
-        Material particleMat = sparks.GetComponent<Material>();
-        particleMat.EnableKeyword("_EMISSION");
-        particleMat.SetColor("_EmissionColor", m_color);
-        particleMat.SetColor("_Color", m_color);*/
+            var sparkTrails = sparks.trails;
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
+                             new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) });
+            sparkTrails.colorOverLifetime = gradient;
 
-        //restart
-        StartCoroutine(PlayDamageParticles());
+            /*
+            // lower the player's brightness
+            Material particleMat = sparks.GetComponent<Material>();
+            particleMat.EnableKeyword("_EMISSION");
+            particleMat.SetColor("_EmissionColor", m_color);
+            particleMat.SetColor("_Color", m_color);
+            */
+        }
     }
 
     /// <summary>
@@ -584,14 +603,20 @@ public class PlayerController : MonoBehaviour
     public void ResetPlayer()
     {
         m_currentHealth = maxHealth;
+        m_aimDirection = transform.right;
         SetGun(defaultGun);
-        m_fireRate = m_currentGun.baseFireRate;
-        m_currentPowerup = Powerup.None;
-        if (m_shieldGameObject) Destroy(m_shieldGameObject);
+        currentPowerup = Powerup.None;
     }
 
     private void OnEnable()
     {
-        GetComponentInChildren<SetColour>().Set(m_color); // Set player colour
+        // Set player colour
+        GetComponentInChildren<SetColour>().Set(m_color);
+    }
+
+    private void OnDisable()
+    {
+        // stop the damage particles coroutine
+        StopCoroutine(PlayDamageParticles());
     }
 }

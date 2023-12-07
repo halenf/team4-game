@@ -1,6 +1,6 @@
 // platform - Cameron, Halen
 // take damages and dies or explodes
-// Last edit: 24/11/23
+// Last edit: 7/12/23
 
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +11,8 @@ public class BreakableObject : MonoBehaviour
 {
     public GameObject debrisObjectPrefab;
     public GameObject destroyEffect;
+
+    public GameObject explosion;
 
     [Space(10)]
 
@@ -49,6 +51,11 @@ public class BreakableObject : MonoBehaviour
             {
                 GameObject gameObject = Instantiate(destroyEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject, debrisDestroyTimer);
+            }
+
+            if(explosion)
+            {
+                Instantiate(explosion, transform.position, Quaternion.identity);
             }
             if (willRespawn)
             {
