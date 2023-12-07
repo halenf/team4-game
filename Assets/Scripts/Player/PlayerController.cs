@@ -111,11 +111,8 @@ public class PlayerController : MonoBehaviour
         get { return m_facingRight; }
         set
         {
-            if (m_facingRight != value)
-            {
-                if (value) m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, 90, 0);
-                else m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, -90, 0);
-            }
+            if (value) m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            else m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, -90, 0);
             m_facingRight = value;
         }
     }
@@ -579,6 +576,23 @@ public class PlayerController : MonoBehaviour
     {
         m_rb.isKinematic = false;
         m_playerInput.ActivateInput();
+
+        // reset rigs and their constraint's weights because they get set to 0 when the player is disabled for some reason
+        foreach (RigLayer rigLayer in m_rigBuilder.layers)
+        {
+            Rig rig = rigLayer.rig;
+            rig.weight = 1f;
+            foreach (TwoBoneIKConstraint constraint in rig.gameObject.GetComponentsInChildren<TwoBoneIKConstraint>())
+            {
+                if (constraint)
+                {
+                    constraint.weight = 1f;
+                    constraint.data.targetPositionWeight = 1f;
+                    constraint.data.targetRotationWeight = 1f;
+                    constraint.data.hintWeight = 1f;
+                }
+            }
+        }
     }
 
     /// <summary>
