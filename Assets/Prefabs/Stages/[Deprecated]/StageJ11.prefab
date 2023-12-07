@@ -1393,6 +1393,37 @@ Transform:
   m_Father: {fileID: 2033401300128212668}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3931014568229515212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3182141512269782497}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3182141512269782497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3931014568229515212}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.3967266, y: 18.728172, z: 0.33067942}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3943144877880169402}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4115068565150994241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1424,37 +1455,6 @@ Transform:
   - {fileID: 4107368454532054097}
   m_Father: {fileID: 3943144877880169402}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4329232697015631990
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6631738018710328413}
-  m_Layer: 0
-  m_Name: PlayerSpawn (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6631738018710328413
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4329232697015631990}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.5, y: 18.5, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4107368454532054097}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5241985106117694435
 GameObject:
@@ -1517,7 +1517,6 @@ Transform:
   m_Children:
   - {fileID: 2571170748823338828}
   - {fileID: 6311945387782598591}
-  - {fileID: 6631738018710328413}
   m_Father: {fileID: 6279194760232086348}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1554,6 +1553,7 @@ Transform:
   - {fileID: 6279194760232086348}
   - {fileID: 8601268393610600250}
   - {fileID: 4073094025596455080}
+  - {fileID: 3182141512269782497}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1572,23 +1572,23 @@ MonoBehaviour:
   roundTime: 50
   playerSpawns:
   - {fileID: 2571170748823338828}
-  - {fileID: 6631738018710328413}
   powerUpSpawns: []
-  gunBoxSpawns: []
+  gunBoxSpawns:
+  - {fileID: 3182141512269782497}
   endLaserSpawns: []
   fireworkSpawns: []
   cameraDefaultTransform: {fileID: 6311945387782598591}
-  gunBoxPrefab: {fileID: 0}
+  gunBoxPrefab: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   powerupBoxPrefab: {fileID: 0}
   endLaserPrefab: {fileID: 0}
   spikeBallPrefab: {fileID: 0}
   fireworks: {fileID: 0}
   gunBoxLifetime: 10
-  minGunTimer: 4
-  maxGunTimer: 8
+  minGunTimer: 3
+  maxGunTimer: 3
   powerupBoxLifetime: 10
   minPowerupTimer: 4
-  maxPowerupTimer: 8
+  maxPowerupTimer: 4
   endLaserTimer: 15
   endLaserSpeed: 3
 --- !u!1 &7888769575743418920
