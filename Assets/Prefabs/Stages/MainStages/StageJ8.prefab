@@ -797,7 +797,7 @@ MonoBehaviour:
   minPowerupTimer: 4
   maxPowerupTimer: 8
   endLaserTimer: 10
-  endLaserSpeed: 3
+  endLaserSpeed: 4
 --- !u!1 &4126076173638119323
 GameObject:
   m_ObjectHideFlags: 0

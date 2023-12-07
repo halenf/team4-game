@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_rb;
     private CapsuleCollider m_collider;
     private PlayerInput m_playerInput;
+    private RigBuilder m_rigBuilder;
     private Gamepad m_controller;
     private Color m_color;
     private Animator m_animator;
@@ -233,6 +235,7 @@ public class PlayerController : MonoBehaviour
         m_rb.mass = defaultMass;
         m_collider = GetComponent<CapsuleCollider>();
         m_playerInput = GetComponent<PlayerInput>();
+        m_rigBuilder = GetComponentInChildren<RigBuilder>();
         m_animator = GetComponentInChildren<Animator>();
     }
 
@@ -496,6 +499,8 @@ public class PlayerController : MonoBehaviour
 
         // have the player look down the gun's sight/barrel
         m_lookTarget.target = m_currentGun.transform;
+
+        //m_rigBuilder.Build();
     }
 
     /// <summary>
@@ -513,10 +518,6 @@ public class PlayerController : MonoBehaviour
     {
         while (m_currentHealth <= 3 * maxHealth / 4 && m_currentHealth > 0)
         {
-            //get an amount of time before the next spark based on health
-            float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
-            yield return new WaitForSeconds(time);
-
             //at one of the positions the player has play the particle effect
             ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
 
@@ -528,6 +529,10 @@ public class PlayerController : MonoBehaviour
             gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
                              new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) });
             sparkTrails.colorOverLifetime = gradient;
+
+            //get an amount of time before the next spark based on health
+            float time = ((maxSparkTimer - minSparkTimer) * (m_currentHealth / maxHealth)) + minSparkTimer + Random.Range(0f, 4f);
+            yield return new WaitForSeconds(time);
 
             /*
             // lower the player's brightness
@@ -606,6 +611,7 @@ public class PlayerController : MonoBehaviour
         m_aimDirection = transform.right;
         SetGun(defaultGun);
         currentPowerup = Powerup.None;
+        if (m_shieldGameObject) Destroy(m_shieldGameObject);
     }
 
     private void OnEnable()

@@ -1143,8 +1143,8 @@ MonoBehaviour:
   powerupBoxLifetime: 10
   minPowerupTimer: 4
   maxPowerupTimer: 8
-  endLaserTimer: 10
-  endLaserSpeed: 3
+  endLaserTimer: 10.5
+  endLaserSpeed: 4
 --- !u!114 &8683508826252919962
 MonoBehaviour:
   m_ObjectHideFlags: 0
