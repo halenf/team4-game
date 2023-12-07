@@ -143,7 +143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debrisObjectPrefab: {fileID: 0}
-  destroyEffect: {fileID: 3623149681444135517, guid: a382766b8b320394197bb30a677620b7, type: 3}
+  destroyEffect: {fileID: 0}
+  explosion: {fileID: 7735432663192807266, guid: 4e2a99727b6ebfd46b134d55bbf87782, type: 3}
   maxHealth: 0.1
   debrisDestroyTimer: 0
   willRespawn: 0

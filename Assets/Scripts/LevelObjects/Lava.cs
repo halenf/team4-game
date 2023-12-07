@@ -30,6 +30,14 @@ public class Lava : MonoBehaviour
             PlayerController victim = other.gameObject.GetComponent<PlayerController>();
             victim.TakeDamage(victim.maxHealth, AnnouncerSubtitleDisplay.AnnouncementType.DeathFire);
         }
+
+        if (other.gameObject.tag == "Breakable")
+        {
+            //get player
+            BreakableObject hitObject = other.gameObject.GetComponent<BreakableObject>();
+            //do max damage
+            hitObject.TakeDamage(hitObject.maxHealth);
+        }
     }
 
     private void TileTexture()
