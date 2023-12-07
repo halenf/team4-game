@@ -248,6 +248,7 @@ MonoBehaviour:
   m_isActive: 0
   toggleTimer: 0
   isRepeating: 0
+  parent: 0
   spawnObjectPrefab: {fileID: 0}
   objectSpawnLocations: []
   objectHasRandomRotation: 0
@@ -1139,7 +1140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614ba74c08e935144bfbe2dab8e802e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 45
+  roundTime: 5
   playerSpawns:
   - {fileID: 5591830628615591417}
   - {fileID: 5591830626778748211}
@@ -1172,7 +1173,7 @@ MonoBehaviour:
   minPowerupTimer: 3
   maxPowerupTimer: 5
   endLaserTimer: 10
-  endLaserSpeed: 3
+  endLaserSpeed: 3.9
 --- !u!1 &5591830627323396188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1270,6 +1271,7 @@ MonoBehaviour:
   m_isActive: 0
   toggleTimer: 0
   isRepeating: 0
+  parent: 0
   spawnObjectPrefab: {fileID: 0}
   objectSpawnLocations: []
   objectHasRandomRotation: 0
@@ -1491,6 +1493,7 @@ MonoBehaviour:
   m_isActive: 0
   toggleTimer: 0
   isRepeating: 0
+  parent: 0
   spawnObjectPrefab: {fileID: 0}
   objectSpawnLocations: []
   objectHasRandomRotation: 0
@@ -2015,6 +2018,7 @@ MonoBehaviour:
   m_isActive: 0
   toggleTimer: 0
   isRepeating: 0
+  parent: 0
   spawnObjectPrefab: {fileID: 0}
   objectSpawnLocations: []
   objectHasRandomRotation: 0
@@ -2074,6 +2078,9 @@ MonoBehaviour:
   m_isActive: 1
   toggleTimer: 0
   hitParticle: {fileID: 8163005987728998194, guid: bb118610af5d2f6439a07ca1c37fd4d4, type: 3}
+  mask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!120 &2121833185807221808
 LineRenderer:
   m_ObjectHideFlags: 0
