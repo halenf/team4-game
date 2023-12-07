@@ -30,4 +30,9 @@ public class DisconnectUI : MonoBehaviour
                 break;
         }
     }
+
+    private void Update()
+    {
+        Time.timeScale = 0f;
+    }
 }
