@@ -9,6 +9,10 @@ public class TransformUpdater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (target) transform.position = target.position;
+        if (target)
+        {
+            transform.position = target.position;
+            transform.rotation = target.rotation;
+        }
     }
 }
