@@ -10,6 +10,8 @@ public class Spawner : Obstacle
 {
     private Vector3 m_velocityVector3;
     private float m_spawnTime;
+    private Animator m_animator;
+    private GameObject m_spawnedObjectReference;
 
     public override bool isActive
     {
@@ -63,6 +65,7 @@ public class Spawner : Obstacle
     {
         base.Start();
         if (isActive) StartSpawnRoutine();
+        m_animator = GetComponentInChildren<Animator>();
     }
 
     private void StartSpawnRoutine()
@@ -72,52 +75,37 @@ public class Spawner : Obstacle
 
     private IEnumerator SpawnRoutine()
     {
-        m_velocityVector3 = new Vector3(Random.Range(minInitialVelocity.x, maxInitialVelocity.x), Random.Range(minInitialVelocity.y, maxInitialVelocity.y), 0);
         m_spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         yield return new WaitForSeconds(m_spawnTime);
-
-        GameObject spawnedObject;
-
-        // Spawn object with preset properties
-        if (parent)
-        {
-            spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
-        }
-        else
-        {
-            spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, Quaternion.identity);
-            spawnedObject.transform.parent = FindObjectOfType<Stage>().transform;
-        }
-        spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
-
-        if(lifeTime != 0)
-        {
-            Destroy(spawnedObject, lifeTime);
-        }
+        m_animator.SetTrigger("Spawn");
 
         // repeat
         while (isRepeating)
         {
-            m_velocityVector3 = new Vector3(Random.Range(minInitialVelocity.x, maxInitialVelocity.x), Random.Range(minInitialVelocity.y, maxInitialVelocity.y), 0);
             m_spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
             yield return new WaitForSeconds(m_spawnTime);
+            m_animator.SetTrigger("Spawn");
+        }
+    }
 
-            // Spawn object with preset properties
-            if (parent)
-            {
-                spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
-            }
-            else
-            {
-                spawnedObject = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, Quaternion.identity);
-                spawnedObject.transform.parent = FindObjectOfType<Stage>().transform;
-            }
-            spawnedObject.GetComponent<Rigidbody>().velocity = m_velocityVector3;
+    public void SpawnObject()
+    {
+        m_velocityVector3 = new Vector3(Random.Range(minInitialVelocity.x, maxInitialVelocity.x), Random.Range(minInitialVelocity.y, maxInitialVelocity.y), 0);
+        // Spawn object with preset properties
+        if (parent)
+        {
+            m_spawnedObjectReference = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
+        }
+        else
+        {
+            m_spawnedObjectReference = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, Quaternion.identity);
+            m_spawnedObjectReference.transform.parent = FindObjectOfType<Stage>().transform;
+        }
+        m_spawnedObjectReference.GetComponent<Rigidbody>().velocity = m_velocityVector3;
 
-            if (lifeTime != 0)
-            {
-                Destroy(spawnedObject, lifeTime);
-            }
+        if (lifeTime != 0)
+        {
+            Destroy(m_spawnedObjectReference, lifeTime);
         }
     }
 }
