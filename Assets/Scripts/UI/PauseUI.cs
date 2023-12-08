@@ -46,4 +46,14 @@ public class PauseUI : MonoBehaviour
         Time.timeScale = 1f;
         GameManager.Instance.ResetGame();
     }
+
+    private void OnEnable()
+    {
+        EventSystemManager.Instance.indicator.gameObject.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        EventSystemManager.Instance.indicator.gameObject.SetActive(false);
+    }
 }
