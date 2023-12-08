@@ -39,6 +39,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5289236923252886086}
     m_Modifications:
+    - target: {fileID: 6360428496617983723, guid: aaa53d378d5dc864c9b824762e2889b1, type: 3}
+      propertyPath: willRespawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6360428496617983723, guid: aaa53d378d5dc864c9b824762e2889b1, type: 3}
+      propertyPath: timeToRespawn
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7322567878279350095, guid: aaa53d378d5dc864c9b824762e2889b1, type: 3}
       propertyPath: m_Name
       value: Breakable_DoubleSided_Platform
