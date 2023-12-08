@@ -102,7 +102,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 596328847778230735}
-  - component: {fileID: 1142720826792702751}
   m_Layer: 0
   m_Name: FireworkSpawn2
   m_TagString: Untagged
@@ -125,31 +124,6 @@ Transform:
   m_Father: {fileID: 5721100726409053624}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1142720826792702751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062453263790137708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 889c56931e3e4574c8795656ecd9e80c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_isActive: 1
-  toggleTimer: 0
-  isRepeating: 1
-  parent: 0
-  spawnObjectPrefab: {fileID: 443255457539259445, guid: 670ed16ffd92b894b8455d5cc34dbdee, type: 3}
-  objectSpawnLocations:
-  - {fileID: 596328847778230735}
-  objectHasRandomRotation: 0
-  minSpawnTime: 1
-  maxSpawnTime: 5
-  minInitialVelocity: {x: 0, y: 0}
-  maxInitialVelocity: {x: 0, y: 0}
-  lifeTime: 0
 --- !u!1 &1303700399125117862
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,7 +803,9 @@ MonoBehaviour:
   endLaserSpawns:
   - {fileID: 8691319482861125706}
   - {fileID: 5370934661914882389}
-  fireworkSpawns: []
+  fireworkSpawns:
+  - {fileID: 3076555523677422871}
+  - {fileID: 596328847778230735}
   cameraDefaultTransform: {fileID: 5757813968239163772}
   gunBoxPrefab: {fileID: 6146957387454679208, guid: 2eb5832984826144f9cb3cff5546a367, type: 3}
   powerupBoxPrefab: {fileID: 2281714658480379015, guid: c32939b3dd7e7f446aaf92760970e52a, type: 3}
@@ -1355,7 +1331,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3076555523677422871}
-  - component: {fileID: 5628640088945740069}
   m_Layer: 0
   m_Name: FireworkSpawn1
   m_TagString: Untagged
@@ -1378,31 +1353,6 @@ Transform:
   m_Father: {fileID: 5721100726409053624}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5628640088945740069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8072004987668251828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 889c56931e3e4574c8795656ecd9e80c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_isActive: 1
-  toggleTimer: 0
-  isRepeating: 1
-  parent: 0
-  spawnObjectPrefab: {fileID: 443255457539259445, guid: 670ed16ffd92b894b8455d5cc34dbdee, type: 3}
-  objectSpawnLocations:
-  - {fileID: 3076555523677422871}
-  objectHasRandomRotation: 0
-  minSpawnTime: 1
-  maxSpawnTime: 5
-  minInitialVelocity: {x: 0, y: 0}
-  maxInitialVelocity: {x: 0, y: 0}
-  lifeTime: 0
 --- !u!1 &8687789630374473999
 GameObject:
   m_ObjectHideFlags: 0
