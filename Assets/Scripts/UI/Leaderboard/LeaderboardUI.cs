@@ -32,6 +32,8 @@ public class LeaderboardUI : MonoBehaviour
 
         // only enable the play again and menu buttons if the game is over
         m_endGameButtons.SetActive(isGameOver);
+
+        EventSystemManager.Instance.indicator.gameObject.SetActive(isGameOver);
     }
 
     public void OnPlayAgain()
@@ -42,5 +44,10 @@ public class LeaderboardUI : MonoBehaviour
     public void OnMainMenu()
     {
         GameManager.Instance.ResetGame();
+    }
+
+    private void OnDisable()
+    {
+        EventSystemManager.Instance.indicator.gameObject.SetActive(false);
     }
 }
