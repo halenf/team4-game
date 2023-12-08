@@ -412,11 +412,13 @@ public class PlayerController : MonoBehaviour
         //set emmisoin
         GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
 
-        // rumble controller
-        Rumble(.2f, .4f, 0.6f);
-
-        // if player is dead
-        if (m_currentHealth <= 0)
+        // rumble controller and play damage sound when damage is taken
+        if (m_currentHealth > 0)
+        {
+            Rumble(.2f, .4f, 0.6f);
+            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDAMAGE");
+        }
+        else // if player is dead
         {
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
@@ -432,7 +434,7 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.StartAnnouncement(announcementType);
 
             //if fire seath make ash pile
-            if(announcementType == AnnouncerSubtitleDisplay.AnnouncementType.DeathFire)
+            if (announcementType == AnnouncerSubtitleDisplay.AnnouncementType.DeathFire)
             {
                 GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
                 ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
@@ -452,10 +454,6 @@ public class PlayerController : MonoBehaviour
 
             // deactivate player object
             gameObject.SetActive(false);
-        }
-        else
-        {
-            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDAMAGE");
         }
     }
 
@@ -584,13 +582,16 @@ public class PlayerController : MonoBehaviour
             rig.weight = 1f;
             foreach (TwoBoneIKConstraint constraint in rig.gameObject.GetComponentsInChildren<TwoBoneIKConstraint>())
             {
-                if (constraint)
-                {
-                    constraint.weight = 1f;
-                    constraint.data.targetPositionWeight = 1f;
-                    constraint.data.targetRotationWeight = 1f;
-                    constraint.data.hintWeight = 1f;
-                }
+                constraint.weight = 1f;
+                constraint.data.targetPositionWeight = 1f;
+                constraint.data.targetRotationWeight = 1f;
+                constraint.data.hintWeight = 1f;
+            }
+            foreach (MultiAimConstraint constraint in rig.gameObject.GetComponentsInChildren<MultiAimConstraint>())
+            {
+                constraint.weight = 1f;
+                constraint.data.sourceObjects = new WeightedTransformArray { new WeightedTransform(constraint.data.sourceObjects.GetTransform(0), 1f) };
+                constraint.data.limits = new Vector2(-65f, 65f);
             }
         }
     }
