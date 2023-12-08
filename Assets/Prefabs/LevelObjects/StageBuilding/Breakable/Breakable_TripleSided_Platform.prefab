@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eefe4cf2b30940a41bb79f7c0df44ae5, type: 2}
+  - {fileID: 2100000, guid: b084e9976130fcd4999a155ecf77fcd1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debrisObjectPrefab: {fileID: 6956104143960525552, guid: 42ab7383bea627f499bd85ee8be6f49c, type: 3}
   destroyEffect: {fileID: 0}
+  explosion: {fileID: 0}
   maxHealth: 2
   debrisDestroyTimer: 1
   willRespawn: 0
