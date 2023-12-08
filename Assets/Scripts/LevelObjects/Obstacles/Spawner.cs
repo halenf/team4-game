@@ -8,9 +8,7 @@ using UnityEngine;
 
 public class Spawner : Obstacle
 {
-    private Vector3 m_velocityVector3;
     private float m_spawnTime;
-    private Animator m_animator;
     private GameObject m_spawnedObjectReference;
 
     public override bool isActive
@@ -33,8 +31,8 @@ public class Spawner : Obstacle
     [Tooltip("Whether the spawner will only spawn the object once or many times.")]
     public bool isRepeating;
 
-    [Tooltip("Whether the object will be a child of the transform.")]
-    public bool parent;
+    [Tooltip("Whether the object will be a child of the Spawner.")]
+    public bool spawnerIsParent;
 
     [Header("Object Spawn Properties")]
     [Tooltip("Prefab that will be cloned.")]
@@ -65,7 +63,6 @@ public class Spawner : Obstacle
     {
         base.Start();
         if (isActive) StartSpawnRoutine();
-        m_animator = GetComponentInChildren<Animator>();
     }
 
     private void StartSpawnRoutine()
@@ -90,20 +87,21 @@ public class Spawner : Obstacle
 
     public void SpawnObject()
     {
-        m_velocityVector3 = new Vector3(Random.Range(minInitialVelocity.x, maxInitialVelocity.x), Random.Range(minInitialVelocity.y, maxInitialVelocity.y), 0);
         // Spawn object with preset properties
-        if (parent)
-        {
-            m_spawnedObjectReference = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)]);
-        }
-        else
-        {
-            m_spawnedObjectReference = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, Quaternion.identity);
-            m_spawnedObjectReference.transform.parent = FindObjectOfType<Stage>().transform;
-        }
-        m_spawnedObjectReference.GetComponent<Rigidbody>().velocity = m_velocityVector3;
+        m_spawnedObjectReference = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, Quaternion.identity, spawnerIsParent ? transform : null);
 
-        if (lifeTime != 0)
+        // if the object has a rigidbody
+        if (m_spawnedObjectReference.GetComponent<Rigidbody>())
+        {
+            Vector3 initialVelocity = new(Random.Range(minInitialVelocity.x, maxInitialVelocity.x), Random.Range(minInitialVelocity.y, maxInitialVelocity.y));
+            m_spawnedObjectReference.GetComponent<Rigidbody>().velocity = initialVelocity;
+        }
+
+        // Set rotation randomly if enabled
+        if (objectHasRandomRotation) m_spawnedObjectReference.transform.rotation = Random.rotation;
+
+        // if the object should be destroyed
+        if (lifeTime > 0)
         {
             Destroy(m_spawnedObjectReference, lifeTime);
         }
