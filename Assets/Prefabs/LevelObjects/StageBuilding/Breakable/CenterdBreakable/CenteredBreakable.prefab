@@ -39,6 +39,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2306714436671742331}
     m_Modifications:
+    - target: {fileID: -274275399784049948, guid: 473d3a4ea30ba2946a3d646b16275556, type: 3}
+      propertyPath: willRespawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -274275399784049948, guid: 473d3a4ea30ba2946a3d646b16275556, type: 3}
+      propertyPath: timeToRespawn
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 127946971493252839, guid: 473d3a4ea30ba2946a3d646b16275556, type: 3}
       propertyPath: m_Name
       value: Breakable_Diagonal_Platform
