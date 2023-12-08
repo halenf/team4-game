@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614ba74c08e935144bfbe2dab8e802e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundTime: 60
+  roundTime: 5
   playerSpawns:
   - {fileID: 7985890903679917171}
   - {fileID: 7384403592772333109}
@@ -90,7 +90,7 @@ MonoBehaviour:
   powerupBoxLifetime: 15
   minPowerupTimer: 5
   maxPowerupTimer: 13
-  endLaserTimer: 2
+  endLaserTimer: 15
   endLaserSpeed: 1
 --- !u!1 &182179305536510985
 GameObject:
