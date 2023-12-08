@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 8163005987728998194}
   - component: {fileID: 7137910491963040446}
   m_Layer: 0
-  m_Name: Laser Hit
+  m_Name: laser_hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
