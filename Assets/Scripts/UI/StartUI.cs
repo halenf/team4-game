@@ -17,6 +17,8 @@ public class StartUI : MonoBehaviour
     [SerializeField] private GameObject[] m_playerConnectedObjects;
     [SerializeField] private Image[] m_inputDisplays;
     [SerializeField] private GameObject m_startPromptDisplay;
+    [SerializeField] private Sprite[] m_standing;
+    [SerializeField] private Sprite[] m_thumbsUp;
 
     [Header("Sprites")]
     [SerializeField] private Sprite m_connectPromptSprite;
@@ -57,6 +59,13 @@ public class StartUI : MonoBehaviour
     // turn on the knobs when a player has input
     public void ShowPlayerInput(bool show, int id)
     {
-        m_inputDisplays[id].gameObject.SetActive(show);
+        if(show)
+        {
+            m_inputDisplays[id].sprite = m_thumbsUp[id];
+        }
+        else
+        {
+            m_inputDisplays[id].sprite = m_standing[id];
+        }
     }
 }
