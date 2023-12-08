@@ -151,7 +151,7 @@ public class Bullet : MonoBehaviour
         if (m_currentEffect == BulletEffect.Ricochet && m_bounces > 0)
         {
             Instantiate(ricochetPrefab, transform.position, transform.rotation);
-
+            transform.rotation = Quaternion.LookRotation(m_rb.velocity);
             m_bounces--;
         }
         else
