@@ -98,16 +98,14 @@ public class GameplayUI : MonoBehaviour
             yield return new WaitForSeconds(0.75f);
         }
 
-        // Enable player inputs and start round
-        
         m_countdownDisplay.sprite = startRoundSprite;
-        //m_countdownDisplay.SetNativeSize();
-
-        GameManager.Instance.EnablePlayers();
 
         // Keep Fight! up
         yield return new WaitForSeconds(0.75f);
         m_countdownDisplay.gameObject.SetActive(false);
+
+        // enable players
+        GameManager.Instance.EnablePlayers();
     }
 
     private IEnumerator RoundEnd(int winningPlayerID)

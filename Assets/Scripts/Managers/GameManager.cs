@@ -300,7 +300,7 @@ public class GameManager : MonoBehaviour
             playerController.Init(m_controllers[j], j, playerColours[j]);
 
             // make their controller rumble
-            playerController.Rumble(.25f, .85f, 3f);
+            //playerController.Rumble(.25f, .85f, 3f);
 
             // add player to list of players
             m_activePlayerControllers.Add(playerController);
@@ -708,5 +708,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
+    public void StartControllerRumbleRoutine(int id, float lowFrequncy, float highFrequency, float time)
+    {
+        
+        StartCoroutine(ControllerRumbleRoutine(id, highFrequency, lowFrequncy, time));
+
+    }
+
+    private IEnumerator ControllerRumbleRoutine(int id, float lowFrequncy, float highFrequency, float time)
+    {
+        m_controllers[id].SetMotorSpeeds(lowFrequncy, highFrequency);
+        yield return new WaitForSeconds(time);
+        m_controllers[id].SetMotorSpeeds(0, 0);
+    }
 }
