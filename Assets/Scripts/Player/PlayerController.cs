@@ -164,7 +164,6 @@ public class PlayerController : MonoBehaviour
             }
 
             // set powerup
-            Powerup oldPowerUp = m_currentPowerup;
             m_currentPowerup = value;
 
             // create indicator
@@ -261,26 +260,15 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
             {
-                // old recoil force
-                //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
-
-                // Determine if the current powerup affects shooting
-                Bullet.BulletEffect bulletEffect;
-                switch (m_currentPowerup)
+                // if m_currentPowerup == left side, bulletEffect = right side
+                // _ is default
+                var bulletEffect = m_currentPowerup switch
                 {
-                    case Powerup.Ricochet:
-                        bulletEffect = Bullet.BulletEffect.Ricochet;
-                        break;
-                    case Powerup.BigBullets:
-                        bulletEffect = Bullet.BulletEffect.Big;
-                        break;
-                    case Powerup.ExplodeBullets:
-                        bulletEffect = Bullet.BulletEffect.Explode;
-                        break;
-                    default:
-                        bulletEffect = Bullet.BulletEffect.None;
-                        break;
-                }
+                    Powerup.Ricochet => Bullet.BulletEffect.Ricochet,
+                    Powerup.BigBullets => Bullet.BulletEffect.Big,
+                    Powerup.ExplodeBullets => Bullet.BulletEffect.Explode,
+                    _ => Bullet.BulletEffect.None,
+                };
 
                 // shoot gun
                 m_currentGun.Shoot(id, bulletEffect, ricochetBounces);
@@ -484,7 +472,7 @@ public class PlayerController : MonoBehaviour
         m_currentGun.ChangeMaterial(id);
 
         // Sets the gun's aim
-        Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
+        Vector3 indicatorPosition = new(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
         m_currentGun.transform.localPosition = indicatorPosition;
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_gunTransform.position);
 
@@ -520,7 +508,7 @@ public class PlayerController : MonoBehaviour
             sparkMain.startColor = m_color;
 
             var sparkTrails = sparks.trails;
-            Gradient gradient = new Gradient();
+            Gradient gradient = new();
             gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
                              new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) });
             sparkTrails.colorOverLifetime = gradient;
