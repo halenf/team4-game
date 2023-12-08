@@ -111,11 +111,8 @@ public class PlayerController : MonoBehaviour
         get { return m_facingRight; }
         set
         {
-            if (m_facingRight != value)
-            {
-                if (value) m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, 90, 0);
-                else m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, -90, 0);
-            }
+            if (value) m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, 90, 0);
+            else m_animator.gameObject.transform.localRotation = Quaternion.Euler(0, -90, 0);
             m_facingRight = value;
         }
     }
@@ -167,7 +164,6 @@ public class PlayerController : MonoBehaviour
             }
 
             // set powerup
-            Powerup oldPowerUp = m_currentPowerup;
             m_currentPowerup = value;
 
             // create indicator
@@ -264,26 +260,15 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.time >= m_nextFireTime) // Only on button press and when the player can fire based on their fire rate
             {
-                // old recoil force
-                //m_rb.AddForce(m_currentGun.recoil * -Vector3.Normalize(m_aimDirection), ForceMode.Impulse); // Launch player away from where they're aiming
-
-                // Determine if the current powerup affects shooting
-                Bullet.BulletEffect bulletEffect;
-                switch (m_currentPowerup)
+                // if m_currentPowerup == left side, bulletEffect = right side
+                // _ is default
+                var bulletEffect = m_currentPowerup switch
                 {
-                    case Powerup.Ricochet:
-                        bulletEffect = Bullet.BulletEffect.Ricochet;
-                        break;
-                    case Powerup.BigBullets:
-                        bulletEffect = Bullet.BulletEffect.Big;
-                        break;
-                    case Powerup.ExplodeBullets:
-                        bulletEffect = Bullet.BulletEffect.Explode;
-                        break;
-                    default:
-                        bulletEffect = Bullet.BulletEffect.None;
-                        break;
-                }
+                    Powerup.Ricochet => Bullet.BulletEffect.Ricochet,
+                    Powerup.BigBullets => Bullet.BulletEffect.Big,
+                    Powerup.ExplodeBullets => Bullet.BulletEffect.Explode,
+                    _ => Bullet.BulletEffect.None,
+                };
 
                 // shoot gun
                 m_currentGun.Shoot(id, bulletEffect, ricochetBounces);
@@ -415,11 +400,13 @@ public class PlayerController : MonoBehaviour
         //set emmisoin
         GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
 
-        // rumble controller
-        Rumble(.2f, .4f, 0.6f);
-
-        // if player is dead
-        if (m_currentHealth <= 0)
+        // rumble controller and play damage sound when damage is taken
+        if (m_currentHealth > 0)
+        {
+            Rumble(.2f, .4f, 0.6f);
+            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDAMAGE");
+        }
+        else // if player is dead
         {
             // explode into blood
             for (int i = 0; i < 1 + Mathf.CeilToInt(damage); i++)
@@ -435,7 +422,7 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.StartAnnouncement(announcementType);
 
             //if fire seath make ash pile
-            if(announcementType == AnnouncerSubtitleDisplay.AnnouncementType.DeathFire)
+            if (announcementType == AnnouncerSubtitleDisplay.AnnouncementType.DeathFire)
             {
                 GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
                 ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
@@ -453,12 +440,11 @@ public class PlayerController : MonoBehaviour
             // play sound effect
             SoundManager.Instance.PlayAfterTime("Crowd/AMB-CROWDCHEERUPONDEATH", 2f);
 
+            // make controller rumble
+            GameManager.Instance.StartControllerRumbleRoutine(id, 0.3f, 0.6f, 0.6f);
+
             // deactivate player object
             gameObject.SetActive(false);
-        }
-        else
-        {
-            SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDAMAGE");
         }
     }
 
@@ -489,7 +475,7 @@ public class PlayerController : MonoBehaviour
         m_currentGun.ChangeMaterial(id);
 
         // Sets the gun's aim
-        Vector3 indicatorPosition = new Vector3(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
+        Vector3 indicatorPosition = new(m_aimDirection.x * gunHoldDistance, m_aimDirection.y * gunHoldDistance, 0);
         m_currentGun.transform.localPosition = indicatorPosition;
         m_currentGun.transform.rotation = Quaternion.LookRotation(m_currentGun.transform.position - m_gunTransform.position);
 
@@ -525,7 +511,7 @@ public class PlayerController : MonoBehaviour
             sparkMain.startColor = m_color;
 
             var sparkTrails = sparks.trails;
-            Gradient gradient = new Gradient();
+            Gradient gradient = new();
             gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
                              new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) });
             sparkTrails.colorOverLifetime = gradient;
@@ -579,6 +565,26 @@ public class PlayerController : MonoBehaviour
     {
         m_rb.isKinematic = false;
         m_playerInput.ActivateInput();
+
+        // reset rigs and their constraint's weights because they get set to 0 when the player is disabled for some reason
+        foreach (RigLayer rigLayer in m_rigBuilder.layers)
+        {
+            Rig rig = rigLayer.rig;
+            rig.weight = 1f;
+            foreach (TwoBoneIKConstraint constraint in rig.gameObject.GetComponentsInChildren<TwoBoneIKConstraint>())
+            {
+                constraint.weight = 1f;
+                constraint.data.targetPositionWeight = 1f;
+                constraint.data.targetRotationWeight = 1f;
+                constraint.data.hintWeight = 1f;
+            }
+            foreach (MultiAimConstraint constraint in rig.gameObject.GetComponentsInChildren<MultiAimConstraint>())
+            {
+                constraint.weight = 1f;
+                constraint.data.sourceObjects = new WeightedTransformArray { new WeightedTransform(constraint.data.sourceObjects.GetTransform(0), 1f) };
+                constraint.data.limits = new Vector2(-65f, 65f);
+            }
+        }
     }
 
     /// <summary>
