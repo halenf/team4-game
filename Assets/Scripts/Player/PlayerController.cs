@@ -440,6 +440,9 @@ public class PlayerController : MonoBehaviour
             // play sound effect
             SoundManager.Instance.PlayAfterTime("Crowd/AMB-CROWDCHEERUPONDEATH", 2f);
 
+            // make controller rumble
+            GameManager.Instance.StartControllerRumbleRoutine(id, 0.3f, 0.6f, 0.6f);
+
             // deactivate player object
             gameObject.SetActive(false);
         }
