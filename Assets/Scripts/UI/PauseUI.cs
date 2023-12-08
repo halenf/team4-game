@@ -8,15 +8,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseUI : MonoBehaviour
+public class PauseUI : MenuUI
 {
     [Header("UI Elements")]
     [Tooltip("Label that displays which player has control of the menu.")]
     [SerializeField] private Image m_labelDisplay;
     [SerializeField] private Sprite[] m_playerLabelSprites;
-
-    [Header("Event System Settings")]
-    public GameObject defaultSelectedObject;
 
     [Header("Transition Prefabs")]
     public GameObject fadeOut;

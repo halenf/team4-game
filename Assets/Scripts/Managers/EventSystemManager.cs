@@ -29,8 +29,13 @@ public class EventSystemManager : MonoBehaviour
 
     }
 
+    public bool inMenu;
+
     [Header("Component References")]
     public EventSystem eventSystem;
+
+    private Image m_indicator;
+    private Vector2 m_padding;
 
     /// <summary>
     /// Set's the event system's currently selected game object for UI
@@ -53,4 +58,22 @@ public class EventSystemManager : MonoBehaviour
         GetComponentInChildren<InputSystemUIInputModule>().actionsAsset = playerController.gameObject.GetComponent<PlayerInput>().actions;
     }
 
+    private void Update()
+    {
+        // if a menu is active
+        if (inMenu) UpdateIndicator();
+    }
+
+    public void SetButtonIndicator(Image indicator, Vector2 padding)
+    {
+        m_indicator = indicator;
+        m_padding = padding;
+    }
+
+    private void UpdateIndicator()
+    {
+        Vector2 buttonSize = eventSystem.currentSelectedGameObject.GetComponent<RectTransform>().sizeDelta;
+        m_indicator.rectTransform.sizeDelta = new(buttonSize.x + m_padding.x, buttonSize.y + m_padding.y);
+        m_indicator.transform.position = eventSystem.currentSelectedGameObject.transform.position;
+    }
 }

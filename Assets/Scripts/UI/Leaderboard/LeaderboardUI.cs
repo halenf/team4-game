@@ -7,16 +7,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LeaderboardUI : MonoBehaviour
+public class LeaderboardUI : MenuUI
 {
     public PlayerScoreDisplay playerScoreDisplayPrefab;
     
     [Header("UI Object References")]
     [SerializeField] private GameObject m_endGameButtons;
     [SerializeField] private Transform m_scoreDisplayLayoutGroup;
-
-    [Header("Default Selected Object")]
-    public GameObject defaultSelectedObject;
 
     /// <summary>
     /// Update all the display details of the canvas.
@@ -32,6 +29,9 @@ public class LeaderboardUI : MonoBehaviour
 
         // only enable the play again and menu buttons if the game is over
         m_endGameButtons.SetActive(isGameOver);
+        m_selectedIndicator.gameObject.SetActive(isGameOver);
+        EventSystemManager.Instance.inMenu = isGameOver;
+        EventSystemManager.Instance.SetButtonIndicator(m_selectedIndicator, padding);
     }
 
     public void OnPlayAgain()
@@ -42,5 +42,10 @@ public class LeaderboardUI : MonoBehaviour
     public void OnMainMenu()
     {
         GameManager.Instance.ResetGame();
+    }
+
+    protected override void OnEnable()
+    {
+        m_selectedIndicator.gameObject.SetActive(false);
     }
 }

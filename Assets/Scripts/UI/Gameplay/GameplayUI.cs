@@ -11,6 +11,7 @@ using static AnnouncerSubtitleDisplay;
 
 public class GameplayUI : MonoBehaviour
 {
+    [Header("Sprites")]
     public Sprite[] countdownSprites;
     public Sprite startRoundSprite;
     
@@ -135,6 +136,4 @@ public class GameplayUI : MonoBehaviour
         m_roundWinnerDisplay.text = "";
         Instantiate(fadeOut);
     }
-
-    
 }
