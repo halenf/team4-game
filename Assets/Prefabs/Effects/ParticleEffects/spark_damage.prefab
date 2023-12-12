@@ -4892,7 +4892,7 @@ GameObject:
   - component: {fileID: 4241609960148780320}
   - component: {fileID: 6086552412002029673}
   m_Layer: 0
-  m_Name: Spark_Damage
+  m_Name: spark_damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4922,14 +4922,14 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7626283334324840050}
   serializedVersion: 8
-  lengthInSec: 5
+  lengthInSec: 0.54
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
