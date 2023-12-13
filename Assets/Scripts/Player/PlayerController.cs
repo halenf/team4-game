@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
     public float minSparkTimer;
     [Tooltip("maximum time between when damage sparks play on the player")]
     public float maxSparkTimer;
+    private ParticleSystem m_sparkReference;
 
     [Header("Animation")]
     [Tooltip("The horizontal speed threshold at which the player is detected as 'moving'.")]
@@ -392,7 +393,7 @@ public class PlayerController : MonoBehaviour
         m_currentHealth -= damage;
 
         //if the player has been damaged enough start playing sparks
-        if(m_currentHealth <= 4)
+        if(m_currentHealth <= 4 && m_currentHealth >= 0.05f)
         {
             StartCoroutine(PlayDamageParticles());
         }
@@ -505,12 +506,12 @@ public class PlayerController : MonoBehaviour
         while (m_currentHealth <= 3 * maxHealth / 4 && m_currentHealth > 0)
         {
             //at one of the positions the player has play the particle effect
-            ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+            m_sparkReference = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
 
-            var sparkMain = sparks.main;
+            var sparkMain = m_sparkReference.main;
             sparkMain.startColor = m_color;
 
-            var sparkTrails = sparks.trails;
+            var sparkTrails = m_sparkReference.trails;
             Gradient gradient = new();
             gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
                              new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) });
@@ -624,6 +625,13 @@ public class PlayerController : MonoBehaviour
     {
         // Set player colour
         GetComponentInChildren<SetColour>().Set(m_color);
+        foreach(Transform sparkLocal in sparkLocations)
+        {
+            for(int i = 0; i < sparkLocal.childCount; i++)
+            {
+                Destroy(sparkLocal.GetChild(i).gameObject);
+            }
+        }
     }
 
     private void OnDisable()
