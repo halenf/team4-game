@@ -5059,8 +5059,8 @@ MonoBehaviour:
   bulletSpeed: 20
   bulletDamage: 2
   bulletLifeTime: 3
-  highRumbleFrequency: 0.846
-  lowRumbleFrequency: 0.3
+  highRumbleFrequency: 0.314
+  lowRumbleFrequency: 0.202
   rumbleTime: 0.05
   shootClip: {fileID: 8300000, guid: 62cdcee7bbb7673429c412d0e0db51d8, type: 3}
   equipClip: {fileID: 8300000, guid: 6fbcf3f99122e1443ba4305aed557ddf, type: 3}
