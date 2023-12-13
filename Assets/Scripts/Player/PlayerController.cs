@@ -626,6 +626,7 @@ public class PlayerController : MonoBehaviour
         m_aimDirection = transform.right;
         SetGun(defaultGun);
         currentPowerup = Powerup.None;
+        GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
     }
 
