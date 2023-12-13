@@ -4921,13 +4921,9 @@ MonoBehaviour:
   damage: 4
   radius: 5
   lifetime: 5
-  fragments: {fileID: 7095177697174510587}
+  blastSizeMultiplyer: 0
   blast: {fileID: 7785448750215647882}
-  killStrings:
-  - "It\u2019s hard to be bored when things blow up."
-  - Sploded!
-  - Splattered all over the walls!
-  - And the front row is soaked blood red!
+  volume: 1
 --- !u!82 &3557701006738178974
 AudioSource:
   m_ObjectHideFlags: 0
