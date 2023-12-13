@@ -10,8 +10,9 @@ public class ItemBox : PowerUp
 {
     [SerializeField] private PlayerController.Powerup m_currentPowerup;
 
-    public override void OnStart()
+    public override void Start()
     {
+        base.Start();
         //pick power up, random int chosen from length of enum Powerup cast back to the enum
         m_currentPowerup = (PlayerController.Powerup) UnityEngine.Random.Range(1, Enum.GetValues(typeof(PlayerController.Powerup)).Length - 1);
     }
@@ -19,7 +20,7 @@ public class ItemBox : PowerUp
     public override void OnTriggerEnter(Collider other)
     {
         //if colliding with player
-        if (other.gameObject.tag == "Player")
+        if (m_isActive && other.gameObject.tag == "Player")
         {
             //find player
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
