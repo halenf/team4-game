@@ -519,9 +519,6 @@ public class PlayerController : MonoBehaviour
             //at one of the positions the player has play the particle effect
             m_sparkReference = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
 
-            var sparkMain = m_sparkReference.main;
-            sparkMain.startColor = m_color;
-
             var sparkTrails = m_sparkReference.trails;
             Gradient gradient = new();
             gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
