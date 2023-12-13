@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 3
   radius: 2
-  lifetime: 5
-  blastSizeMultiplyer: 3.5
-  blast: {fileID: 8591866835076225624, guid: d31592030fb258f47875c0be0a6f1f52, type: 3}
+  lifetime: 0.5
+  blastSizeMultiplier: 3.5
+  explosionEffectPrefab: {fileID: 8591866835076225624, guid: d31592030fb258f47875c0be0a6f1f52, type: 3}
   volume: 0.5
 --- !u!82 &4698986172753535863
 AudioSource:

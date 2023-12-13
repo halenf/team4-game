@@ -14,7 +14,9 @@ public abstract class PowerUp : MonoBehaviour
     private bool m_hasQuit = false; // tracks if the game has ended
 
     protected bool m_isActive = false; // if the powerup is able to be picked up
-                                     // becomes true when the expanding animation ends
+                                       // becomes true when the expanding animation ends
+
+    protected bool m_isDespawning = false;
 
     private Animator m_animator;
 
@@ -25,13 +27,19 @@ public abstract class PowerUp : MonoBehaviour
     public virtual void Start()
     {
         m_animator = GetComponentInChildren<Animator>();
+        m_hasQuit = false;
+        m_isActive = false;
+        m_isDespawning = false;
     }
 
     private void Update()
     {
         // Despawn the powerup if it has reached the end of its lifetime and isn't already destroying itself
-        if (m_lifeTimer >= m_lifeTime && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Shrink"))
+        if (m_lifeTimer >= m_lifeTime && !m_isDespawning)
+        {
             m_animator.SetTrigger("Despawn");
+            m_isDespawning = true;
+        }
 
         // increase the powerup timer if the powerup is not permanent
         if (m_lifeTime > 0) m_lifeTimer += Time.deltaTime;
@@ -61,11 +69,11 @@ public abstract class PowerUp : MonoBehaviour
         m_hasQuit = true;
     }
 
-
     protected void Awake()
     {
         if (m_spawnEffect) Instantiate(m_spawnEffect);
     }
+
     protected void OnDestroy()
     {
         if (!m_hasQuit)

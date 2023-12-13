@@ -92,6 +92,9 @@ public class Spawner : Obstacle
         // Spawn object with preset properties
         m_spawnedObjectReference = Instantiate(spawnObjectPrefab, objectSpawnLocations[Random.Range(0, objectSpawnLocations.Length)].position, Quaternion.identity, spawnerIsParent ? transform : null);
 
+        // Set the tag on the object for cleanup later
+        m_spawnedObjectReference.tag = "Spawned";
+
         // if the object has a rigidbody
         if (m_spawnedObjectReference.GetComponent<Rigidbody>())
         {
@@ -102,8 +105,13 @@ public class Spawner : Obstacle
         // Set rotation randomly if enabled
         if (objectHasRandomRotation) m_spawnedObjectReference.transform.rotation = Random.rotation;
 
-        // if the object should be destroyed
-        if (lifeTime > 0)
+        // if object is an Obstacle
+        if (m_spawnedObjectReference.GetComponent<Obstacle>())
+        {
+            Obstacle obstacleReference = m_spawnedObjectReference.GetComponent<Obstacle>();
+            if (lifeTime > 0) obstacleReference.DestroyObstacle(lifeTime);
+        }
+        else if (lifeTime > 0)
         {
             Destroy(m_spawnedObjectReference, lifeTime);
         }

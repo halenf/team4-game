@@ -147,6 +147,12 @@ public class Bullet : MonoBehaviour
             collision.gameObject.GetComponent<BreakableObject>().TakeDamage(m_damage);
         }
 
+        // if the bullet hits an explosive obstacle
+        if (collision.gameObject.GetComponent<Explosive>())
+        {
+            collision.gameObject.GetComponent<Explosive>().TakeDamage(m_damage);
+        }
+
         // destroy or bounce bullet
         if (m_currentEffect == BulletEffect.Ricochet && m_bounces > 0)
         {

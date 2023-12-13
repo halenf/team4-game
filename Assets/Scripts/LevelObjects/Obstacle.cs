@@ -47,6 +47,22 @@ public abstract class Obstacle : MonoBehaviour
         }
     }
 
+    // for spawner
+    /// <summary>
+    /// Destroys the obstacle after an amount of time and triggers any on-destroy behaviour.
+    /// </summary>
+    /// <param name="time">Time until object is destroyed.</param>
+    public virtual void DestroyObstacle(float time)
+    {
+        StartCoroutine(DestroyAfterTime(time));
+    }
+
+    protected virtual IEnumerator DestroyAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(gameObject);
+    }
+
     // animation
     protected Animator m_animator;
 

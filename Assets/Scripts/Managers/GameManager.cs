@@ -343,12 +343,17 @@ public class GameManager : MonoBehaviour
         GameObject[] allRemainingBullets = GameObject.FindGameObjectsWithTag("Bullet");
         foreach (Object bullet in allRemainingBullets) Destroy(bullet);
 
+        // Destroy any remaining powerup indicators in the scene
         PickupIndicator[] remainingIndicators = FindObjectsOfType<PickupIndicator>();
         foreach (PickupIndicator indicator in remainingIndicators) Destroy(indicator.gameObject);
 
         // destroy any remaining powerups in the scene
         PowerUp[] allPowerUps = FindObjectsOfType<PowerUp>();
         foreach (Object powerup in allPowerUps) Destroy(powerup);
+
+        // destroy any remaining spawned objects in the scene
+        GameObject[] spawnedObjects = GameObject.FindGameObjectsWithTag("Spawned");
+        foreach (Object spawnedObject in spawnedObjects) Destroy(spawnedObject);
 
         //destroy the current stage and load a new one
         if (m_currentStageObject) Destroy(m_currentStageObject);

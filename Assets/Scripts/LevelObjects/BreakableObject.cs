@@ -9,21 +9,26 @@ using UnityEngine;
 
 public class BreakableObject : MonoBehaviour
 {
+    [Header("Effect Prefabs")]
     public GameObject debrisObjectPrefab;
-    public GameObject destroyEffect;
 
-    public GameObject explosion;
-
-    [Space(10)]
-
+    [Header("Object Properties")]
     public float maxHealth;
+    private float m_currentHealth;
+
     public float debrisDestroyTimer;
+
+    [Space(5)]
+
+    public float lifeTime;
+    private float m_lifeTimer;
 
     public bool willRespawn;
     public float timeToRespawn;
-    
-    private float m_currentHealth;
 
+    private bool m_hasQuit = false;
+
+    // components
     private MeshRenderer m_renderer;
     private Collider m_collider;
 
@@ -34,39 +39,51 @@ public class BreakableObject : MonoBehaviour
         m_collider = GetComponent<Collider>();
     }
 
+    private void Update()
+    {
+        // if object has a lifetime
+        if (lifeTime > 0)
+        {
+            // if timer is up, break the object
+            if (m_lifeTimer >= lifeTime)
+            {
+                BreakObject();
+                m_lifeTimer = 0;
+            }
+
+            // increase the timer
+            m_lifeTimer += Time.deltaTime;
+        }
+    }
+
     public void TakeDamage(float damage)
     {
         m_currentHealth -= damage;
         if (m_currentHealth <= 0)
         {
-            // Only try to create the debris if the object has debris set
-            if (debrisObjectPrefab)
-            {
-                GameObject debris = Instantiate(debrisObjectPrefab, transform.position, Random.rotation);
-                Destroy(debris, debrisDestroyTimer);
-            }
-            
-            // only create the destroy effect if there is one
-            if (destroyEffect)
-            {
-                GameObject gameObject = Instantiate(destroyEffect, transform.position, Quaternion.identity);
-                Destroy(gameObject, debrisDestroyTimer);
-            }
+            BreakObject();
+        }
+    }
 
-            if(explosion)
-            {
-                Instantiate(explosion, transform.position, Quaternion.identity);
-            }
-            if (willRespawn)
-            {
-                m_renderer.enabled = false;
-                m_collider.enabled = false;
-                StartCoroutine(Respawn());
-            }
-            else
-            {
-                Destroy(gameObject);
-            }   
+    private void BreakObject()
+    {
+        // Only try to create the debris if the object has debris set
+        if (debrisObjectPrefab)
+        {
+            GameObject debris = Instantiate(debrisObjectPrefab, transform.position, Random.rotation);
+            Destroy(debris, debrisDestroyTimer);
+        }
+
+        // respawn on timer or disable object
+        if (willRespawn)
+        {
+            m_renderer.enabled = false;
+            m_collider.enabled = false;
+            StartCoroutine(Respawn());
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 
