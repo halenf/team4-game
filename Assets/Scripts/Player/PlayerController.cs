@@ -178,6 +178,7 @@ public class PlayerController : MonoBehaviour
             {
                 case Powerup.Ricochet:
                     {
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-BULLETRICOCHET");
                         break;
                     }
                 case Powerup.FireRateUp:
