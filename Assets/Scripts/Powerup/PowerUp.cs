@@ -62,7 +62,7 @@ public abstract class PowerUp : MonoBehaviour
         m_isActive = true;
     }
 
-    public abstract void OnTriggerEnter(Collider other);
+    public abstract void OnTriggerStay(Collider other);
 
     private void OnApplicationQuit()
     {

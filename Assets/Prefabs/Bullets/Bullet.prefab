@@ -191,7 +191,7 @@ MonoBehaviour:
   m_currentEffect: 0
   explosionPrefab: {fileID: 7735432663192807267, guid: 4e2a99727b6ebfd46b134d55bbf87782, type: 3}
   explosionDamage: 5
-  explosionRadius: 6
+  explosionRadius: 3
   explosionLifetime: 0.2
   sparksPrefab: {fileID: -4343892208976721057, guid: b6ebd225944abff4a9fb50e24c1148e0, type: 3}
   ricochetPrefab: {fileID: 6647730250613079163, guid: 8cb2db274e759c64a983744e95e0501f, type: 3}

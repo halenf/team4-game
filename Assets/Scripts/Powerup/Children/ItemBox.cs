@@ -17,7 +17,7 @@ public class ItemBox : PowerUp
         m_currentPowerup = (PlayerController.Powerup) UnityEngine.Random.Range(1, Enum.GetValues(typeof(PlayerController.Powerup)).Length - 1);
     }
 
-    public override void OnTriggerEnter(Collider other)
+    public override void OnTriggerStay(Collider other)
     {
         //if colliding with player
         if (m_isActive && other.gameObject.tag == "Player")

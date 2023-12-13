@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 290609186512011905}
   - component: {fileID: 8687248180109748571}
   - component: {fileID: 6647730250613079163}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ricochet_bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
