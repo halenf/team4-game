@@ -28,6 +28,8 @@ public class Spawner : Obstacle
     }
 
     [Header("Spawner Properties")]
+    [SerializeField] private ParticleSystem m_spawnEffect;
+
     [Tooltip("Whether the spawner will only spawn the object once or many times.")]
     public bool isRepeating;
 
@@ -74,14 +76,14 @@ public class Spawner : Obstacle
     {
         m_spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
         yield return new WaitForSeconds(m_spawnTime);
-        m_animator.SetTrigger("Spawn");
+        TriggerSpawnAnimation(m_spawnTime);
 
         // repeat
         while (isRepeating)
         {
             m_spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
             yield return new WaitForSeconds(m_spawnTime);
-            m_animator.SetTrigger("Spawn");
+            TriggerSpawnAnimation(m_spawnTime);
         }
     }
 
@@ -105,5 +107,27 @@ public class Spawner : Obstacle
         {
             Destroy(m_spawnedObjectReference, lifeTime);
         }
+    }
+
+    private void TriggerSpawnAnimation(float m_spawnTime)
+    {
+        // calc the animation speed
+        // the animation will always finish playing before the 
+        float animationSpeed = 1f / m_spawnTime + 0.01f;
+        
+        // Set speed of anim
+        m_animator.SetFloat("Speed", animationSpeed);
+
+        // Instantiate particle system
+        foreach (Transform transform in objectSpawnLocations)
+        {
+            ParticleSystem spawnEffect = Instantiate(m_spawnEffect, this.transform);
+            spawnEffect.transform.position = transform.position;
+            var main = spawnEffect.main;
+            main.startLifetime = m_spawnTime;
+        }
+
+        // trigger the animation, which then spawns the object
+        m_animator.SetTrigger("Spawn");
     }
 }
