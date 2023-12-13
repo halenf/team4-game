@@ -29,6 +29,7 @@ public class AnnouncerSubtitleDisplay : MonoBehaviour
         DeathBullet,
         DeathExplosion,
         DeathFire,
+        DeathZapper,
         DeathSpikeball,
         EndRound
     }
