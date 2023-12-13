@@ -588,7 +588,7 @@ MonoBehaviour:
   - {r: 0.6510284, g: 0.0040494935, b: 0.8584906, a: 1}
   deathIndicator: {fileID: 21300000, guid: ede42cc3cbf216c4295634203e7dd59b, type: 3}
   bloodPrefab: {fileID: -4343892208976721057, guid: 1702c369db8a49a49bd588544f7201fa, type: 3}
-  damagedParticlePrefab: {fileID: 3959945360424630612, guid: 1ba4209e74e8e4349a52348ba0c4c453, type: 3}
+  damagedParticlePrefab: {fileID: 4241609960148780320, guid: 0fbac03ae2ea26443805ed030ddb56dc, type: 3}
   sparkLocations:
   - {fileID: 6372037594767305296}
   - {fileID: 265064057586954450}

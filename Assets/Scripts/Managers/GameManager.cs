@@ -248,6 +248,7 @@ public class GameManager : MonoBehaviour
                 m_startCanvas.ShowPlayerInput(false, i);
             }
         }
+        m_startCanvas.ShowControls(m_controllers);
     }
 
     /// <summary>
