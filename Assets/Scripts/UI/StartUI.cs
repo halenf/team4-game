@@ -19,6 +19,7 @@ public class StartUI : MonoBehaviour
     [SerializeField] private GameObject m_startPromptDisplay;
     [SerializeField] private Sprite[] m_standing;
     [SerializeField] private Sprite[] m_thumbsUp;
+    [SerializeField] private GameObject controllsImage;
 
     [Header("Sprites")]
     [SerializeField] private Sprite m_connectPromptSprite;
@@ -66,6 +67,19 @@ public class StartUI : MonoBehaviour
         else
         {
             m_inputDisplays[id].sprite = m_standing[id];
+        }
+    }
+
+    public void ShowControls(List<Gamepad> controllers)
+    {
+        controllsImage.SetActive(false);
+        foreach (Gamepad controller in controllers)
+        {
+            if (controller.selectButton.IsPressed())
+            {
+                controllsImage.SetActive(true);
+                return;
+            }
         }
     }
 }
