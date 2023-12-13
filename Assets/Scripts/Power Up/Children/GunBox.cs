@@ -14,13 +14,15 @@ public class GunBox : PowerUp
     [SerializeField] private Gun m_currentGun;
 
     // Start is called before the first frame update
-    public override void OnStart()
+    public override void Start()
     {
+        base.Start();
         m_currentGun = guns[Random.Range(0, guns.Length)];        
     }
 
     public override void OnTriggerEnter(Collider other)
     {
+        //if colliding with player
         if (other.gameObject.tag == "Player")
         {
             //find player

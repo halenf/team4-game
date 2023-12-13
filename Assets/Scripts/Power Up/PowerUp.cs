@@ -7,24 +7,53 @@ using UnityEngine;
 
 public abstract class PowerUp : MonoBehaviour
 {
-    public float lifeTime;
+    // properties
+    private float m_lifeTime; // time box exists for
+    private float m_lifeTimer; // tracks whether the box should despawn
 
-    public void Start()
+    private bool m_hasQuit = false; // tracks if the game has ended
+
+    private Animator m_animator;
+
+    [Header("Particle Effects")]
+    [SerializeField] private ParticleSystem m_spawnEffect;
+    [SerializeField] private ParticleSystem m_destroyEffect;
+
+    public virtual void Start()
     {
-        if (lifeTime != 0)
-        {
-            Destroy(gameObject, lifeTime);
-        }
+        m_animator = GetComponentInChildren<Animator>();
+    }
 
-        OnStart();
+    private void Update()
+    {
+        // Despawn the powerup if it has reached the end of its lifetime
+        if (m_lifeTimer >= m_lifeTime) m_animator.SetTrigger("Despawn");
+
+        // increase the powerup timer if the powerup is not permanent
+        if (m_lifeTime > 0) m_lifeTimer += Time.deltaTime;
     }
 
     /// <summary>
-    /// Add any code you need to run in Start here.
+    /// Initialise the powerup.
     /// </summary>
-    public virtual void OnStart() { }
+    /// <param name="_lifeTime">The powerup's lifetime. 0 won't despawn the powerup.</param>
+    public virtual void Init(float _lifeTime)
+    {
+        m_lifeTime = _lifeTime;
+    }
 
     public abstract void OnTriggerEnter(Collider other);
 
-    
+    private void OnApplicationQuit()
+    {
+        m_hasQuit = true;
+    }
+
+    protected void OnDestroy()
+    {
+        if (!m_hasQuit)
+        {
+            Instantiate(m_destroyEffect);
+        }
+    }
 }
