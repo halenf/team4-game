@@ -1,12 +1,11 @@
 // GameManager - Cameron, Halen
 // Manages level loading, round flow, mapping controller inputs, and UI
-// last edit 15/11/2023
+// last edit 14/12/2023
 
 using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -65,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Info")]
     public GameObject[] stageList;
+    private GameObject[] m_orderedStageList;
     public int numberOfRounds;
 
     [Header("Announcer Display Screen")]
@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         NumberOfWins = 0,
         NumberOfRounds = 1
     }
-    private GameMode m_gameMode;
+    private readonly GameMode m_gameMode;
 
     // Game state tracking
     private enum GameState
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
         // if the number of gamepads has changed
         if (gamepadCount != Gamepad.all.Count)
         {
-            List<Gamepad> dissconnected = new List<Gamepad>();
+            List<Gamepad> dissconnected = new();
             
             foreach (Gamepad controller in m_controllers)
             {
@@ -355,10 +355,14 @@ public class GameManager : MonoBehaviour
         GameObject[] spawnedObjects = GameObject.FindGameObjectsWithTag("Spawned");
         foreach (Object spawnedObject in spawnedObjects) Destroy(spawnedObject);
 
-        //destroy the current stage and load a new one
+        //destroy the current stage and load the next one
         if (m_currentStageObject) Destroy(m_currentStageObject);
-        int random = Random.Range(0, stageList.Length);
-        m_currentStageObject = Instantiate(stageList[random]);
+
+        // modulus with 0 will cause errors
+        int index = stageList.Length % (m_roundNumber + 1);
+        if (index == 0) m_orderedStageList = RandomisedStageOrder(); 
+        m_currentStageObject = Instantiate(m_orderedStageList[index]);
+        Debug.Log(m_orderedStageList);
 
         // Reset camera to default position
         CameraManager.Instance.SetCameraPosition(m_currentStageObject.GetComponent<Stage>().cameraDefaultTransform);
@@ -568,7 +572,7 @@ public class GameManager : MonoBehaviour
     public void UpdateCameraTargetGroup()
     {
         // Add the players to the target group target array
-        List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>();
+        List<CinemachineTargetGroup.Target> targets = new();
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
             if (!m_activePlayerControllers[i].isDead)
@@ -627,6 +631,23 @@ public class GameManager : MonoBehaviour
             spawns[i] = spawns[r];
             spawns[r] = tmp;
         }
+    }
+
+    /// <summary>
+    /// Randomises a gameobject array.
+    /// </summary>
+    /// <returns></returns>
+    private GameObject[] RandomisedStageOrder()
+    {
+        GameObject[] stages = stageList;
+        for (int i = 0; i < stages.Length; i++)
+        {
+            GameObject tmp = stages[i];
+            int r = Random.Range(i, stages.Length);
+            stages[i] = stages[r];
+            stages[r] = tmp;
+        }
+        return stages;
     }
 
     /// <summary>

@@ -33,6 +33,8 @@ public class Bullet : MonoBehaviour
     [Tooltip("Time the explosion hitbox is active for in seconds.")]
     [Min(0)] public float explosionLifetime;
 
+    [Min(1)] public float bigBulletScalar;
+
     [Header("Particle Effects")]
     public ParticleSystem sparksPrefab;
     public ParticleSystem ricochetPrefab;
@@ -78,7 +80,7 @@ public class Bullet : MonoBehaviour
             }
             case BulletEffect.Big:
             {
-                transform.localScale = transform.localScale * 2;
+                transform.localScale = transform.localScale * bigBulletScalar;
                 break;
             }
             case BulletEffect.Explode:

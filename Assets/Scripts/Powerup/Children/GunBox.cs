@@ -20,10 +20,10 @@ public class GunBox : PowerUp
         m_currentGun = guns[Random.Range(0, guns.Length)];        
     }
 
-    public override void OnTriggerEnter(Collider other)
+    public override void OnTriggerStay(Collider other)
     {
         //if colliding with player
-        if (m_isActive && other.gameObject.tag == "Player")
+        if (m_isActive && other.gameObject.CompareTag("Player"))
         {
             //find player
             PlayerController player = other.gameObject.GetComponent<PlayerController>();

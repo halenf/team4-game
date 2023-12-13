@@ -563,7 +563,14 @@ MonoBehaviour:
   defaultGun: {fileID: 1788972594773971130, guid: fbac1fa5d84274140b2863d100c4fa70, type: 3}
   gunHoldDistance: 1.1
   m_currentPowerup: 0
-  powerupTime: 5
+  powerupTime:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   maxShieldHealth: 3
   fireRateScalar: 1.4
   lowGravityScalar: 0.7
