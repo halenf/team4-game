@@ -20,7 +20,7 @@ public class ItemBox : PowerUp
     public override void OnTriggerEnter(Collider other)
     {
         //if colliding with player
-        if (other.gameObject.tag == "Player")
+        if (m_isActive && other.gameObject.tag == "Player")
         {
             //find player
             PlayerController player = other.gameObject.GetComponent<PlayerController>();

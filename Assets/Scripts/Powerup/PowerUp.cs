@@ -13,6 +13,9 @@ public abstract class PowerUp : MonoBehaviour
 
     private bool m_hasQuit = false; // tracks if the game has ended
 
+    protected bool m_isActive = false; // if the powerup is able to be picked up
+                                     // becomes true when the expanding animation ends
+
     private Animator m_animator;
 
     [Header("Particle Effects")]
@@ -26,8 +29,9 @@ public abstract class PowerUp : MonoBehaviour
 
     private void Update()
     {
-        // Despawn the powerup if it has reached the end of its lifetime
-        if (m_lifeTimer >= m_lifeTime) m_animator.SetTrigger("Despawn");
+        // Despawn the powerup if it has reached the end of its lifetime and isn't already destroying itself
+        if (m_lifeTimer >= m_lifeTime && !m_animator.GetCurrentAnimatorStateInfo(0).IsName("Shrink"))
+            m_animator.SetTrigger("Despawn");
 
         // increase the powerup timer if the powerup is not permanent
         if (m_lifeTime > 0) m_lifeTimer += Time.deltaTime;
@@ -42,6 +46,14 @@ public abstract class PowerUp : MonoBehaviour
         m_lifeTime = _lifeTime;
     }
 
+    /// <summary>
+    /// Activates the powerup so it can be collected.
+    /// </summary>
+    public void Activate()
+    {
+        m_isActive = true;
+    }
+
     public abstract void OnTriggerEnter(Collider other);
 
     private void OnApplicationQuit()
@@ -49,11 +61,16 @@ public abstract class PowerUp : MonoBehaviour
         m_hasQuit = true;
     }
 
+
+    protected void Awake()
+    {
+        if (m_spawnEffect) Instantiate(m_spawnEffect);
+    }
     protected void OnDestroy()
     {
         if (!m_hasQuit)
         {
-            Instantiate(m_destroyEffect);
+            if (m_destroyEffect) Instantiate(m_destroyEffect);
         }
     }
 }

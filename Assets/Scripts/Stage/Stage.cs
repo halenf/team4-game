@@ -76,26 +76,12 @@ public class Stage : MonoBehaviour
     [Tooltip("speed of end lasers")]
     [Min(0)] public float endLaserSpeed;
 
-    private List<GameObject> m_currentPowerupBoxes;
-    private List<GameObject> m_currentGunBoxes;
-
     /// <summary>
     /// call functions to start coroutines
     /// </summary>
     private void Start()
     {
         m_currentRoundTime = 0;
-
-        m_currentGunBoxes = new List<GameObject>(gunBoxSpawns.Length);
-        for (int i = 0; i < gunBoxSpawns.Length; i++)
-        {
-            m_currentGunBoxes.Add(gunBoxPrefab);
-        }
-        m_currentPowerupBoxes = new List<GameObject>(powerUpSpawns.Length);
-        for (int i = 0; i < powerUpSpawns.Length; i++)
-        {
-            m_currentPowerupBoxes.Add(powerupBoxPrefab);
-        }
 
         if (m_shouldSpawnPowerups) StartPowerupSpawning();
     }
@@ -115,69 +101,42 @@ public class Stage : MonoBehaviour
 
     private void StartPowerupSpawning()
     {
-        StartCoroutine(SpawnGunBox());
-        StartCoroutine(SpawnItemBox());
+        // spawn gun boxes
+        StartCoroutine(SpawnPowerup(gunBoxPrefab, gunBoxLifetime, minGunTimer, maxGunTimer, gunBoxSpawns));
+        // spawn item boxes
+        StartCoroutine(SpawnPowerup(powerupBoxPrefab, powerupBoxLifetime, minPowerupTimer, maxPowerupTimer, powerUpSpawns));
     }
 
     /// <summary>
-    /// waits for its time to be over then finds a gunbox transform and spawns a gunbox there then restarts
+    /// Spawns a powerup at a random slot, or the next empty slot, or not at all if all slots are full.
     /// </summary>
-    /// <param name="time"></param>
-    /// <returns></returns>
-    private IEnumerator SpawnGunBox()
+    private IEnumerator SpawnPowerup(GameObject powerupPrefab, float lifeTime, float minSpawnTimer, float maxSpawnTimer, Transform[] spawnLocations)
     {
         while (m_shouldSpawnPowerups)
         {
-            yield return new WaitForSeconds(Random.Range(minGunTimer, maxGunTimer));
-            int spawnIndex = Random.Range(0, gunBoxSpawns.Length);
-            //start making the next one
-        
-            // if there isn't already a box in that slot, spawn a new one
-            if (gunBoxSpawns[spawnIndex].childCount == 0)
-            {
-                GameObject gunBox = Instantiate(gunBoxPrefab, gunBoxSpawns[spawnIndex].transform);
-                m_currentGunBoxes.Insert(spawnIndex, gunBox);
-                gunBox.GetComponent<PowerUp>().Init(gunBoxLifetime);
-            }
-        }
-    }
-
-    /// <summary>
-    /// waits for its time to be over then finds a itembox transform and spawns a itembox there then restarts
-    /// </summary>
-    private IEnumerator SpawnItemBox()
-    {
-        while (m_shouldSpawnPowerups)
-        {
-            yield return new WaitForSeconds(Random.Range(minPowerupTimer, maxPowerupTimer));
-            int spawnIndex = Random.Range(0, powerUpSpawns.Length);
-
-            // if there isn't already a box in that slot, spawn a new one
-            if (powerUpSpawns[spawnIndex].childCount == 0)
-            {
-                GameObject powerUp = Instantiate(powerupBoxPrefab, powerUpSpawns[spawnIndex].transform);
-                m_currentPowerupBoxes.Insert(spawnIndex, powerUp);
-                powerUp.GetComponent<PowerUp>().Init(powerupBoxLifetime);
-            }
-        }
-    }
-
-    /// <summary>
-    /// waits for its time to be over then finds a itembox transform and spawns a itembox there then restarts
-    /// </summary>
-    private IEnumerator SpawnPowerup(GameObject powerupPrefab, float minSpawnTimer, float maxSpawnTimer, Transform[] spawnLocations, List<GameObject> currentPowerups)
-    {
-        while (m_shouldSpawnPowerups)
-        {
+            // spawn timer
             yield return new WaitForSeconds(Random.Range(minSpawnTimer, maxSpawnTimer));
-            int spawnIndex = Random.Range(0, spawnLocations.Length);
 
-            // if there isn't already a box in that slot, spawn a new one
-            if (spawnLocations[spawnIndex].childCount == 0)
+            // find an empty slot to spawn the powerup in
+            // if there aren't any empty slots, just skip
+            int counter = 0;
+            int spawnIndex = Random.Range(0, spawnLocations.Length);
+            while (true)
             {
-                GameObject powerup = Instantiate(powerupPrefab, spawnLocations[spawnIndex].transform);
-                m_currentPowerupBoxes.Insert(spawnIndex, powerup);
-                powerup.GetComponent<PowerUp>().Init(powerupBoxLifetime);
+                if (spawnLocations[spawnIndex].childCount == 0)
+                {
+                    GameObject powerup = Instantiate(powerupPrefab, spawnLocations[spawnIndex].transform);
+                    powerup.GetComponent<PowerUp>().Init(lifeTime);
+                    break; // if a powerup is spawned, exit
+                }
+                else
+                {
+                    spawnIndex++; // if the slot is full, move to the next
+                    if (spawnIndex == spawnLocations.Length) spawnIndex = 0; // spawnIndex overflow
+                }
+
+                counter++; // increase the counter
+                if (counter == spawnLocations.Length) break; // no places to spawn a powerup
             }
         }
     }
@@ -187,22 +146,6 @@ public class Stage : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
-        // destroy all the powerups when the stage is unloaded
-        foreach (GameObject obj in m_currentGunBoxes)
-        {
-            if (obj != gunBoxPrefab)
-            {
-                Destroy(obj);
-            }
-        }
-        foreach (GameObject obj in m_currentPowerupBoxes)
-        {
-            if (obj != powerupBoxPrefab)
-            {
-                Destroy(obj);
-            }
-        }
-
         // stop the spawning coroutines
         StopAllCoroutines();
     }
