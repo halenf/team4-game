@@ -181,7 +181,7 @@ public class Bullet : MonoBehaviour
         else Instantiate(m_particle, transform.position, transform.rotation);
 
         // Separate the trail from the bullet to let it autodestruct
-        trailRenderer.transform.parent = null;
+        if (trailRenderer) trailRenderer.transform.parent = null;
 
         Destroy(gameObject);
     }
