@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
-    [Min(0)] public float powerupTime;
+    [Min(0)] public float[] powerupTime;
 
     [Space(10)]
 
@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
         set
         {
             // only set timer if the powerup is not shield
-            if (value != Powerup.Shield) m_powerupTimer = powerupTime;
+            if (value != Powerup.Shield) m_powerupTimer = powerupTime[(int)value];
 
             // Deactivation checks
             if (value == Powerup.None)
