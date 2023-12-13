@@ -422,17 +422,27 @@ public class PlayerController : MonoBehaviour
             // Have announcer say something stupid
             GameManager.Instance.StartAnnouncement(announcementType);
 
-            //if fire seath make ash pile
-            if (announcementType == AnnouncerSubtitleDisplay.AnnouncementType.DeathFire)
+            switch (announcementType)
             {
-                GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
-                ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
-                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHASH");
-            }
-            else
-            {
-                // Play death sound
-                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+                case AnnouncerSubtitleDisplay.AnnouncementType.DeathFire:
+                    {
+                        GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
+                        ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHASH");
+                        break;
+                    }
+                case AnnouncerSubtitleDisplay.AnnouncementType.DeathZapper:
+                    {
+                        GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
+                        ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Obstacles/SFX-ZAPPERELECTRIFY");
+                        break;
+                    }
+                default:
+                    {
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+                        break;
+                    }
             }
 
             // let game manager know somebody died
