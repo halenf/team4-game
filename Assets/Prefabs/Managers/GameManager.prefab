@@ -64,8 +64,8 @@ MonoBehaviour:
   - {r: 0.34117648, g: 1, b: 0.011764706, a: 1}
   stageList:
   - {fileID: 3170264843013748611, guid: d6364d577a154ed44901f70dcfed2c99, type: 3}
+  - {fileID: 13028561052481414, guid: c077fe6aaf9441542bc4dbf55741ab13, type: 3}
   - {fileID: 6020532710181630620, guid: 56d0b9382e6fb414191fb672c887aa2d, type: 3}
-  - {fileID: 7608319705386287573, guid: fe28bc3acdee1ed4498e29c24ddcec04, type: 3}
   - {fileID: 5591830627243611222, guid: bb0d3be748ceba94d99a6af14c21fa40, type: 3}
   - {fileID: 4012481546695760712, guid: 3ffd51ef4dc4f9e4da73be846b03913c, type: 3}
   - {fileID: 5362399507169375447, guid: 823bf9bd77418ea4c9efb3cbf4f032cc, type: 3}

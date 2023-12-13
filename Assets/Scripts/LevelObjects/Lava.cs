@@ -38,6 +38,12 @@ public class Lava : MonoBehaviour
             //do max damage
             hitObject.TakeDamage(hitObject.maxHealth);
         }
+
+        if (other.gameObject.GetComponent<Explosive>())
+        {
+            Explosive explosive = other.gameObject.GetComponent<Explosive>();
+            explosive.TakeDamage(explosive.maxHealth);
+        }
     }
 
     private void TileTexture()
