@@ -59,7 +59,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7eb54ed846b47b4781659f6a25280ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeTime: 10
+  m_spawnEffect: {fileID: 0}
+  m_destroyEffect: {fileID: 0}
   guns:
   - {fileID: 2639462504726439464, guid: dadaa2246f6567141bbdc5f8ab065f32, type: 3}
   - {fileID: 7557321546389718272, guid: 33b9e3908e9af964fa614bc03795cb03, type: 3}
@@ -79,7 +80,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933c0a13ab0235b4e8366d2f2928f7e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933c0a13ab0235b4e8366d2f2928f7e9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -95,19 +96,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933c0a13ab0235b4e8366d2f2928f7e9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933c0a13ab0235b4e8366d2f2928f7e9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.98587734
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933c0a13ab0235b4e8366d2f2928f7e9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.16746889
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933c0a13ab0235b4e8366d2f2928f7e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 19.281
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 933c0a13ab0235b4e8366d2f2928f7e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
