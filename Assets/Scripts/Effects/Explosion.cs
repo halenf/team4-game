@@ -12,16 +12,20 @@ public class Explosion : MonoBehaviour
     private bool m_shouldDisableCollider;
     
     [Header("Properties")]
-    [Tooltip("Damage dealt by the explosion to players.")]
+    [Tooltip("Damage dealt by the explosion to players and objects.")]
     [Min(0)] public float damage;
-    [Tooltip("changes the size of hit sphere")]
+
+    [Tooltip("The size of the explosion.")]
     public float radius;
+
+    [Tooltip("How long the explosion is active for.")]
     public float lifetime;
-    [Tooltip("changes the size of the visual portion of the explosion")]
-    public float blastSizeMultiplyer;
+
+    [Tooltip("Size of the explosion particle effect.")]
+    public float blastSizeMultiplier;
+
     [Header("Particle Systems")]
-    //public ParticleSystem fragments;
-    public ParticleSystem blast;
+    public ParticleSystem explosionEffectPrefab;
 
     [Header("Audio Properties")]
     public float volume;
@@ -31,27 +35,24 @@ public class Explosion : MonoBehaviour
         if (m_shouldDisableCollider) GetComponent<SphereCollider>().enabled = false;
     }
 
-    public void Awake()
+    public void Start()
     {
         // Create the explosion collider
         SphereCollider collider = gameObject.AddComponent(typeof(SphereCollider)) as SphereCollider;
         collider.isTrigger = true;
         collider.radius = radius;
-        //collider.center = transform.position;
 
-        // set details of the particle systems
-        //var fragmentsModule = fragments.main;
-        //fragmentsModule.startSpeed = radius * 3.75f;
+        // Play sound effect and shake screen
+        SoundManager.Instance.PlaySound("SFX/SFX-EXPLOSION", volume);
+        CameraManager.Instance.ScreenShake(.05f, 30f, .5f);
 
-        var blastModule = blast.main;
-        blastModule.startSize = radius * blastSizeMultiplyer;
+        // create particle system
+        ParticleSystem explosion = Instantiate(explosionEffectPrefab, transform);
+        var blastModule = explosion.main;
+        blastModule.startSize = radius * blastSizeMultiplier;
 
-        // start explosion and make particles and set destruction and play explosion sound
-        //SoundManager.Instance.PlaySound("SFX/SFX-EXPLOSION", volume);
-        //CameraManager.Instance.ScreenShake(.05f, 30f, .5f);
+        // Enable explosion, destroy object after lifetime
         StartCoroutine(Explode(lifetime));
-        //Instantiate(fragments, transform.position, Quaternion.identity);
-        Instantiate(blast, transform);
         Destroy(gameObject, blastModule.startLifetime.constant);
     }
 
@@ -83,6 +84,13 @@ public class Explosion : MonoBehaviour
         {
             other.gameObject.GetComponent<BreakableObject>().TakeDamage(damage);
             m_shouldDisableCollider = true;
+        }
+
+        // check if the explosion hits another explosive object
+        if (other.gameObject.GetComponent<Explosive>())
+        {
+            Explosive explosive = other.gameObject.GetComponent<Explosive>();
+            explosive.TakeDamage(explosive.maxHealth);
         }
     }
 }

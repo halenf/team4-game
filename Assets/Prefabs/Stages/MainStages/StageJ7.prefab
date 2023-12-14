@@ -247,6 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isActive: 0
   toggleTimer: 0
+  m_spawnEffect: {fileID: 0}
   isRepeating: 0
   spawnerIsParent: 0
   spawnObjectPrefab: {fileID: 0}
@@ -1262,6 +1263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isActive: 0
   toggleTimer: 0
+  m_spawnEffect: {fileID: 0}
   isRepeating: 0
   spawnerIsParent: 0
   spawnObjectPrefab: {fileID: 0}
@@ -1492,6 +1494,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isActive: 0
   toggleTimer: 0
+  m_spawnEffect: {fileID: 0}
   isRepeating: 0
   spawnerIsParent: 0
   spawnObjectPrefab: {fileID: 0}
@@ -2017,6 +2020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isActive: 0
   toggleTimer: 0
+  m_spawnEffect: {fileID: 0}
   isRepeating: 0
   spawnerIsParent: 0
   spawnObjectPrefab: {fileID: 0}
@@ -2081,6 +2085,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 513
+  killWidth: 1
 --- !u!120 &2121833185807221808
 LineRenderer:
   m_ObjectHideFlags: 0

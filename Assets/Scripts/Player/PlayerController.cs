@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Powerup Properties")]
     [SerializeField] private Powerup m_currentPowerup;
-    [Min(0)] public float powerupTime;
+    [Min(0)] public float[] powerupTime;
 
     [Space(10)]
 
@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
     public float minSparkTimer;
     [Tooltip("maximum time between when damage sparks play on the player")]
     public float maxSparkTimer;
+    private ParticleSystem m_sparkReference;
 
     [Header("Animation")]
     [Tooltip("The horizontal speed threshold at which the player is detected as 'moving'.")]
@@ -134,7 +135,7 @@ public class PlayerController : MonoBehaviour
         set
         {
             // only set timer if the powerup is not shield
-            if (value != Powerup.Shield) m_powerupTimer = powerupTime;
+            if (value != Powerup.Shield) m_powerupTimer = powerupTime[(int)value];
 
             // Deactivation checks
             if (value == Powerup.None)
@@ -177,6 +178,7 @@ public class PlayerController : MonoBehaviour
             {
                 case Powerup.Ricochet:
                     {
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Power-Ups/PWR-BULLETRICOCHET");
                         break;
                     }
                 case Powerup.FireRateUp:
@@ -392,7 +394,7 @@ public class PlayerController : MonoBehaviour
         m_currentHealth -= damage;
 
         //if the player has been damaged enough start playing sparks
-        if(m_currentHealth <= 4)
+        if(m_currentHealth <= 4 && m_currentHealth >= 0.05f)
         {
             StartCoroutine(PlayDamageParticles());
         }
@@ -421,17 +423,27 @@ public class PlayerController : MonoBehaviour
             // Have announcer say something stupid
             GameManager.Instance.StartAnnouncement(announcementType);
 
-            //if fire seath make ash pile
-            if (announcementType == AnnouncerSubtitleDisplay.AnnouncementType.DeathFire)
+            switch (announcementType)
             {
-                GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
-                ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
-                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHASH");
-            }
-            else
-            {
-                // Play death sound
-                SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+                case AnnouncerSubtitleDisplay.AnnouncementType.DeathFire:
+                    {
+                        GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
+                        ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHASH");
+                        break;
+                    }
+                case AnnouncerSubtitleDisplay.AnnouncementType.DeathZapper:
+                    {
+                        GameObject ash = Instantiate(ashPrefab, transform.position, Quaternion.identity);
+                        ash.transform.parent = FindObjectOfType<Stage>().gameObject.transform;
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Obstacles/SFX-ZAPPERELECTRIFY");
+                        break;
+                    }
+                default:
+                    {
+                        SoundManager.Instance.PlayAudioAtPoint(transform.position, "Player/SFX-PLAYERDEATHBLOODY");
+                        break;
+                    }
             }
 
             // let game manager know somebody died
@@ -505,12 +517,9 @@ public class PlayerController : MonoBehaviour
         while (m_currentHealth <= 3 * maxHealth / 4 && m_currentHealth > 0)
         {
             //at one of the positions the player has play the particle effect
-            ParticleSystem sparks = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
+            m_sparkReference = Instantiate(damagedParticlePrefab, sparkLocations[Random.Range(0, sparkLocations.Length)]);
 
-            var sparkMain = sparks.main;
-            sparkMain.startColor = m_color;
-
-            var sparkTrails = sparks.trails;
+            var sparkTrails = m_sparkReference.trails;
             Gradient gradient = new();
             gradient.SetKeys(new GradientColorKey[] { new GradientColorKey(m_color, 0.0f), new GradientColorKey(m_color, 1.0f) },
                              new GradientAlphaKey[] { new GradientAlphaKey(1.0f, 0.0f), new GradientAlphaKey(1.0f, 1.0f) });
@@ -617,6 +626,7 @@ public class PlayerController : MonoBehaviour
         m_aimDirection = transform.right;
         SetGun(defaultGun);
         currentPowerup = Powerup.None;
+        GetComponentInChildren<SetColour>().Set(m_color, m_currentHealth / maxHealth);
         if (m_shieldGameObject) Destroy(m_shieldGameObject);
     }
 
@@ -624,6 +634,13 @@ public class PlayerController : MonoBehaviour
     {
         // Set player colour
         GetComponentInChildren<SetColour>().Set(m_color);
+        foreach(Transform sparkLocal in sparkLocations)
+        {
+            for(int i = 0; i < sparkLocal.childCount; i++)
+            {
+                Destroy(sparkLocal.GetChild(i).gameObject);
+            }
+        }
     }
 
     private void OnDisable()
