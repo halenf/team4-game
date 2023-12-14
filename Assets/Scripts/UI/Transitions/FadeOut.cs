@@ -19,7 +19,6 @@ public class FadeOut : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("state exited");
         GameManager.Instance.LoadStage();
         Time.timeScale = 1f;
         Destroy(animator.gameObject.GetComponentInParent<Canvas>().gameObject);
