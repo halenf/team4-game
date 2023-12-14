@@ -4958,9 +4958,9 @@ MonoBehaviour:
   indicator: {fileID: 21300000, guid: a0c555ebcfde5ae429f40859c8bafe9c, type: 3}
   colour: {r: 1, g: 0.7236256, b: 0.08784264, a: 1}
   bulletPrefab: {fileID: 2271769695517889325, guid: 15ef51ede76b142468b93acdca306149, type: 3}
-  spread: 20
+  spread: 19
   bulletSpeed: 13
-  bulletDamage: 0.75
+  bulletDamage: 0.83
   bulletLifeTime: 10
   highRumbleFrequency: 1
   lowRumbleFrequency: 0

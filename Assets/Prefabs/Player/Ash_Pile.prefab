@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5471047519673066737}
   - component: {fileID: 3672016181265205376}
   - component: {fileID: -1201312681574904549}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ash_Pile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ash_pile_light
       objectReference: {fileID: 0}
+    - target: {fileID: 9020113988028629043, guid: f301d406fce7c4a40b96d6453c3792ac, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f301d406fce7c4a40b96d6453c3792ac, type: 3}
 --- !u!4 &4668969340762939039 stripped
@@ -181,6 +185,10 @@ PrefabInstance:
     - target: {fileID: 6059934775132726121, guid: 713a1f79921ed2a418d2a7bdc161f42c, type: 3}
       propertyPath: m_Name
       value: ash_pile_embers
+      objectReference: {fileID: 0}
+    - target: {fileID: 6059934775132726121, guid: 713a1f79921ed2a418d2a7bdc161f42c, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 713a1f79921ed2a418d2a7bdc161f42c, type: 3}
@@ -263,6 +271,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6b3e680a1d76d1244ac9c019d6390f21, type: 3}
       propertyPath: m_Name
       value: Ash_Pile
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b3e680a1d76d1244ac9c019d6390f21, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b3e680a1d76d1244ac9c019d6390f21, type: 3}
