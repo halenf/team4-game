@@ -81,6 +81,13 @@ public class GameplayUI : MonoBehaviour
     public void ShowLaserWarning()
     {
         m_endLaserDisplay.gameObject.SetActive(true);
+        StartCoroutine(StopShowingWarning());
+    }
+
+    private IEnumerator StopShowingWarning()
+    {
+        yield return new WaitForSeconds(4f);
+        m_endLaserDisplay.gameObject.SetActive(false);
     }
 
     private IEnumerator Countdown()
