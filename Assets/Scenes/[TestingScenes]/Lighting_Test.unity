@@ -146,6 +146,14 @@ PrefabInstance:
       propertyPath: m_gameplayCamera
       value: 
       objectReference: {fileID: 1823501235}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6369607398092397878, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
+      propertyPath: stageList.Array.data[0]
+      value: 
+      objectReference: {fileID: 5362399507169375447, guid: 823bf9bd77418ea4c9efb3cbf4f032cc, type: 3}
     - target: {fileID: 6369607398092397879, guid: 432bb563dfdee144582b7be6285749ab, type: 3}
       propertyPath: m_RootOrder
       value: 2

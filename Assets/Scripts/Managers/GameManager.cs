@@ -362,7 +362,6 @@ public class GameManager : MonoBehaviour
         int index = stageList.Length % (m_roundNumber + 1);
         if (index == 0) m_orderedStageList = RandomisedStageOrder(); 
         m_currentStageObject = Instantiate(m_orderedStageList[index]);
-        Debug.Log(m_orderedStageList);
 
         // Reset camera to default position
         CameraManager.Instance.SetCameraPosition(m_currentStageObject.GetComponent<Stage>().cameraDefaultTransform);

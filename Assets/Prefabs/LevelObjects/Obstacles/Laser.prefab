@@ -50,6 +50,7 @@ MonoBehaviour:
   m_isActive: 1
   toggleTimer: 0
   hitParticle: {fileID: 8163005987728998194, guid: bb118610af5d2f6439a07ca1c37fd4d4, type: 3}
+  chargeEffectPrefab: {fileID: 8759256007538070757, guid: 6e7d754c5e52cea46b2671867215ffcf, type: 3}
   mask:
     serializedVersion: 2
     m_Bits: 513
