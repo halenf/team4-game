@@ -508,7 +508,6 @@ public class GameManager : MonoBehaviour
 
         // disable players and set UI controls
         DisablePlayers();
-
         Time.timeScale = 1f;
         EventSystemManager.Instance.SetPlayerToControl(m_activePlayerControllers[winnerIndex]);
     }
@@ -540,7 +539,7 @@ public class GameManager : MonoBehaviour
         }
         else // if the game is unpaused
         {
-            EnablePlayers(); // Enable input for all players - Halen
+            EnablePlayers(true); // Enable input for all alive players - Halen
             m_focusedPlayerController.SetControllerMap("Player");
 
             //unfreeze time
@@ -674,12 +673,24 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Enable all active players.
     /// </summary>
-    public void EnablePlayers()
+    public void EnablePlayers(bool onlyAlivePlayers = false)
     {
         foreach (PlayerController player in m_activePlayerControllers)
         {
-            player.gameObject.SetActive(true);
-            player.EnableInput();
+            if (onlyAlivePlayers)
+            {
+                if (!player.isDead)
+                {
+                    player.gameObject.SetActive(true);
+                    player.EnableInput();
+                }
+            }
+            else
+            {
+                player.gameObject.SetActive(true);
+                player.EnableInput();
+            }
+            
         }
     }    
 
