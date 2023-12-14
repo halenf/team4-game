@@ -1416,6 +1416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundTime: 45
+  m_shouldSpawnPowerups: 1
   playerSpawns:
   - {fileID: 7925962354855729044}
   - {fileID: 5710660623041093247}
@@ -1461,6 +1462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isActive: 1
   toggleTimer: 0
+  m_spawnEffect: {fileID: 0}
   isRepeating: 1
   spawnerIsParent: 0
   spawnObjectPrefab: {fileID: 4872935802854433896, guid: 735331b7140807f4a8021a133db25238, type: 3}
@@ -34752,7 +34754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15.494932
+      value: -22.244932
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -40678,7 +40680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15.494932
+      value: -22.244932
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_LocalPosition.z
