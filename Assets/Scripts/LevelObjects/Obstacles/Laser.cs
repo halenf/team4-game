@@ -9,11 +9,31 @@ using UnityEngine;
 
 public class Laser : Obstacle
 {
+    [Header("Laser Properties")]
     public ParticleSystem hitParticle;
     private ParticleSystem m_particleInScene;
+    [SerializeField] private ParticleSystem chargeEffectPrefab;
+    private ParticleSystem m_chargeEffect;
     private LineRenderer m_lineRenderer;
     public LayerMask mask;
     public float killWidth;
+
+    public override bool isActive
+    {
+        get { return m_isActive; }
+        set
+        {
+            if (value != m_isActive)
+            {
+                if (value)
+                {
+                    m_chargeEffect = Instantiate(chargeEffectPrefab, transform);
+                    StartCoroutine(StartLaser(m_chargeEffect.main.startLifetime.constant));
+                }
+                else m_isActive = value;
+            }
+        }
+    }
     
     public override void Start()
     {
@@ -24,6 +44,12 @@ public class Laser : Obstacle
 
         // create the hit particle in the scene
         m_particleInScene = Instantiate(hitParticle, transform);
+
+        if (isActive)
+        {
+            m_chargeEffect = Instantiate(chargeEffectPrefab, transform);
+            StartCoroutine(StartLaser(m_chargeEffect.main.startLifetime.constant));
+        }
     }
 
     /// <summary>
@@ -43,9 +69,6 @@ public class Laser : Obstacle
                 //draw line between here and end point of ray
                 m_lineRenderer.SetPosition(0, transform.position);
                 m_lineRenderer.SetPosition(1, lineHit.point);
-
-                // activate the particle system
-                if (!m_particleInScene.isPlaying) m_particleInScene.Play();
 
                 //move particles
                 m_particleInScene.gameObject.SetActive(true);
@@ -79,6 +102,11 @@ public class Laser : Obstacle
                     //do max damage
                     hitObject.TakeDamage(hitObject.maxHealth);
                 }
+                if (boxHit.collider.gameObject.GetComponent<Explosive>())
+                {
+                    Explosive explosive = boxHit.collider.gameObject.GetComponent<Explosive>();
+                    explosive.TakeDamage(explosive.maxHealth);
+                }
             }
         }
         else
@@ -88,8 +116,16 @@ public class Laser : Obstacle
         }
     }
 
+    private IEnumerator StartLaser(float time)
+    {
+        yield return new WaitForSeconds(time);
+        m_isActive = true;
+        Destroy(m_chargeEffect);
+    }
+
     private void OnDisable()
     {
         Destroy(m_particleInScene);
+        if (m_chargeEffect) Destroy(m_chargeEffect);
     }
 }
