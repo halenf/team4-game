@@ -11384,7 +11384,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3134811422387393504, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: killWidth
-      value: 0.75
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 3788925204285201061, guid: 281bab486281b8a4fafc137bb037bc3f, type: 3}
       propertyPath: m_RootOrder
@@ -22929,7 +22929,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5870180796672742153, guid: 5a9846a7e630e674ab1594d8bfab1474, type: 3}
       propertyPath: force
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5870180796672742154, guid: 5a9846a7e630e674ab1594d8bfab1474, type: 3}
       propertyPath: m_Name
@@ -33165,7 +33165,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5870180796672742153, guid: 5a9846a7e630e674ab1594d8bfab1474, type: 3}
       propertyPath: force
-      value: 125
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5870180796672742154, guid: 5a9846a7e630e674ab1594d8bfab1474, type: 3}
       propertyPath: m_Name

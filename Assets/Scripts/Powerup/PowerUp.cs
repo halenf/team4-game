@@ -15,6 +15,18 @@ public abstract class PowerUp : MonoBehaviour
 
     protected bool m_isActive = false; // if the powerup is able to be picked up
                                        // becomes true when the expanding animation ends
+    public bool isActive
+    {
+        get { return m_isActive; }
+        set
+        {
+            if (value != m_isActive)
+            {
+                if (value) Instantiate(m_spawnEffect, transform);
+                m_isActive = value;
+            }
+        }
+    }
 
     protected bool m_isDespawning = false;
 
@@ -52,7 +64,6 @@ public abstract class PowerUp : MonoBehaviour
     public virtual void Init(float _lifeTime)
     {
         m_lifeTime = _lifeTime;
-        if (m_spawnEffect) Instantiate(m_spawnEffect);
     }
 
     /// <summary>
@@ -60,7 +71,7 @@ public abstract class PowerUp : MonoBehaviour
     /// </summary>
     public void Activate()
     {
-        m_isActive = true;
+        isActive = true;
     }
 
     public abstract void OnTriggerStay(Collider other);
@@ -74,7 +85,7 @@ public abstract class PowerUp : MonoBehaviour
     {
         if (!m_hasQuit)
         {
-            if (m_destroyEffect) Instantiate(m_destroyEffect);
+            if (m_destroyEffect) Instantiate(m_destroyEffect, transform);
         }
     }
 }

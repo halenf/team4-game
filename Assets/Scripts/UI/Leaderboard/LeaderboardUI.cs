@@ -48,6 +48,13 @@ public class LeaderboardUI : MonoBehaviour
 
     private void OnDisable()
     {
-        EventSystemManager.Instance.indicator.gameObject.SetActive(false);
+        try
+        {
+            EventSystemManager.Instance.indicator.gameObject.SetActive(false);
+        }
+        catch (MissingReferenceException e)
+        {
+            // do nothing
+        }
     }
 }

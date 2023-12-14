@@ -44,7 +44,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 0.015686275, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 3
   m_Range: 2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 4811807247540190829}
   - component: {fileID: -2948377341625275921}
   - component: {fileID: -4904066228879846957}
-  - component: {fileID: 1269929605819944874}
+  - component: {fileID: 6860199863523910536}
   m_Layer: 9
   m_Name: barrel_explode
   m_TagString: Untagged
@@ -155,15 +155,15 @@ Rigidbody:
   m_GameObject: {fileID: 5328841878907081587}
   serializedVersion: 2
   m_Mass: 0.5
-  m_Drag: 7
-  m_AngularDrag: 7
+  m_Drag: 0.5
+  m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 88
+  m_Constraints: 8
   m_CollisionDetection: 0
---- !u!65 &1269929605819944874
-BoxCollider:
+--- !u!136 &6860199863523910536
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -172,8 +172,9 @@ BoxCollider:
   m_Material: {fileID: 13400000, guid: 81b1766d9eec2a8439e330a853a754a9, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.7, y: 1, z: 0.7}
+  m_Radius: 0.45
+  m_Height: 1.6
+  m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &4431075812110848078
 PrefabInstance:

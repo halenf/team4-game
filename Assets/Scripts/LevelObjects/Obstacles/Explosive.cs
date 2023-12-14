@@ -59,4 +59,12 @@ public class Explosive : Obstacle
         yield return new WaitForSeconds(time);
         Explode();
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Explode();
+        }
+    }
 }
