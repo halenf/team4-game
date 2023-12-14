@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e8521625bc4fd349baca1bfda0e13d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spawnEffect: {fileID: 0}
+  m_spawnEffect: {fileID: 8441438442243389773, guid: 834dfaa203e51ec4ab663ee944ec80eb, type: 3}
   m_destroyEffect: {fileID: 0}
   m_currentPowerup: 0
 --- !u!135 &1309768621452261183
