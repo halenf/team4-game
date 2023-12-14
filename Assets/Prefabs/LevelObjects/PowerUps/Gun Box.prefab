@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7eb54ed846b47b4781659f6a25280ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spawnEffect: {fileID: 0}
+  m_spawnEffect: {fileID: 2337500307780428192, guid: 53e89ec58526b3c4085c0267e7a131da, type: 3}
   m_destroyEffect: {fileID: 0}
   guns:
   - {fileID: 2639462504726439464, guid: dadaa2246f6567141bbdc5f8ab065f32, type: 3}
