@@ -23,15 +23,12 @@ public class Laser : Obstacle
         get { return m_isActive; }
         set
         {
-            if (value != m_isActive)
+            if (!m_isActive && value)
             {
-                if (value)
-                {
-                    m_chargeEffect = Instantiate(chargeEffectPrefab, transform);
-                    StartCoroutine(StartLaser(m_chargeEffect.main.startLifetime.constant));
-                }
-                else m_isActive = value;
+                m_chargeEffect = Instantiate(chargeEffectPrefab, transform);
+                StartCoroutine(StartLaser(m_chargeEffect.main.startLifetime.constant));
             }
+            else m_isActive = value;
         }
     }
     
@@ -120,7 +117,7 @@ public class Laser : Obstacle
     {
         yield return new WaitForSeconds(time);
         m_isActive = true;
-        Destroy(m_chargeEffect);
+        if (m_chargeEffect) Destroy(m_chargeEffect);
     }
 
     private void OnDisable()
