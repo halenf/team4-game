@@ -359,8 +359,8 @@ public class GameManager : MonoBehaviour
         if (m_currentStageObject) Destroy(m_currentStageObject);
 
         // modulus with 0 will cause errors
-        int index = stageList.Length % (m_roundNumber + 1);
-        if (index == 0) m_orderedStageList = RandomisedStageOrder(); 
+        int index = m_roundNumber % stageList.Length;
+        if (index == 0) m_orderedStageList = ShuffleList(stageList).ToArray(); 
         m_currentStageObject = Instantiate(m_orderedStageList[index]);
 
         // Reset camera to default position
@@ -371,12 +371,13 @@ public class GameManager : MonoBehaviour
         DisablePlayers();
 
         //randomize spawn order
-        ShuffleSpawns(m_currentStageObject.GetComponent<Stage>().playerSpawns);
+        Stage currentStage = m_currentStageObject.GetComponent<Stage>();
+        currentStage.playerSpawns = ShuffleList(currentStage.playerSpawns).ToArray();
 
         // set each player to a spawn - Halen
         for (int i = 0; i < m_activePlayerControllers.Count; i++)
         {
-            m_activePlayerControllers[i].gameObject.transform.position = m_currentStageObject.GetComponent<Stage>().playerSpawns[i].position;
+            m_activePlayerControllers[i].transform.position = currentStage.playerSpawns[i].position;
         }
 
         //keep track of what stage we are on
@@ -600,7 +601,20 @@ public class GameManager : MonoBehaviour
 
     public void ChangeAnnouncerDisplay()
     {
-        m_announcerCamera.SetNewParent(m_targetGroup.m_Targets[Random.Range(0, m_targetGroup.m_Targets.Length)].target.transform);
+        int loopCount = 0;
+        int randomIndex = Random.Range(0, m_activePlayerControllers.Count);
+        while (loopCount < m_activePlayerControllers.Count)
+        {
+            int realIndex = randomIndex + loopCount;
+            if (realIndex >= m_activePlayerControllers.Count) realIndex -= m_activePlayerControllers.Count;
+
+            if (!m_activePlayerControllers[realIndex].isDead)
+            {
+                m_announcerCamera.SetNewParent(m_activePlayerControllers[realIndex].transform);
+            }
+            loopCount++;
+        }
+        
         StartCoroutine(ChangeDisplayLater());
     }
 
@@ -617,36 +631,23 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// randomizes the spawns in the array to spawn players at random locations
+    /// Randomises the order of a list and returns it as a new list.
     /// </summary>
-    /// <param name="spawns"></param>
-    private void ShuffleSpawns(Transform[] spawns)
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    private IList<T> ShuffleList<T>(IList<T> list)
     {
-        // Knuth shuffle algorithm
-        for (int i = 0; i < spawns.Length; i++)
+        IList<T> shuffledList = list.ToList();
+        int count = shuffledList.Count;
+        while (count > 1)
         {
-            Transform tmp = spawns[i];
-            int r = Random.Range(i, spawns.Length);
-            spawns[i] = spawns[r];
-            spawns[r] = tmp;
+            count--;
+            int index = Random.Range(0, count + 1);
+            T value = shuffledList[index];
+            shuffledList[index] = shuffledList[count];
+            shuffledList[count] = value;
         }
-    }
-
-    /// <summary>
-    /// Randomises a gameobject array.
-    /// </summary>
-    /// <returns></returns>
-    private GameObject[] RandomisedStageOrder()
-    {
-        GameObject[] stages = stageList;
-        for (int i = 0; i < stages.Length; i++)
-        {
-            GameObject tmp = stages[i];
-            int r = Random.Range(i, stages.Length);
-            stages[i] = stages[r];
-            stages[r] = tmp;
-        }
-        return stages;
+        return shuffledList;
     }
 
     /// <summary>

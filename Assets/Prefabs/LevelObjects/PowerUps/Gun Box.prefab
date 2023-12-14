@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2737492165702009521}
-  - component: {fileID: 2548626854377051954}
   - component: {fileID: 4472996382917759305}
+  - component: {fileID: 2548626854377051954}
   m_Layer: 0
   m_Name: Gun Box
   m_TagString: Untagged
@@ -34,6 +34,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4472996382917759305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6146957387454679208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7eb54ed846b47b4781659f6a25280ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_spawnEffect: {fileID: 2337500307780428192, guid: 53e89ec58526b3c4085c0267e7a131da, type: 3}
+  m_destroyEffect: {fileID: 0}
+  guns:
+  - {fileID: 2639462504726439464, guid: dadaa2246f6567141bbdc5f8ab065f32, type: 3}
+  - {fileID: 7557321546389718272, guid: 33b9e3908e9af964fa614bc03795cb03, type: 3}
+  - {fileID: -176858537243104423, guid: 69d3963b1479bea4da2f952440c44943, type: 3}
+  - {fileID: 7991177023550822976, guid: 38f6b085243398046806341762f41ff5, type: 3}
+  m_currentGun: {fileID: 0}
 --- !u!65 &2548626854377051954
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -47,26 +67,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.71, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4472996382917759305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6146957387454679208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7eb54ed846b47b4781659f6a25280ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_spawnEffect: {fileID: 0}
-  m_destroyEffect: {fileID: 0}
-  guns:
-  - {fileID: 2639462504726439464, guid: dadaa2246f6567141bbdc5f8ab065f32, type: 3}
-  - {fileID: 7557321546389718272, guid: 33b9e3908e9af964fa614bc03795cb03, type: 3}
-  - {fileID: -176858537243104423, guid: 69d3963b1479bea4da2f952440c44943, type: 3}
-  - {fileID: 7991177023550822976, guid: 38f6b085243398046806341762f41ff5, type: 3}
-  m_currentGun: {fileID: 0}
 --- !u!1001 &6550977091605396670
 PrefabInstance:
   m_ObjectHideFlags: 0

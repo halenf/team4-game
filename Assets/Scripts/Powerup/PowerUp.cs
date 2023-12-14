@@ -52,6 +52,7 @@ public abstract class PowerUp : MonoBehaviour
     public virtual void Init(float _lifeTime)
     {
         m_lifeTime = _lifeTime;
+        if (m_spawnEffect) Instantiate(m_spawnEffect);
     }
 
     /// <summary>
@@ -67,11 +68,6 @@ public abstract class PowerUp : MonoBehaviour
     private void OnApplicationQuit()
     {
         m_hasQuit = true;
-    }
-
-    protected void Awake()
-    {
-        if (m_spawnEffect) Instantiate(m_spawnEffect);
     }
 
     protected void OnDestroy()
