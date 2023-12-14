@@ -6562,7 +6562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9180816079732528715, guid: c3aa67c1451b5ed44be3c7212b2e2752, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2.2000008
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9180816079732528715, guid: c3aa67c1451b5ed44be3c7212b2e2752, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13782,6 +13782,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zapper
       objectReference: {fileID: 0}
+    - target: {fileID: 7517950521567150920, guid: bce28f7b32efdab459514ae49a9f1a18, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8064066260450158082, guid: bce28f7b32efdab459514ae49a9f1a18, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -13825,6 +13829,10 @@ PrefabInstance:
     - target: {fileID: 8064066260450158082, guid: bce28f7b32efdab459514ae49a9f1a18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 157.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8068777374866483512, guid: bce28f7b32efdab459514ae49a9f1a18, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bce28f7b32efdab459514ae49a9f1a18, type: 3}
@@ -14856,7 +14864,7 @@ PrefabInstance:
       objectReference: {fileID: 5328841878907081587, guid: b62de1747513a1249aaf0bbd6ba35758, type: 3}
     - target: {fileID: 5586098692458279127, guid: 8b88cf5e5b263764e89a140b9fe35e29, type: 3}
       propertyPath: maxInitialVelocity.x
-      value: 40
+      value: -40
       objectReference: {fileID: 0}
     - target: {fileID: 5586098692458279127, guid: 8b88cf5e5b263764e89a140b9fe35e29, type: 3}
       propertyPath: maxInitialVelocity.y
@@ -14864,7 +14872,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5586098692458279127, guid: 8b88cf5e5b263764e89a140b9fe35e29, type: 3}
       propertyPath: minInitialVelocity.x
-      value: 20
+      value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 5586098692458279127, guid: 8b88cf5e5b263764e89a140b9fe35e29, type: 3}
       propertyPath: minInitialVelocity.y
@@ -17574,7 +17582,7 @@ PrefabInstance:
       objectReference: {fileID: 5328841878907081587, guid: b62de1747513a1249aaf0bbd6ba35758, type: 3}
     - target: {fileID: 5586098692458279127, guid: 8b88cf5e5b263764e89a140b9fe35e29, type: 3}
       propertyPath: maxInitialVelocity.x
-      value: 40
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5586098692458279127, guid: 8b88cf5e5b263764e89a140b9fe35e29, type: 3}
       propertyPath: maxInitialVelocity.y
@@ -17582,7 +17590,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5586098692458279127, guid: 8b88cf5e5b263764e89a140b9fe35e29, type: 3}
       propertyPath: minInitialVelocity.x
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5586098692458279127, guid: 8b88cf5e5b263764e89a140b9fe35e29, type: 3}
       propertyPath: minInitialVelocity.y
